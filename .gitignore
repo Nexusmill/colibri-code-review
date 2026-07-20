@@ -1,0 +1,39 @@
+# secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+providers.env
+.secrets/
+
+# Colibri run outputs / caches
+.colibri_reviews/
+colibri_batch/
+*_reviews.md
+all_reviews.md
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# streamlit
+.streamlit/secrets.toml
+
+# scratch / logs
+_sweep_stdout.txt
+_sweep_stderr.txt
+_gh_*.txt
+*.log
+*.tmp
+
+# os / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
