@@ -61,6 +61,9 @@ def main():
                     help="stop before the running total would exceed this many dollars (0 = no cap)")
     ap.add_argument("--price-in", type=float, default=0.0, help="$/1M input (fallback if the API omits cost)")
     ap.add_argument("--price-out", type=float, default=0.0, help="$/1M output (fallback)")
+    ap.add_argument("--no-static", action="store_true",
+                    help="disable the static-analysis enrichers (ast+pyflakes, mypy, dis) appended "
+                         "to each prompt (they are on by default)")
     args = ap.parse_args()
 
     if not analyzer.api_key():
@@ -74,7 +77,9 @@ def main():
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     cfg = {"model": args.model, "reasoning": args.effort, "max_tokens": args.max_tokens,
-           "temperature": args.temperature, "price_in": args.price_in, "price_out": args.price_out}
+           "temperature": args.temperature, "price_in": args.price_in, "price_out": args.price_out,
+           "static_ast": not args.no_static, "static_mypy": not args.no_static,
+           "static_dis": not args.no_static}
 
     print("%d file(s) -> %s   model=%s  mode=%s  effort=%s  max_tokens=%d"
           % (len(files), out, args.model, args.mode, args.effort, args.max_tokens))

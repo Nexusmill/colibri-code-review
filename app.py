@@ -74,9 +74,22 @@ with st.sidebar:
         price_in = st.number_input("Price in ($/1M)", value=3.0, step=0.5, min_value=0.0)
         price_out = st.number_input("Price out ($/1M)", value=15.0, step=0.5, min_value=0.0)
 
+    st.markdown("### Static signals")
+    st.caption("Deterministic tool output appended to the prompt so the model corroborates "
+               "instead of guessing.")
+    static_ast = st.checkbox("AST + pyflakes (scope leaks / dead code)", value=True,
+                             help="Undefined names, unused imports/vars, mutable defaults, "
+                                  "bare excepts, unreachable code.")
+    static_mypy = st.checkbox("mypy type check", value=True,
+                              help="Static type errors surfaced before runtime (bug/quality modes).")
+    static_dis = st.checkbox("dis bytecode of hot loops", value=True,
+                             help="Disassembly of loop-bearing functions so the model spots "
+                                  "per-iteration overhead (bug/quality modes).")
+
     cfg = {"model": model, "api_base": api_base, "max_tokens": int(max_tokens),
            "temperature": float(temperature), "reasoning": reasoning,
-           "price_in": float(price_in), "price_out": float(price_out)}
+           "price_in": float(price_in), "price_out": float(price_out),
+           "static_ast": static_ast, "static_mypy": static_mypy, "static_dis": static_dis}
     st.session_state.cfg = cfg
 
 ui.masthead(model)

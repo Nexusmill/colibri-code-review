@@ -1,6 +1,12 @@
 import os
 from openai import OpenAI
 
+try:
+    from static_context import build_static_context
+except Exception:                                      # never let a static-pass import break reviews
+    def build_static_context(code, rel, mode="bug", cfg=None):
+        return ""
+
 # ---------------------------------------------------------------------------
 # Kimi K3 (or any OpenRouter model) - fully config-driven. Nothing about a run
 # is hardcoded here: the UI passes every knob per call, so they are live.
@@ -21,6 +27,12 @@ DEFAULTS = {
     "reasoning": "medium",     # "off" = unbounded (no effort hint) | "low"|"medium"|"high"|"xhigh"
     "price_in": 3.0,           # $/1M input tokens (for the cost meter)
     "price_out": 15.0,         # $/1M output tokens
+    # Static-analysis enrichers: deterministic tool output appended to the prompt so the model
+    # corroborates instead of guessing. All default on; mypy+dis only run for bug/quality modes.
+    "static_ast": True,        # ast smells + pyflakes (scope leaks / dead code)
+    "static_mypy": True,       # mypy type errors
+    "static_dis": True,        # dis bytecode for hot loop-bearing functions
+    "static_max_chars": 8000,  # overall cap on the appended static-signals block
 }
 
 MODES = {"bug": "Bug Hunt", "quality": "Code Quality", "feature": "Feature Ideas"}
@@ -132,6 +144,12 @@ def review_code(code, rel_path, mode="bug", cfg=None):
 
     body = _TEMPLATES[mode].format(rel=rel_path)
     prompt = f"{body}\n\nSource (shown as `N| code`):\n\n```\n{_numbered(code)}\n```\n"
+    try:
+        static = build_static_context(code, rel_path, mode, c)
+    except Exception:
+        static = ""                                    # a broken enricher must never block a review
+    if static:
+        prompt += "\n" + static + "\n"
 
     client = OpenAI(
         api_key=key, base_url=c["api_base"],
