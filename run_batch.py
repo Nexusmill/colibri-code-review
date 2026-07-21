@@ -88,14 +88,17 @@ def main():
         if args.budget and total >= args.budget:
             print("budget $%.2f reached after %d file(s); stopping." % (args.budget, i - 1))
             break
-        rel = os.path.relpath(p)
+        try:
+            rel = os.path.relpath(p)
+        except ValueError:
+            rel = p            # cross-drive on Windows (files on C:, tool on E:): relpath can't cross mounts
         t0 = time.time()
         try:
             code = open(p, encoding="utf-8", errors="ignore").read()
             md, usage = analyzer.review_code(code, rel, args.mode, cfg)
             cost = float(usage.get("cost", 0.0) or 0.0)
             total += cost
-            name = rel.replace(os.sep, "__").replace("/", "__") + ".%s.md" % args.mode
+            name = rel.replace(os.sep, "__").replace("/", "__").replace(":", "") + ".%s.md" % args.mode
             (out / name).write_text(md, encoding="utf-8")
             hi = md.count("[HIGH]") + md.count("[CRITICAL]")
             med = md.count("[MEDIUM]")
