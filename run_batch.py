@@ -50,9 +50,9 @@ def main():
     ap.add_argument("--effort", default="high",
                     choices=["off", "low", "medium", "high", "xhigh"],
                     help="reasoning effort ('off' = unbounded)")
-    ap.add_argument("--max-tokens", type=int, default=32000,
-                    help="output+reasoning ceiling. ~32k is plenty for a source file on high "
-                         "effort; 128k lets high-effort reasoning run for many minutes.")
+    ap.add_argument("--max-tokens", type=int, default=0,
+                    help="output+reasoning ceiling. 0 = AUTO: use the model's own max_completion_tokens "
+                         "(never truncate a review - GLM-5.2 reasons past 20k and needs its full 131k).")
     ap.add_argument("--temperature", type=float, default=0.15)
     ap.add_argument("--glob", default="*.py",
                     help="comma-separated filename patterns for folder walks (default *.py)")
@@ -76,13 +76,14 @@ def main():
 
     out = pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    cfg = {"model": args.model, "reasoning": args.effort, "max_tokens": args.max_tokens,
+    cfg = {"model": args.model, "reasoning": args.effort, "max_tokens": (args.max_tokens or None),
            "temperature": args.temperature, "price_in": args.price_in, "price_out": args.price_out,
            "static_ast": not args.no_static, "static_mypy": not args.no_static,
            "static_dis": not args.no_static}
 
-    print("%d file(s) -> %s   model=%s  mode=%s  effort=%s  max_tokens=%d"
-          % (len(files), out, args.model, args.mode, args.effort, args.max_tokens))
+    _mt = args.max_tokens or analyzer.model_max_tokens(args.model)   # AUTO -> the model's own ceiling
+    print("%d file(s) -> %s   model=%s  mode=%s  effort=%s  max_tokens=%s"
+          % (len(files), out, args.model, args.mode, args.effort, _mt))
     total = 0.0
     for i, p in enumerate(files, 1):
         if args.budget and total >= args.budget:

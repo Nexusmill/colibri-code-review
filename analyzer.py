@@ -22,7 +22,8 @@ def api_key():
 DEFAULTS = {
     "api_base": os.getenv("API_BASE_URL", "https://openrouter.ai/api/v1"),
     "model": os.getenv("MODEL_ID", "moonshotai/kimi-k3"),
-    "max_tokens": 8000,        # hard ceiling on output (reasoning + review share it)
+    "max_tokens": None,        # None = AUTO: use the model's own max_completion_tokens (never cap
+                               # below what the model needs - a low cap truncates the review to nothing)
     "temperature": 0.15,
     "reasoning": "medium",     # "off" = unbounded (no effort hint) | "low"|"medium"|"high"|"xhigh"
     "price_in": 3.0,           # $/1M input tokens (for the cost meter)
@@ -36,6 +37,29 @@ DEFAULTS = {
 }
 
 MODES = {"bug": "Bug Hunt", "quality": "Code Quality", "feature": "Feature Ideas"}
+
+_MODEL_MAX_CACHE = {}
+
+
+def model_max_tokens(model, base_url="https://openrouter.ai/api/v1", fallback=131072):
+    """The model's own output ceiling (top_provider.max_completion_tokens), cached. Used when
+    max_tokens is left on AUTO so no review is ever truncated below what the model needs -
+    e.g. GLM-5.2 reasons past 20k tokens at low effort and returns finish=length with 0 findings
+    under a small cap; its real ceiling is 131072. Falls back high if the lookup fails."""
+    if model in _MODEL_MAX_CACHE:
+        return _MODEL_MAX_CACHE[model]
+    val = fallback
+    try:
+        import json as _json, urllib.request as _u
+        req = _u.Request(base_url.rstrip("/") + "/models", headers={"User-Agent": "colibri"})
+        for m in _json.load(_u.urlopen(req, timeout=20))["data"]:
+            if m.get("id") == model:
+                val = int((m.get("top_provider") or {}).get("max_completion_tokens") or fallback)
+                break
+    except Exception:
+        pass
+    _MODEL_MAX_CACHE[model] = val
+    return val
 
 _SYS = {
     "bug": ("You are a rigorous senior staff engineer and application-security reviewer. "
@@ -161,12 +185,14 @@ def review_code(code, rel_path, mode="bug", cfg=None):
     if eff in ("low", "medium", "high", "xhigh"):
         extra = {"reasoning": {"effort": eff}}
 
+    _mt = c.get("max_tokens")                          # AUTO (None/<=0) -> the model's own ceiling
+    max_tokens = int(_mt) if _mt else model_max_tokens(c["model"], c["api_base"])
     resp = client.chat.completions.create(
         model=c["model"],
         messages=[{"role": "system", "content": _SYS[mode]},
                   {"role": "user", "content": prompt}],
         temperature=float(c["temperature"]),
-        max_tokens=int(c["max_tokens"]),
+        max_tokens=max_tokens,
         extra_body=extra,
     )
     ch = resp.choices[0]
