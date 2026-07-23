@@ -155,7 +155,27 @@ def _merge(cfg):
     return c
 
 
-def review_code(code, rel_path, mode="bug", cfg=None):
+_JSON_INSTR = """
+Return ONLY a JSON object (no prose, no code fences) with this shape:
+{"verdict": "<1-2 sentences>",
+ "findings": [{"severity": "CRITICAL|HIGH|MEDIUM|LOW", "line": <int or null>,
+               "title": "...", "detail": "...", "fix": "..."}],
+ "notes": ["<missing safeguards / quick wins / nice-to-haves as strings>"]}
+Findings worst-first. Use the same rigor as the Markdown contract."""
+
+
+def _parse_json_review(text):
+    """Tolerant parse: strip code fences / leading prose, take the outermost object."""
+    import json as _json
+    t = (text or "").strip()
+    a, b = t.find("{"), t.rfind("}")
+    if a < 0 or b <= a:
+        raise ValueError("no JSON object in response")
+    d = _json.loads(t[a:b + 1])
+    if not isinstance(d, dict) or "findings" not in d:
+        raise ValueError("missing 'findings'")
+    return d
+def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md"):
     """Returns (markdown_review, usage). Config-driven: model, max_tokens, temperature,
     reasoning effort (or 'off' for unbounded), base URL and prices all come from cfg.
     Always returns a string review and a usage dict with the real billed cost."""
@@ -174,6 +194,15 @@ def review_code(code, rel_path, mode="bug", cfg=None):
         static = ""                                    # a broken enricher must never block a review
     if static:
         prompt += "\n" + static + "\n"
+    if prior_md:
+        # DELTA mode: the iterate-until-clean loop stops re-paying to re-hear known findings.
+        prompt += ("\n---\nA PREVIOUS review of an EARLIER version of this file is below. "
+                   "Report ONLY findings that are NEW or CHANGED since that review. Add a "
+                   "'## Fixed since last review' section confirming previously-reported findings "
+                   "that no longer apply. Do not restate unchanged findings.\n\n"
+                   + prior_md[:20000] + "\n---\n")
+    if fmt == "json":
+        prompt += "\n" + _JSON_INSTR + "\n"
 
     client = OpenAI(
         api_key=key, base_url=c["api_base"],
@@ -187,14 +216,15 @@ def review_code(code, rel_path, mode="bug", cfg=None):
 
     _mt = c.get("max_tokens")                          # AUTO (None/<=0) -> the model's own ceiling
     max_tokens = int(_mt) if _mt else model_max_tokens(c["model"], c["api_base"])
-    resp = client.chat.completions.create(
-        model=c["model"],
-        messages=[{"role": "system", "content": _SYS[mode]},
-                  {"role": "user", "content": prompt}],
-        temperature=float(c["temperature"]),
-        max_tokens=max_tokens,
-        extra_body=extra,
-    )
+    messages = [{"role": "system", "content": _SYS[mode]},
+                {"role": "user", "content": prompt}]
+
+    def _call(msgs):
+        return client.chat.completions.create(
+            model=c["model"], messages=msgs, temperature=float(c["temperature"]),
+            max_tokens=max_tokens, extra_body=extra)
+
+    resp = _call(messages)
     ch = resp.choices[0]
     fin = ch.finish_reason
     content = ch.message.content
@@ -211,12 +241,37 @@ def review_code(code, rel_path, mode="bug", cfg=None):
     elif fin == "length":
         content += "\n\n_[Note: output hit the token limit and may be truncated. Raise Max output tokens.]_"
 
-    u = getattr(resp, "usage", None)
-    pin = getattr(u, "prompt_tokens", 0) or 0
-    pout = getattr(u, "completion_tokens", 0) or 0
-    cost = getattr(u, "cost", None)
-    if cost is None:
-        cost = pin * c["price_in"] / 1_000_000 + pout * c["price_out"] / 1_000_000
-    usage = {"prompt_tokens": pin, "completion_tokens": pout, "cost": cost or 0.0,
+    def _usage_of(r):
+        u = getattr(r, "usage", None)
+        pin = getattr(u, "prompt_tokens", 0) or 0
+        pout = getattr(u, "completion_tokens", 0) or 0
+        cost = getattr(u, "cost", None)
+        if cost is None:
+            cost = pin * c["price_in"] / 1_000_000 + pout * c["price_out"] / 1_000_000
+        return pin, pout, (cost or 0.0)
+
+    pin, pout, cost = _usage_of(resp)
+    usage = {"prompt_tokens": pin, "completion_tokens": pout, "cost": cost,
              "finish": fin, "model": c["model"]}
+
+    if fmt == "json" and content:
+        import json as _json
+        try:
+            usage["parsed"] = _parse_json_review(content)
+            content = _json.dumps(usage["parsed"], indent=1)
+        except Exception:
+            try:                                  # ONE corrective retry (the 10/194 parse-error class)
+                r2 = _call(messages + [{"role": "assistant", "content": content[:8000]},
+                                       {"role": "user", "content":
+                                        "That was not valid JSON. Reply again with ONLY the JSON "
+                                        "object, exactly the shape specified."}])
+                c2 = r2.choices[0].message.content or ""
+                p2, o2, cost2 = _usage_of(r2)
+                usage["prompt_tokens"] += p2
+                usage["completion_tokens"] += o2
+                usage["cost"] += cost2
+                usage["parsed"] = _parse_json_review(c2)
+                content = _json.dumps(usage["parsed"], indent=1)
+            except Exception:
+                usage["json_error"] = True        # keep the raw text - never lose a paid review
     return content, usage

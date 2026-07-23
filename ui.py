@@ -73,12 +73,14 @@ def masthead(model):
     )
 
 
-def meter(n_files, tokens_in, max_out, price_in, price_out, unbounded):
+def meter(n_files, tokens_in, max_out, price_in, price_out, unbounded, auto_out=False):
     """The signature: a live instrument whose ceiling is set by the user's own token
     threshold. Shows the MAX possible spend for the current selection + settings."""
     in_cost = tokens_in * price_in / 1_000_000
     ceil = in_cost + n_files * max_out * price_out / 1_000_000
     reach = "unbounded reasoning" if unbounded else "bounded"
+    if auto_out:
+        reach += " | AUTO out = model max"
     sel = f"{n_files} file{'s' if n_files != 1 else ''}"
     st.markdown(
         f"""<div style="border:1px solid {LINE};border-radius:10px;background:

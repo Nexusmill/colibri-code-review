@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 import pandas as pd
-from analyzer import review_code, MODES, DEFAULTS, api_key
+from analyzer import review_code, MODES, DEFAULTS, api_key, model_max_tokens
 import json
 import urllib.request
 import scanner
@@ -62,11 +62,25 @@ with st.sidebar:
         reasoning = "off"
 
     st.markdown("### Limits")
-    max_tokens = st.number_input("Max output tokens", min_value=256, max_value=64000,
-                                 value=8000, step=256,
-                                 help="Hard ceiling on output. Thinking + the written review "
-                                      "share this budget. YOU set the cost ceiling here.")
+    auto_out = st.toggle("Auto output ceiling (model max - never truncate)", value=True,
+                         help="Reasoning models truncated by a low cap return finish=length with "
+                              "ZERO findings. AUTO uses the model's own max_completion_tokens "
+                              "(the ff626b1 fix, now reachable from the console).")
+    if auto_out:
+        _model_ceiling = model_max_tokens(model)
+        st.caption("Output capped at the model's own ceiling: {:,} tokens.".format(_model_ceiling))
+        max_tokens = None
+        eff_max_out = _model_ceiling
+    else:
+        max_tokens = st.number_input("Max output tokens", min_value=256, max_value=64000,
+                                     value=8000, step=256,
+                                     help="Hard ceiling on output. Thinking + the written review "
+                                          "share this budget. YOU set the cost ceiling here.")
+        eff_max_out = int(max_tokens)
     temperature = st.slider("Temperature", 0.0, 1.0, 0.15, 0.05)
+    delta_rr = st.toggle("Delta re-review for changed files", value=True,
+                         help="Stale files get their previous review injected so the model "
+                              "reports only NEW/changed findings (cheaper convergence rounds).")
 
     st.markdown("### Endpoint & pricing")
     with st.expander("Advanced", expanded=False):
@@ -86,7 +100,8 @@ with st.sidebar:
                              help="Disassembly of loop-bearing functions so the model spots "
                                   "per-iteration overhead (bug/quality modes).")
 
-    cfg = {"model": model, "api_base": api_base, "max_tokens": int(max_tokens),
+    cfg = {"model": model, "api_base": api_base,
+           "max_tokens": (int(max_tokens) if max_tokens else None),
            "temperature": float(temperature), "reasoning": reasoning,
            "price_in": float(price_in), "price_out": float(price_out),
            "static_ast": static_ast, "static_mypy": static_mypy, "static_dis": static_dis}
@@ -101,7 +116,7 @@ MODE_CHOICES = {"Bug Hunt": ["bug"], "Code Quality": ["quality"],
 
 
 def per_file_ceiling(tokens_in, n_modes):
-    return tokens_in * cfg["price_in"] / 1e6 + n_modes * cfg["max_tokens"] * cfg["price_out"] / 1e6
+    return tokens_in * cfg["price_in"] / 1e6 + n_modes * eff_max_out * cfg["price_out"] / 1e6
 
 
 def process(base, items):
@@ -114,7 +129,17 @@ def process(base, items):
             with open(path, encoding="utf-8", errors="ignore") as fh:
                 code = fh.read()
             sha = store.file_sha(path)
-            md, usage = review_code(code, rel, mode, cfg)
+            prior = None
+            if delta_rr:
+                mf = st.session_state.get("manifest") or {}
+                if store.status(mf, os.path.abspath(path), sha, mode) == "stale":
+                    md_e = ((mf.get(os.path.abspath(path)) or {}).get("modes") or {}).get(mode) or {}
+                    try:
+                        if md_e.get("output") and os.path.isfile(md_e["output"]):
+                            prior = open(md_e["output"], encoding="utf-8", errors="ignore").read()
+                    except OSError:
+                        prior = None
+            md, usage = review_code(code, rel, mode, cfg, prior_md=prior)
             out = store.save_review(base, path, rel, sha, mode, md, usage, cfg["model"])
             spent += usage.get("cost", 0)
             note = "  ·  truncated (raise Max output tokens)" if usage.get("finish") == "length" else ""
@@ -192,8 +217,8 @@ if st.session_state.get("scan"):
     picked = [d["File"] for d, e in zip(disp, recs) if e["Select"]]
     sel_tok = sum(d["_tok"] for d, e in zip(disp, recs) if e["Select"])
 
-    ui.meter(len(picked), sel_tok, cfg["max_tokens"], cfg["price_in"], cfg["price_out"],
-             unbounded=(reasoning == "off"))
+    ui.meter(len(picked), sel_tok, eff_max_out, cfg["price_in"], cfg["price_out"],
+             unbounded=(reasoning == "off"), auto_out=auto_out)
 
     b1, b2, b3 = st.columns(3)
     if b1.button(f"Review selected ({len(picked)})", type="primary", disabled=not picked,
@@ -213,7 +238,7 @@ if st.session_state.get("scan"):
         files = {rel for rel, _ in pend["items"]}
         tok = sum(d["_tok"] for d in disp if d["File"] in files)
         # ceiling across the whole queue: input over unique files + max output per (file,mode) call
-        ceil = tok * cfg["price_in"] / 1e6 + len(pend["items"]) * cfg["max_tokens"] * cfg["price_out"] / 1e6
+        ceil = tok * cfg["price_in"] / 1e6 + len(pend["items"]) * eff_max_out * cfg["price_out"] / 1e6
         st.warning(f"Queued: **{len(pend['items'])}** review call(s) — {pend['why']}. "
                    f"Max spend **≤ ${ceil:.2f}** at your current settings. This spends real money.")
         cc1, cc2, _ = st.columns([2, 1, 3])

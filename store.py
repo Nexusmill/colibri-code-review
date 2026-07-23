@@ -26,8 +26,13 @@ def load_manifest(base):
 
 
 def save_manifest(base, m):
-    with open(_manifest_path(base), "w", encoding="utf-8") as f:
+    # atomic: a crash mid-dump previously corrupted the manifest -> load_manifest returned {}
+    # and the WHOLE project's sha cache + cost ledger silently reset (every file re-billed as new).
+    p = _manifest_path(base)
+    tmp = p + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
         json.dump(m, f, indent=1)
+    os.replace(tmp, p)
 
 
 def file_sha(path):
@@ -68,8 +73,10 @@ def save_review(base, path, rel, sha, mode, review_md, usage, model):
               f"- reviewed: {time.strftime('%Y-%m-%d %H:%M')}\n"
               f"- tokens: in {usage.get('prompt_tokens', 0)} / out {usage.get('completion_tokens', 0)}\n"
               f"- est cost: ${usage.get('cost', 0):.4f}\n\n---\n\n")
-    with open(out, "w", encoding="utf-8") as f:
+    tmp = out + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
         f.write(header + (review_md or "_(empty review)_"))
+    os.replace(tmp, out)                        # atomic: never leave a half-written review
 
     m = load_manifest(base)
     ap = os.path.abspath(path)
