@@ -1,0 +1,945 @@
+﻿{
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\_git_do.py": {
+  "rel": "_git_do.py",
+  "modes": {
+   "bug": {
+    "sha": "1af7623a",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\_git_do.py__bug__1af7623a.md",
+    "reviewed_at": "2026-07-19 21:00",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 1066,
+    "tokens_out": 1388,
+    "cost": 0.024,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\_git_restore.py": {
+  "rel": "_git_restore.py",
+  "modes": {
+   "bug": {
+    "sha": "cd9b91f7",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\_git_restore.py__bug__cd9b91f7.md",
+    "reviewed_at": "2026-07-19 21:02",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 641,
+    "tokens_out": 980,
+    "cost": 0.0166,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\_safe_edit.py": {
+  "rel": "_safe_edit.py",
+  "modes": {
+   "bug": {
+    "sha": "1b682a1a",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\_safe_edit.py__bug__1b682a1a.md",
+    "reviewed_at": "2026-07-22",
+    "model": "claude-fable-5 (in-session, max)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\app.py": {
+  "rel": "asset-forge\\app.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__app.py__bug__917df447__r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\bundle.py": {
+  "rel": "asset-forge\\forge\\bundle.py",
+  "modes": {
+   "bug": {
+    "sha": "df4557bd",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__bundle.py__bug__df4557bd.md",
+    "reviewed_at": "2026-07-24",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\generators\\__init__.py": {
+  "rel": "asset-forge\\forge\\generators\\__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "581700d6420d35942ad24214cf834280ea59f38fd5274b54889d3f1208ef0c9a",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__generators____init__.py__bug__581700d6.md",
+    "reviewed_at": "2026-07-19 21:04",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 390,
+    "tokens_out": 412,
+    "cost": 0.0073
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\generators\\patterns.py": {
+  "rel": "asset-forge\\forge\\generators\\patterns.py",
+  "modes": {
+   "bug": {
+    "sha": "38d7fa870278fce291648b1653f0bba34707840b963291a62eba1d0467a5b84f",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__generators__patterns.py__bug__38d7fa87.md",
+    "reviewed_at": null,
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\imagegen\\__init__.py": {
+  "rel": "asset-forge\\forge\\imagegen\\__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "c8c4eb58f48d9c7236dc064fe3b53d7514d48c19fe8503e45b93175f6d8a0827",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__imagegen____init__.py__bug__c8c4eb58.md",
+    "reviewed_at": "2026-07-19 21:03",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 467,
+    "tokens_out": 310,
+    "cost": 0.0061
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\imagegen\\replicate_flux.py": {
+  "rel": "asset-forge\\forge\\imagegen\\replicate_flux.py",
+  "modes": {
+   "bug": {
+    "sha": "d7dfb395",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__imagegen__replicate_flux.py__bug__d7dfb395.md",
+    "reviewed_at": "2026-07-24",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\library_gen.py": {
+  "rel": "asset-forge\\forge\\library_gen.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__library_gen.py__bug__95c8603e_r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": "claude-opus-4-8[1m] lead verification of a primed claude-sonnet scanner",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\pipeline.py": {
+  "rel": "asset-forge\\forge\\pipeline.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__pipeline.py__bug__adjudicated.md",
+    "reviewed_at": null,
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\secrets.py": {
+  "rel": "asset-forge\\forge\\secrets.py",
+  "modes": {
+   "bug": {
+    "sha": "5007dc23",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__secrets.py__bug__5007dc23.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\tracer\\__init__.py": {
+  "rel": "asset-forge\\forge\\tracer\\__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "d6dd66536b5c261bc8b5cd382288bf0df0deec230e0cf0e3dfc479fc5302fae8",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__tracer____init__.py__bug__d6dd6653.md",
+    "reviewed_at": "2026-07-19 21:03",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 511,
+    "tokens_out": 365,
+    "cost": 0.007
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\tracer\\svg_stego.py": {
+  "rel": "asset-forge\\forge\\tracer\\svg_stego.py",
+  "modes": {
+   "bug": {
+    "sha": "65f05781",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__tracer__svg_stego.py__bug__65f05781.md",
+    "reviewed_at": null,
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\launcher.py": {
+  "rel": "asset-forge\\launcher.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__launcher.py__bug__f0c90e7d__r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\make_user_edition.py": {
+  "rel": "asset-forge\\make_user_edition.py",
+  "modes": {
+   "bug": {
+    "sha": "f85988ae",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__make_user_edition.py__bug__f85988ae.md",
+    "reviewed_at": "2026-07-20 01:08",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2611,
+    "tokens_out": 1830,
+    "cost": 0.0353,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\sign_set.py": {
+  "rel": "asset-forge\\sign_set.py",
+  "modes": {
+   "bug": {
+    "sha": "3f212ac335631bafcdb518fea9e36b461822382d49e395d5d9d13c73d660a04e",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__sign_set.py__bug__3f212ac3.md",
+    "reviewed_at": null,
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\skin_part.py": {
+  "rel": "asset-forge\\skin_part.py",
+  "modes": {
+   "bug": {
+    "sha": "abc30f765dc9d7485aed96c911b141ecc10d0e620132d833daa871e07d58d869",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__skin_part.py__bug__abc30f76.md",
+    "reviewed_at": null,
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\templates\\index.html": {
+  "rel": "asset-forge\\templates\\index.html",
+  "modes": {
+   "bug": {
+    "sha": "bcd1664badfd8ca6a6b11eb1e0132a8fff31caea3372c48b98e6fc1a1d29f533",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__templates__index.html__bug__bcd1664b.md",
+    "reviewed_at": "2026-07-22",
+    "model": "claude-fable-5 (in-session,max)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\templates\\library.html": {
+  "rel": "asset-forge\\templates\\library.html",
+  "modes": {
+   "debug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__templates__library.html__debug__2026-07-23.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\app.py": {
+  "rel": "asset-forge-user\\app.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__app.py__bug__917df447__r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "twin_of": "asset-forge\\app.py"
+   },
+   "feature": {
+    "sha": "5dabc731",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge-user__app.py__feature__5dabc731.md",
+    "reviewed_at": "2026-07-19 19:32",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 11445,
+    "tokens_out": 1634,
+    "cost": 0.0588,
+    "sha_partial": true
+   },
+   "quality": {
+    "sha": "5dabc731",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge-user__app.py__quality__5dabc731.md",
+    "reviewed_at": "2026-07-19 19:31",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 11446,
+    "tokens_out": 1612,
+    "cost": 0.0585,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\forge\\bundle.py": {
+  "rel": "asset-forge-user\\forge\\bundle.py",
+  "modes": {
+   "bug": {
+    "sha": "df4557bd",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__bundle.py__bug__df4557bd.md",
+    "reviewed_at": "2026-07-24",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true,
+    "twin_of": "asset-forge\\forge\\bundle.py"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\forge\\generators\\__init__.py": {
+  "rel": "asset-forge-user\\forge\\generators\\__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "581700d6420d35942ad24214cf834280ea59f38fd5274b54889d3f1208ef0c9a",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge-user__forge__generators____init__.py__bug__581700d6.md",
+    "reviewed_at": "2026-07-19 21:04",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 391,
+    "tokens_out": 246,
+    "cost": 0.0049
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\forge\\imagegen\\__init__.py": {
+  "rel": "asset-forge-user\\forge\\imagegen\\__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "c8c4eb58f48d9c7236dc064fe3b53d7514d48c19fe8503e45b93175f6d8a0827",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge-user__forge__imagegen____init__.py__bug__c8c4eb58.md",
+    "reviewed_at": "2026-07-19 21:04",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 468,
+    "tokens_out": 500,
+    "cost": 0.0089
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\forge\\imagegen\\replicate_flux.py": {
+  "rel": "asset-forge-user\\forge\\imagegen\\replicate_flux.py",
+  "modes": {
+   "bug": {
+    "sha": "d7dfb395",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__imagegen__replicate_flux.py__bug__d7dfb395.md",
+    "reviewed_at": "2026-07-24",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true,
+    "twin_of": "asset-forge\\forge\\imagegen\\replicate_flux.py"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\forge\\library_gen.py": {
+  "rel": "asset-forge-user\\forge\\library_gen.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__library_gen.py__bug__95c8603e_r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": "claude-opus-4-8[1m] lead verification of a primed claude-sonnet scanner",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "twin_of": "asset-forge\\forge\\library_gen.py"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\forge\\secrets.py": {
+  "rel": "asset-forge-user\\forge\\secrets.py",
+  "modes": {
+   "bug": {
+    "sha": "5007dc23",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__secrets.py__bug__5007dc23.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true,
+    "twin_of": "asset-forge\\forge\\secrets.py"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\forge\\tracer\\__init__.py": {
+  "rel": "asset-forge-user\\forge\\tracer\\__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "9ac01344",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge-user__forge__tracer____init__.py__bug__9ac01344.md",
+    "reviewed_at": "2026-07-19 21:03",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 675,
+    "tokens_out": 1060,
+    "cost": 0.0179,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\launcher.py": {
+  "rel": "asset-forge-user\\launcher.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__launcher.py__bug__f0c90e7d__r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "twin_of": "asset-forge\\launcher.py"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\templates\\index.html": {
+  "rel": "asset-forge-user\\templates\\index.html",
+  "modes": {
+   "bug": {
+    "sha": "bcd1664badfd8ca6a6b11eb1e0132a8fff31caea3372c48b98e6fc1a1d29f533",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__templates__index.html__bug__bcd1664b.md",
+    "reviewed_at": "2026-07-22",
+    "model": "claude-fable-5 (in-session,max)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "twin_of": "asset-forge\\templates\\index.html"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\check_integrity.py": {
+  "rel": "check_integrity.py",
+  "modes": {
+   "bug": {
+    "sha": "281d6137",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\check_integrity.py__bug__281d6137.md",
+    "reviewed_at": "2026-07-19 21:01",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 903,
+    "tokens_out": 1142,
+    "cost": 0.0198,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\launch\\gallery_gen.py": {
+  "rel": "launch\\gallery_gen.py",
+  "modes": {
+   "bug": {
+    "sha": "845eac3e648aadbab450190b85db5d926336912586382b0b51a758beab0ab950",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\launch__gallery_gen.py__bug__845eac3e.md",
+    "reviewed_at": "2026-07-20 00:58",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 5778,
+    "tokens_out": 1753,
+    "cost": 0.0436
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\launch\\release.py": {
+  "rel": "launch\\release.py",
+  "modes": {
+   "bug": {
+    "sha": "bf7fd5454aca8d1458da3582674748083142ed13d1c233f960bab2146f894d6a",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\launch__release.py__bug__bf7fd545.md",
+    "reviewed_at": "2026-07-20 01:23",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 1934,
+    "tokens_out": 1761,
+    "cost": 0.0322
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\package_release.py": {
+  "rel": "package_release.py",
+  "modes": {
+   "bug": {
+    "sha": "760ecd1d",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\package_release.py__bug__760ecd1d.md",
+    "reviewed_at": "2026-07-19 20:59",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 1132,
+    "tokens_out": 1530,
+    "cost": 0.0263,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\__init__.py": {
+  "rel": "PatternSkin\\__init__.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin____init__.py__bug__c64c9ba6_r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": "claude-opus-4-8[1m] (in-session targeted verification)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   },
+   "feature": {
+    "sha": "44b55140",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin____init__.py__feature__44b55140.md",
+    "reviewed_at": "2026-07-19 19:40",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 100023,
+    "tokens_out": 1849,
+    "cost": 0.3278,
+    "sha_partial": true
+   },
+   "quality": {
+    "sha": "44b55140",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin____init__.py__quality__44b55140.md",
+    "reviewed_at": "2026-07-19 19:39",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 100024,
+    "tokens_out": 2946,
+    "cost": 0.3443,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\accel.py": {
+  "rel": "PatternSkin\\accel.py",
+  "modes": {
+   "bug": {
+    "sha": "75b9e1d1",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__accel.py__bug__75b9e1d1.md",
+    "reviewed_at": "2026-07-23",
+    "model": "claude-opus-4-8[1m] (in-session, max)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\ai_parts.py": {
+  "rel": "PatternSkin\\ai_parts.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__ai_parts.py__bug__cda83e42_r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": "claude-opus-4-8[1m] lead verification of a primed claude-opus scanner",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\ai_select.py": {
+  "rel": "PatternSkin\\ai_select.py",
+  "modes": {
+   "bug": {
+    "sha": "bb03bb4ef0e817b33f9a4be4c52ad5a62d54018308548ffa1f35af7cee794999",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__ai_select.py__bug__bb03bb4e.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\filmstrip.py": {
+  "rel": "PatternSkin\\filmstrip.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__filmstrip.py__bug__38811d28_r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": "claude-sonnet-4-6 (in-session)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\heightmap.py": {
+  "rel": "PatternSkin\\heightmap.py",
+  "modes": {
+   "bug": {
+    "sha": "01dab69c",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__heightmap.py__bug__01dab69c.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\keystore.py": {
+  "rel": "PatternSkin\\keystore.py",
+  "modes": {
+   "bug": {
+    "sha": "8a27009e",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__keystore.py__bug__8a27009e.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\part_export.py": {
+  "rel": "PatternSkin\\part_export.py",
+  "modes": {
+   "bug": {
+    "sha": "30d1e2ed",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__part_export.py__bug__30d1e2ed.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\presets_data.py": {
+  "rel": "PatternSkin\\presets_data.py",
+  "modes": {
+   "bug": {
+    "sha": "d1fd2e6a1c830c601e38cec2e0930b77aa4043b7c6c67d907fd255751d00d503",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__presets_data.py__bug__d1fd2e6a.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\projections.py": {
+  "rel": "PatternSkin\\projections.py",
+  "modes": {
+   "bug": {
+    "sha": "917a724a3f27cff353ca5818c1e81517f29ece1ac7d8f00e87aff3a55cbf2426",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__projections.py__bug__917a724a.md",
+    "reviewed_at": "2026-07-23",
+    "model": "claude-opus-4-8[1m] (in-session, max)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\replicate_client.py": {
+  "rel": "PatternSkin\\replicate_client.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__replicate_client.py__bug__43c9db79_r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": "claude-opus-4-8[1m] (in-session; cross-file lead from the replicate_flux r2 finding)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\selectcore.py": {
+  "rel": "PatternSkin\\selectcore.py",
+  "modes": {
+   "bug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__selectcore.py__bug__ab0edae1_r2.md",
+    "reviewed_at": "2026-07-24",
+    "model": "claude-opus-4-8[1m] (in-session; lead verification of a primed sonnet scanner)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\spector_bridge.py": {
+  "rel": "PatternSkin\\spector_bridge.py",
+  "modes": {
+   "bug": {
+    "sha": "06c863ca",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__spector_bridge.py__bug__06c863ca.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0,
+    "sha_partial": true
+   },
+   "debug": {
+    "sha": null,
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__spector_bridge.py__debug__t2__2026-07-23.md",
+    "reviewed_at": "2026-07-23",
+    "model": null,
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\skin3d_proto.py": {
+  "rel": "skin3d_proto.py",
+  "modes": {
+   "bug": {
+    "sha": "9286cc5351c1c613cd2681d223f77d58034b6be01377b5e4e326e65564b995ee",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\skin3d_proto.py__bug__9286cc53.md",
+    "reviewed_at": "2026-07-22",
+    "model": "claude-fable-5 (in-session, max)",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0
+   },
+   "feature": {
+    "sha": "bb41e92e",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\skin3d_proto.py__feature__bb41e92e.md",
+    "reviewed_at": "2026-07-19 19:43",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 1627,
+    "tokens_out": 1283,
+    "cost": 0.0241,
+    "sha_partial": true
+   },
+   "quality": {
+    "sha": "bb41e92e",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\skin3d_proto.py__quality__bb41e92e.md",
+    "reviewed_at": "2026-07-19 19:42",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 1628,
+    "tokens_out": 1303,
+    "cost": 0.0244,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\Spector\\app.py": {
+  "rel": "Spector\\app.py",
+  "modes": {
+   "bug": {
+    "sha": "ad3e4665",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__app.py__bug__ad3e4665.md",
+    "reviewed_at": "2026-07-24 13:45",
+    "model": "claude-opus-4-8",
+    "sha_partial": true,
+    "note": "changed-files bug-hunt; 1 MEDIUM + 2 LOW fixed same tranche"
+   },
+   "feature": {
+    "sha": "bafe64d1",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__app.py__feature__bafe64d1.md",
+    "reviewed_at": "2026-07-19 19:34",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2991,
+    "tokens_out": 1319,
+    "cost": 0.0288,
+    "sha_partial": true
+   },
+   "quality": {
+    "sha": "bafe64d1",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__app.py__quality__bafe64d1.md",
+    "reviewed_at": "2026-07-19 19:34",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2992,
+    "tokens_out": 1467,
+    "cost": 0.031,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\Spector\\launcher.py": {
+  "rel": "Spector\\launcher.py",
+  "modes": {
+   "bug": {
+    "sha": "bbc31181894dff31b7ec56317d41b457aeed68c97d0da9194687fc7abc0e7d0c",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__launcher.py__bug__bbc31181.md",
+    "reviewed_at": "2026-07-20 01:20",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 1985,
+    "tokens_out": 1758,
+    "cost": 0.0275
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\Spector\\spectordna.py": {
+  "rel": "Spector\\spectordna.py",
+  "modes": {
+   "bug": {
+    "sha": "78ae1bec",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__spectordna.py__bug__78ae1bec.md",
+    "reviewed_at": "2026-07-20 01:19",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2270,
+    "tokens_out": 5346,
+    "cost": 0.087,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\Spector\\warehouse.py": {
+  "rel": "Spector\\warehouse.py",
+  "modes": {
+   "bug": {
+    "sha": "deb602d6",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__warehouse.py__bug__deb602d6.md",
+    "reviewed_at": "2026-07-19 21:13",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 9837,
+    "tokens_out": 2798,
+    "cost": 0.0715,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_accel_tiers.py": {
+  "rel": "tests\\test_accel_tiers.py",
+  "modes": {
+   "bug": {
+    "sha": "6d71a59032981de08fb68a4d2941c2fa165fc313a07b3c573a4247fae93c860e",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tests__test_accel_tiers.py__bug__6d71a590.md",
+    "reviewed_at": "2026-07-20 01:12",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2516,
+    "tokens_out": 2390,
+    "cost": 0.0434
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_patternskin_math.py": {
+  "rel": "tests\\test_patternskin_math.py",
+  "modes": {
+   "bug": {
+    "sha": "e172da66eb8bfeeed1b1ae3596864d86b2bbb323f9c70a3156c3137ba625c95d",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tests__test_patternskin_math.py__bug__e172da66.md",
+    "reviewed_at": "2026-07-20 01:21",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2364,
+    "tokens_out": 1514,
+    "cost": 0.0298
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_watermark_robustness.py": {
+  "rel": "tests\\test_watermark_robustness.py",
+  "modes": {
+   "bug": {
+    "sha": "1b658b085402ee34bde5f1a3c5d67ef2400fd212f2b66dc2684d7ca6bfd5e922",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tests__test_watermark_robustness.py__bug__1b658b08.md",
+    "reviewed_at": "2026-07-20 01:24",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 1907,
+    "tokens_out": 1473,
+    "cost": 0.0278
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\design_bible.py": {
+  "rel": "tools\\design_bible.py",
+  "modes": {
+   "bug": {
+    "sha": "497fb6c1fea1993074687b1e7e8c6820261d586b020b0bc9f24add8e42e4b748",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tools__design_bible.py__bug__497fb6c1.md",
+    "reviewed_at": "2026-07-20 01:02",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2711,
+    "tokens_out": 570,
+    "cost": 0.0167
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\global_rules.py": {
+  "rel": "tools\\global_rules.py",
+  "modes": {
+   "bug": {
+    "sha": "ee3cc54e",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tools__global_rules.py__bug__ee3cc54e.md",
+    "reviewed_at": "2026-07-20 01:02",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2958,
+    "tokens_out": 443,
+    "cost": 0.0155,
+    "sha_partial": true
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\sync_builds.py": {
+  "rel": "tools\\sync_builds.py",
+  "modes": {
+   "bug": {
+    "sha": "aadd388715c72c1e62bb58aec7470c4eb4459c0ec055e726aa491f25bf4f509e",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tools__sync_builds.py__bug__aadd3887.md",
+    "reviewed_at": "2026-07-20 01:14",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2254,
+    "tokens_out": 1745,
+    "cost": 0.0329
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\video_critic.py": {
+  "rel": "tools\\video_critic.py",
+  "modes": {
+   "bug": {
+    "sha": "5e1df9aa43363a7704a3ebf06ee6a0873730d45c51c79791aa36055d3575eaa9",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tools__video_critic.py__bug__5e1df9aa.md",
+    "reviewed_at": "2026-07-20 01:10",
+    "model": "moonshotai/kimi-k3",
+    "tokens_in": 2810,
+    "tokens_out": 2582,
+    "cost": 0.0472
+   }
+  }
+ }
+}

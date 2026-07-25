@@ -12,6 +12,7 @@
     "api",
     "testing",
     "performance",
-    "general"
+    "general",
+    "review"
   ]
 }
