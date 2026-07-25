@@ -14,5 +14,10 @@
     "performance",
     "general",
     "review"
-  ]
+  ],
+  "autoindex": {
+    "docs": true,
+    "reviews": true
+  },
+  "colibri_hub": true
 }
