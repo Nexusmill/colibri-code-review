@@ -1,0 +1,17 @@
+{
+  "name": "colibri-code-review",
+  "db_path": "E:/repo-memory/colibri_code_review",
+  "table": "memory",
+  "categories": [
+    "architecture",
+    "build_system",
+    "gotcha",
+    "workflow",
+    "tools_and_env",
+    "decision",
+    "api",
+    "testing",
+    "performance",
+    "general"
+  ]
+}

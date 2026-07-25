@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "colibri_code_review-memory": {
+      "type": "stdio",
+      "command": "C:/Users/User/source/repos/repo-memory/.venv/Scripts/python.exe",
+      "args": [
+        "-B",
+        "-m",
+        "repo_memory.server"
+      ],
+      "env": {
+        "REPO_MEMORY_NAME": "colibri-code-review",
+        "REPO_MEMORY_DB": "E:/repo-memory/colibri_code_review",
+        "PYTHONPATH": "C:/Users/User/source/repos/repo-memory",
+        "REPO_MEMORY_REPO_ROOT": "C:/Users/User/source/repos/colibri-code-review"
+      }
+    }
+  }
+}
