@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 import pandas as pd
-from analyzer import review_code, MODES, DEFAULTS, api_key, model_max_tokens
+from analyzer import review_code, MODES, DEFAULTS, api_key, model_max_tokens, load_spec
 import json
 import urllib.request
 import scanner
@@ -112,7 +112,8 @@ if not api_key():
     st.error("No API key found. Set OPENROUTER_API_KEY (see INSTRUCTIONS.md), then restart the app.")
 
 MODE_CHOICES = {"Bug Hunt": ["bug"], "Code Quality": ["quality"],
-                "Feature Ideas": ["feature"], "All three": ["bug", "quality", "feature"]}
+                "Feature Ideas": ["feature"], "Spec Conformance": ["spec"],
+                "All three": ["bug", "quality", "feature"]}
 
 
 def per_file_ceiling(tokens_in, n_modes):
@@ -139,7 +140,9 @@ def process(base, items):
                             prior = open(md_e["output"], encoding="utf-8", errors="ignore").read()
                     except OSError:
                         prior = None
-            md, usage = review_code(code, rel, mode, cfg, prior_md=prior)
+            md, usage = review_code(code, rel, mode, cfg, prior_md=prior,
+                                    spec_text=(st.session_state.get("spec_text")
+                                               if mode == "spec" else None))
             out = store.save_review(base, path, rel, sha, mode, md, usage, cfg["model"])
             spent += usage.get("cost", 0)
             note = "  ·  truncated (raise Max output tokens)" if usage.get("finish") == "length" else ""
@@ -180,6 +183,24 @@ if st.session_state.get("scan"):
 
     mode_label = st.radio("Review type", list(MODE_CHOICES), horizontal=True)
     modes = MODE_CHOICES[mode_label]
+    if "spec" in modes:
+        st.info("Spec Conformance PREREQUISITE: the feature expectations - a spec-harness "
+                "registry file (tests/harness/specs/<product>/<surface>.json) or any "
+                "hand-written contract text.")
+        sp1, sp2 = st.columns([3, 2])
+        _spec_path = sp1.text_input("Expectations file", value=st.session_state.get("spec_path", ""))
+        _spec_ids = sp2.text_input("Row ids (comma-separated, optional)",
+                                   value=st.session_state.get("spec_ids", ""))
+        st.session_state.spec_path = _spec_path
+        st.session_state.spec_ids = _spec_ids
+        st.session_state.spec_text = None
+        if _spec_path.strip():
+            try:
+                st.session_state.spec_text = load_spec(_spec_path.strip(),
+                                                       _spec_ids.strip() or None)
+                st.caption(f"expectations loaded: {len(st.session_state.spec_text):,} chars")
+            except Exception as e:
+                st.error(f"expectations: {e}")
     is_all = len(modes) > 1
 
     f1, f2 = st.columns(2)

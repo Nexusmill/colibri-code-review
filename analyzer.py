@@ -36,7 +36,45 @@ DEFAULTS = {
     "static_max_chars": 8000,  # overall cap on the appended static-signals block
 }
 
-MODES = {"bug": "Bug Hunt", "quality": "Code Quality", "feature": "Feature Ideas"}
+MODES = {"bug": "Bug Hunt", "quality": "Code Quality", "feature": "Feature Ideas",
+         "spec": "Spec Conformance"}
+
+
+def load_spec(source, ids=None):
+    """Load the feature expectations for spec mode. A path to the Nexusmill spec-harness
+    registry (`controls` rows) or a features registry (`features` rows) renders to readable
+    per-control contract text, optionally filtered by comma-separated row ids; a path to any
+    other file (or raw text) passes through as-is."""
+    import json as _json
+    raw = source
+    if os.path.isfile(source):
+        raw = open(source, encoding="utf-8-sig", errors="ignore").read()
+    try:
+        d = _json.loads(raw)
+    except ValueError:
+        return raw.strip()
+    rows = (d.get("controls") or d.get("features") or []) if isinstance(d, dict) else []
+    if not rows:
+        return raw.strip()
+    want = {s.strip() for s in ids.split(",") if s.strip()} if ids else None
+    out = []
+    for r in rows:
+        rid = r.get("id", "?")
+        if want and rid not in want:
+            continue
+        out.append("### %s - %s" % (rid, r.get("label") or r.get("feature", "")))
+        c = r.get("contract")
+        if isinstance(c, dict):
+            for k, v in c.items():
+                if v:
+                    out.append("  %s: %s" % (k.upper(), v))
+        elif r.get("expected"):
+            out.append("  EXPECTED: %s" % r["expected"])
+        if r.get("status"):
+            out.append("  STATUS: %s" % r["status"])
+    if not out:
+        raise ValueError("no matching spec rows (ids=%s)" % ids)
+    return "\n".join(out)
 
 _MODEL_MAX_CACHE = {}
 
@@ -70,6 +108,10 @@ _SYS = {
                 "invent bugs that aren't there."),
     "feature": ("You are a pragmatic, product-minded staff engineer. You propose high-value feature "
                 "add-ons grounded in what the code actually does, with a realistic sense of effort."),
+    "spec": ("You are a rigorous senior staff engineer doing a CONFORMANCE review against the "
+             "maintainer's authoritative feature expectations. You report ONLY divergences between "
+             "the code and the stated expectations, quote the violated clause for every finding, "
+             "and never critique the expectations themselves or report unrelated bugs."),
 }
 
 _TEMPLATES = {
@@ -141,6 +183,34 @@ Ranked by value:
 
 ## Nice-to-haves
 Short bullets of smaller ideas.""",
+
+    "spec": """Check `{rel}` for CONFORMANCE against the maintainer's feature expectations below.
+
+FEATURE EXPECTATIONS (authoritative - the contract this code must satisfy):
+
+{expectations}
+
+Your ONLY job: find places where this code can produce a result NOT in line with those
+expectations. Check the quiet clauses hardest: disabled/greyed states, error paths,
+sentinels, cost disclosure, side effects, wrap/boundary behavior. Do NOT report generic
+bugs unrelated to the expectations (Bug Hunt owns those), do NOT critique the
+expectations, and a clause the code satisfies gets silence.
+
+Return Markdown:
+
+## Verdict
+1-2 sentences: does this file conform to the judgable clauses?
+
+## Divergences
+Worst first:
+**[CRITICAL|HIGH|MEDIUM|LOW] title** - `line N`
+- Expectation: the violated clause, quoted
+- Trigger: the input or condition that hits the divergence
+- Behavior: what the code actually does vs what the contract expects
+- Fix: the concrete change
+
+## UNJUDGEABLE HERE
+One line per clause whose behavior lives outside this file (name where it likely lives).""",
 }
 
 
@@ -175,7 +245,7 @@ def _parse_json_review(text):
     if not isinstance(d, dict) or "findings" not in d:
         raise ValueError("missing 'findings'")
     return d
-def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md"):
+def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", spec_text=None):
     """Returns (markdown_review, usage). Config-driven: model, max_tokens, temperature,
     reasoning effort (or 'off' for unbounded), base URL and prices all come from cfg.
     Always returns a string review and a usage dict with the real billed cost."""
@@ -186,7 +256,14 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md"):
     if not key:
         return "**No API key.** Set `OPENROUTER_API_KEY` and restart the app.", {"cost": 0}
 
-    body = _TEMPLATES[mode].format(rel=rel_path)
+    if mode == "spec":
+        if not spec_text:
+            return ("**Spec Conformance requires the feature expectations.** Load them first "
+                    "(spec-harness registry JSON or hand-written contracts) - no API call was "
+                    "made."), {"cost": 0}
+        body = _TEMPLATES["spec"].format(rel=rel_path, expectations=spec_text)
+    else:
+        body = _TEMPLATES[mode].format(rel=rel_path)
     prompt = f"{body}\n\nSource (shown as `N| code`):\n\n```\n{_numbered(code)}\n```\n"
     try:
         static = build_static_context(code, rel_path, mode, c)
