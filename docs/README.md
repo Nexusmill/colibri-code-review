@@ -27,6 +27,7 @@ model corroborates facts instead of guessing.
 | [STORAGE.md](STORAGE.md) | `.colibri_reviews/` layout, the manifest schema, statuses, export, the central `reviews_archive/` + repo-memory mirror | `store.py`, `scanner.py` |
 | [ADVERSARY_GATE.md](ADVERSARY_GATE.md) | The mandatory adversarial commit gate (G39) as armed in THIS repo: what it refuses, how to work under it | `Tools/adversary-gate/adversary_gate.py` |
 | [GATE_INSTALLER.md](GATE_INSTALLER.md) | Installing the gate on ANY repo with `install_gate.py` - directly, or via a local/external subagent | `Tools/adversary-gate/install_gate.py` |
+| [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) | The four layers around the gate: driver check, harness guard, the git-notes audit tripwire, CI + branch protection - and the honest bypass surface | `Tools/adversary-gate/` (auditor, guard, record) |
 | [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | Everything that must be in place to run an external (headless) subagent that can arm the gate and drive reviews | field-verified prerequisites |
 
 ## Quick starts

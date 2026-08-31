@@ -20,6 +20,8 @@ clearance automatically - clearance follows bytes, not intentions.
   .h .rs .go .java .glsl .osl`
 - **Anything under `.githooks/`** regardless of extension - a hook edit could neuter the
   gate itself (finding from the gate's own birth review, round 2)
+- **Anything under `.github/workflows/`** - the CI audit workflow is enforcement config
+  too; editing it un-gated would be the same hole (layered-enforcement review 2026-08-31)
 - **Deletions of code files and renames-away** (code renamed to a non-code extension) -
   removing or hiding code is a code change (birth review, round 3); keyed as `D:<path>`
   with the removed HEAD blob's sha
@@ -83,6 +85,20 @@ arming): the hook must be committed with index mode **100755** - POSIX git silen
 checkout (`git update-index --chmod=+x .githooks/pre-commit`); and
 `.githooks/.gitattributes` pins the shim to `eol=lf` so an `autocrlf=true` checkout can
 never hand `/bin/sh` a CRLF script it refuses to parse.
+
+## Durable notarization + the audit tripwire (2026-08-31)
+
+The hook alone is advisory - git offers `--no-verify`, plumbing, GUI escapes, unarmed
+clones, and (worst) direct forgery of `.adversary/clearance.json`. The answer is layered
+(full doc: [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md)): a `post-commit` hook runs
+`adversary_gate.py record`, which writes a durable **git note** on
+`refs/notes/adversary` iff every changed code blob matches a fresh CLEAR (fail-closed:
+no match, no note - note ABSENCE is the tripwire signal); the vendored
+`.githooks/adversary_audit.py` re-verifies every commit after
+`.githooks/adversary_baseline` and screams on unnotarized or sha-mismatched history;
+CI runs the same auditor on push. Owner OVERRIDEs become provenance-carrying OVERRIDE
+notes - visible forever, blessing only the exact blobs they were invoked for. **Push
+notes with the branch:** `git push origin refs/notes/adversary`.
 
 ## Why it exists (the receipts)
 

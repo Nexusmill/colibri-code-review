@@ -1,9 +1,14 @@
 # GATE_INSTALLER.md - arming the gate on any repo (directly or via a subagent)
 
 > Source of truth: `C:\Users\User\source\repos\Tools\adversary-gate\install_gate.py`
-> (selftest `install_selftest.py`, 25/25). Shipped 2026-08-30; first live arming the same
+> (selftest `install_selftest.py`, 35/35). Shipped 2026-08-30; first live arming the same
 > day: `E:\AI\Caliper` (commit 63ebec8), whose adversary review immediately caught the
 > 100644 exec-mode fail-open now covered below - the installer's proving sequence works.
+> **v2 (2026-08-31)** also installs the layer-3 tripwire: the `post-commit` notarization
+> shim, the vendored self-contained auditor (`.githooks/adversary_audit.py`), the
+> tripwire anchor `.githooks/adversary_baseline` (= HEAD at first install; NEVER moved by
+> a re-run), and `notes.rewriteRef refs/notes/adversary` so rebases/amends carry notes to
+> rewritten commits. See [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md).
 
 ## What `install_gate.py` does
 
@@ -58,8 +63,8 @@ is not its call). The commit that lands `.githooks/` is itself gated - which is 
 what proves the hook fires in this clone, free of charge:
 
 ```bash
-git add .githooks/pre-commit .githooks/.gitattributes .gitignore
-git update-index --chmod=+x .githooks/pre-commit
+git add .githooks .gitignore
+git update-index --chmod=+x .githooks/pre-commit .githooks/post-commit
 #   ^ REQUIRED: os.chmod cannot set an exec bit on Windows, and POSIX git silently
 #     SKIPS a 100644 hook - the index mode is what clones inherit
 git commit -m "chore(gate): arm the mandatory adversarial commit gate (G39)"
@@ -67,9 +72,11 @@ git commit -m "chore(gate): arm the mandatory adversarial commit gate (G39)"
 #      That refusal is the end-to-end verification. If the commit SUCCEEDS here,
 #      something is wrong - stop and audit with --verify-only.
 python C:\Users\User\source\repos\Tools\adversary-gate\adversary_gate.py run \
-  --context "arming commit: canonical shim, installed by install_gate.py"
+  --context "arming commit: canonical shims + vendored auditor, installed by install_gate.py"
 git commit -m "chore(gate): arm the mandatory adversarial commit gate (G39)"
-#   -> passes while the staged bytes stay identical
+#   -> passes while the staged bytes stay identical; the post-commit hook then
+#      NOTARIZES it (verify: git notes --ref refs/notes/adversary show HEAD)
+git push origin refs/notes/adversary   # when pushing: the notes travel separately
 ```
 
 Finish all edits BEFORE running the adversary: clearances are keyed to staged blob shas,
