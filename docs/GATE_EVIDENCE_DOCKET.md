@@ -11,7 +11,12 @@
 
 ## The scoreboard (as of 2026-08-31)
 
-- **14 evidence rows** across 2 days of the gate's existence.
+- **15 evidence rows** across 2 days of the gate's existence.
+- **~24 covenant violations by past sessions surfaced in one sweep** the first time the
+  post-gate audit ran the features critic (EV-015): stale testers masking stronger code,
+  an overruled design still asserted as the contract, thirteen orphaned green batteries,
+  nine never-tested rows - the harness's verdicts had quietly stopped meaning anything
+  for a fifth of the registry until a detection layer was made to look.
 - **3 false rebuttals by the authoring agent, caught by the reviewer reading the actual
   bytes** (EV-001, EV-002, EV-010) - including one made the same day the author wrote
   the docket row about the previous two.

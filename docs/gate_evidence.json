@@ -155,6 +155,17 @@
    "author_initially": "The author's own earlier sessions had created the misfilings.",
    "resolution": "Owner-ruled restructures: rows moved verbatim into the live arrays; the anchor trap recorded in the governance-editing memory; strict validation now walks the actual tree.",
    "refs": ["Nexusmill e471915 + the HY4 move in c9ac5d0"]
+  },
+  {
+   "id": "EV-015-CRITIC-COVENANT-SWEEP",
+   "date": "2026-08-31",
+   "repo": "Nexusmill (harness over PatternSkin + Asset Forge + caseview)",
+   "layer": "features critic (the harness's own DRIFT/FAIL/undeclared ratchet - a detection layer in the same family as the auditor)",
+   "caught": "Roughly two dozen covenant violations by PAST sessions, invisible until the post-gate audit ran the tier: five tester FAILs that were all STALENESS masking evolved-STRONGER code (the sam3 zero-decode protection, the broadened generator guard, the ruled refuse-not-substitute transparency contract); four registry anchors orphaned by refactors; one battery still asserting an owner-OVERRULED design (the dishonest white-backdrop downgrade) as if it were the contract; THIRTEEN green batteries that existed but were never wired to their rows (their features counted as tested by nobody); and nine rows with genuinely no coverage, shipped without testers by the sessions that added them.",
+   "severity": "HIGH in aggregate (the harness's verdicts had quietly stopped meaning anything for a fifth of the registry)",
+   "author_initially": "Past sessions - this agent included - repeatedly shipped feature rows and refactors without the same-commit tester/registry updates the covenant demands; nothing enforced it until the audit.",
+   "resolution": "Tranche 3976f63: staleness fixed WITH git -S evidence per item (never blind re-fixed - G35), the overruled battery reworked to the ruled contract, thirteen batteries wired (system-python isolation for Blender-lacking deps), nine debts DECLARED in the ratchet allowlist with reasons. Features tier green for the first time in weeks: 0 FAIL, 0 DRIFT, 0 undeclared. The row itself argues for gating registry edits the way code is gated - which the .json-as-code ruling already began.",
+   "refs": ["Nexusmill 3976f63", "tests/harness/results/VERDICT.md"]
   }
  ]
 }
