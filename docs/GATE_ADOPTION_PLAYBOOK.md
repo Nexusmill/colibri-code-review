@@ -291,7 +291,10 @@ pushed to the same remote automatically.
 **Part C** sets branch protection on every adopted repo with a remote:
 `enforce_admins: true` (the required `audit` check binds the owner's own pushes too),
 `required_linear_history: true`, required check context `audit`, and PATCHes the repo
-to disable the merge/squash/rebase UI buttons. Consequence, stated plainly: a
+to reduce the UI merge strategies to rebase-only — GitHub refuses disabling all three
+(422 `no_merge_method`, found live), and rebase-only is the least-harmful residue:
+merge commits are impossible under linear history anyway, and a UI rebase-merge mints
+new shas carrying no notes, so the audit turns red and catches it. Consequence, stated plainly: a
 protected branch only ever moves by fast-forwarding a sha that ALREADY passed the
 audit check on another branch. Push your work to a feature branch, let CI go green,
 then fast-forward the protected branch to that same sha. If Part C fails with a
