@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "8317b1f97ed09eeab418efdc93947e90765d4e31",
+ "when": "20260831-030631",
+ "files": {
+  ".github/workflows/adversary-audit.yml": {
+   "sha": "1948b3581eed637f3bc1642e82ce8f5c2db422b49b5fb1913c3fff83a01c6eb8",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-030631",
+   "artifact": ".adversary\\reviews\\gate_20260831-030631.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260831-030631.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 1032, 'completion_tokens': 4193, 'total_tokens': 5225, 'cost': 0.00983276, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 192, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00983276, 'upstream_inference_prompt_cost': 0.00060816, 'upstream_inference_completions_cost': 0.0092246}, 'completion_tokens_details': {'reasoning_tokens': 3678, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.github/workflows/adversary-audit.yml']\n\nLooking at this change carefully.\n\nThe change removes the `pull_request:` trigger from the adversary-audit workflow, leaving only `push:`. The author's claim is that `pull_request` events check out GitHub's synthetic merge commit (refs/pull/N/merge), which is server-side and can't carry a note on refs/notes/adversary, causing the auditor to flag every PR.\n\nLet me verify the claims:\n\n1. **Synthetic merge commit claim**: Correct. On `pull_request` events, `github.sha` is the synthetic merge commit that GitHub creates by merging the PR head into the base branch. `actions/checkout@v4` checks out this commit. It's not a real commit in the user's history and wouldn't be notarized on refs/notes/adversary.\n\n2. **\"Auditor would flag every PR\"**: The auditor (`adversary_audit.py --repo .`) walks history from the checked-out HEAD. If it checks that the HEAD (or commits in range) carry a note, the synthetic merge commit would fail. This is a reasonable inference given the gate's design.\n\n3. **Push runs report on real head sha**: On `push` events, `github.sha` is the actual pushed commit, and `actions/checkout@v4` checks out that real commit. Required status checks match on the head sha. Sound.\n\n4. **Security model after removal**: Every push to any branch triggers the audit on the real head. When a PR is later opened from that branch, the PR head sha already has a passing check from the push event, so required status checks are satisfied. No gap introduced \u2014 the push event covers feature branches and merges to protected branches alike. Fork PRs: before this change, the `pull_request` check would always fail on the merge commit; after, it doesn't run at all. Either way fork PRs were already blocked if this is a required check \u2014 no regression.\n\n5. **YAML validity**: `on: push:` with no filters is valid and triggers on all push events. Structure is correct.\n\n6. **No new unhandled paths**: The workflow still fetches notes (`git fetch ... || echo ...` handles missing ref), still runs the auditor on `--repo .`. No logic change beyond the trigger.\n\nThe fix is sound \u2014 it converts an always-failing-on-PR trigger into a correct push-only trigger that reports on the real head commit that required status checks match.\n\nVERDICT: CLEAR"
+ }
+}
