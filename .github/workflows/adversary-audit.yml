@@ -6,9 +6,12 @@
 # external tooling. This file lives under .github/workflows/ and is therefore itself
 # GATED code - the gate refuses commits editing it without an independent CLEAR.
 name: adversary-audit
+# push only, deliberately: a pull_request run checks out GitHub's SYNTHETIC merge commit
+# (refs/pull/N/merge), which is created server-side and can never carry a note - the
+# auditor would flag every PR as a violation. Push runs report the check on the real
+# head sha, which is what required status checks match.
 on:
   push:
-  pull_request:
 jobs:
   audit:
     runs-on: ubuntu-latest
