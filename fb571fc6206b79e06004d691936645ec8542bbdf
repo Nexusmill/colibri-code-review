@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "fb571fc6206b79e06004d691936645ec8542bbdf",
+ "when": "20260831-161305",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "d3226aba354ab89559edb2aac4e4986d9ff8d9bd83ff6306d3da9303527f0e29",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-161304",
+   "artifact": ".adversary\\reviews\\gate_20260831-161304.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260831-161304.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 5539, 'completion_tokens': 751, 'total_tokens': 6290, 'cost': 0.00164528936, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 4874, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00164528936, 'upstream_inference_prompt_cost': 0.00065727376, 'upstream_inference_completions_cost': 0.0009880156}, 'completion_tokens_details': {'reasoning_tokens': 499, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['docs/gate_evidence.json']\n\nThe change adds one evidence row (EV-015) to the JSON manifest and updates the human-readable scoreboard from 14 to 15 rows.\n\nVerification performed:\n- Counted entries in the full staged JSON: EV-001 through EV-015 = 15 entries. The MD scoreboard's \"15 evidence rows\" is accurate.\n- JSON structure: the comma was correctly added after EV-014's closing `}`, the new object is well-formed, and the array/document close properly. No duplicate keys within the new object; the `id` EV-015-CRITIC-COVENANT-SWEEP is unique across the manifest.\n- The MD scoreboard's new bullet (~24 covenant violations) is consistent with the JSON row's \"caught\" description (5 stale + 4 orphaned + 1 overruled + 13 unwired + 9 no-coverage \u2248 32 items, but the row itself says \"roughly two dozen\" and describes ~24 past-session violations as the framing \u2014 the prose is internally consistent with the row).\n- No code, no callers, no contract breaks \u2014 this is a documentation/evidence manifest only.\n\nNo real defect introduced or enabled.\n\nVERDICT: CLEAR"
+ }
+}
