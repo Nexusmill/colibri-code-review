@@ -35,6 +35,18 @@
     "model": "claude-fable-5 gate over /code-review ultra run 2",
     "cost": 0.0,
     "sha_partial": true
+   },
+   "fix": {
+    "sha": "b1e82510de8af227616a266fe4be3a4c6c899b01658fbb8b3258e2e009e45d27",
+    "output": "PatternSkin__ai_parts.py__fix__b1e82510.md",
+    "reviewed_at": "2026-08-15",
+    "cost": 0.0
+   },
+   "debug": {
+    "sha": "be1ea09f6dac379a",
+    "output": "PatternSkin__ai_parts.py__debug__be1ea09f.md",
+    "reviewed_at": "2026-08-27",
+    "cost": 0.0
    }
   }
  },
@@ -48,6 +60,12 @@
     "model": "claude-fable-5 gate over /code-review ultra run 1",
     "cost": 0.0,
     "sha_partial": true
+   },
+   "debug:ai-selection-field": {
+    "sha": "57e16dd7a264c150ca792c9667eb3286c79f831cf1a4e4ded19f59e705a6d7c5",
+    "output": ".colibri_reviews/PatternSkin__ai-selection-field__2026-08-28.md",
+    "reviewed_at": "2026-08-28",
+    "cost": 0.0
    }
   }
  },
@@ -392,6 +410,12 @@
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
+   },
+   "fix": {
+    "sha": "ec4107227f59579f56a763d631586c8b6b2915b2a4d45c9a961f89af26b160e0",
+    "output": "asset-forge__app.py__fix__ec410722.md",
+    "reviewed_at": "2026-08-15",
+    "cost": 0.0
    }
   }
  },
@@ -405,6 +429,12 @@
     "model": "claude-opus-5 (in-session)",
     "tokens_in": null,
     "tokens_out": null,
+    "cost": 0.0
+   },
+   "fix": {
+    "sha": "f1961c7c1c656f294658f43f64b1a40978c181f3224337290caf53c060684b22",
+    "output": "asset-forge__forge__bundle.py__fix__f1961c7c.md",
+    "reviewed_at": "2026-08-15",
     "cost": 0.0
    }
   }
@@ -421,6 +451,12 @@
     "tokens_out": null,
     "cost": 0.0,
     "sha_partial": true
+   },
+   "fix": {
+    "sha": "b333d9229113fbaa04294d7bf91c85e9c6d32d9560ab2b1f1da609cbf064f49a",
+    "output": "asset-forge__forge__concurrency.py__fix__b333d922.md",
+    "reviewed_at": "2026-08-15",
+    "cost": 0.0
    }
   }
  },
@@ -506,6 +542,12 @@
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
+   },
+   "fix": {
+    "sha": "4681360fd3dd35aaaa12157e072f0fd275c75dfe70ba7a7243524b6ad8670679",
+    "output": "asset-forge__forge__imagegen__schema.py__fix__4681360f.md",
+    "reviewed_at": "2026-08-15",
+    "cost": 0.0
    }
   }
  },
@@ -522,6 +564,12 @@
     "cost": 0.0
    },
    "debug": {
+    "sha": "cd828195ca9587b389332175988b5116701204d99a821a3d666e6e8671b0ff81",
+    "output": "asset-forge__forge__library_gen.py__debug__cd828195.md",
+    "reviewed_at": "2026-08-12",
+    "cost": 0.0
+   },
+   "debug@f14c435e": {
     "sha": "f14c435e",
     "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__library_gen.py__debug__f14c435e.md",
     "reviewed_at": "2026-08-09",
@@ -530,6 +578,13 @@
     "tokens_out": null,
     "cost": 0.0,
     "sha_partial": true
+   },
+   "bug@93a01550": {
+    "sha": "93a01550b2f67f98",
+    "output": ".colibri_reviews/asset-forge__forge__library_gen.py__bug__93a01550.md",
+    "reviewed_at": "2026-08-13",
+    "cost": 0.0,
+    "note": "library colour/duplication/floor audit vs live library + job 20260812_055729; cross-file: quality.py bb07a93c, catalog.json 441bb6d0, prompts.py 0248b5da, color_hints.json 5f348b77"
    }
   }
  },
@@ -828,6 +883,12 @@
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
+   },
+   "fix": {
+    "sha": "b49d0864eba763536b3cce0674fcd6178fdd0ba03319c108bb818ea6318dbfb0",
+    "output": "PatternSkin__accel_bootstrap.py__fix__b49d0864.md",
+    "reviewed_at": "2026-08-15",
+    "cost": 0.0
    }
   }
  },
@@ -841,6 +902,12 @@
     "model": null,
     "tokens_in": null,
     "tokens_out": null,
+    "cost": 0.0
+   },
+   "fix": {
+    "sha": "0e5f7ce7951824df19ff606d133395090a294bfdcc69ce4684bcbc580fc8621a",
+    "output": "PatternSkin__accel_ipc.py__fix__0e5f7ce7.md",
+    "reviewed_at": "2026-08-15",
     "cost": 0.0
    }
   }
@@ -869,6 +936,12 @@
     "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
     "tokens_in": null,
     "tokens_out": null,
+    "cost": 0.0
+   },
+   "plan": {
+    "sha": "ded218ea37a3e563",
+    "output": ".colibri_reviews/PatternSkin__accel.py__plan__ded218ea.md",
+    "reviewed_at": "2026-08-30",
     "cost": 0.0
    }
   }
@@ -928,6 +1001,12 @@
     "tokens_out": null,
     "cost": 0.0,
     "sha_partial": true
+   },
+   "fix": {
+    "sha": "cca155c22a2ca59311c2a8285488fd24822dd98ec2353027cb8ebff6c5228263",
+    "output": "PatternSkin__heightmap.py__fix__cca155c2.md",
+    "reviewed_at": "2026-08-15",
+    "cost": 0.0
    }
   }
  },
@@ -1360,99 +1439,6 @@
    }
   }
  },
- "asset-forge/forge/library_gen.py": {
-  "debug": {
-   "sha": "cd828195ca9587b389332175988b5116701204d99a821a3d666e6e8671b0ff81",
-   "output": "asset-forge__forge__library_gen.py__debug__cd828195.md",
-   "reviewed_at": "2026-08-12",
-   "cost": 0.0
-  },
-  "bug": {
-   "sha": "93a01550b2f67f98",
-   "output": ".colibri_reviews/asset-forge__forge__library_gen.py__bug__93a01550.md",
-   "reviewed_at": "2026-08-13",
-   "cost": 0.0,
-   "note": "library colour/duplication/floor audit vs live library + job 20260812_055729; cross-file: quality.py bb07a93c, catalog.json 441bb6d0, prompts.py 0248b5da, color_hints.json 5f348b77"
-  }
- },
- "asset-forge/forge/imagegen/schema.py": {
-  "fix": {
-   "sha": "4681360fd3dd35aaaa12157e072f0fd275c75dfe70ba7a7243524b6ad8670679",
-   "output": "asset-forge__forge__imagegen__schema.py__fix__4681360f.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  }
- },
- "asset-forge/forge/output_opts.py": {
-  "fix": {
-   "sha": "3a63a0b4873b4ce0b8d78641901fefa1dbc48d0236e81048b47fdfc023c28433",
-   "output": "asset-forge__forge__output_opts.py__fix__3a63a0b4.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  }
- },
- "asset-forge/app.py": {
-  "fix": {
-   "sha": "ec4107227f59579f56a763d631586c8b6b2915b2a4d45c9a961f89af26b160e0",
-   "output": "asset-forge__app.py__fix__ec410722.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  }
- },
- "asset-forge/forge/bundle.py": {
-  "fix": {
-   "sha": "f1961c7c1c656f294658f43f64b1a40978c181f3224337290caf53c060684b22",
-   "output": "asset-forge__forge__bundle.py__fix__f1961c7c.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  }
- },
- "asset-forge/forge/concurrency.py": {
-  "fix": {
-   "sha": "b333d9229113fbaa04294d7bf91c85e9c6d32d9560ab2b1f1da609cbf064f49a",
-   "output": "asset-forge__forge__concurrency.py__fix__b333d922.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  }
- },
- "PatternSkin/ai_parts.py": {
-  "fix": {
-   "sha": "b1e82510de8af227616a266fe4be3a4c6c899b01658fbb8b3258e2e009e45d27",
-   "output": "PatternSkin__ai_parts.py__fix__b1e82510.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  },
-  "debug": {
-   "sha": "be1ea09f6dac379a",
-   "output": "PatternSkin__ai_parts.py__debug__be1ea09f.md",
-   "reviewed_at": "2026-08-27",
-   "cost": 0.0
-  }
- },
- "PatternSkin/heightmap.py": {
-  "fix": {
-   "sha": "cca155c22a2ca59311c2a8285488fd24822dd98ec2353027cb8ebff6c5228263",
-   "output": "PatternSkin__heightmap.py__fix__cca155c2.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  }
- },
- "PatternSkin/accel_bootstrap.py": {
-  "fix": {
-   "sha": "b49d0864eba763536b3cce0674fcd6178fdd0ba03319c108bb818ea6318dbfb0",
-   "output": "PatternSkin__accel_bootstrap.py__fix__b49d0864.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  }
- },
- "PatternSkin/accel_ipc.py": {
-  "fix": {
-   "sha": "0e5f7ce7951824df19ff606d133395090a294bfdcc69ce4684bcbc580fc8621a",
-   "output": "PatternSkin__accel_ipc.py__fix__0e5f7ce7.md",
-   "reviewed_at": "2026-08-15",
-   "cost": 0.0
-  }
- },
  "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\imagegen\\colour_forms.py": {
   "rel": "asset-forge\\forge\\imagegen\\colour_forms.py",
   "modes": {
@@ -1481,28 +1467,26 @@
    }
   }
  },
- "PatternSkin/__init__.py": {
-  "debug:ai-selection-field": {
-   "sha": "57e16dd7a264c150ca792c9667eb3286c79f831cf1a4e4ded19f59e705a6d7c5",
-   "output": ".colibri_reviews/PatternSkin__ai-selection-field__2026-08-28.md",
-   "reviewed_at": "2026-08-28",
-   "cost": 0.0
+ "asset-forge/forge/output_opts.py": {
+  "rel": "asset-forge/forge/output_opts.py",
+  "modes": {
+   "fix": {
+    "sha": "3a63a0b4873b4ce0b8d78641901fefa1dbc48d0236e81048b47fdfc023c28433",
+    "output": "asset-forge__forge__output_opts.py__fix__3a63a0b4.md",
+    "reviewed_at": "2026-08-15",
+    "cost": 0.0
+   }
   }
  },
  "PatternSkin/(top5)": {
-  "gate:hy4-spec-r1": {
-   "sha": "multi",
-   "output": ".colibri_reviews/PatternSkin__hy4-spec-r1-gate__2026-08-30.md",
-   "reviewed_at": "2026-08-30",
-   "cost": 0.7
-  }
- },
- "PatternSkin/accel.py": {
-  "plan": {
-   "sha": "ded218ea37a3e563",
-   "output": ".colibri_reviews/PatternSkin__accel.py__plan__ded218ea.md",
-   "reviewed_at": "2026-08-30",
-   "cost": 0.0
+  "rel": "PatternSkin/(top5)",
+  "modes": {
+   "gate:hy4-spec-r1": {
+    "sha": "multi",
+    "output": ".colibri_reviews/PatternSkin__hy4-spec-r1-gate__2026-08-30.md",
+    "reviewed_at": "2026-08-30",
+    "cost": 0.7
+   }
   }
  }
 }

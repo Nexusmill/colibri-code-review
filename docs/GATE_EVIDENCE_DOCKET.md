@@ -11,7 +11,12 @@
 
 ## The scoreboard (as of 2026-08-31)
 
-- **15 evidence rows** across 2 days of the gate's existence.
+- **16 evidence rows** across 2 days of the gate's existence.
+- **A remediation itself caught destroying data** (EV-016): the fix for the archive
+  schema drift silently discarded two real review records on a mode collision; the
+  reviewer traced the deletion out of the staged diff and the BLOCK stopped it from
+  landing - the corpora were restored and re-normalized loss-free. Remediations get
+  reviewed like any change; that is why.
 - **~24 covenant violations by past sessions surfaced in one sweep** the first time the
   post-gate audit ran the features critic (EV-015): stale testers masking stronger code,
   an overruled design still asserted as the contract, thirteen orphaned green batteries,

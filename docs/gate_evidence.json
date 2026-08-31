@@ -142,8 +142,8 @@
    "caught": "Real mixed-era schema drift in the review-archive manifest: 13 rows without the rel/modes wrapper, three output-path conventions, ten source files dual-keyed with their review record fragmented across incompatible entries - a generator defect nobody had noticed across weeks of syncs.",
    "severity": "MEDIUM (consumer contract split)",
    "author_initially": "Rebutted the FIX location (hand-editing generator data would falsify the record and desync the writer) - the rebuttal was verified and accepted; the DEFECT was conceded and docketed.",
-   "resolution": "Docketed OPEN as deferred COLIBRI-ARCHIVE-SCHEMA (fix belongs in the console writer); the archive committed as ground truth.",
-   "refs": ["gate_20260831-084546.md / -084825.md (colibri)"]
+   "resolution": "Docketed OPEN as deferred COLIBRI-ARCHIVE-SCHEMA; the archive committed as ground truth. EXECUTED same day under the audit campaign (amendment per covenant): the real writer proved to be review SESSIONS hand-editing the manifest against an ambiguous skill instruction - normalize_manifest() shipped in repo-memory (read-side tolerance + archive-write normalization, TDD), one-shot normalization of both corpora recovered ALL FIFTEEN review records that had been invisible to every consumer (visible modes 102->117, dual keys folded 99->88 entries), and the skill instruction was sharpened to the exact canonical shape in all three copies including the public plugin. The first normalizer version destroyed two colliding records - caught by the gate, EV-016 - before the corrected collision-safe version produced these numbers.",
+   "refs": ["gate_20260831-084546.md / -084825.md (colibri)", "repo-memory normalize_manifest + collision-safe commits", "Nexusmill fc06f79"]
   },
   {
    "id": "EV-014-DOCKET-MISFILING-DISEASE",
@@ -166,6 +166,17 @@
    "author_initially": "Past sessions - this agent included - repeatedly shipped feature rows and refactors without the same-commit tester/registry updates the covenant demands; nothing enforced it until the audit.",
    "resolution": "Tranche 3976f63: staleness fixed WITH git -S evidence per item (never blind re-fixed - G35), the overruled battery reworked to the ruled contract, thirteen batteries wired (system-python isolation for Blender-lacking deps), nine debts DECLARED in the ratchet allowlist with reasons. Features tier green for the first time in weeks: 0 FAIL, 0 DRIFT, 0 undeclared. The row itself argues for gating registry edits the way code is gated - which the .json-as-code ruling already began.",
    "refs": ["Nexusmill 3976f63", "tests/harness/results/VERDICT.md"]
+  },
+  {
+   "id": "EV-016-NORMALIZER-DATA-LOSS",
+   "date": "2026-08-31",
+   "repo": "colibri-code-review (defect authored in repo-memory)",
+   "layer": "gate-review BLOCK (on the normalized-archive commit - a REMEDIATION reviewed like any change)",
+   "caught": "The remediation for EV-013 itself destroyed data: the first normalize_manifest resolved a mode-name collision with 'canonical wins', silently discarding the wrapperless side - and the reviewer traced the actual diff to prove the two colliding library_gen.py records were DIFFERENT legitimate reviews (distinct shas, dates 08-12/08-13, one carrying a substantive cross-file audit note). It also caught the arithmetic cover: '13 recovered' was true only because 15 existed and 2 were silently dropped.",
+   "severity": "MEDIUM (permanent loss of two paid review records, inside a fix whose stated rule was 'never destroys')",
+   "author_initially": "Claimed 'canonical data preserved on every collision' - accurate about the canonical side, silent about the discarded side; the reviewer read the deletion out of the staged diff.",
+   "resolution": "Collision-safe rework, RED-first: identical sha = dedupe; different sha = newer reviewed_at holds the bare key, the other preserved under the sanctioned synthetic key mode@sha8. Corpora restored from the archive's committed HEAD (the BLOCK had stopped the bad version from landing) and re-normalized: all FIFTEEN records preserved, visible modes 102->117, verified per-entry. The meta-lesson joins the docket: remediations destroy data too - review them like any change.",
+   "refs": ["gate_20260831-170642.md (colibri)", "repo-memory collision-safe commit", "tests/test_manifest_normalize.py C-cases"]
   }
  ]
 }
