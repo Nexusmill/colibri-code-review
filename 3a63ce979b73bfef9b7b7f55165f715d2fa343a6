@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "3a63ce979b73bfef9b7b7f55165f715d2fa343a6",
+ "when": "20260831-155341",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "9d35b53de66dcfe8df64f6a19535cedce8bfdedaf03b64431c1d287d34a2e8c3",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-155340",
+   "artifact": ".adversary\\reviews\\gate_20260831-155340.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260831-155340.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 9392, 'completion_tokens': 1059, 'total_tokens': 10451, 'cost': 0.00257158538, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 8077, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00257158538, 'upstream_inference_prompt_cost': 0.00117836498, 'upstream_inference_completions_cost': 0.0013932204}, 'completion_tokens_details': {'reasoning_tokens': 609, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['docs/gate_evidence.json']\n\nThis change adds two new documentation/governance artifacts (a markdown docket and its machine-readable JSON twin) and links them from the docs README. No code, no callers, no logic paths are touched.\n\nVerification of the implicit claims I can check against the bytes:\n\n- **\"14 evidence rows\"** (markdown scoreboard) vs JSON: entries EV-001 through EV-014 = exactly 14. \u2713\n- **\"3 false rebuttals\"** vs JSON: EV-001 (\"FALSE REBUTTAL #1\"), EV-002 (\"FALSE REBUTTAL #2\"), EV-010 (\"FALSE REBUTTAL #3\"). \u2713\n- **\"2 days\"** vs JSON dates: 2026-08-30 and 2026-08-31 only. \u2713\n- **Scoreboard cross-references** (EV-003 CRITICAL disarm, EV-005 CRITICAL forgery, EV-004 fail-closed, EV-006 self-caught push bug, EV-008 three portability defects, EV-011/EV-014 data diseases, EV-009 merge reversal, EV-012 guard-vs-author): each maps to a real row with matching content. \u2713\n- **\"passes strict zero-duplicate-key validation\"**: scanned every object in the JSON \u2014 top-level keys (`_doc`, `_covenant`, `entries`) are unique; each of the 14 entry objects has exactly 8 distinct keys (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`) with no repetition. \u2713\n- **README link target** `GATE_EVIDENCE_DOCKET.md` exists in the same diff. \u2713\n- **JSON is well-formed**: valid structure, balanced brackets/braces, properly escaped strings. \u2713\n\nNo code is modified, so there are no broken call sites, no state/ordering races, no contract breaks with surrounding code, and no security or money-safety surface introduced. The change is internally consistent and the artifacts are self-validating against each other.\n\nVERDICT: CLEAR"
+ }
+}
