@@ -1,0 +1,22 @@
+{
+ "type": "CLEAR",
+ "commit": "bc74b51421134829289a066a1f9fe79def7f3dd2",
+ "when": "20260831-171541",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "1366fdcc505691416098a0222b337bdf5811cad5a257fb193972e7b4074907b4",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-171539",
+   "artifact": ".adversary\\reviews\\gate_20260831-171539.md"
+  },
+  "reviews_archive/nexusmill/_manifest.json": {
+   "sha": "dd4bd5dd86baab61b02dcc58db4e1cf52f96fe7cd3e69106f530ad1ccc95355e",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-171539",
+   "artifact": ".adversary\\reviews\\gate_20260831-171539.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260831-171539.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 33012, 'completion_tokens': 8300, 'total_tokens': 41312, 'cost': 0.0146113526, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 29710, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0146113526, 'upstream_inference_prompt_cost': 0.0036918726, 'upstream_inference_completions_cost': 0.01091948}, 'completion_tokens_details': {'reasoning_tokens': 7581, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['docs/gate_evidence.json', 'reviews_archive/nexusmill/_manifest.json']\n\nLooking at this change, I need to verify the central claim: that the collision-safe normalizer preserved all 15 previously-invisible records, especially the two library_gen.py records that the first (failed) normalizer dropped.\n\n**Verifying the library_gen.py collision resolution (the EV-016 crux):**\n\nThe wrapped entry `C:\\...\\asset-forge\\forge\\library_gen.py` originally had:\n- `bug`: sha 1a262868 (08-22)\n- `debug`: sha f14c435e (08-09)\n\nThe wrapperless `asset-forge/forge/library_gen.py` had:\n- `debug`: sha cd828195 (08-12)\n- `bug`: sha 93a01550 (08-13, with cross-file note)\n\nFinal manifest shows four distinct records:\n- `bug` \u2192 1a262868 (08-22, newer, holds bare key) \u2713\n- `bug@93a01550` \u2192 93a01550 (08-13, older, synthetic key, note preserved) \u2713\n- `debug` \u2192 cd828195 (08-12, newer, holds bare key) \u2713\n- `debug@f14c435e` \u2192 f14c435e (08-09, older, synthetic key, model/sha_partial preserved) \u2713\n\nThe collision rule (\"newer reviewed_at holds bare key, older \u2192 mode@sha8\") is applied consistently. Both previously-dropped records are present with all their original metadata.\n\n**Verifying the 15-record / 88-entry / 117-mode arithmetic:**\n\nCounting the 13 deleted wrapperless entries and their records: library_gen (2), imagegen/schema (1), output_opts (1), app (1), bundle (1), concurrency (1), ai_parts (2), heightmap (1), accel_bootstrap (1), accel_ipc (1), __init__ (1), top5 (1), accel (1) = 15 records. \u2713\n\n11 of 13 wrapperless entries merged into existing wrapped entries (folding 99\u219288). 2 had no wrapped equivalent (output_opts, top5) and received wrappers. Counting top-level keys in the final manifest yields exactly 88. \u2713\n\n117 \u2212 102 = 15, matching the recovered record count. \u2713\n\n**Cross-checking every deleted wrapperless record against its destination in the final manifest:** all 15 records (shas, dates, notes, output paths) are present in their canonical or synthetic-key positions. No data loss.\n\n**Checking for introduced structural defects:** No duplicate keys. JSON is valid. The `PatternSkin/(top5)` and `output_opts.py` entries use forward-slash keys without the Windows path prefix \u2014 but this is pre-existing (the keys were already that shape), and the normalizer correctly added `rel`/`modes` wrappers rather than discarding them. The mixed output-path conventions remain (explicitly covered by \"read-side tolerance\" in the EV-013 resolution, not in scope for this fix).\n\n**Docket consistency:** EV-013 resolution amended to honest numbers (15, not 13) and names the failed first attempt. EV-016 records the catch including the arithmetic-cover point. Scoreboard says 16 rows; EV-001 through EV-016 = 16. \u2713\n\nNo defect found.\n\nVERDICT: CLEAR"
+ }
+}
