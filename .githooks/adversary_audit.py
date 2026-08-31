@@ -36,7 +36,7 @@ import shutil
 import subprocess
 import sys
 
-CODE_EXTS = {".py", ".js", ".ts", ".jsx", ".tsx", ".html", ".css", ".ps1", ".sh", ".bat",
+CODE_EXTS = {".py", ".js", ".json", ".ts", ".jsx", ".tsx", ".html", ".css", ".ps1", ".sh", ".bat",
              ".c", ".cpp", ".h", ".rs", ".go", ".java", ".glsl", ".osl"}
 GATED_PREFIXES = (".githooks/", ".github/workflows/")
 NOTES_REF = "refs/notes/adversary"
