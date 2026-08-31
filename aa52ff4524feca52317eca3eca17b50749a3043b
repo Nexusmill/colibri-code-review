@@ -1,0 +1,28 @@
+{
+ "type": "CLEAR",
+ "commit": "aa52ff4524feca52317eca3eca17b50749a3043b",
+ "when": "20260831-093246",
+ "files": {
+  ".githooks/post-commit": {
+   "sha": "377b1254489c2fe84091aa3cc269f4083baa3d44d3781e47c635e88249387268",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-093245",
+   "artifact": ".adversary\\reviews\\gate_20260831-093245.md"
+  },
+  ".githooks/pre-commit": {
+   "sha": "72864701ba348f1f0486994283215aa3dd35341edc15b4ce9276ced457cd32b9",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-093245",
+   "artifact": ".adversary\\reviews\\gate_20260831-093245.md"
+  },
+  ".githooks/pre-push": {
+   "sha": "8d44759bf78782df62fbdcb27189abfd1b5ea96d03ac7ccd0c8d3c3609d7b761",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-093245",
+   "artifact": ".adversary\\reviews\\gate_20260831-093245.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260831-093245.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 2309, 'completion_tokens': 3132, 'total_tokens': 5441, 'cost': 0.0085067, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0085067, 'upstream_inference_prompt_cost': 0.0016163, 'upstream_inference_completions_cost': 0.0068904}, 'completion_tokens_details': {'reasoning_tokens': 2621, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.githooks/post-commit', '.githooks/pre-commit', '.githooks/pre-push']\n\nLooking at this change carefully:\n\n**The change**: All three hooks replace `PYBIN=python` fallback with a two-tier fallback: try `python3` first (via `command -v`), then fall back to `python`.\n\n**Logic analysis of the `A && B || C` pattern**:\n- `A` = `command -v python3 >/dev/null 2>&1` (exit status only)\n- `B` = `PYBIN=python3` (assignment \u2014 always succeeds in any POSIX shell)\n- `C` = `PYBIN=python`\n\nSince B is a bare assignment that cannot fail, the classic `A && B || C` pitfall (B failing and causing C to run unintentionally) does not apply. The truth table is correct:\n- `python3` on PATH \u2192 `PYBIN=python3` \u2713\n- `python3` not on PATH \u2192 `PYBIN=python` \u2713\n- Hardcoded `.exe` already executable \u2192 short-circuits before the group \u2713\n\n**POSIX conformance**: `{ ...; }` grouping, `command -v`, and `>/dev/null 2>&1` are all POSIX-required. The required space after `{` and `;` before `}` are both present. Works under dash, bash, and MSYS/Git Bash sh.\n\n**Fail-closed preservation**:\n- `pre-commit` / `pre-push`: GATE existence check (`exit 1`) runs *before* `exec \"$PYBIN\"`. If neither python binary is found, `exec` fails with 127, which is still non-zero \u2192 fail-closed preserved.\n- `post-commit`: notarization failure is caught by `|| echo` \u2192 warn-only, unchanged from original design.\n\n**Exit status of the standalone line**: Always 0 (either `[ -x ]` succeeds, or the group's last command is an assignment returning 0). Identical to the original `PYBIN=python` assignment returning 0. No caller depends on this line's status.\n\n**Windows consideration**: On a Windows Git Bash where `python3` doesn't exist but `python` does (common with python.org installs), `command -v python3` fails cleanly and it falls through to `python` \u2014 correct. The hardcoded `Python311/python.exe` path and GATE path are unchanged per the diff and rebuttal.\n\nNo real defect found.\n\nVERDICT: CLEAR"
+ }
+}
