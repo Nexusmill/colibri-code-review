@@ -68,10 +68,16 @@ You need, on the machine that will commit:
    on OpenRouter. Cost is real but small (roughly a cent per commit with the
    recommended model).
 5. **The gh CLI authenticated** (only needed for the CI/branch-protection chapters):
-   `gh auth status` must show a logged-in keyring account. NOTE (documented owner
-   fact, 2026-08-31): this machine's single gh keyring credential is valid for BOTH
-   sites - the personal `github.com/phantom-man` account AND the `github.com/Nexusmill`
-   org. You do not need a second login to work across them.
+   `gh auth status` must show a logged-in keyring account, and the token must carry
+   the **`workflow` scope** if you will ever push a repo containing
+   `.github/workflows/` files - GitHub rejects such a push outright without it
+   (`refusing to allow an OAuth App to create or update workflow ... without
+   'workflow' scope` - hit live on this system's first push). Add it once with
+   `gh auth refresh -h github.com -s workflow` (one browser device-code prompt).
+   NOTE (documented owner fact, 2026-08-31): this machine's single gh keyring
+   credential is valid for BOTH sites - the personal `github.com/phantom-man` account
+   AND the `github.com/Nexusmill` org. You do not need a second login to work across
+   them.
 
 Verify the reviewer works before touching any repo:
 
@@ -256,11 +262,12 @@ and demands a matching CLEAR note; owner OVERRIDE notes pass but are listed loud
 
 ---
 
-## Chapter 5 - Branch protection + the owner's two irreducible steps
+## Chapter 5 - The owner's irreducible steps (one script, three parts)
 
-Two steps can only be done by the OWNER (an agent attempting them is blocked by the
-permission harness, correctly - they alter the harness itself and the shared remote's
-rules). Both live in ONE idempotent script, no elevation needed:
+Some steps can only be done by the OWNER (an agent attempting them is blocked by the
+permission harness, correctly - they alter the harness itself, the credential's
+scopes, and the shared remote's rules). All of them live in ONE idempotent script,
+no elevation needed, one interactive moment (a browser device-code prompt in Part B):
 
 ```
 python C:\Users\User\source\repos\Tools\adversary-gate\owner_setup.py
@@ -276,15 +283,20 @@ hooksPath re-pointing, `commit-tree`/`update-ref` plumbing, mutating `git notes`
 all `.adversary/**` writes. It fails OPEN on malformed input (never bricks the
 harness) - the wall and the tripwire stand behind it.
 
-**Part B** sets branch protection on every adopted repo with a remote:
+**Part B** adds the `workflow` scope to the gh token if missing (Chapter 1, prereq 5;
+one device-code prompt) and then performs the outstanding pushes. Each push runs the
+armed pre-push guard: outgoing history is audited and `refs/notes/adversary` is
+pushed to the same remote automatically.
+
+**Part C** sets branch protection on every adopted repo with a remote:
 `enforce_admins: true` (the required `audit` check binds the owner's own pushes too),
 `required_linear_history: true`, required check context `audit`, and PATCHes the repo
 to disable the merge/squash/rebase UI buttons. Consequence, stated plainly: a
 protected branch only ever moves by fast-forwarding a sha that ALREADY passed the
 audit check on another branch. Push your work to a feature branch, let CI go green,
-then fast-forward the protected branch to that same sha. If Part B fails with a
-check-context error, the repo simply has no CI run yet - push once, then re-run the
-script.
+then fast-forward the protected branch to that same sha. If Part C fails with a
+check-context error, the repo simply has no CI run yet - the pushed workflows must
+finish once; then re-run the script (Parts A and B become no-ops).
 
 ---
 
@@ -326,9 +338,19 @@ script.
   `git fetch <remote> +refs/notes/adversary:refs/notes/adversary-theirs` then
   `git notes --ref refs/notes/adversary merge -s cat_sort_uniq refs/notes/adversary-theirs`,
   then push again.
-- **Pre-push refuses on OLD commits that predate the gate.** The baseline should
-  exclude them; if it does not, the baseline file is wrong or missing - re-run the
-  installer (never hand-edit the baseline to make a refusal go away).
+- **Pre-push refuses on OLD commits that predate the gate.** Two known causes. (a)
+  Your gate version predates the single-`--not` fix: `rev-list --not A --not B`
+  TOGGLES, so the guard's original two-`--not` range re-INCLUDED the whole
+  pre-baseline history and refused fully notarized pushes - caught on this system's
+  FIRST live push, fixed same hour (Tools 4cfbf34, regression-tested); update the
+  Tools repo. (b) The baseline file is wrong or missing - re-run the installer (never
+  hand-edit the baseline to make a refusal go away).
+- **Push rejected: `refusing to allow an OAuth App to create or update workflow ...
+  without 'workflow' scope`.** GitHub, not the gate: the gh token cannot push
+  `.github/workflows/` files. `gh auth refresh -h github.com -s workflow` once
+  (Chapter 1 prereq 5), then push again. Note the pre-push guard had already audited
+  the range and pushed the notes ref before GitHub rejected the branch - a rejected
+  branch push with notes on the remote is a harmless intermediate state.
 - **Rebase/amend "lost" the clearance notes.** `notes.rewriteRef` was unset (old
   arming). Installer re-run sets it. Notes for unchanged blobs survive a rebase;
   changed blobs correctly need fresh review.
