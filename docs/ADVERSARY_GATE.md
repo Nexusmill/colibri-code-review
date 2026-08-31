@@ -16,8 +16,9 @@ clearance automatically - clearance follows bytes, not intentions.
 
 ## What counts as "staging code"
 
-- Files with a code extension: `.py .js .ts .jsx .tsx .html .css .ps1 .sh .bat .c .cpp
-  .h .rs .go .java .glsl .osl`
+- Files with a code extension: `.py .js .json .ts .jsx .tsx .html .css .ps1 .sh .bat .c
+  .cpp .h .rs .go .java .glsl .osl` (`.json` added 2026-08-31, owner's order: manifests,
+  registries and configs are load-bearing - a forged manifest row is a code change)
 - **Anything under `.githooks/`** regardless of extension - a hook edit could neuter the
   gate itself (finding from the gate's own birth review, round 2)
 - **Anything under `.github/workflows/`** - the CI audit workflow is enforcement config
@@ -28,8 +29,9 @@ clearance automatically - clearance follows bytes, not intentions.
 - **Merges are NOT exempt** - a merge can carry un-gated commits; the staged result is
   reviewable like any other change
 
-Docs, JSON, and other non-code files pass free (this is why documentation commits in this
-repo need no clearance).
+Docs (`.md`) and other non-code files pass free - documentation commits need no
+clearance. JSON does NOT pass free since 2026-08-31: manifest/registry rows are reviewed
+with the change they describe.
 
 ## The working loop
 
