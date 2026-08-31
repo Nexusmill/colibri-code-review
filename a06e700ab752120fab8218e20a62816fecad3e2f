@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "a06e700ab752120fab8218e20a62816fecad3e2f",
+ "when": "20260831-075935",
+ "files": {
+  ".githooks/adversary_audit.py": {
+   "sha": "28ebdc7b4162c932308fa70d1c249d57f04ce7d5954cd544fe1fbce03e9426db",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-075934",
+   "artifact": ".adversary\\reviews\\gate_20260831-075934.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260831-075934.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 2897, 'completion_tokens': 296, 'total_tokens': 3193, 'cost': 0.0015005445, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 2193, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0015005445, 'upstream_inference_prompt_cost': 0.0008167845, 'upstream_inference_completions_cost': 0.00068376}, 'completion_tokens_details': {'reasoning_tokens': 189, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.githooks/adversary_audit.py']\n\nThe diff is a single, coherent one-line addition (`.json` to `CODE_EXTS`) in the vendored auditor. The auditor's own docstring states `audit_selftest.py` asserts parity between this file and `adversary_gate.py`, so the drift-tripwire covers the unverifiable parity claim. Adding `.json` causes JSON-only commits to be audited rather than skipped \u2014 consistent with intent, no new logic paths, no broken callers, no ordering/state concerns.\n\nVERDICT: CLEAR"
+ }
+}
