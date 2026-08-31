@@ -1,0 +1,160 @@
+{
+ "_doc": "GATE EVIDENCE DOCKET (machine-readable; human view GATE_EVIDENCE_DOCKET.md). Owner order 2026-08-31: keep a manifest of everything the adversary gate and its enforcement layers CATCH and force into remediation - the running evidentiary case for the mandatory adversarial commit gate and the layered structure (and for the harness-native version proposed in anthropics/claude-code#90887).",
+ "_covenant": "Every catch that forces a remediation gets a row IN THE SAME WORKING SESSION as the catch: date, repo, layer (gate-review BLOCK / pre-commit wall / post-commit notary / push guard / auditor / harness guard / CI / advisor second-reviewer), what was caught, severity, whether the author initially disputed it (false rebuttals are the strongest rows - they prove authors defend invented claims, the gate's founding thesis), the resolution, and artifact references. Rows are never deleted; a catch later shown false is amended in place with the evidence.",
+ "entries": [
+  {
+   "id": "EV-001-GATE-BIRTH",
+   "date": "2026-08-30",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (six adversarial rounds on the gate's own birth code)",
+   "caught": "Merge-commit bypass (merges exempted from review); empty-model-response IndexError crash; hook-edit bypass (extension filter waved .githooks edits through); code-deletion/rename-away bypass; a literal BEL byte the author had dismissed as a rendering artifact; a per-clone-arming overpromise in the shim's own banner.",
+   "severity": "HIGH (multiple independent bypass classes in the enforcement tool itself)",
+   "author_initially": "Defended several; round 5 caught FALSE REBUTTAL #1 - the author claimed fixes that a failed edit driver had never written; the adversary read the staged bytes and proved the claim false.",
+   "resolution": "All six classes fixed and re-reviewed to CLEAR before the gate's first arming; the empty-response fail-closed BLOCK later proved itself live (EV-004).",
+   "refs": ["Nexusmill docs/GLOBAL_RULES.md G39", "Tools 844c54a/c2cf124 era", "AGENT_STATE 2026-08-30"]
+  },
+  {
+   "id": "EV-002-INSTALLER-BIRTH",
+   "date": "2026-08-30",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (seven rounds on install_gate.py)",
+   "caught": "Eleven real findings including CRLF-corrupted-shim blessing, foreign-hooksPath equivalence misjudgment, and fail-closed-vs-armed exit-contract gaps.",
+   "severity": "HIGH",
+   "author_initially": "Round 6 caught FALSE REBUTTAL #2 - the author claimed the chmod=+x step was already in the NEXT-steps text; it was not.",
+   "resolution": "All fixed; installer selftest grew to cover every claim (38/38 today).",
+   "refs": ["Tools 02dbb4b era", "colibri docs/GATE_INSTALLER.md"]
+  },
+  {
+   "id": "EV-003-POSIX-100644-FAILOPEN",
+   "date": "2026-08-30",
+   "repo": "Caliper (retro-fix: Nexusmill, Tools, colibri-code-review)",
+   "layer": "gate-review BLOCK (review of Caliper's own arming commit)",
+   "caught": "The staged hook was index mode 100644 - POSIX git SILENTLY SKIPS a non-executable hook, so the mandatory gate was fully DISARMED on any POSIX checkout. All three previously-armed repos had shipped the same fail-open.",
+   "severity": "CRITICAL (the whole gate a no-op on POSIX clones)",
+   "author_initially": "Accepted immediately.",
+   "resolution": "update-index --chmod=+x + .gitattributes LF pins everywhere; installer NEXT text and selftests now enforce it; G35 row GATE-HOOK-MODE-100644.",
+   "refs": ["Nexusmill dfb93c5", "Caliper 63ebec8 review"]
+  },
+  {
+   "id": "EV-004-HY3-EMPTY-FAILCLOSED",
+   "date": "2026-08-31",
+   "repo": "Tools",
+   "layer": "gate-review runtime behavior (fail-closed proof, not an author error)",
+   "caught": "The default reviewer hung ~50 minutes and returned NO content; the gate printed '(model returned no content - failing closed)' and BLOCKed instead of crashing or silently clearing - the exact behavior EV-001's empty-response fix was built for.",
+   "severity": "evidence-of-design (a permissive gate would have shipped an unreviewed commit)",
+   "author_initially": "n/a",
+   "resolution": "Review re-run on z-ai/glm-5.2 (now the recommended flag); the same failure mode later got an auto-retry guard in hy4-review (EV-010).",
+   "refs": [".adversary/reviews/gate_20260831-010912.md (Tools)"]
+  },
+  {
+   "id": "EV-005-ADVISOR-FORGERY-ROUTE",
+   "date": "2026-08-31",
+   "repo": "all armed repos",
+   "layer": "advisor second-reviewer (design review before the layered build)",
+   "caught": "The trivial bypass of the entire hook architecture: an agent writing .adversary/clearance.json directly with correct staged sha256s - a forged clearance notarizes cleanly and audits green; layers 1/3/4 cannot see it. Identified BEFORE the build; became the pivot of the layer-2 design.",
+   "severity": "CRITICAL (silent total bypass)",
+   "author_initially": "Had not considered it.",
+   "resolution": "harness_guard.py denies every .adversary/** write path (file tools AND Bash) plus notes mutation and update-ref; registered machine-wide by the owner.",
+   "refs": ["colibri docs/LAYERED_ENFORCEMENT.md"]
+  },
+  {
+   "id": "EV-006-PUSHGUARD-DOUBLE-NOT",
+   "date": "2026-08-31",
+   "repo": "Tools (caught live on Nexusmill's first guarded push)",
+   "layer": "pre-push guard (the layer caught its own defect in production)",
+   "caught": "rev-list's --not flag TOGGLES: the guard's '--not <remote> --not <baseline>' range re-INCLUDED the entire pre-baseline history and refused a fully notarized push. The selftest had only covered the remote-sha-zero shape, where a single --not is emitted.",
+   "severity": "MEDIUM (false refusal; fail-safe direction, but would have blocked every real push)",
+   "author_initially": "n/a (self-caught by the layer's refusal output on first live use)",
+   "resolution": "Single --not with all exclusions; regression test push_guard_remote_plus_baseline; G35 row GATE-PUSH-DOUBLE-NOT; playbook troubleshooting entry.",
+   "refs": ["Tools 4cfbf34", "Nexusmill 678cfe2"]
+  },
+  {
+   "id": "EV-007-PR-SYNTHETIC-MERGE",
+   "date": "2026-08-31",
+   "repo": "Nexusmill, colibri-code-review, Caliper, colibri-marketplace",
+   "layer": "advisor second-reviewer (CI design)",
+   "caught": "The audit workflow's pull_request trigger checks out GitHub's server-side synthetic merge commit, which can never carry a note - every PR would have been flagged a VIOLATION forever, and with enforce_admins protection, merges would have locked permanently.",
+   "severity": "HIGH (layer 4 would have been unusable)",
+   "author_initially": "Shipped the trigger before the catch.",
+   "resolution": "Workflows are push-only with the rationale in-file; playbook chapter 4 + troubleshooting entry.",
+   "refs": ["commit 5530c72 (Nexusmill) and twins"]
+  },
+  {
+   "id": "EV-008-PLUGIN-PORTABILITY",
+   "date": "2026-08-31",
+   "repo": "colibri-marketplace",
+   "layer": "gate-review BLOCK (fresh eyes on byte-copies of ALREADY-CLEARED code)",
+   "caught": "Three real portability defects in code every line of which had passed review in its home repo: (HIGH) adversary_gate.py's hardcoded git path with no PATH fallback - the distributed gate dead on arrival on any non-authoring machine; (MED) the refusal message instructing users to run a path that exists only on the authoring machine; (LOW) two selftests with the same hardcoded git path.",
+   "severity": "HIGH (the public offering would not have functioned anywhere else)",
+   "author_initially": "Framed the bundle as 'byte-copies of cleared canonicals' expecting a rubber stamp.",
+   "resolution": "All three fixed in the Tools canonicals (d7d496f), re-bundled, re-reviewed to CLEAR. Context matters: 'already reviewed' is a property of a diff in a repo, not of bytes.",
+   "refs": ["marketplace review gate_20260831-095432.md"]
+  },
+  {
+   "id": "EV-009-MERGE-STRATEGY-EXCHANGE",
+   "date": "2026-08-31",
+   "repo": "Tools (owner_setup.py) + all four GitHub repos",
+   "layer": "gate-review BLOCK, two rounds, plus live platform counter-evidence",
+   "caught": "Round 1: the author's rebase-only merge fallback was BACKWARDS security logic - under linear-history protection the rebase button WORKS and mints N unaudited shas onto the protected branch, while the merge button is inert; the status line also claimed 'merge buttons off' while enabling one. Round 2: after the platform refused the reviewer's ideal too (422 protected_branch_policy), the reviewer caught the module docstring still promising 'buttons are DISABLED' and an unconditional fast-forward-only guarantee that squash-only had broken.",
+   "severity": "HIGH (unaudited shas reachable on protected branches + overstated security posture)",
+   "author_initially": "Argued 'least-harmful residue' with reversed reasoning; conceded on re-read.",
+   "resolution": "Squash-only floor (one unaudited sha per misuse instead of N; any use turns the audit red), truthful docstring and status lines, both live 422 constraints documented in code and playbook.",
+   "refs": ["Tools f08d69f", "gate_20260831-102830.md"]
+  },
+  {
+   "id": "EV-010-HY4GUARD-DEFECTS",
+   "date": "2026-08-31",
+   "repo": "Tools (hy4-review)",
+   "layer": "gate-review BLOCK",
+   "caught": "Two real defects in a 30-line guard: the empty-response retry unconditionally re-added a reasoning key the provider had already 400-rejected (crash loop with a raw traceback and no spend report), and the retry call lacked the HTTPError handling every other API call in the function has.",
+   "severity": "MEDIUM",
+   "author_initially": "FALSE REBUTTAL #3 - the author's context claimed 'the retry only runs when reasoning was accepted'; the guard had no such check. The reviewer quoted the actual condition.",
+   "resolution": "reasoning_ok flag gating the guard; wrapped retry with the wasted first-call usage in the error; conceded in the re-review context.",
+   "refs": ["Tools gate_20260831-113048.md + follow-up commit"]
+  },
+  {
+   "id": "EV-011-MANIFEST-DUPKEYS",
+   "date": "2026-08-31",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK",
+   "caught": "A helper-import side effect had doubled the status/resolution KEY PAIR inside one deferred-manifest object - json.loads silently keeps the last duplicate, so the author's own 'manifest validates' claim was true-but-meaningless; the reviewer distinguished duplicate array ids (checked) from duplicate object keys (not checked).",
+   "severity": "LOW (identical values; but malformed under strict validation, and a validator blind spot)",
+   "author_initially": "Claimed validation had passed - it had, for the wrong property.",
+   "resolution": "Pair removed; a strict object_pairs_hook duplicate-key sweep adopted as the standing validation for every governance-JSON edit since.",
+   "refs": ["gate_20260831-112118.md (Nexusmill)"]
+  },
+  {
+   "id": "EV-012-HARNESS-GUARD-VS-AUTHOR",
+   "date": "2026-08-31",
+   "repo": "machine-wide",
+   "layer": "harness guard (layer 2, live)",
+   "caught": "Within the hour of registration the guard blocked its OWN AUTHOR twice: a commit message containing the word 'hooksPath' in prose, and a plain ls of .adversary/reviews. Both were the documented accepted-false-positive class; both times the author reworded or used gate tooling rather than weakening the guard.",
+   "severity": "evidence-of-design (enforcement holding against the agent that built it)",
+   "author_initially": "n/a",
+   "resolution": "No change - working as designed; the precedent 'reword, never weaken' is now in the playbook.",
+   "refs": ["session record AGENT_STATE 2026-08-31 round 4"]
+  },
+  {
+   "id": "EV-013-ARCHIVE-SCHEMA-DRIFT",
+   "date": "2026-08-31",
+   "repo": "colibri-code-review",
+   "layer": "gate-review BLOCK (on a data-sync commit the author expected to pass trivially)",
+   "caught": "Real mixed-era schema drift in the review-archive manifest: 13 rows without the rel/modes wrapper, three output-path conventions, ten source files dual-keyed with their review record fragmented across incompatible entries - a generator defect nobody had noticed across weeks of syncs.",
+   "severity": "MEDIUM (consumer contract split)",
+   "author_initially": "Rebutted the FIX location (hand-editing generator data would falsify the record and desync the writer) - the rebuttal was verified and accepted; the DEFECT was conceded and docketed.",
+   "resolution": "Docketed OPEN as deferred COLIBRI-ARCHIVE-SCHEMA (fix belongs in the console writer); the archive committed as ground truth.",
+   "refs": ["gate_20260831-084546.md / -084825.md (colibri)"]
+  },
+  {
+   "id": "EV-014-DOCKET-MISFILING-DISEASE",
+   "date": "2026-08-31",
+   "repo": "Nexusmill",
+   "layer": "auditor-mindset sweep during remediation (found because the gate forces manifest reads)",
+   "caught": "A structural filing disease across BOTH governance manifests: three G35 remediation rows appended into a nested findings[] array instead of entries[], and ALL EIGHT HY4 spec dockets appended into entries_archived (the closed pile) - every consumer iterating the live arrays missed them. Cause: tail-anchored surgical inserts following whatever object closes last.",
+   "severity": "MEDIUM (open work invisible to the queues that exist to track it)",
+   "author_initially": "The author's own earlier sessions had created the misfilings.",
+   "resolution": "Owner-ruled restructures: rows moved verbatim into the live arrays; the anchor trap recorded in the governance-editing memory; strict validation now walks the actual tree.",
+   "refs": ["Nexusmill e471915 + the HY4 move in c9ac5d0"]
+  }
+ ]
+}

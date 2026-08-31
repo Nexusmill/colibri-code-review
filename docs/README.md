@@ -29,6 +29,7 @@ model corroborates facts instead of guessing.
 | [GATE_INSTALLER.md](GATE_INSTALLER.md) | Installing the gate on ANY repo with `install_gate.py` - directly, or via a local/external subagent | `Tools/adversary-gate/install_gate.py` |
 | [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) | The four layers around the gate: driver check, harness guard, the git-notes audit tripwire, CI + branch protection - and the honest bypass surface | `Tools/adversary-gate/` (auditor, guard, record) |
 | [GATE_ADOPTION_PLAYBOOK.md](GATE_ADOPTION_PLAYBOOK.md) | **THE OFFERING** - the complete novice-grade runbook for adopting the whole solution on any repo: exact commands, expected outputs, the daily loop, push/notes/CI/branch-protection flow, and a troubleshooting chapter where every entry actually happened | the whole `Tools/adversary-gate/` suite |
+| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | **THE RUNNING CASE** - every catch the gate and its layers forced into remediation (rows of record in `gate_evidence.json`; false rebuttals, live-caught layer bugs, pre-ship CRITICALs; covenant: a row per catch, same session, never deleted) | `gate_evidence.json` |
 | [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | Everything that must be in place to run an external (headless) subagent that can arm the gate and drive reviews | field-verified prerequisites |
 
 ## Quick starts
