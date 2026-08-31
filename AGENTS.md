@@ -1,3 +1,7 @@
+# AGENTS.md
+
+> **ARM THE COMMIT GATE (mandatory, once per clone):** `git config core.hooksPath .githooks` - every commit staging code then requires the adversarial clearance (tool: Nexusmill Tools repo, adversary-gate/). A fresh clone is UNARMED until this runs.
+
 # AGENTS.md — driving Colibri from a coding agent
 
 This note is for a coding agent (Claude, Cursor, etc.) asked to sweep a repo with Colibri.
