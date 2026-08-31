@@ -113,6 +113,7 @@ if not api_key():
 
 MODE_CHOICES = {"Bug Hunt": ["bug"], "Code Quality": ["quality"],
                 "Feature Ideas": ["feature"], "Spec Conformance": ["spec"],
+                "Remediation Plan": ["plan"],
                 "All three": ["bug", "quality", "feature"]}
 
 

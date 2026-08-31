@@ -37,7 +37,7 @@ DEFAULTS = {
 }
 
 MODES = {"bug": "Bug Hunt", "quality": "Code Quality", "feature": "Feature Ideas",
-         "spec": "Spec Conformance"}
+         "spec": "Spec Conformance", "plan": "Remediation Plan"}
 
 
 def load_spec(source, ids=None):
@@ -112,6 +112,9 @@ _SYS = {
              "maintainer's authoritative feature expectations. You report ONLY divergences between "
              "the code and the stated expectations, quote the violated clause for every finding, "
              "and never critique the expectations themselves or report unrelated bugs."),
+    "plan": ("You are a senior staff engineer writing a REMEDIATION PLAN. You plan only and never "
+             "claim to execute, apply, or verify a change - the plan is executed later by someone "
+             "else under strict TDD. Concrete symbols, failing-test-first, smallest viable fixes."),
 }
 
 _TEMPLATES = {
@@ -211,6 +214,26 @@ Worst first:
 
 ## UNJUDGEABLE HERE
 One line per clause whose behavior lives outside this file (name where it likely lives).""",
+
+    "plan": """Write a REMEDIATION PLAN for `{rel}` - PLAN ONLY, never execute.
+
+First identify the few most load-bearing REAL defects in this file (or, if a PREVIOUS
+review is supplied below, plan for exactly its still-open findings - do not re-litigate,
+expand, or drop them). Then, for each item:
+
+### <id/title>
+- Objective: the defect in one line
+- Root cause: exact line/symbol
+- Fix design: the smallest change that works (sketch the exact edit)
+- Test first: the FAILING test to write BEFORE the fix - test file + concrete asserts
+- Steps: ordered, bite-sized
+- Verification: commands to run and their expected outcomes
+- Risk & rollback: call sites affected, what could break, how to revert
+
+Order items worst-first. End with:
+
+## Execution order & batching
+Commit-sized tranches, dependencies noted.""",
 }
 
 
