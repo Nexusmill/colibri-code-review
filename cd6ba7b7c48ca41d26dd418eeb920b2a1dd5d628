@@ -1,0 +1,22 @@
+{
+ "type": "CLEAR",
+ "commit": "cd6ba7b7c48ca41d26dd418eeb920b2a1dd5d628",
+ "when": "20260831-083209",
+ "files": {
+  ".githooks/.gitattributes": {
+   "sha": "f7aab29804f2222bb938a44ca8b7781fdcd122fedda5949cb74f1ec4913103f8",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-083208",
+   "artifact": ".adversary\\reviews\\gate_20260831-083208.md"
+  },
+  ".githooks/pre-push": {
+   "sha": "be0618d50ad767f6c748da08843cd2af97de9404c0b21d4221c15bf076162ea3",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-083208",
+   "artifact": ".adversary\\reviews\\gate_20260831-083208.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260831-083208.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 1018, 'completion_tokens': 3595, 'total_tokens': 4613, 'cost': 0.00850736, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 192, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00850736, 'upstream_inference_prompt_cost': 0.00059836, 'upstream_inference_completions_cost': 0.007909}, 'completion_tokens_details': {'reasoning_tokens': 3100, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.githooks/.gitattributes', '.githooks/pre-push']\n\nLooking at this carefully:\n\n**The shim itself:** The pre-push hook is a thin fail-closed wrapper \u2014 it locates Python, verifies the gate tool exists (refuses if missing), and `exec`s the tool with `check-push \"$1\"`. `exec` replaces the shell, so git's stdin (the ref update list the pre-push hook receives) is inherited by the tool intact. `$1` is the remote name per git's pre-push contract (name + URL on argv; ref list on stdin), and it is quoted against shell metacharacters. Fail-closed on missing tool is correct.\n\n**The .gitattributes entry:** `pre-push text eol=lf` is scoped correctly \u2014 patterns in `.githooks/.gitattributes` are relative to that dir, so it matches `.githooks/pre-push`. Forcing LF on a `#!/bin/sh` script that Git invokes via MSYS sh on Windows is the right call; CRLF endings there would break the shebang. The existing pre-commit/post-commit/adversary entries already use this pattern, so the new line is consistent with the established contract.\n\n**Mode:** `new file mode 100755` \u2014 executable bit is set on the staged file, matching the other hooks.\n\n**Rebuttal verification:** The \"byte-copy from the reviewed Tools commit\" claim I cannot falsify without the Tools repo, but nothing in the shim contradicts it. The \"chmod 100755 on all three hooks\" claim is slightly over-stated relative to this diff (only `pre-push` shows `100755` here; pre-commit/post-commit aren't in the diff), but the change does not worsen their modes \u2014 pre-existing mode concerns on untouched files are out of scope per instructions.\n\n**No introduced defect found:** no broken callers (it's a leaf hook), no unhandled path in the shim itself, no state/ordering race (single exec), no money/security issue, no contract break with the visible files. The behavioral claims in the comment (notarization refusal, notes-ref push) live in `adversary_gate.py`, which isn't in scope here; the shim's only job is to locate it and fail closed, which it does.\n\nVERDICT: CLEAR"
+ }
+}
