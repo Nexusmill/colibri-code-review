@@ -1,0 +1,34 @@
+{
+ "type": "CLEAR",
+ "commit": "351b8981dbca60b72d3d7a8f8caa87904697a670",
+ "when": "20260831-025332",
+ "files": {
+  ".githooks/.gitattributes": {
+   "sha": "9b7cef4db8fecdc6c9d6a7b9bb3d9ae6399c060f5d611d877da65a1902dc71e7",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-025028",
+   "artifact": ".adversary\\reviews\\gate_20260831-025028.md"
+  },
+  ".githooks/adversary_audit.py": {
+   "sha": "6237d9f07df7ca872b23562e5cca61a439875f278f9cc7ce36b89f0e30af9bd8",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-025028",
+   "artifact": ".adversary\\reviews\\gate_20260831-025028.md"
+  },
+  ".githooks/adversary_baseline": {
+   "sha": "2af538740439e9fbd657ecfd45d7c80abd9e4f7482b1076f600a0c2c0ba76271",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-025028",
+   "artifact": ".adversary\\reviews\\gate_20260831-025028.md"
+  },
+  ".githooks/post-commit": {
+   "sha": "dfafd5a0b39aced4410f1595ed834d1be6adac89dac991ebdc01db31315ec2eb",
+   "model": "z-ai/glm-5.2",
+   "when": "20260831-025028",
+   "artifact": ".adversary\\reviews\\gate_20260831-025028.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260831-025028.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 6029, 'completion_tokens': 13637, 'total_tokens': 19666, 'cost': 0.03254618, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 2816, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.03254618, 'upstream_inference_prompt_cost': 0.00254478, 'upstream_inference_completions_cost': 0.0300014}, 'completion_tokens_details': {'reasoning_tokens': 13007, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.githooks/.gitattributes', '.githooks/adversary_audit.py', '.githooks/adversary_baseline', '.githooks/post-commit']\n\n## Adversarial Review\n\nI traced `adversary_audit.py` end-to-end, the post-commit hook, the baseline file, and the `.gitattributes`, and weighed the rebuttal.\n\n**Logic correctness (`_changed_code` / `_audit_commit`):**\n- Root-commit handling (`rev^1` missing \u2192 `EMPTY_TREE`) is correct.\n- Rename handling is asymmetric but sound: old=code/new=code records only `new`; old=code/new=non-code records `D:old`; old=non-code/new=code records `new`. In every branch the key the auditor expects is a key that actually exists in `rev` or `base`, so `blob_sha`'s `git show rev:path` cannot 404 in normal operation. Extra keys in the note are ignored, so mirror-drift where the gate adds `D:old` for a both-code rename cannot create false violations; the only failure mode is the gate *omitting* a key the auditor expects, which the `audit_selftest.py` drift tripwire is explicitly built to catch.\n- `note.get(\"files\") or {}` + per-key `row.get(\"sha\")` comparison is correct; `type` fallthrough (`None`/unknown \u2192 violation, `OVERRIDE` \u2192 override, `CLEAR` \u2192 clean) is correct.\n- Exit codes (0 clean / 1 violations-or-strict-overrides / 2 env/usage) match the docstring and fail closed.\n\n**Baseline `b21e9fae1e75ca47abdbb2cd1f2fc6078b244967`:** unverifiable from the diff, but if it is not a real commit in this repo, `rev-parse --verify ...^{commit}` returns non-zero and the auditor exits 2 \u2014 fail-closed, no false clean possible. Consistent with the rebuttal's \"arming commit\" framing.\n\n**`post-commit` hardcoded `C:/Users/User/...` path:** real, but explicitly by design \u2014 the hook is documented as non-blocking and warn-only (\"a missing tool here only WARNS\"), the audit reads immutable notes rather than the hook, and the docstring states client-side hooks are advisory by construction. Not a defect the change *introduces*; it's the stated threat model.\n\n**Other edge cases considered and rejected:** `C` status only appears with `-C` (not `-M`), so the `\"ACM\"` branch's `bits[1]` interpretation is dead, not wrong; `T` (type-change) is skipped, but that matches the gate (mirror) and falls inside the documented \"detection, not prevention\" limit; non-UTF-8 paths would crash `blob_sha` via `SystemExit`, but only in pathological cases not worsened by this change.\n\nNo real defect introduced or enabled.\n\nVERDICT: CLEAR"
+ }
+}
