@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "752ba85bebef9701c4449421db1e8ba1b71959d7",
+ "when": "20260901-034144",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "467da987090db1ed1a3a8eeee5c580ecad2f353b0d289a0d8d7242b93d7400dc",
+   "model": "z-ai/glm-5.2",
+   "when": "20260901-034137",
+   "artifact": ".adversary\\reviews\\gate_20260901-034137.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260901-034137.md": "model: z-ai/glm-5.2 | usage: {'prompt_tokens': 6525, 'completion_tokens': 639, 'total_tokens': 7164, 'cost': 0.0119466, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0119466, 'upstream_inference_prompt_cost': 0.009135, 'upstream_inference_completions_cost': 0.0028116}, 'completion_tokens_details': {'reasoning_tokens': 440, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['docs/gate_evidence.json']\n\nNo defects found. The change is a documentation-only addition to the evidence docket (markdown + JSON). I verified:\n\n- JSON is well-formed: EV-016's `refs` array closes, a comma separates the new object, EV-017 is a complete object with all covenant-required fields (id, date, repo, layer, caught, severity, author_initially, resolution, refs), and the root `entries`/object close correctly.\n- Scoreboard consistency: \"17 evidence rows\" matches EV-001..EV-017 (17 entries). \"3 days\" spans 2026-08-30..2026-09-01. The header date updated to 2026-09-01.\n- The new scoreboard bullet's claims (incomplete truth-pass, one occurrence fixed, second three rows away, re-edit invalidated clearance) are consistent with the EV-017 JSON entry.\n- No duplicate keys, no structural misfiling into the wrong array (the exact disease EV-014 documents), no broken cross-references.\n\nVERDICT: CLEAR"
+ }
+}
