@@ -9,9 +9,13 @@
 > founding thesis - authors, AI agents included, defend invented claims about code
 > they have not read.
 
-## The scoreboard (as of 2026-08-31)
+## The scoreboard (as of 2026-09-01)
 
-- **16 evidence rows** across 2 days of the gate's existence.
+- **17 evidence rows** across 3 days of the gate's existence.
+- **An incomplete truth-pass caught inside a CLEAR** (EV-017): a registry
+  correction fixed one occurrence of a stale count and declared victory; the
+  reviewer's clearance notes pointed at the second occurrence three rows away,
+  and the re-edit invalidated the clearance exactly as designed.
 - **A remediation itself caught destroying data** (EV-016): the fix for the archive
   schema drift silently discarded two real review records on a mode collision; the
   reviewer traced the deletion out of the staged diff and the BLOCK stopped it from

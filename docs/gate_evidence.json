@@ -177,6 +177,21 @@
    "author_initially": "Claimed 'canonical data preserved on every collision' - accurate about the canonical side, silent about the discarded side; the reviewer read the deletion out of the staged diff.",
    "resolution": "Collision-safe rework, RED-first: identical sha = dedupe; different sha = newer reviewed_at holds the bare key, the other preserved under the sanctioned synthetic key mode@sha8. Corpora restored from the archive's committed HEAD (the BLOCK had stopped the bad version from landing) and re-normalized: all FIFTEEN records preserved, visible modes 102->117, verified per-entry. The meta-lesson joins the docket: remediations destroy data too - review them like any change.",
    "refs": ["gate_20260831-170642.md (colibri)", "repo-memory collision-safe commit", "tests/test_manifest_normalize.py C-cases"]
+  },
+  {
+   "id": "EV-017-INCOMPLETE-TRUTH-PASS",
+   "date": "2026-09-01",
+   "repo": "Nexusmill",
+   "layer": "gate-review advisory note inside a CLEAR (tranche-8 commit 87cb8f29)",
+   "caught": "The tranche-8 registry truth-pass corrected the colour-hint library count (70->69; GREY-MUSH-1/487781a0 deliberately removed one hint) in AF-LIB-HINTS' expected text and verify field - but MISSED the second stale '70 hints' sitting in AF-STUDIO-HINTS' expected text three rows away. The GLM reviewer flagged the leftover in its clearance notes while granting CLEAR.",
+   "severity": "LOW (stale registry documentation; no code effect - but a truth-pass that fixes one occurrence of a wrong number and declares victory is the exact half-measure the docket exists to record)",
+   "author_initially": "Declared the 70->69 correction complete after editing only the row the failing battery check pointed at; never grepped the registry for other occurrences of the stale count.",
+   "resolution": "Same session, pre-commit: the second occurrence corrected with the same git citation, features tier re-run green, commit re-gated (the re-edit invalidated the prior clearance exactly as designed) and landed in Nexusmill 87cb8f29. Lesson: a truth-pass on a number greps for EVERY occurrence of the old number before claiming completeness.",
+   "refs": [
+    "gate_20260901-033419.md (Nexusmill .adversary - the advisory catch)",
+    "gate_20260901-033921.md (Nexusmill .adversary - CLEAR after the fix)",
+    "Nexusmill 87cb8f29 (campaign tranche 8)"
+   ]
   }
  ]
 }
