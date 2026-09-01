@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "7acbb04d2ea9eb45e243b577c47abd36bedcdb23",
+ "when": "20260901-111229",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "4fb82ff5731f358143f0f9ae86fafb044b6a68bc81d0e00b0dc02a2ffe97e4b9",
+   "model": "deepseek/deepseek-v4-flash-0731",
+   "when": "20260901-111216",
+   "artifact": ".adversary\\reviews\\gate_20260901-111216.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260901-111216.md": "model: deepseek/deepseek-v4-flash-0731 | usage: {'prompt_tokens': 7686, 'completion_tokens': 27209, 'total_tokens': 34895, 'cost': 0.00310395792, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00310395792, 'upstream_inference_prompt_cost': 0.00038414628, 'upstream_inference_completions_cost': 0.00271981164}, 'completion_tokens_details': {'reasoning_tokens': 27201, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['docs/gate_evidence.json']\n\nVERDICT: CLEAR"
+ }
+}
