@@ -11,7 +11,14 @@
 
 ## The scoreboard (as of 2026-09-01)
 
-- **17 evidence rows** across 3 days of the gate's existence.
+- **18 evidence rows** across 3 days of the gate's existence.
+- **The gate blocked its own model promotion, three times** (EV-018): the change that
+  made deepseek the primary reviewer was BLOCKed by deepseek itself on its first
+  official runs (two findings BLOCKs plus one fail-closed BLOCK on its own empty
+  response) - a reachable crash behind a false 'unreachable' comment, a dead
+  fallback on the canonical transport failure, and a security comment
+  contradicting the code; the final CLEAR arrived through the new fallback path
+  exercising itself live.
 - **An incomplete truth-pass caught inside a CLEAR** (EV-017): a registry
   correction fixed one occurrence of a stale count and declared victory; the
   reviewer's clearance notes pointed at the second occurrence three rows away,

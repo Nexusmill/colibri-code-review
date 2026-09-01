@@ -192,6 +192,23 @@
     "gate_20260901-033921.md (Nexusmill .adversary - CLEAR after the fix)",
     "Nexusmill 87cb8f29 (campaign tranche 8)"
    ]
+  },
+  {
+   "id": "EV-018-GATE-BLOCKS-OWN-PROMOTION",
+   "date": "2026-09-01",
+   "repo": "Tools (adversary-gate itself)",
+   "layer": "gate-review BLOCK x3 - two findings BLOCKs (r1, r3) + one fail-closed empty-content BLOCK (r2) - on the commit that promoted deepseek-v4-flash-0731 to primary (its first official reviews)",
+   "caught": "The model-fallback-chain change (owner ruling: deepseek primary, glm-5.3-flash fallback) drew three BLOCK verdicts before its CLEAR - findings BLOCKs in r1 and r3 from the new primary reviewing its own promotion, and r2's fail-closed BLOCK on an empty response. r1: --model '' / ADVERSARY_MODEL='' produce an empty chain and `raise None` (TypeError) behind the author's comment 'unreachable (empty chain is impossible: argparse default is non-empty)' - a false claim about reachability. r3: URLError (connection refused/DNS/TLS/timeout - the canonical transport failure the chain was BUILT for) never converts to SystemExit, so the chain crashed with a raw traceback instead of falling back; and the DEFAULT_MODEL comment still documented the pre-amendment empty-response behavior, contradicting the code about the EV-004 invariant. Between them, r2's blind fail-closed BLOCK on deepseek's empty-content response (32,677 reasoning tokens, zero answer text) exposed the operational hazard that reshaped the design to chain-advance-on-empty.",
+   "severity": "MEDIUM (a crash path, a dead fallback, and an unhandled empty-response operational hazard in the safety tool itself - the last reshaping the design to chain-advance-on-empty - plus two wrong claims in its security comments, all in the change that was supposed to make the gate MORE reliable)",
+   "author_initially": "Declared the empty chain 'impossible' in a comment (wrong: two reachable inputs produce it) and left a security comment asserting an invariant the amended code no longer implemented.",
+   "resolution": "All fixed pre-commit: empty chain fails closed with a clean error; URLError converts to SystemExit so the chain advances; the comment now states the SURVIVING invariant (empty can never CLEAR; a last-model empty still BLOCKs). The final CLEAR arrived through the new fallback path exercising itself live - deepseek returned empty content on the gate's own file twice and glm-5.3-flash completed the review. Landed as Tools dca6ae4; Tools pushed to github.com/Nexusmill/Tools (private) after a full-history secrets scan (209 objects, zero hits).",
+   "refs": [
+    "gate_20260901-101840.md (Tools reviews - r1 BLOCK)",
+    "gate_20260901-102316.md (Tools reviews - r2 empty-content fail-closed BLOCK)",
+    "gate_20260901-102841.md (Tools reviews - r3 BLOCK)",
+    "gate_20260901-104924.md (Tools reviews - CLEAR via the fallback)",
+    "Tools dca6ae4"
+   ]
   }
  ]
 }
