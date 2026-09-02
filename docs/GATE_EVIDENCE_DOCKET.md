@@ -9,9 +9,9 @@
 > founding thesis - authors, AI agents included, defend invented claims about code
 > they have not read.
 
-## The scoreboard (as of 2026-09-01)
+## The scoreboard (as of 2026-09-02)
 
-- **19 evidence rows** across 3 days of the gate's existence.
+- **20 evidence rows** (EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count — addressed, not rebutted).
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -

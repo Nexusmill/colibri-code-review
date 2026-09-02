@@ -224,6 +224,21 @@
     "gate_20260901-233142.md (Nexusmill .adversary - CLEAR after the fix)",
     "Nexusmill 0ae3029c (campaign tranche 15)"
    ]
+  },
+  {
+   "id": "EV-020-REVIEW-PROSE-INACCURACY",
+   "date": "2026-09-02",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (pre-commit, campaign phase-2 tranche-1 sweep reviews)",
+   "caught": "Two confident-wrong claims in the AGENT'S OWN gated colibri-review deliverables (not the code under review): (1) the guard_selftest.py review labeled GLM's cwd finding 'MEDIUM refuted' and SILENTLY DROPPED GLM's actual MEDIUM (run_guard has no subprocess timeout -> selftest can hang forever), asserting false provenance; (2) the adversary_audit.py review said 'ALL ten locations' then enumerated nine vendored twins, an off-by-one in the re-vendor checklist that would silently leave one copy on stale gate code.",
+   "severity": "LOW-MEDIUM (false-provenance + dropped-finding in the review archive; the gate treats a wrong claim in a deliverable as the same defect class it exists to prevent)",
+   "author_initially": "Wrote both claims as fact. The gate (glm-5.3-flash primary) BLOCKed and named both; the author ADDRESSED (did not rebut) - confirmed the real timeout MEDIUM, relabeled the cwd finding LOW-refuted, and reconciled the count to 1 canonical + 9 vendored = 10.",
+   "resolution": "Both review .md corrected; re-staged; gate re-run to CLEAR before the Tools commit. Lesson: an external review's severities and full finding set must be carried into the gated review verbatim - relabeling or dropping a finding is the same confident-wrong class the sweep is hunting.",
+   "refs": [
+    "Tools .colibri_reviews/adversary-gate__guard_selftest.py__bug__f8f61526.md",
+    "Tools .colibri_reviews/adversary-gate__adversary_audit.py__bug__28ebdc7b.md",
+    "Tools .adversary/reviews/gate_20260902-105914.md (the BLOCK)"
+   ]
   }
  ]
 }
