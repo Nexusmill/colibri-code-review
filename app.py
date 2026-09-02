@@ -138,7 +138,8 @@ def process(base, items):
                     md_e = ((mf.get(os.path.abspath(path)) or {}).get("modes") or {}).get(mode) or {}
                     try:
                         if md_e.get("output") and os.path.isfile(md_e["output"]):
-                            prior = open(md_e["output"], encoding="utf-8", errors="ignore").read()
+                            with open(md_e["output"], encoding="utf-8", errors="ignore") as _pf:
+                                prior = _pf.read()
                     except OSError:
                         prior = None
             md, usage = review_code(code, rel, mode, cfg, prior_md=prior,
@@ -249,8 +250,12 @@ if st.session_state.get("scan"):
                                     "why": f"{len(picked)} selected · {mode_label}"}
     if b2.button("Review all changed + new", use_container_width=True):
         outs = [d["File"] for d in disp if d["_out"]]
-        st.session_state.pending = {"items": [(rel, m) for rel in outs for m in modes],
-                                    "why": f"all {len(outs)} outstanding · {mode_label}"}
+        if outs:
+            st.session_state.pending = {"items": [(rel, m) for rel in outs for m in modes],
+                                        "why": f"all {len(outs)} outstanding · {mode_label}"}
+        else:
+            st.session_state.pop("pending", None)
+            st.info("Nothing outstanding — every shown file is already reviewed at its current sha.")
     if b3.button("Export all reviews", use_container_width=True):
         path, text = store.export_all(base)
         st.session_state.export = (path, text)
@@ -258,7 +263,10 @@ if st.session_state.get("scan"):
     pend = st.session_state.get("pending")
     if pend and pend["items"]:
         files = {rel for rel, _ in pend["items"]}
-        tok = sum(d["_tok"] for d in disp if d["File"] in files)
+        # token map over ALL scanned rows, not the filtered `disp`: a queued file hidden by
+        # a later filter change would otherwise contribute 0 and undercount the spend ceiling.
+        _tokmap = {r["rel"]: r["tokens"] for r in rows}
+        tok = sum(_tokmap.get(rel, 0) for rel in files)
         # ceiling across the whole queue: input over unique files + max output per (file,mode) call
         ceil = tok * cfg["price_in"] / 1e6 + len(pend["items"]) * eff_max_out * cfg["price_out"] / 1e6
         st.warning(f"Queued: **{len(pend['items'])}** review call(s) — {pend['why']}. "

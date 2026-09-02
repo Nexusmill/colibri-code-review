@@ -79,6 +79,10 @@ def _ast_smells(code):
         tree = ast.parse(code)
     except SyntaxError as e:
         return ["SYNTAX ERROR at L%s: %s (the file does not parse)" % (e.lineno, e.msg)], True
+    except (ValueError, RecursionError, MemoryError) as e:
+        # null bytes -> ValueError; pathological nesting -> Recursion/MemoryError. The
+        # no-crash contract means these degrade to a note, never escape build_static_context.
+        return ["parse failed (%s) - not statically analyzable" % type(e).__name__], True
     smells = []
 
     for node in ast.walk(tree):
@@ -197,8 +201,8 @@ def dis_section(code, rel, max_funcs=3, per_cap=2500):
     try:
         tree = ast.parse(code)
         module_co = compile(code, rel or "<module>", "exec")
-    except SyntaxError:
-        return "skipped (file does not parse)."
+    except (SyntaxError, ValueError, RecursionError, MemoryError) as e:
+        return "skipped (%s)." % type(e).__name__
     names = _hot_functions(tree)[:max_funcs]
     if not names:
         return "no loop-bearing functions - nothing hot to disassemble."
@@ -231,15 +235,27 @@ def build_static_context(code, rel, mode="bug", cfg=None):
     want_ast = cfg.get("static_ast", True)
     want_mypy = cfg.get("static_mypy", True) and mode in ("bug", "quality")
     want_dis = cfg.get("static_dis", True) and mode in ("bug", "quality")
-    total_cap = int(cfg.get("static_max_chars", 8000) or 8000)
+    try:
+        total_cap = int(cfg.get("static_max_chars", 8000) or 8000)
+    except (TypeError, ValueError):
+        total_cap = 8000
 
     sections = []
+
+    def _safe(title, fn):
+        # each pass degrades to a note on ANY failure (incl. the recursive ast walkers'
+        # RecursionError) - the module promises a short note, never a crash.
+        try:
+            sections.append((title, fn()))
+        except Exception as e:
+            sections.append((title, "failed (%s) - skipped." % type(e).__name__))
+
     if want_ast:
-        sections.append(("Scope leaks & dead code (ast + pyflakes)", ast_section(code)))
+        _safe("Scope leaks & dead code (ast + pyflakes)", lambda: ast_section(code))
     if want_mypy:
-        sections.append(("Static type check (mypy)", mypy_section(code, rel)))
+        _safe("Static type check (mypy)", lambda: mypy_section(code, rel))
     if want_dis:
-        sections.append(("Bytecode of hot loop-bearing functions (dis)", dis_section(code, rel)))
+        _safe("Bytecode of hot loop-bearing functions (dis)", lambda: dis_section(code, rel))
     if not sections:
         return ""
 
