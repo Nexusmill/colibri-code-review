@@ -1,0 +1,34 @@
+{
+ "type": "CLEAR",
+ "commit": "97e2a9fb9c50611a79ce134f4116664d1541ba70",
+ "when": "20260902-133628",
+ "files": {
+  ".githooks/adversary_audit.py": {
+   "sha": "d80683857024925fdaf62580a7826d2c471f7fb4363c32abbb63b73b9e64142d",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260902-133605",
+   "artifact": ".adversary\\reviews\\gate_20260902-133605.md"
+  },
+  "run_batch.py": {
+   "sha": "45b57fa5d19eafa8826b1d809c2f96d99a46805ec071bb1ec78a9b78b632b217",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260902-133605",
+   "artifact": ".adversary\\reviews\\gate_20260902-133605.md"
+  },
+  "scanner.py": {
+   "sha": "11f72b520a021339b1b009c8696c669d43165a7d5bc296bd0013bb73cc304665",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260902-133605",
+   "artifact": ".adversary\\reviews\\gate_20260902-133605.md"
+  },
+  "store.py": {
+   "sha": "38147a015a8ac6fabda78214e68232685cabe0ea3dbf027352997932625158ea",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260902-133605",
+   "artifact": ".adversary\\reviews\\gate_20260902-133605.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260902-133605.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 12160, 'completion_tokens': 30603, 'total_tokens': 42763, 'cost': 0.0171255, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0171255, 'upstream_inference_prompt_cost': 0.001824, 'upstream_inference_completions_cost': 0.0153015}, 'completion_tokens_details': {'reasoning_tokens': 29527, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.githooks/adversary_audit.py', 'run_batch.py', 'scanner.py', 'store.py']\n\nVerification notes per file, hunting for anything the change introduces or enables:\n\n**.githooks/adversary_audit.py**\n- `-z` parse walked token-by-token against git's actual `--name-status -z` grammar (`M\\0path\\0`, `R100\\0old\\0new\\0`, `D\\0path\\0`, trailing NUL \u2192 empty final token handled by the `if not st` branch). Indices line up; no off-by-one; the `else: i += 2` branch only reachable for statuses (`U`/`X`) that a commit-vs-first-parent diff cannot emit.\n- Copy status (`C`) would be misparsed (treated as one path, token stream desyncs), but copies require `-C`/`--find-copies`/`diff.renames=copies`; the explicit `-M` on the command line overrides `diff.renames=copies`, so with this exact argv `C` is unreachable. Not a real trigger.\n- Non-UTF-8 path bytes now become U+FFFD after `decode(\"utf-8\",\"replace\")`, so `git show rev:<mangled>` fails \u2192 `check=True` \u2192 SystemExit, exit 1. That is fail-closed/loud, versus the old C-quoted path being silently *skipped* (fail-open). Strictly safer, not a defect.\n- `GIT_NO_REPLACE_OBJECTS` is honored by all relevant git versions and only removes substitution; notes/rev-list/diff/show all see the true graph consistently, so no new false violation for replace-free repos.\n\n**run_batch.py**\n- Bounded dispatch: pending set capped at `workers`; `wait(FIRST_COMPLETED)` drains `done` and reassigns pending to not-done; trailing `as_completed(pending)` drains the remainder including the empty-set case. `f.result()` cannot realistically raise since `_one` catches both its critical sections (`file_sha` swallows OSError \u2192 `\"\"`; a vanished file still dies inside the review `try`, which is caught). The state/summary bookkeeping on the new pre-review error path matches the existing error rows.\n- Budget: `state[\"total\"]` rises only inside `save_review` under `mlock`; the pre-submit check reads it under `mlock`, so the check is race-free; overshoot is now bounded by in-flight `workers` (the documented tradeoff) versus unbounded before. `state[\"stopped\"]` is written but never read \u2014 vestigial, pre-existing, harmless.\n\n**scanner.py**\n- `sha256(raw)` is byte-identical to `store.file_sha` (both full raw `rb` reads) \u2014 the CRLF divergence is genuinely fixed. `data` (decoded) is used only for `chars`/`head`/scoring, exactly as the text-mode read fed before; the only delta is `\\r` now counted for CRLF files, which only nudges the `tokens` estimate and the `<80 chars` heuristic \u2014 ranking, not correctness. Consumers keyed on the old text-sha see at most a one-time \"stale\" transition, in the direction of correctness.\n\n**store.py**\n- `_manifest_lock`: fcntl path blocks correctly (per-open-file-description, so distinct `open()` calls in one process serialize too; PEP 475 covers EINTR); msvcrt `LK_NBLCK` retry loop releases the GIL in `sleep`, and Windows byte-range locks do conflict across handles in-process, so the retry is required and correct; lock is released on body exception via `finally`; OS reclaims it on process death. Lock file lives under `.colibri_reviews/`, excluded from both run_batch's walk and scanner's CODE_EXT set.\n- `save_review` re-reads the manifest inside the lock before mutate+replace \u2014 the batch thread's subsequent `manifest.update(load_manifest(base))` outside the lock reads an atomic `os.replace`'d snapshot, so no lost update. Writer-writer clobbering (the reported bug) is closed; the pre-existing reader-vs-`os.replace` window (Windows open-handle) is unchanged in kind and not worsened.\n- Cross-lock ordering: `mlock` \u2192 `_manifest_lock` in run_batch; no code path takes `_manifest_lock` then `mlock`, so no deadlock between thread lock and OS lock.\n- Minor, fail-closed nit: in `_manifest_lock`'s finally, if the lock was never acquired (e.g., KeyboardInterrupt during the retry sleep), the msvcrt unlock of an unlocked byte raises and masks the original exception \u2014 cosmetic, no state corruption, process exit path only.\n\nAuthor's specific claims checked against the bytes: raw-bytes sha equality (holds), `-z`/typechange/non-ASCII path handling (correct per grammar), completion-bounded budget (correct), cross-process manifest RMW serialization (correct), GIT_NO_REPLACE_OBJECTS scope (consistent across all `_git` calls). Nothing the change touches enables a logic error, money-safety break, contract break, or race.\n\nVERDICT: CLEAR"
+ }
+}
