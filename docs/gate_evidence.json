@@ -239,6 +239,21 @@
     "Tools .colibri_reviews/adversary-gate__adversary_audit.py__bug__28ebdc7b.md",
     "Tools .adversary/reviews/gate_20260902-105914.md (the BLOCK)"
    ]
+  },
+  {
+   "id": "EV-021-GATE-SELF-CRASH-MALFORMED-200",
+   "date": "2026-09-02",
+   "repo": "Tools -> Nexusmill",
+   "layer": "gate run CRASH (L0 fail-closed surfaced a latent defect in the gate's OWN code during live use)",
+   "caught": "While gating the phase-2 remediation's Nexusmill manifest commit, adversary_gate._call_one_model crashed with JSONDecodeError: OpenRouter returned a 200 with an HTML proxy-error body, and json.loads sat inside a try whose except only handled HTTPError/URLError, so the error escaped _call_model's SystemExit-only chain handler and killed cmd_run instead of failing over to the fallback model. The gate could not run -> it blocked its own remediation commit.",
+   "severity": "MEDIUM (availability: a flaky provider bricks the gate instead of failing over; fail-closed so no false CLEAR)",
+   "author_initially": "This exact MEDIUM was DOCUMENTED in the phase-2 adversary_gate.py sweep review but not fixed (it was not in the owner's top-5). It then bit live. Fixed immediately (Tools 9b60573): non-JSON body -> SystemExit (chain advances), null choices coerced.",
+   "resolution": "Verified modelA-bad-body -> modelB failover + null-choices no-crash + gate_selftest 32/32; committed 9b60573; remediation row GATE-MALFORMED-200-CRASH. Lesson: a documented-but-deferred defect in the enforcement tool itself can block the very work that would fix everything - the gate's fail-closed crash is what surfaced it.",
+   "refs": [
+    "Tools/adversary-gate/adversary_gate.py _call_one_model",
+    "Nexusmill remediation_manifest GATE-MALFORMED-200-CRASH",
+    "gate run gate_20260902-135030 (the CLEAR after the fix)"
+   ]
   }
  ]
 }
