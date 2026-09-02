@@ -57,10 +57,11 @@ def scan(root):
                   "core.py", "server.py", "index.js", "index.ts"}
     for p, rel, ext, dp in cand:
         try:
-            with open(p, "r", encoding="utf-8", errors="ignore") as fh:
-                data = fh.read()
+            with open(p, "rb") as fh:
+                raw = fh.read()
         except OSError:
             continue
+        data = raw.decode("utf-8", "ignore")   # decoded text is used for scoring only
         chars = len(data)
         depth = rel.count(os.sep)
         sib = dir_count.get(dp, 1)
@@ -84,7 +85,7 @@ def scan(root):
             "path": p, "rel": rel, "ext": ext, "chars": chars,
             "tokens": int(chars / 3.5), "dir_siblings": sib,
             "score": round(score, 1),
-            "sha": hashlib.sha256(data.encode("utf-8", "ignore")).hexdigest(),
+            "sha": hashlib.sha256(raw).hexdigest(),   # RAW bytes: must equal store.file_sha() (binary), or CRLF files read as perpetually "stale" and get re-billed
         })
     rows.sort(key=lambda r: (-r["score"], -r["tokens"]))
     return rows

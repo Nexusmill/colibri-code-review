@@ -117,9 +117,18 @@ def main():
             rel = os.path.relpath(p)
         except ValueError:
             rel = p            # cross-drive on Windows: relpath can't cross mounts
-        sha = store.file_sha(p)
-        with mlock:
-            st_ = store.status(manifest, os.path.abspath(p), sha, args.mode)
+        # sha/status ran OUTSIDE the review try, so a file deleted between gather() and
+        # here (or a manifest read error) crashed the whole batch and skipped the summary.
+        try:
+            sha = store.file_sha(p)
+            with mlock:
+                st_ = store.status(manifest, os.path.abspath(p), sha, args.mode)
+        except Exception as e:
+            with mlock:
+                state["errors"] += 1
+            print("[%d/%d] %-48s  ERROR (pre-review): %s" % (i, len(files), rel[-48:], e))
+            summary.append({"rel": rel, "status": "error", "error": str(e)[:300]})
+            return
         if st_ == "reviewed" and not args.force:
             with mlock:
                 state["skipped"] += 1
@@ -175,17 +184,27 @@ def main():
                 break
             _one(i, p)
     else:
+        # Bound in-flight dispatch on COMPLETION so --budget is actually enforced: the old
+        # single-pass loop submitted every file before any worker finished (state["total"]
+        # rises only on completion), so the budget check never tripped and the whole list
+        # was billed regardless. Keep at most `workers` in flight; re-check budget as
+        # completions accrue.
+        from concurrent.futures import wait, FIRST_COMPLETED
         with ThreadPoolExecutor(max_workers=workers) as ex:
-            futs = []
+            pending = set()
             for i, p in enumerate(files, 1):
                 with mlock:
-                    if args.budget and state["total"] >= args.budget:
-                        state["stopped"] = True
-                if state["stopped"]:
+                    over = bool(args.budget) and state["total"] >= args.budget
+                if over:
+                    state["stopped"] = True
                     print("budget $%.2f reached; not dispatching further files." % args.budget)
                     break
-                futs.append(ex.submit(_one, i, p))
-            for f in as_completed(futs):
+                pending.add(ex.submit(_one, i, p))
+                if len(pending) >= workers:
+                    done, pending = wait(pending, return_when=FIRST_COMPLETED)
+                    for f in done:
+                        f.result()
+            for f in as_completed(pending):
                 f.result()
     import json as _json
     (out / "_batch_summary.json").write_text(_json.dumps(

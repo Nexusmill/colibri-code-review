@@ -1,7 +1,46 @@
 """Persistence: remembers which files were reviewed, PER MODE (bug/quality/feature),
 saves each review to .colibri_reviews/ and links it back to the source file.
 Also exports every saved review into one Markdown file. Survives app restarts."""
-import os, json, hashlib, time
+import os, json, hashlib, time, contextlib
+try:
+    import msvcrt                      # Windows advisory file lock
+except ImportError:
+    msvcrt = None
+try:
+    import fcntl                       # POSIX advisory file lock
+except ImportError:
+    fcntl = None
+
+
+@contextlib.contextmanager
+def _manifest_lock(base):
+    """Cross-PROCESS lock around the manifest read-modify-write. The Streamlit console and
+    run_batch (separate processes, no shared threading.Lock) both load->mutate->replace the
+    same _manifest.json; without this the last writer clobbers the other's row (silent loss
+    of a review record). Held across the load and the replace."""
+    lockp = os.path.join(reviews_dir(base), "_manifest.lock")
+    f = open(lockp, "a+")
+    try:
+        if msvcrt:
+            f.seek(0)
+            while True:
+                try:
+                    msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
+                    break
+                except OSError:
+                    time.sleep(0.05)
+        elif fcntl:
+            fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+        yield
+    finally:
+        try:
+            if msvcrt:
+                f.seek(0)
+                msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
+            elif fcntl:
+                fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+        finally:
+            f.close()
 
 
 def reviews_dir(base):
@@ -78,20 +117,21 @@ def save_review(base, path, rel, sha, mode, review_md, usage, model):
         f.write(header + (review_md or "_(empty review)_"))
     os.replace(tmp, out)                        # atomic: never leave a half-written review
 
-    m = load_manifest(base)
-    ap = os.path.abspath(path)
-    entry = m.get(ap) or {"rel": rel, "modes": {}}
-    entry.setdefault("modes", {})
-    entry["rel"] = rel
-    entry["modes"][mode] = {
-        "sha": sha, "output": out,
-        "reviewed_at": time.strftime("%Y-%m-%d %H:%M"),
-        "tokens_in": usage.get("prompt_tokens", 0),
-        "tokens_out": usage.get("completion_tokens", 0),
-        "cost": usage.get("cost", 0),
-    }
-    m[ap] = entry
-    save_manifest(base, m)
+    with _manifest_lock(base):           # cross-process: re-read INSIDE the lock, then replace
+        m = load_manifest(base)
+        ap = os.path.abspath(path)
+        entry = m.get(ap) or {"rel": rel, "modes": {}}
+        entry.setdefault("modes", {})
+        entry["rel"] = rel
+        entry["modes"][mode] = {
+            "sha": sha, "output": out,
+            "reviewed_at": time.strftime("%Y-%m-%d %H:%M"),
+            "tokens_in": usage.get("prompt_tokens", 0),
+            "tokens_out": usage.get("completion_tokens", 0),
+            "cost": usage.get("cost", 0),
+        }
+        m[ap] = entry
+        save_manifest(base, m)
     return out
 
 
