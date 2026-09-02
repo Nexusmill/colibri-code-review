@@ -11,7 +11,14 @@
 
 ## The scoreboard (as of 2026-09-01)
 
-- **18 evidence rows** across 3 days of the gate's existence.
+- **19 evidence rows** across 3 days of the gate's existence.
+- **A false-green test-coverage construction caught before it landed** (EV-019): the
+  new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
+  a missing Blender, a pre-check crash, or the packaged add-on failing to enable -
+  the exact regression class the battery exists to catch - left the other row PASS
+  with zero checks executed. The reviewer traced all four trigger paths from the
+  staged bytes; the fix (both-row LIBRUN_ guards + own-evidence-required grading)
+  was verified by trace in the re-review.
 - **The gate blocked its own model promotion, three times** (EV-018): the change that
   made deepseek the primary reviewer was BLOCKed by deepseek itself on its first
   official runs (two findings BLOCKs plus one fail-closed BLOCK on its own empty

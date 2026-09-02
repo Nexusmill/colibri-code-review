@@ -209,6 +209,21 @@
     "gate_20260901-104924.md (Tools reviews - CLEAR via the fallback)",
     "Tools dca6ae4"
    ]
+  },
+  {
+   "id": "EV-019-LIB-ROW-GRADING-FALSE-GREEN",
+   "date": "2026-09-01",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (campaign tranche 15, first review)",
+   "caught": "The new PS-LIB battery's row-grading split let every run-integrity failure fail only ONE of its two rows: with no Blender on the machine, with the inner probe crashing before its first check, or - the primary regression class the battery exists to catch - with the PACKAGED add-on failing to enable (or silently loading the machine's installed copy instead of the sandbox), PS-LIB-FLAT-INSTALL graded PASS with ZERO of its checks executed; symmetrically a mid-run death after one LIBG_ line left PS-LIB-GENERATE green on unexecuted claims. The reviewer traced all four trigger paths from the staged bytes and named the fix shape.",
+   "severity": "HIGH (false-green coverage rows - the untested ratchet would have believed debt paid on evidence that never ran)",
+   "author_initially": "Had built the mid-run-death guard for exactly this class but scoped it to one row - in the reviewer's words, 'it just stops one row short'. Accepted immediately.",
+   "resolution": "Run-integrity guards renamed LIBRUN_ (no-Blender / inner-never-ran / inner-died-mid-run / loaded-from-wrong-place / ops-unregistered) and appended to BOTH rows' fail lists; each row additionally requires at least one of its OWN check lines to have executed (else it reads 'no ... checks executed', red). Verified by trace in the re-review: the no-Blender scenario reds both rows; features tier green end-to-end; CLEAR on r2.",
+   "refs": [
+    "gate_20260901-230829.md (Nexusmill .adversary - the BLOCK)",
+    "gate_20260901-233142.md (Nexusmill .adversary - CLEAR after the fix)",
+    "Nexusmill 0ae3029c (campaign tranche 15)"
+   ]
   }
  ]
 }
