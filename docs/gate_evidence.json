@@ -269,6 +269,20 @@
     "Tools gate_20260902-200213.md (the CLEAR)",
     "8 gate rounds 17:xx-20:xx"
    ]
+  },
+  {
+   "id": "EV-023-CREDENTIAL-LEAK-BLOCKED",
+   "date": "2026-09-02",
+   "repo": "3DPrinting",
+   "layer": "pre-commit gate BLOCK (committing the copilot-branch's outstanding tracked edits before moving the repo to main)",
+   "caught": "A ~22,000-line addition to a tracked memory/session_learnings archive carried LIVE plaintext network credentials pasted from a terminal transcript: the LAN gateway's root password (a paramiko one-liner that demonstrably authenticated), the Wi-Fi AP admin password verbatim, and printer SSH creds. The agent had staged the whole tracked diff (git add -u) and was one commit away from writing those secrets into permanent git history - exactly the G18 'never commit secrets' violation the gate exists to stop. (Secret VALUES are deliberately not recorded in this docket - only the class.) The same review also flagged a LOW dangling dataset-index reference to an unstaged artifact.",
+   "severity": "HIGH (root/admin credential exposure to any future push/clone/backup of the repo)",
+   "author_initially": "Accepted the finding immediately - unstaged the credential-bearing file plus all memory/ transcript files and the dangling-index files, committed only the gate-cleared safe subset, and surfaced the exposure to the owner with a rotate-and-scrub recommendation (rotating live network credentials is an owner action, not taken unilaterally).",
+   "resolution": "3DPrinting ec6a7e1e commits the safe subset only; the credential file stays a local uncommitted edit. Owner flagged to rotate the gateway root + AP admin passwords and scrub the file. LESSON: `git add -u` on a repo one hasn't worked in recently can sweep pasted-transcript secrets into history; the gate's content review - not just extension/path filtering - is what caught it.",
+   "refs": [
+    "3DPrinting ec6a7e1e chore(workspace)",
+    "3DPrinting gate_20260902-203258.md (the BLOCK)"
+   ]
   }
  ]
 }
