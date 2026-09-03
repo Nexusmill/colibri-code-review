@@ -254,6 +254,21 @@
     "Nexusmill remediation_manifest GATE-MALFORMED-200-CRASH",
     "gate run gate_20260902-135030 (the CLEAR after the fix)"
    ]
+  },
+  {
+   "id": "EV-022-HARNESS-GUARD-8-ROUND-HARDENING",
+   "date": "2026-09-02",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK x8 + one byte-cited rebuttal (the phase-2 sweep's harness_guard residual fix, reviewed over eight rounds)",
+   "caught": "Closing two documented harness_guard residuals (compound-command exemption + shell-var commit-bypass smuggle) took EIGHT gate rounds; the gate found a REAL agent-reachable forgery route or integrity defect nearly every round: (r1) a write-indicator denylist missed python open()/git config --file/curl -o/node -e/find -delete writes; (r2) a first-word read-allowlist ignored a redirect/heredoc still in the segment; (r3) process substitution + xxd outfile operand + export-prefixed var assignments; (r4) shell-FUNCTION laundering (a reader-named function definition); (r5) cross-segment function laundering + PATH hijack (per-segment eval severed def from invoke; argv[0]=='cat' guarantees nothing runs cat); (r6-r8) shallow var-flag bypasses + author overclaims + a STAGING MISMATCH (the fix was on disk but a denied stage command left the round-6 bytes staged; the gate proved 'the tree you verified is not the tree being committed'). Final design: NO read exemption on the state dir - block any reference; reads go through the status subcommand - the only thing a text guard can do safely once shadowing/PATH/aliases exist.",
+   "severity": "HIGH (each round was a live forgery route into the state dir's clearance file - the one bypass with no backstop - or a verification-integrity defect)",
+   "author_initially": "Overclaimed completeness twice (rounds 5-6) and staged the wrong bytes once (rounds 7-8); each caught and corrected. Round 8 was a gate MISREAD of the staged regex, settled by a byte-cited factual rebuttal (staged==disk; the staged decide() blocks all cited forms; guard_selftest 84/84 not 79/84) - the gate re-verified against the bytes and CLEARed.",
+   "resolution": "Committed Tools a72b051 after CLEAR; guard_selftest 41->84 (a regression per closed bypass); reason+docstring honestly scope the var rule as best-effort/audit-backstopped. LESSON: a regex cannot safely classify shell as read-vs-write; the secure move is to block the whole state dir and lean on the audit tripwire for the unbounded tail - and ALWAYS re-verify the STAGED bytes match the fix, since a denied stage command silently leaves old bytes staged.",
+   "refs": [
+    "Tools a72b051 fix(guard)",
+    "Tools gate_20260902-200213.md (the CLEAR)",
+    "8 gate rounds 17:xx-20:xx"
+   ]
   }
  ]
 }
