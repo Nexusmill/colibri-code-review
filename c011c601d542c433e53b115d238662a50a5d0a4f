@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "c011c601d542c433e53b115d238662a50a5d0a4f",
+ "when": "20260903-171755",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "0f14c144bdea8dd71b9530cdd99456d03806a5c48352e1b4dfaa561135464d6d",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260903-171751",
+   "artifact": ".adversary\\reviews\\gate_20260903-171751.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260903-171751.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 11830, 'completion_tokens': 781, 'total_tokens': 12611, 'cost': 0.0010825, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0010825, 'upstream_inference_prompt_cost': 0.00088725, 'upstream_inference_completions_cost': 0.00019525}, 'completion_tokens_details': {'reasoning_tokens': 331, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['docs/gate_evidence.json']\n\nThis staged change is a docs-only amendment to `docs/gate_evidence.json`: it extends the `resolution` field of entry EV-025 and appends three refs. Adversarial checks performed:\n\n1. **JSON validity**: The amended `resolution` string contains backticks and parentheses but no unescaped double quotes or backslashes; the `refs` array additions are comma-separated correctly with the last element comma-free; the entry and file close with balanced brackets. The file parses as valid JSON \u2014 no EV-011-style duplicate-key or truncation defect introduced.\n\n2. **Covenant compliance**: The row is amended in place, not deleted, per the stated covenant (\"a catch later shown false is amended in place\"). The amendment is an append to `resolution` plus additive refs \u2014 no historical bytes deleted.\n\n3. **Internal factual consistency**: The amendment claims `gate_selftest 51 -> 54` while the round-1 refutation narrative mentions \"selftest 23 green\" \u2014 these are plausibly different selftests (gate_selftest vs. a fixture-level selftest), and the docket text itself distinguishes them (\"TDD through the gate (gate_selftest 51 -> 54)\" vs. the refuted docstring-trip claim's \"selftest 23 green\"). Not a contradiction on the bytes provided.\n\n4. **Stale-code-quote risk**: The pre-existing ref quoting `_looks_secret` line 112 as `classes >= 3 or (len(v) >= 20 and classes >= 2)` now describes the PRE-fix code, while the amendment says the branch changed. But that ref is explicitly a historical citation of the original catch (Tools 89df736 era), and the new ref `Tools ad641bb` documents the change \u2014 the record is not falsified.\n\n5. **No code, no callers, no enforcement logic is touched** \u2014 the change cannot introduce a runtime, money-safety, or bypass defect. The claims about the scanner fix (digit class, letter-led-hex fail-open) are attributed to a separate Tools commit not staged here and are not verifiable from these bytes; the docket records them as evidence, which is its contract.\n\nNothing in the staged bytes is wrong, malformed, or self-contradictory in a way this change introduces or worsens.\n\nVERDICT: CLEAR"
+ }
+}
