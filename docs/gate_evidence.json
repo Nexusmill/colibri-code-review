@@ -300,6 +300,21 @@
     "Tools gate_20260903-012246.md (round-3 CLEAR)",
     "Tools 89df736 fix(adversary-gate): local secret pre-scan"
    ]
+  },
+  {
+   "id": "EV-025-SECRET-FLOOR-FALSE-POSITIVE-ON-AN-ENV-VAR-NAME-ACCEPTED-NOT-LOOSENED",
+   "date": "2026-09-03",
+   "repo": "Nexusmill (docs/AGENT_STATE.md) / Tools adversary_gate.py _looks_secret",
+   "layer": "local secret pre-scan (pattern floor, Tools 89df736) -> BLOCK before transmit; accepted-false-positive friction",
+   "caught": "Committing the HOOK-JSON-CODEPAGE fix (the SessionStart grounding hook emitted cp437-corrupted JSON that Claude Code 2.1.258 rejects, silently dropping the whole grounding context), the pre-scan BLOCKed on docs/AGENT_STATE.md line 4570 'secret-assignment(token)'. The value is a 21-character ALL-UPPERCASE env-var / path NAME (shape AA_AAAAA/AAAAAA_AAAAA: letters, underscore, slash; no digits, no lowercase) in a sentence about the Cowork GitHub container token, committed weeks earlier (c6b8fb37) before the pattern floor existed. _looks_secret admits it via the 'len >= 20 and classes >= 2' branch (uppercase + punctuation), which a real token (base62/hex mix) always exceeds and an identifier-shaped name should never satisfy. The pre-scan scans every staged file's FULL new blob, so a one-line edit at the top of a 4,800-line state file re-litigates every historical line.",
+   "severity": "LOW (friction, no defect shipped; the residual risk of loosening the floor is the real question)",
+   "author_initially": "Did NOT edit the scanner. Verified the flagged bytes locally with the value masked (shape only), confirmed via git that the line pre-dates this change and the floor, and treated the floor's verdict as an owner-domain decision: loosening a secret scanner is not the agent's call, so the doc line was reworded to what it is (an env-var name in backticks, 'Container token env var `...`') and the friction recorded here rather than argued away.",
+   "resolution": "Accepted false positive; commit proceeded after the accurate reword. OPEN for the owner: whether _looks_secret should reject values with neither lowercase nor digits (identifier shape) - that would silence this class but also exempt all-caps, digit-free passphrases of 20+ characters; the floor stays as-is until ruled. Also worth a ruling: scanning full staged blobs (not just added lines) makes every edit to a large historical doc pay for every old line - correct for the 'what the commit will hold' contract, expensive for state files.",
+   "refs": [
+    "Nexusmill gate run 2026-09-03: 'ADVERSARY GATE: secret material detected ... docs/AGENT_STATE.md:4570 secret-assignment(token)' (values never printed)",
+    "Nexusmill .colibri_reviews/tools__session_grounding_hook.ps1__debug__2348056a.md (the fix this commit carried)",
+    "Tools adversary_gate.py _looks_secret (line 112): 'classes >= 3 or (len(v) >= 20 and classes >= 2)'"
+   ]
   }
  ]
 }
