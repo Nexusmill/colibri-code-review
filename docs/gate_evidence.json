@@ -337,6 +337,24 @@
     "Tools skill-gate/install_project_hooks_selftest.py (mixed_row_*, structurally_wrong_*)",
     "Nexusmill docs/G38_ENFORCEMENT.md (Cowork section), docs/superpowers/specs/2026-09-04-skill-gate-design.md"
    ]
+  },
+  {
+   "id": "EV-027-SKILL-CENSUS-SCOPE-FALSE-POSITIVE-AND-TWO-ROBUSTNESS-LOWS",
+   "date": "2026-09-04",
+   "repo": "Nexusmill tools/skill_census.py + tests (the G38 monthly skill census tool) with the 2026-09 census record and its manifest rows",
+   "layer": "external reviewer via adversary_gate.py run -> BLOCK round 1 (1 MEDIUM + 3 LOW, gate_20260904-132054.md) -> F2/F3 fixed TEST-FIRST, F1 rebutted with the staged name-status bytes, F4 declined with walk evidence -> CLEAR round 2 (gate_20260904-132516.md), Nexusmill ff4de0d0",
+   "caught": "F1 (MEDIUM, FALSE POSITIVE by scope): the reviewer declared docs/SKILL_UTILIZATION_CENSUS_2026-09.md 'not staged' and the features_manifest row a same-commit contract break. The file WAS staged (A) in the same set; the gate's domain division sends the reviewer code-class files only, so the three staged .md files were invisible to it. Rebutted with the `git diff --cached --name-status` listing; accepted in round 2 as 'consistent with the payload split, no counter-evidence'. F2 (LOW, real): main() never created parent directories for --out/--json, so the module docstring's own usage example (--out junk/...) raised FileNotFoundError on any checkout without junk/ - after the full two-store walk had already run. F3 (LOW, real): a missing store root was skipped silently and main() returned 0, so a misconfigured monthly run (APPDATA unset -> relative Cowork path) would print a confident 'Skill invocations: 0' for exactly the metric G38 polices. F4 (LOW, speculative): guards for record shapes (non-string timestamp, non-dict Skill input) that a full walk of both stores (453 files, 42,152 tool_use records) and a shape probe showed do not occur; the one non-conforming shape found (Cowork system/permission_denied with a string `message`) had already been fixed under colibri Phase D with the regression test written first. Declined; the reviewer weighed the decline and accepted it (unguarded shapes fail loud, not silent - the safe direction for a compliance metric).",
+   "severity": "MEDIUM (scope false positive, rebutted) + LOW + LOW (accepted, fixed) + LOW (declined with evidence)",
+   "author_initially": "Did not dispute F2/F3 - each reproduced RED at main() (FileNotFoundError; empty stderr) before the fix. Rebutted F1 with bytes, not prose: the staged listing plus the gate's documented code/docs split. Declined F4 on the walk + probe evidence and the karpathy 'nothing speculative' posture; stated the decline in --context rather than silently ignoring the note. Round 2 accepted all three positions and independently re-traced the fixture counting, the double-count exclusion, the window semantics and both manifests' JSON.",
+   "resolution": "F2: os.makedirs(dirname, exist_ok=True) over both output paths before writing (test_main_creates_missing_output_directories, nested missing dirs for both flags). F3: main() writes 'warning: <store> store root not found, skipped: <path>' to stderr per absent root, exit code unchanged (test_main_warns_on_stderr_when_a_store_root_is_missing, incl. the clean-stderr case). Suite 9 -> 11, all green on the committed bytes; Nexusmill ff4de0d0 (notarized). Lesson recorded: manifest rows that name .md siblings will read as contract breaks to the code reviewer; the rebuttal is the staged name-status, every time. Observed the same session, NOT fixed, flagged to the owner: the G38 skill gate (Tools/skill-gate) denied the first safe_replace AFTER a verification-before-completion run as 'G-POSTURE: first source edit of this session and the posture skills have not run', although karpathy-guidelines + executing-plans + test-driven-development had run at session start and a dozen safe_* edits had passed; re-loading the two skills released it. Suspected ledger reset on the Stop/verification path; needs a reproduction in the gate's selftest before any fix.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260904-132054.md (round-1 BLOCK: F1 MEDIUM false positive, F2 LOW, F3 LOW, F4 LOW note)",
+    "Nexusmill .adversary/reviews/gate_20260904-132516.md (round-2 CLEAR: rebuttal verified, fixes verified, decline weighed)",
+    "Nexusmill ff4de0d0 feat(tools): skill_census.py + the 2026-09 pre-gate baseline record",
+    "Nexusmill tests/test_skill_census.py (test_main_creates_missing_output_directories, test_main_warns_on_stderr_when_a_store_root_is_missing)",
+    "Nexusmill .colibri_reviews/tools__skill_census.py__debug__c95f46e1.md (the string-message Phase D record the F4 decline rests on)",
+    "Nexusmill docs/SKILL_UTILIZATION_CENSUS_2026-09.md (the staged file F1 called unstaged)"
+   ]
   }
  ]
 }
