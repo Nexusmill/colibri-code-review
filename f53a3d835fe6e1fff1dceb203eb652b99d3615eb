@@ -1,0 +1,22 @@
+{
+ "type": "CLEAR",
+ "commit": "f53a3d835fe6e1fff1dceb203eb652b99d3615eb",
+ "when": "20260904-080457",
+ "files": {
+  ".claude/settings.json": {
+   "sha": "1923ccd8e3c4482f90a0ae98f85a894babc79d3fe84f5549feb6ae53b058c387",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260904-080453",
+   "artifact": ".adversary\\reviews\\gate_20260904-080453.md"
+  },
+  "docs/gate_evidence.json": {
+   "sha": "e9d6c7132e19cb64081a792b88b4d98d32115df4647f541e27ae7d122c531e7d",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260904-080453",
+   "artifact": ".adversary\\reviews\\gate_20260904-080453.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260904-080453.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 15715, 'completion_tokens': 913, 'total_tokens': 16628, 'cost': 0.00189105, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00189105, 'upstream_inference_prompt_cost': 0.0015715, 'upstream_inference_completions_cost': 0.00031955}, 'completion_tokens_details': {'reasoning_tokens': 533, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.claude/settings.json', 'docs/gate_evidence.json']\n\nReviewing the staged bytes against the rebuttal's claims:\n\n1. **F4 fix verification (renamed desktop-commander):** The staged matchers do carry the regex form `mcp__desktop-commander(-[A-Za-z0-9_-]+)?__(start_process|write_file|edit_block)` in both PreToolUse and PostToolUse, and the optional group correctly also matches the plain `mcp__desktop-commander__*` names. Matches rebuttal point (3). Consistent.\n\n2. **`args` / exec-form schema claim:** The staged file uses `command` + `args` + `statusMessage` exactly as the rebuttal describes; the backslash absolute paths are safe only under exec form (no shell), and that is what `args` selects. The claim is internally consistent with the bytes and the cited live-run evidence cannot be falsified from this changeset. Not re-raised.\n\n3. **Matcher semantics:** Matched as regexes, the bare alternatives (`Edit`, `Write`, `Bash`) may over-match MCP tool names containing those substrings (e.g. `safe_write` already listed explicitly). Any over-match only widens gating in the enforcing direction and the file-work tools are already enumerated \u2014 no bypass, no deny-loop introduced.\n\n4. **Skill placement, fail-open, absolute paths, settings.local.json rejection:** all settled design decisions per the rebuttal with cited spec/README backing; nothing in the staged bytes contradicts them.\n\n5. **Docket entry EV-026:** prose-only, accurately describes the fixes whose results are visible in the staged matchers (F4 regex canonicalisation claim cross-checks against the actual JSON). No false-provenance class claim detectable in the bytes.\n\nNo new defect introduced or enabled by this changeset.\n\nVERDICT: CLEAR"
+ }
+}
