@@ -1,0 +1,11 @@
+{
+ "type": "OVERRIDE",
+ "commit": "b51a3060d6589e437b403898e3a0dfa482f9b742",
+ "when": "20260904-171709",
+ "reason": "Owner one-shot OVERRIDE 2026-09-04 (Damien): docs-only docket commit EV-028. The local docs reviewer (docscan, Qwen3-4B) blocks on the PRE-EXISTING EV-024 summary sentence - prose about the EV-023/024 credential incident with no secret values - re-submitted only because the 8k-char summary paragraph was split into one line per row. Four rewordings still blocked; the external reviewer CLEARed the JSON row (gate_20260904-143316.md). No secret is present.",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "8367d81b25bf72ac48aecc71cc2b8b72b3de81b264f99362e9c5bf294df82418"
+  }
+ }
+}
