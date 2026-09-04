@@ -319,6 +319,24 @@
     "Nexusmill G35 rows GATE-FLOOR-DIGIT-CLASS + GATE-IDENT-EXEMPT-LETTER-LED-HEX",
     "Tools 623bb1a feat(adversary-gate): secret floor scans ADDED lines only (owner ruling)"
    ]
+  },
+  {
+   "id": "EV-026-SKILL-GATE-PROJECT-WIRING-PER-EVENT-DEFERRAL-AND-INSTALLER-CONTRACT",
+   "date": "2026-09-04",
+   "repo": "Tools skill-gate (skill_gate.py `--level project` deferral, install_project_hooks.py)",
+   "layer": "external reviewer via adversary_gate.py run -> BLOCK round 1 (3 findings, gate_20260904-065341.md) -> all fixed TEST-FIRST -> CLEAR round 2 (gate_20260904-070813.md)",
+   "caught": "Wiring the G38 skill gate at repo level so Cowork (which executes only repo-level hooks) is gated. F1 (MEDIUM): the project-level instance decided whether to defer to the user-level instance by a SUBSTRING test ('skill_gate.py' anywhere in ~/.claude/settings.json). A user file carrying only a PreToolUse row - exactly the shape of the change's own selftest fixture - made the project instance skip post and stop too, so skill loads and edits were never recorded and G-POSTURE would deny the first source edit forever: a permanent deny loop in every CLI/VS Code session with partial user-level wiring, violating the gate's own 'a hook bug must never brick work' invariant. F2 (LOW): install_project_hooks.py raised its structural ValueErrors (hooks not an object, an event not a list) OUTSIDE the REFUSED handler and never caught OSError, so those paths crashed with a traceback and exit 1 - indistinguishable, in --verify-only, from 'rows missing'. F3 (LOW): a row that mixed a foreign hook with a gate hook was replaced wholesale, silently deleting the foreign hook.",
+   "severity": "MEDIUM (F1 would have bricked sessions in the direction the design forbids) + LOW + LOW",
+   "author_initially": "Wrote the substring check and a fixture that happened to satisfy it, never considered a partially wired user file; placed apply_rows outside the except; treated any row mentioning skill_gate.py as the gate's. Did not argue any of the three - each was reproduced RED at the real entry points before the fix.",
+   "resolution": "F1: _user_level_wired(sub) parses the user settings JSON and requires, for THAT event, a hook whose args end in skill_gate.py and contain the subcommand; any parse doubt returns False so the project instance runs (enforcing is the safe direction); the wired fixture now carries all three rows and a pre-only fixture proves post/stop still run. F2: load_settings + apply_rows sit in one try/except (ValueError, OSError) -> REFUSED exit 2, file untouched; cases for {hooks:5} and {hooks:{PreToolUse:{}}} incl. --verify-only. F3: a row is gate-OWNED only when every hook in it is the gate's; a mixed row keeps its foreign hooks and loses only the gate ones, then exactly one owned row is ensured. skill_gate_selftest 63->66, install_project_hooks_selftest 19->25, both green; Tools eb86adb. Round-2 non-blocking lows accepted and recorded: deferral trusts row existence not matcher breadth (author-controlled identical rows); is_gate_hook is substring containment by documented contract. Informational note (machine-specific absolute paths in committed project settings) accepted and documented in the installer docstring. F4 (same day, from the per-repo gate reviews of the generated .claude/settings.json - all eight BLOCKed): 3DPrinting's .mcp.json registers desktop-commander as `desktop-commander-local`, so the exact-name matchers and tool sets could never see mcp__desktop-commander-local__write_file / start_process - a real bypass in that repo. Accepted and fixed test-first: tool names are canonicalised by prefix (DC_RENAMED_RE) and the matchers are regexes, selftest 66->70, Tools c2b1781. The same reviews' remaining claims were REBUTTED with bytes and docs rather than accepted: `args` and `statusMessage` ARE in the documented hook schema (exec form) and have run the G39 harness guard live since 2026-08-31 (7 denies inside VS Code sessions) and the skill gate itself in session d5f804ad; absolute paths are the documented single-machine trade-off shared with the adversary-gate hooks; Skill in PostToolUse only and fail-open are design decisions in the spec.",
+   "refs": [
+    "Tools gate_20260904-065341.md (round-1 BLOCK: F1 MEDIUM, F2 LOW, F3 LOW)",
+    "Tools gate_20260904-070813.md (round-2 CLEAR after test-first fixes)",
+    "Tools eb86adb feat(skill-gate): project-level wiring for Cowork",
+    "Tools skill-gate/skill_gate_selftest.py section 12 (level_project_post_runs_when_user_has_no_post_row, level_project_stop_runs_when_user_has_no_stop_row)",
+    "Tools skill-gate/install_project_hooks_selftest.py (mixed_row_*, structurally_wrong_*)",
+    "Nexusmill docs/G38_ENFORCEMENT.md (Cowork section), docs/superpowers/specs/2026-09-04-skill-gate-design.md"
+   ]
   }
  ]
 }
