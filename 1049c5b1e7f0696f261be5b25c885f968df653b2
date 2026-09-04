@@ -1,0 +1,22 @@
+{
+ "type": "CLEAR",
+ "commit": "1049c5b1e7f0696f261be5b25c885f968df653b2",
+ "when": "20260904-084801",
+ "files": {
+  ".claude/settings.json": {
+   "sha": "6600901e321131a087d5511fed71bf727ed403b534a19511a57baaf298e14ff0",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260904-084755",
+   "artifact": ".adversary\\reviews\\gate_20260904-084755.md"
+  },
+  "docs/gate_evidence.json": {
+   "sha": "c6fdf4377312def43ee31cefea5b1ca842933ee7ecafb0cd7f013e9c35269dcd",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260904-084755",
+   "artifact": ".adversary\\reviews\\gate_20260904-084755.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260904-084755.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 17299, 'completion_tokens': 1390, 'total_tokens': 18689, 'cost': 0.0022164, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0022164, 'upstream_inference_prompt_cost': 0.0017299, 'upstream_inference_completions_cost': 0.0004865}, 'completion_tokens_details': {'reasoning_tokens': 924, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.claude/settings.json', 'docs/gate_evidence.json']\n\nI examined the inline bootstrap against its claims, byte by byte, since that is the executable part of this change.\n\n**Bootstrap argument passing.** With `python -I -c <code> pre --level project`, CPython sets `sys.argv = ['-c', 'pre', '--level', 'project']`; the bootstrap rebuilds `sys.argv = [p] + sys.argv[1:]` \u2192 `[script, 'pre', '--level', 'project']`. Correct for all three rows (pre/post/stop).\n\n**Fail-open vs fail-closed contract.** Missing script \u2192 `sys.exit(0)` (fail-open, per the accepted F5 fix). Load failure \u2192 traceback to stderr, exit 0 (F6 finding 2). `except SystemExit: raise` passes the gate's deliberate codes (including the Stop hook's blocking 2) through unchanged. All match the documented intent.\n\n**F6 isolation.** `-I` in 3.11 implies `-E -s` and no cwd on `sys.path`; the bootstrap explicitly inserts the gate's directory, so sibling imports resolve and a repo-local `json.py`/`os.py` cannot shadow stdlib inside the gate process. The JSON-escaped path decodes to a correct single-backslash Windows path. `runpy.run_path` with `run_name='__main__'` is the correct entry convention.\n\n**Residuals, not new.** `except BaseException` also swallows `KeyboardInterrupt` into fail-open \u2014 consistent with the design's stated invariant (\"a hook bug must never brick work\"). Absolute machine-specific paths are the documented single-machine trade-off. The G39 harness_guard rows keeping the bare `python.exe <path>` form are pre-existing and explicitly flagged to the owner, not touched here.\n\n**Matcher/PostToolUse shape.** The rows are otherwise byte-identical to the previously cleared form (matcher regex with `DC_RENAMED_RE`-shaped desktop-commander alternation unchanged; missing `statusMessage` on the PostToolUse row is cosmetic and schema-legal).\n\nThe evidence-row amendment (F5/F6 text) accurately describes the staged bytes; I found no claim in it contradicted by the diff.\n\nVERDICT: CLEAR"
+ }
+}
