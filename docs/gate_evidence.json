@@ -409,6 +409,22 @@
     "colibri-code-review .adversary/reviews/gate_20260904-152804.md (the docket review naming two more forms)",
     "Tools adversary-gate/GUARD_PORTABILITY.md section 3 (EV-030 paragraph)"
    ]
+  },
+  {
+   "id": "EV-031-DOCS-FEED-BLANKED-BY-COLOR-OR-EXTERNAL-DIFF-CAUGHT-REVIEWING-THE-DISTRIBUTED-COPY",
+   "date": "2026-09-04",
+   "repo": "Tools adversary-gate/adversary_gate.py (_staged_doc_added_text) - surfaced by the colibri-marketplace gate reviewing the plugin's synced copy of the whole file",
+   "layer": "external reviewer via adversary_gate.py run on colibri-marketplace (plugin sync, gate_20260904-181520.md, HIGH) -> reproduced RED in Tools gate_selftest -> fixed test-first in Tools -> plugin re-synced",
+   "caught": "The docs half of the domain division (EV-024's remedy) builds its input from `git diff --cached --unified=0 --text --no-textconv --no-relative` and keeps the '+' hunk lines. Its code-feed sibling `_staged_added_lines` also pins `--no-color --no-ext-diff`; the docs feed did not. With `color.diff=always` git paints ANSI escapes on a pipe, so no line starts with '+' and the feed is empty - `docscan.scan('')` returns clear/empty and a docs-only commit passes the local secret scan with nothing scanned and no warning. With GIT_EXTERNAL_DIFF (or diff.external) set, git runs the driver instead of emitting a diff: here the gate crashed with SystemExit. The reviewer only saw the whole function because the marketplace plugin copy was two weeks stale, so the sync diff showed the entire file - a review of the same bytes as a normal Tools diff would have shown only the CODE_EXTS hunk.",
+   "severity": "HIGH (a fail-silent path in the layer that exists to catch prose-shaped material in docs-only commits; reachable by a one-line git config)",
+   "author_initially": "Did not dispute. Verified against the Tools source (the two sibling functions' argv lists), wrote gate_selftest section 0b - both triggers RED on the unfixed bytes (61/63: colour -> empty feed; external diff -> SystemExit) - then added the two flags.",
+   "resolution": "Tools: `--no-color --no-ext-diff` added to the docs feed's diff args (adversary_gate.py `_staged_doc_added_text`); gate_selftest 61 -> 63 (docs_feed_survives_color_diff_always, docs_feed_survives_external_diff_env); audit 15/15, install 38/38, guard 148/148. The marketplace plugin copy re-synced byte for byte and re-gated. Lesson (EV-008's twin): a full-file re-read in a new context finds what diff-scoped reviews cannot; the distributed plugin sync is a free full-file review of the gate every time it runs.",
+   "refs": [
+    "colibri-marketplace .adversary/reviews/gate_20260904-181520.md (the HIGH, on the plugin sync diff)",
+    "Tools adversary-gate/gate_selftest.py section 0b (docs_feed_survives_*)",
+    "Tools adversary-gate/adversary_gate.py _staged_doc_added_text vs _staged_added_lines",
+    "Nexusmill docs/remediation_manifest.json GATE-DOCS-FEED-COLOR-EXTDIFF"
+   ]
   }
  ]
 }
