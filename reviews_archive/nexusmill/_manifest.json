@@ -1488,5 +1488,33 @@
     "cost": 0.7
    }
   }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\session_grounding_hook.ps1": {
+  "rel": "tools/session_grounding_hook.ps1",
+  "modes": {
+   "debug": {
+    "sha": "2348056a89abb1a00289d901c222369ca573d383fe604a58001fae6d5e5361f8",
+    "sha_before_fix": "69c3825fa8d1c4ab931e07ff6fadee6bcaf9179b6f128306093a3ee1f47ff2a5",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tools__session_grounding_hook.ps1__debug__2348056a.md",
+    "reviewed_at": "2026-09-03 12:50",
+    "model": "claude-fable-5-1 (in-session Phase D debug)",
+    "cost": 0.0,
+    "finding": "HOOK-JSON-CODEPAGE: cp437 stdout best-fit put 0x1A/0x82 inside the hook JSON; fixed by pure-ASCII emission"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\skill_census.py": {
+  "rel": "tools/skill_census.py",
+  "modes": {
+   "debug": {
+    "sha": "c95f46e1e1a47fd9a3f6bf9731bb410d196c46acb31d431cde155aba76a0672d",
+    "sha_before_fix": "15520559557ee958985828939cf3706d264eac27686528d686d70f17a2e6a182",
+    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tools__skill_census.py__debug__c95f46e1.md",
+    "reviewed_at": "2026-09-04 20:30",
+    "model": "claude-fable-5-1 (in-session Phase D debug)",
+    "cost": 0.0,
+    "finding": "CENSUS-STRING-MESSAGE: Cowork system/permission_denied records carry message as a str; extract_events assumed dict and crashed the whole walk; fixed by isinstance guard, regression test first"
+   }
+  }
  }
 }
