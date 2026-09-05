@@ -478,6 +478,26 @@
     "3DPrinting .adversary/reviews/gate_20260905-032517.md (CLEAR)",
     "EV-027 (the same scope class)"
    ]
+  },
+  {
+   "id": "EV-035-PUSH-GUARD-REFUSED-REWRITTEN-NOTES-NONFF",
+   "date": "2026-09-05",
+   "repo": "3DPrinting (owner-run git-filter-repo purge: 277 -> 236 commits, 8.24 GiB -> 758 MiB pack, 36 blobs over 100 MiB gone - the FIRST history rewrite of an ARMED repo)",
+   "layer": "pre-push PUSH GUARD (Tools adversary_gate.py, the notes-push-failed branch) - refusal; plus the pre-commit GATED_PREFIXES rule, pre-empted by an agent gate run before the owner's commit",
+   "caught": "The owner ran the runbook's printed sequence: backfill notes -> commit -> auditor (clean, 6 after baseline / 4 code) -> `git push --force origin main`. The guard audited main (passed), then pushed refs/notes/adversary NON-forced; the remote still held the pre-rewrite notes, GitHub rejected the notes push as non-fast-forward, and the guard refused the whole push - 'the evidence travels or nothing does'. Correct refusal: un-synced notes must not be separated from the branch. But the guard's printed recovery (fetch theirs + `git notes merge -s cat_sort_uniq`) is WRONG after a rewrite - it would re-import notes naming commits that no longer exist. The right recovery was to force-push the rebuilt notes ref FIRST, then the branch. Same day, same runbook, the pre-commit hook would also have refused the purge commit itself (.githooks/adversary_baseline is under GATED_PREFIXES) - caught by reading the hook before the owner reached that step, cleared by an agent gate run on the owner's staged bytes.",
+   "severity": "Guard: correct behaviour, no false positive. Hint: wrong for the rewrite case (defect, fixed). Runbook: printed the pushes in the wrong order and omitted the gate step (defects, fixed).",
+   "author_initially": "The runbook (3DPrinting 7815350 = the rewrite of 7ac749d4, CLEAR gate_20260905-041102) printed main-then-notes and no gate step; its rehearsal on a throwaway clone never committed or pushed, so neither could show. Honest count for the day: FOUR live-only defects in one CLEARed runbook (dirty gitlink worktree at preflight; a filter-repo stdin prompt hidden behind captured stdout - 2h47m at 0.0 s CPU; the gated baseline commit; this push order). The gate's two CLEARs on the runbook (gate_20260905-041102 on 7ac749d4 -> 7815350; gate_20260905-042017 on the defect-1 fix 19b29e2c -> 0ff453dd) were byte-scoped happy-path reviews and 041102 said so ('Happy-path claims are consistent with the bytes'); the reviewer cannot see the live repo's dirt, its stale .git/filter-repo state, or the remote's refs. A fresh clone was the wrong test double for all four. THEN THE DOCKET GATE BLOCKED THIS ROW'S FIRST DRAFT (gate_20260905-124456, MEDIUM-LOW): it claimed 'two CLEARs' and two verified remediations while citing ONE review artifact and neither remediation CLEAR - the EV-033 class (034227) repeated by the same author on the same day; all four are cited now. Its second finding (LOW: '7815350 is a dead pre-rewrite sha') was wrong - 7815350 IS the rewritten id of 7ac749d4 per .git/filter-repo/commit-map and resolves in the pushed history - but the row now annotates it the way it annotates 19b29e2c -> 0ff453dd, so the reader never has to guess.",
+   "resolution": "Live: `git push --force origin refs/notes/adversary` then `git push --force origin main` - both landed; remote main d1dcbac and notes 1555d8d verified equal to local by ls-remote. Tools 491235d (gate_20260905-123629 CLEAR): the hint now names the rewrite case (force-push notes first, never merge); guard behaviour unchanged, gate_selftest 63/63. 3DPrinting 0bf78c9 (gate_20260905-123854 CLEAR): the runbook clears stale .git/filter-repo state and streams filter-repo output (defect 2), prints the gate run before the commit (defect 3) and the notes-first push order (defect 4); defect 1 was 19b29e2c (now 0ff453dd) before the run. docs/REPO_HEALTH_2026-09-05.md carries the real-run addendum with the four-defect table. Standing observation: this repo has NO layer-4 CI audit workflow - detection is the local auditor + the push guard only.",
+   "refs": [
+    "Tools adversary-gate/adversary_gate.py cmd_prepush - the non-forced notes push (the refusal path)",
+    "Tools commit 491235d (hint fix; gate_20260905-123629 CLEAR)",
+    "3DPrinting .adversary/reviews/gate_20260905-122228.md (CLEAR on the owner's staged baseline - the commit the pre-commit hook would otherwise have refused)",
+    "3DPrinting .adversary/reviews/gate_20260905-041102.md (the runbook's CLEAR, 7ac749d4 -> 7815350) and gate_20260905-042017.md (the defect-1 fix's CLEAR, 19b29e2c -> 0ff453dd) - neither could see the other three",
+    "3DPrinting commits d1dcbac (the purge commit), 0ff453dd (defect 1, rewritten from 19b29e2c), 0bf78c9 (defects 2-4; gate_20260905-123854 CLEAR)",
+    "3DPrinting/docs/REPO_HEALTH_2026-09-05.md - 'Addendum - the REAL run' (four-defect table + lessons)",
+    "git_filter_repo.py 2.47.0 lines 3282-3294 (the already_ran prompt that --force does not skip)",
+   "colibri .adversary/reviews/gate_20260905-124456.md (the docket gate's BLOCK on this row's first draft: uncited CLEARs; its dead-sha finding refuted by commit-map)"
+   ]
   }
  ]
 }
