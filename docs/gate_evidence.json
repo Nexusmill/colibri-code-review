@@ -444,6 +444,40 @@
     "Blink .adversary/reviews/gate_20260904-205101.md (the BLOCK: 3 findings)",
     "Blink .adversary/reviews/gate_20260904-210804.md (CLEAR after factual --context rebuttal)"
    ]
+  },
+  {
+   "id": "EV-033-TOOLS-NETDIAG-MOVE-DEAD-ON-ARRIVAL",
+   "date": "2026-09-05",
+   "repo": "Tools (netdiag/ arriving byte-identical from 3DPrinting/tools/netdiag, owner order)",
+   "layer": "gate-review BLOCK on the move commit (gate_20260905-031939.md), CLEAR after test-first fixes (round 2)",
+   "caught": "HIGH - four of the eight Python diagnostics (flint_inventory, flint_offload, flint_offload_verify, flint_wan_speed) build their output path with os.path at module scope but never import os: NameError before main() runs, so the toolkit shipped four scripts that could not execute - in the ORIGIN repo too, undetected since 2026-08-09. HIGH/MEDIUM - verify.py, the toolkit's own self-check, hardcoded DIR to the old 3DPrinting path, so after the move it would either crash or green-light the stale tree instead of the committed one. LOW - the self-check's '_reports' rule permanently flags flint_rainmeter_poll.py, which writes beside itself by design.",
+   "severity": "HIGH x1 (class: four dead scripts) + HIGH/MEDIUM + LOW",
+   "author_initially": "The --context claimed 'byte-identical, no behaviour change to any script' - true of the diff and irrelevant to the bytes: a move commit inherits every defect of its origin, and the reviewer judges the staged bytes, not the delta. No dispute once read; the origin copy's own verify.py could never have caught a missing import (it checks syntax and marker strings only).",
+   "resolution": "Fixed test-first the same session: a static unbound-name probe (module-scope Name loads minus imports/assignments/dunders) flags exactly the four files on the HEAD copy (RED, 4) and none on the staged set (GREEN, 0); verify.py DIR -> dirname(abspath(__file__)); flint_rainmeter_poll.py added to the _reports exemption; verify.py run from Tools/netdiag prints RESULT: ALL CLEAN. Round 2 CLEAR (Tools 21e40de). The 3DPrinting copies were deleted in their own gated commit (EV-034). THEN THE DOCKET GATE CAUGHT THIS ROW TWICE: gate_20260905-034227 (LOW) - the first draft claimed the round-2 CLEAR and the RED/GREEN probe without citing either artifact, the only uncited CLEAR in the docket - which forced the refs rewrite below AND the promotion of the scratch probe into the toolkit's own self-check (Tools 654588e: verify.py now runs the AST unbound-name check per file; RED = exactly the four 'os' scripts on the pre-move copies, GREEN = ALL CLEAN on the toolkit); then gate_20260905-035628 (LOW) - that 034227 catch and the 654588e sha were themselves unrecorded; both are recorded here.",
+   "refs": [
+    "Tools .adversary/reviews/gate_20260905-031939.md (BLOCK, 3 findings)",
+    "Tools .adversary/reviews/gate_20260905-032738.md (CLEAR round 2: all three fixes verified against the staged bytes)",
+    "Tools commit 21e40de (the move + fixes, notarized CLEAR)",
+    "Tools commit 654588e (gate_20260905-035401 CLEAR): Tools/netdiag/verify.py gains the unbound-name check (module-scope Name loads minus imports/assignments/defs/params/dunders) - the class the origin verify.py could never see is now caught on every run; the one-off scratch probe that produced the first RED 4 / GREEN 0 numbers used the same AST walk",
+    "colibri .adversary/reviews/gate_20260905-034227.md + gate_20260905-035628.md (the docket gate's two LOW catches on this row's own drafts)",
+    "3DPrinting/docs/REPO_HEALTH_2026-09-05.md (the tranche that moved the tooling)",
+    "Tools TOOLS_MANIFEST.md netdiag row + history bullet"
+   ]
+  },
+  {
+   "id": "EV-034-REVIEWER-SCOPE-FALSE-POSITIVE-SECOND-OCCURRENCE",
+   "date": "2026-09-05",
+   "repo": "3DPrinting (deletion-only commit: tools/netdiag/* + tools/screencap/* removed, tools/README.md pointer added)",
+   "layer": "gate-review BLOCK round 1 (gate_20260905-031924.md), CLEAR round 2 on a byte-cited rebuttal (gate_20260905-032517.md)",
+   "caught": "Two findings that were scope false positives, not defects: (1) 'the pointer markdown is missing from the staged diff' - tools/README.md WAS staged (git diff --cached --name-status: A tools/README.md), but the reviewer is sent code-class files only, so the addition was invisible to it; (2) 'tools/netdiag/_reports/.gitignore possibly orphaned' - it WAS in the deletion set, again outside the reviewer's scope. Second occurrence of the class (EV-027: the reviewer called the staged census doc 'not staged'). A third, CONFIRM-ONLY item (external callers of the deleted scripts) was answered with the Rainmeter deployed-copy fact and the Tools MCP server path; round 2 independently corroborated the missing-import defect in the deleted bytes (EV-033) as proof the deleted copies were the stale twins.",
+   "severity": "MEDIUM-LOW + LOW as filed; both false positives",
+   "author_initially": "Rebutted factually with the staged name-status listing; no code changed between rounds. The first draft of THIS row then miscounted the class - 'third occurrence', citing EV-023 (the credentials catch, which has no scope false positive in it) - and the docket gate BLOCKed the row on that invented prior instance (gate_20260905-033728); corrected to 'second' here.",
+   "resolution": "CLEAR round 2. Standing observation for the gate maintainers: a reviewer that cannot see non-code staged paths will keep filing 'X is missing' findings whenever a code deletion is paired with a docs pointer; feeding the reviewer the staged NAME LIST (not contents) of non-code paths would close the class. Flagged, not fixed (Tools-side change, owner's pending gate pass).",
+   "refs": [
+    "3DPrinting .adversary/reviews/gate_20260905-031924.md (BLOCK)",
+    "3DPrinting .adversary/reviews/gate_20260905-032517.md (CLEAR)",
+    "EV-027 (the same scope class)"
+   ]
   }
  ]
 }
