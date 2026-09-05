@@ -429,6 +429,21 @@
     "Tools adversary-gate/adversary_gate.py _staged_doc_added_text vs _staged_added_lines",
     "Nexusmill docs/remediation_manifest.json GATE-DOCS-FEED-COLOR-EXTDIFF"
    ]
+  },
+  {
+   "id": "EV-032-BLINK-ARMING-AUDITOR-BASELINE-TRUST-AND-ROBUSTNESS",
+   "date": "2026-09-05",
+   "repo": "Blink (fresh arming via install_gate.py; findings against .githooks/adversary_audit.py = byte-identical Tools canonical)",
+   "layer": "gate-review BLOCK on the arming commit itself (gate_20260904-205101.md), cleared via factual --context rebuttal (gate_20260904-210804.md)",
+   "caught": "Three findings on the vendored auditor: HIGH - the tripwire's anchor .githooks/adversary_baseline is attacker-writable repo content trusted with zero cross-checks; a bypassing committer can move the baseline onto their own dirty commit (the baseline..HEAD walk goes empty -> false 'clean', exit 0), and layer-4 CI reads the PUSHED baseline so it does not close the hole either - proving the module docstring's 'the layer no local trick escapes' overclaims against the playbook's honest contract (Ch.0: detection is the guarantee, prevention is not claimed). LOW x2 - malformed-but-valid-JSON notes (non-dict note, non-dict files row, non-string reason) crash _audit_commit with exit 1 colliding with the violations exit code, and a non-UTF-8 filename decoded with errors='replace' then fails `git show` under check=True, aborting the whole audit with the same exit-1 collision. The CLEAR-round reviewer independently verified the one candidate silent false-CLEAN (C-status token desync) is unreachable - the explicit -M flag overrides diff.renames=copies.",
+   "severity": "HIGH (the tripwire's central correctness claim refuted by its own trusted input) + 2 LOW (fail-loud robustness; no silent detection hole found)",
+   "author_initially": "Accepted immediately - no dispute of the bytes; the owner then ruled the DISPOSITION (rebuttal-only, flagged-not-fixed), not the validity.",
+   "resolution": "Owner ruling 2026-09-05: the arming commit cleared via run --context carrying the doctrine (detection-not-prevention honest contract; the vendored file must stay byte-identical to Tools canonical or the next install_gate.py re-run silently reverts a local patch). Flagged-not-fixed items for the owner's pending Tools-side test-first pass: (a) soften the docstring claim + document the baseline-move limit, with an owner ruling on pinning an expected baseline out-of-band (e.g. CI repo variable); (b) malformed-note handling -> structured VIOLATION rows instead of exit-1 crashes; (c) non-UTF-8 filenames -> hash by tree blob sha instead of decoded path; (d) reviewer's non-blocking gate-side question: verify adversary_gate.py record() binds clearances to the commit tree - if it recomputes shas without binding, sequencer commits (rebase/cherry-pick) could receive spurious CLEAN notes the auditor cannot distinguish from reviewed ones.",
+   "refs": [
+    "Blink arming commit 9acce8a (notarized CLEAR, z-ai/glm-5.3-flash; verified git notes show + adversary_audit clean + install_gate --verify-only ARMED)",
+    "Blink .adversary/reviews/gate_20260904-205101.md (the BLOCK: 3 findings)",
+    "Blink .adversary/reviews/gate_20260904-210804.md (CLEAR after factual --context rebuttal)"
+   ]
   }
  ]
 }
