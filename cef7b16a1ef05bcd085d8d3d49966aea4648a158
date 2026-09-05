@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "cef7b16a1ef05bcd085d8d3d49966aea4648a158",
+ "when": "20260904-183437",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "b6227f5f9621a724a382b5bb6a49f5b51f12cae67b06099f253e192169b7d60f",
+   "model": "xai:grok-4.6",
+   "when": "20260904-183149",
+   "artifact": ".adversary\\reviews\\gate_20260904-183149.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260904-183149.md": "model: xai:grok-4.6 | usage: {'input_tokens': 21449, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 7580, 'output_tokens_details': {'reasoning_tokens': 7430}, 'total_tokens': 29029, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 876100000, 'context_details': {'input_tokens': 21449, 'output_tokens': 7580}} | files: ['docs/gate_evidence.json']\n\nThe staged hunk is a single new docket object (EV-031) plus the required trailing-comma fix on EV-030. JSON is well-formed, the id is unique, required fields match the existing schema, and the countable claims that can be checked against this file line up: EV-029 left `gate_selftest` at 61, EV-030 left `guard_selftest` at 148, EV-025 already recorded the missing `--no-color/--no-ext-diff` on the docscan feed, and EV-031\u2019s 61\u219263 / 148/148 figures are consistent with that. No contract break is visible in the provided bytes.\n\nVERDICT: CLEAR"
+ }
+}
