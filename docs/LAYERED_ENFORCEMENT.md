@@ -64,6 +64,14 @@ breaks); `ADVERSARY_FAKE` outside selftests. It fails OPEN on malformed input - 
 and the tripwire stand behind it. Accepted false positive: `--no-verify` inside a quoted
 commit message still blocks; reword.
 
+Since 2026-09-04 it also refuses **any reference to the live hook dir `.git/hooks`** (any
+spelling, no read exemption - the tracked `.githooks/` shim never matches), the G38 skill
+gate's state dir `skill_gate/`, and a variable-built `$VAR commit -n`; `git commit -mn msg`
+(a value-taking bundle, the hook runs) is no longer a false positive; and file-tool paths are
+canonicalised with every ambiguous dot/space segment read both ways before the compare. The
+full rule catalogue, the seven-round hardening arc (EV-028 to EV-030) and the Caliper twin are
+in `HARNESS_GUARD.md`.
+
 ## Layer 4 - CI + branch protection
 
 `.github/workflows/adversary-audit.yml` (fetch-depth 0, fetch the notes ref, run the

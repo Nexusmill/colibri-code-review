@@ -17,8 +17,12 @@ clearance automatically - clearance follows bytes, not intentions.
 ## What counts as "staging code"
 
 - Files with a code extension: `.py .js .json .ts .jsx .tsx .html .css .ps1 .sh .bat .c
-  .cpp .h .rs .go .java .glsl .osl` (`.json` added 2026-08-31, owner's order: manifests,
-  registries and configs are load-bearing - a forged manifest row is a code change)
+  .cpp .h .rs .go .java .glsl .osl .mjs .cjs .mts .cts` (`.json` added 2026-08-31, owner's
+  order: manifests, registries and configs are load-bearing - a forged manifest row is a code
+  change; the four JS/TS module forms added 2026-09-04, EV-029: an ES-module security guard had
+  passed a gate run with a clearance covering only its test file - the same set lives in the
+  vendored auditor, and re-vendoring it makes the auditor demand notes for module files in
+  post-baseline history, which is the fail-closed direction)
 - **Anything under `.githooks/`** regardless of extension - a hook edit could neuter the
   gate itself (finding from the gate's own birth review, round 2)
 - **Anything under `.github/workflows/`** - the CI audit workflow is enforcement config
