@@ -535,6 +535,22 @@
     "jcodemunch-mcp fe2afe5 fix(index_folder) + tests/test_branch_no_change_head.py (9 tests)",
     "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__tools__index_folder.py__bug__18b712cf.md (Fixed 2026-09-06 section: all four findings, the open MEDIUM, the trade-off)"
    ]
+  },
+  {
+   "id": "EV-038-FIX-PURGED-A-SIBLINGS-ROWS-THROUGH-A-STEM-KEYED-SOURCE",
+   "date": "2026-09-06",
+   "repo": "repo-memory (28846a2 on main, local only - the repo has no remote: remediation item 8 of the post-gate audit - autoindex register() atomicity, stale-row cleanup, source-qualified topic dedup)",
+   "layer": "gate-review BLOCK round 1 (gate_20260906-112358.md, one finding, data loss), CLEAR round 2 (gate_20260906-115017.md) on bytes that fixed the finding AND the older collision it stood on",
+   "caught": "The author's fix for 'a changed doc that now yields no sections keeps its stale rows' added `delete_source(docs/<stem>/section)` for every changed file absent from the rebuilt rows. The reviewer traced the source naming: sources are keyed by file STEM, so README.md and docs/README.md share ONE source, and the new delete purged the UNCHANGED sibling's rows on a zero-section edit of the other - silent and non-self-healing (the sibling's fingerprint stamp never changes again, so it is never re-indexed). The author's own hygiene test sidestepped the case (README.md vs docs/usage.md - different stems). Reproducing the reviewer's scenario RED showed the collision was older than the delete: batch_upsert(replace_all=True) purges the WHOLE shared source, so rebuilding docs/README.md alone had already dropped README.md's rows on HEAD, and the removed-file loop purged the sibling on a delete.",
+   "severity": "HIGH as filed (memory-row destruction on an ordinary edit path); CONFIRMED by a RED check",
+   "author_initially": "Accepted after tracing. First cut of the repair (skip the delete when another current file shares the stem) went GREEN on the delete but the RED check still failed one step earlier - README rows=['Sibling section'] - which exposed the pre-existing replace_all purge. Root fix: the docs block groups by stem, rebuilds every current file of an affected stem together (changed or removed), and drops a source only when no file of that stem yields sections; the separate removed-file loop was subsumed. Three same-stem checks (empty one keeps the other's rows and drops the emptied file's own; delete one keeps the other's rows) were RED on the round-1 bytes and are GREEN; all seven repo test scripts pass.",
+   "resolution": "CLEAR round 2, commit 28846a2 notarized (local; the repo has no remote to push to). Reviewer residuals recorded open in the review record: a transiently unreadable doc now evicts instead of retaining (self-healing on the next change); same-stem siblings with an IDENTICAL heading still collapse under the (source, topic) key - both inherent to stem-keyed sources. Lesson: when a fix touches a keyed store, test the KEY's collisions, not just the feature - the fixture that proved the feature used distinct keys and could not see the purge.",
+   "refs": [
+    "repo-memory .adversary/reviews/gate_20260906-112358.md (BLOCK round 1, sibling rows purged through the shared stem source)",
+    "repo-memory .adversary/reviews/gate_20260906-115017.md (CLEAR round 2)",
+    "repo-memory 28846a2 fix(autoindex,indexer) + tests/test_autoindex_hygiene.py (14 checks)",
+    "repo-memory .colibri_reviews/repo_memory__autoindex.py__bug__ea43d12d.md (Fixed 2026-09-06 section: the round-1 catch, the older collision, the stem-group fix, the residuals)"
+   ]
   }
  ]
 }
