@@ -29,10 +29,34 @@ GLM-lane, verified + gated this tranche:
 - repo-memory `store.py` — **HIGH** non-atomic delete-then-add data loss (read-confirmed); MEDIUM swallowed-delete duplicates; MEDIUM category filter injection (plausible); MEDIUM query-swallows-all-errors (plausible).
 - colibri `run_batch.py` — **HIGH** `--budget` unenforced with `--workers>1` (money; read-confirmed); MEDIUM pre-`try` crash skips summary.
 
-## PENDING VERIFICATION — GLM findings not yet Phase-3 gated (NEXT TRANCHE)
+## GATED 2026-09-05 — the GLM findings below were Phase-3 traced against current bytes
 
-Reported by GLM-5.3-flash, raw evidence in `_external_raw/`. NOT yet confirmed — must be
-traced before docketing/fixing (colibri-review law 3). Triaged by apparent severity:
+In-session gate (claude-fable-5-1) of all ten pending files; records in each repo's
+`.colibri_reviews/` (repo-memory autoindex/indexer/server, colibri static_context/app, Tools
+gate_selftest/owner_setup/install_selftest/audit_selftest/grok_review), manifests folded in.
+**Most of the top items had ALREADY been fixed on 2026-09-02, after the raws were captured and
+without this ledger being updated** — recorded verified-stale with the commit, never re-fixed
+(G35): repo-memory `46b0ba4` closed autoindex HIGH #1 (docs opt-out purge), HIGH #2 (hub failure
+persisted), MEDIUM #3 (reviews opt-out) and LOW #8 (`_int_env`); `30b4bd9` closed server #3
+(READONLY gates autoindex) and #6 (days header); colibri `4782c9f` closed static_context #1
+(no-crash contract) and #4, app.py #2 (spend map over all rows), #4, #5; Tools `a72b051` closed
+gate_selftest #1 (15b false-PASS). **Refuted:** indexer HIGH #1 (`batch_upsert(replace_all)`
+purges only the sources present in `rows` — the failure is stale rows, not loss; re-scoped LOW);
+server #2 (`redirect_stdout` cannot divert MCP frames — `stdio_server` captures `sys.stdout.buffer`
+at start, mcp/server/stdio.py:49); server #1 (`maybe_sync` already swallows); app.py #1
+(`analyzer.review_code` refuses spec mode without expectations, zero cost); install_selftest's
+MEDIUM (the installer chmods the shim, install_gate.py:285). **Still open, confirmed:** autoindex
+`register()` non-atomic registry write (MEDIUM), changed-file-with-zero-sections stale rows
+(MEDIUM), per-mode colibri row cleanup (MEDIUM), `--force` skips cleanup, truthy-string
+booleans, no sync serialisation (PLAUSIBLE); indexer cross-file topic collapse (MEDIUM);
+server embedder "degrade" (LOW), STORE concurrency (PLAUSIBLE); static_context tmpdir leak /
+hot-function name collision / `match` scan gap (LOW); app.py multi-mode spend ceiling (LOW);
+owner_setup unguarded subprocess sites (MEDIUM) + 2 LOW; audit_selftest decode + tmpdir (LOW);
+grok_review unhandled post-billing errors (MEDIUM), silent `--spec`/`--findings` ignore
+(MEDIUM), key over-match (LOW); gate_selftest POSIX exec bits + tmpdir (LOW).
+
+Original triage below kept verbatim as the pre-gate record. Reported by GLM-5.3-flash, raw
+evidence in `_external_raw/`. Triaged by apparent severity:
 
 **repo-memory `autoindex.py`** (raw: `repomem__autoindex.py`): 2 apparent HIGH —
 (1) `autoindex.docs:false` opt-out purges previously-indexed docs rows (`removed` computed

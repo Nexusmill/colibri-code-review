@@ -2,9 +2,44 @@
 
 24 reviews of jcodemunch-mcp + deepagents-quickstarts cores, run as background external
 reviews (~30% GLM-5.3-flash / ~70% Grok, the standing cadence). Raw outputs preserved under
-each repo's `.colibri_reviews/_external_raw/` (19 jcm, 5 deepagents). **NONE Phase-3 gated or
-remediated yet** — that is the next tranche (colibri-review law 3: verify each finding against
-current bytes before docketing/fixing; refuted ones → verified-stale, never re-fixed).
+each repo's `.colibri_reviews/_external_raw/` (19 jcm, 5 deepagents).
+
+**STATUS 2026-09-05 — ALL 24 PHASE-3 GATED (in-session, claude-fable-5-1), NOT YET REMEDIATED.**
+Gated records + manifests committed and notarized: jcodemunch-mcp `e6d8eb0` (19 records,
+gate BLOCK 220745 → CLEAR 220915) and deepagents-quickstarts `407cab3` (5 records, gate BLOCK
+220638 → CLEAR 220944); both BLOCKs were the reviewer-scope false positive (EV-036, third
+occurrence of the EV-027 class). All 24 files were byte-identical to the raws at dispatch.
+Kept after tracing: **8 HIGH** — jcm (5): `sqlite_store.load_index` torn cold load cached as
+fresh; `index_folder` no-change runs write the BRANCH head into the BASE index (worse than
+reported); `plan_refactoring` TS overload rename swallows the implementation line (corrupts the
+file); `search_symbols` narrowing drops identity matches; `deletion_safety` classes entry-point
+files dead. deepagents (3): `agency_graph.composer_node` unbound `audio_path`/`result` +
+duplicate asset; `agent_runner.run_cinematographer` runs the paid generation TWICE;
+`schema_service` file-keyword heuristic misrenders its own first-party schemas. Plus ~16 MEDIUM
+(config `_strip_jsonc` comma corruption probe-confirmed on 2 of the 4 claimed shapes; project
+`trusted_folders` absolute entries; sqlite unchunked `IN` lists; Rust `use` dedup; index_repo
+silent fetch-failure symbol deletion; token_tracker first-path binding with a live mixed caller
+(winnow_symbols); security.py project overrides inert for two keys; `cli/init.py` rewriting an
+invalid client config — downgraded from HIGH because a `.bak` is written; plan_refactoring's
+unguarded `repo.split`; deletion_safety's cluster override + unchecked text-sweep error;
+composer lyrics sent as ACE-Step tags; app.py gs:// regex + console link + Stop (plausible);
+…) and ~30 LOW. **Refuted with line evidence (never re-fix): 18 external claims** — the
+`search_ast` `child.text` HIGH plus its two MEDIUMs (the other HIGH narrowed to a LOW), the
+`_call_graph` HIGH (`_symbol_index` always built) and its depth-0 MEDIUM (callers clamp), both
+`check_delete_safe` findings (`scip_reference_files` cannot raise), the two `should_exclude_file`
+findings (NO caller in src — dead code) plus the string half of the secret-pattern finding,
+`index_folder`'s parser-upgrade MEDIUM + coverage LOW (deliberate), watcher's crash/leak claims
+(WatcherManager restarts; IndexStore holds no handle), get_blast_radius's private-access +
+cross-repo-except findings (style/design), audit_agent_config's partial-load LOW, app.py's
+CRITICAL import (resolves via sys.path + `__init__` files) and its non-3-tuple event. One
+external FIX was itself wrong: the Haskell node is `type_synomym` (grammar probe), not
+`type_synonym`.
+Per-file verdicts: each repo's `.colibri_reviews/<path>__bug__<sha8>.md`. Next: remediation
+tranches, worst-first, TDD, own gated commits.
+
+Original triage below is kept verbatim as the pre-gate record (colibri-review law 3: verify each
+finding against current bytes before docketing/fixing; refuted ones → verified-stale, never
+re-fixed).
 
 Triaged apparent findings (from the raw reviews — UNVERIFIED, verify before acting):
 

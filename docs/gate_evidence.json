@@ -498,6 +498,26 @@
     "git_filter_repo.py 2.47.0 lines 3282-3294 (the already_ran prompt that --force does not skip)",
    "colibri .adversary/reviews/gate_20260905-124456.md (the docket gate's BLOCK on this row's first draft: uncited CLEARs; its dead-sha finding refuted by commit-map)"
    ]
+  },
+  {
+   "id": "EV-036-REVIEWER-SCOPE-FALSE-POSITIVE-THIRD-OCCURRENCE-TWICE-IN-ONE-SESSION",
+   "date": "2026-09-05",
+   "repo": "jcodemunch-mcp (e6d8eb0: 19 Phase-3-gated colibri review records + a NEW .colibri_reviews/_manifest.json) and deepagents-quickstarts (407cab3: 5 records + manifest) - the post-gate audit's tranche 2-4 gating commits",
+   "layer": "gate-review BLOCK round 1 in BOTH repos (jcodemunch-mcp gate_20260905-220745.md, Medium; deepagents-quickstarts gate_20260905-220638.md, HIGH), CLEAR round 2 on a byte-cited rebuttal (gate_20260905-220915.md; gate_20260905-220944.md)",
+   "caught": "Both BLOCKs made the same finding: 'the staged diff contains exactly one file, the manifest; the 19 (resp. 5) review .md records and the raw external reviews it indexes are not staged, so every output path dangles and the commit fails its own purpose.' All of them WERE staged: `git diff --cached --name-only` listed 39 paths in jcodemunch-mcp and 11 in deepagents-quickstarts (manifest + records + _external_raw). The reviewer is sent code-class files only (.json here), so the .md records were invisible to it - the EV-027 class, third occurrence (EV-027: a staged census doc; EV-034: a staged README pointer + a deleted .gitignore), this time twice in one session on two repos within seven minutes. The jcodemunch-mcp round also filed a LOW it could not verify (absolute `output` paths make the manifest machine-bound): answered factually - `rel` is the portable field, the absolute shape is what the CURRENT consumer (colibri store.py save_review) writes and reads, the portability defect is already a CONFIRMED docketed finding against store.py from the 2026-09-02 tranche, and the repo-memory indexer resolves records by `Path(output).name` only (repo_memory/colibri.py:253), so both shapes load.",
+   "severity": "Medium (jcm) + HIGH (deepagents) as filed; both scope false positives, no defect in the bytes",
+   "author_initially": "Rebutted factually with the verbatim `git diff --cached --name-only` output in --context; no bytes changed between rounds (the CLEAR is on the identical staged blobs). The class is now predictable: any commit whose code-class part is an INDEX to non-code files (a review manifest, a docs pointer, a registry) will draw this finding, so the author now front-loads the staged path list into the first --context - done for the three follow-up commits the same evening (repo-memory 5427f5a CLEAR 221821 round 1; Tools e7a8f25 CLEAR 221823 round 1; colibri, this commit).",
+   "resolution": "CLEAR round 2 in both repos; commits notarized (jcodemunch-mcp e6d8eb0 note 221202; deepagents-quickstarts 407cab3 note 221219) and pushed. Standing observation from EV-034 stands and now has three data points: feeding the reviewer the staged NAME LIST of non-code paths (never their contents) would close the class at the gate rather than per-author habit. Flagged, not fixed (Tools-side change, owner's pending gate pass).",
+   "refs": [
+    "jcodemunch-mcp .adversary/reviews/gate_20260905-220745.md (BLOCK, Medium)",
+    "jcodemunch-mcp .adversary/reviews/gate_20260905-220915.md (CLEAR)",
+    "deepagents-quickstarts .adversary/reviews/gate_20260905-220638.md (BLOCK, HIGH)",
+    "deepagents-quickstarts .adversary/reviews/gate_20260905-220944.md (CLEAR)",
+    "repo-memory .adversary/reviews/gate_20260905-221821.md and Tools .adversary/reviews/gate_20260905-221823.md (round-1 CLEARs with the staged list front-loaded)",
+    "EV-027, EV-034 (the same scope class - first and second occurrences)",
+    "colibri docs/GATE_SWEEP_2026-09-02_TRANCHE234_PENDING.md (status block: what the 24 gated records found)",
+    "repo-memory repo_memory/colibri.py:253 (consumer resolves manifest output by basename)"
+   ]
   }
  ]
 }
