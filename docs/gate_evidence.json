@@ -551,6 +551,22 @@
     "repo-memory 28846a2 fix(autoindex,indexer) + tests/test_autoindex_hygiene.py (14 checks)",
     "repo-memory .colibri_reviews/repo_memory__autoindex.py__bug__ea43d12d.md (Fixed 2026-09-06 section: the round-1 catch, the older collision, the stem-group fix, the residuals)"
    ]
+  },
+  {
+   "id": "EV-039-AUTHORS-SELFTEST-WAS-VACUOUS-GREEN-FOR-THE-WRONG-REASON",
+   "date": "2026-09-06",
+   "repo": "Tools (5a372a0 on main: remediation item 9 of the post-gate audit - grok_review paid-call failure paths + flag/mode contract; owner_setup subprocess guards)",
+   "layer": "gate-review BLOCK round 1 (gate_20260906-120232.md: MEDIUM vacuous selftest + LOW incidental string matches + LOW HTTPException escape), CLEAR round 2 (gate_20260906-120811.md) after the selftest was rewritten to drive each path",
+   "caught": "The author staged a new owner_setup selftest and cited '9/9 PASS' as proof that the new Part B guards work (missing gh -> FAIL, post-refresh scope re-verify, per-repo FAIL row on OSError). The reviewer traced each scenario against the staged bytes: every Part B scenario set GITEXE to a MISSING path, and the very first line of the new part_b() is an up-front `isfile(GITEXE)` guard - so all three scenarios returned there, the .cmd gh shims were never invoked, and none of the three code paths the selftest existed to lock was ever executed. Worse, the unrefreshed-scope check asserted `'workflow' in out`, satisfied by the static section header '== PART B: workflow token scope ...', and `'PUSHED' not in out`, satisfied by the failure text alone. Nine green checks, three of them testing nothing. The same round noted that http.client.HTTPException (IncompleteRead / BadStatusLine from r.read()) still escaped the new 'never traceback after billing' handler.",
+   "severity": "MEDIUM (vacuous test cited as proof) + 2 LOW; all CONFIRMED by the author against the bytes",
+   "author_initially": "Accepted all three - none rebuttable. The selftest was rewritten so each scenario gets PAST the up-front guard: GITEXE is a real runnable file (this interpreter; the push then fails rc != 0 -> the ordinary FAIL row) or a real NON-executable .txt (CreateProcess raises WinError 193 -> the per-repo except-OSError row) per scenario; the gh-missing check asserts 'gh CLI not found'; the unrefreshed check asserts the exact post-refresh FAIL message and that no padded repo row was printed. 12/12 with every path traced by the round-2 reviewer. HTTPException was added to the except tuple with an IncompleteRead check. A second self-inflicted lesson from the same item: the grok_review selftest's first RED run reached the real xAI endpoint with a dummy key (rejected 400, unbilled) because nothing in main() stopped a flag-mismatch run before dispatch - the selftest now stubs urlopen for main() too and would fail loudly if dispatch were ever reached.",
+   "resolution": "CLEAR round 2, Tools 5a372a0 notarized and pushed. Lesson (the author's own words in the record): a green count is not evidence that the new code ran - when a fix adds an EARLY RETURN, every scenario in its test must be shown to get past it, or the test locks nothing. Closes the ranked remediation queue (items 1-9); with EV-037 and EV-038 this is the third real BLOCK in the queue, all three on the author's own fix or its test rather than on the original finding.",
+   "refs": [
+    "Tools .adversary/reviews/gate_20260906-120232.md (BLOCK round 1: vacuous selftest, incidental string matches, HTTPException escape)",
+    "Tools .adversary/reviews/gate_20260906-120811.md (CLEAR round 2, every selftest scenario traced)",
+    "Tools 5a372a0 fix(grok-review,owner_setup) + adversary-gate/owner_setup_selftest.py (12) + grok-review/grok_review_selftest.py (10)",
+    "Tools .colibri_reviews/adversary-gate__owner_setup.py__bug__284672f6.md and grok-review__grok_review.py__bug__1ca63ea5.md (Fixed 2026-09-06 sections)"
+   ]
   }
  ]
 }
