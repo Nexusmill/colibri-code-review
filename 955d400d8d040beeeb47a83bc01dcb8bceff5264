@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "955d400d8d040beeeb47a83bc01dcb8bceff5264",
+ "when": "20260906-011904",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "167331a70c4de2bb178306eb4d2fe6911c5f0135e5e389a6b8e3f02156ae8fa7",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260906-011835",
+   "artifact": ".adversary\\reviews\\gate_20260906-011835.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260906-011835.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 26440, 'completion_tokens': 8872, 'total_tokens': 35312, 'cost': 0.008402, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.008402, 'upstream_inference_prompt_cost': 0.003966, 'upstream_inference_completions_cost': 0.004436}, 'completion_tokens_details': {'reasoning_tokens': 8274, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['docs/gate_evidence.json']\n\n## Review\n\nThe change is a docs-only append of one evidence row (EV-037) to the machine-readable docket, plus the markdown twin. I verified it against the file's own conventions and its history of failure classes (EV-011 duplicate keys, EV-014 misfiling, EV-033/035 uncited CLEARs, EV-034 wrong prior-instance counts):\n\n**Structure / JSON validity**\n- The insertion point is correct: after EV-036's refs close, EV-036's object brace is converted to `},` (the diff's context-matched tail is a valid minimal diff \u2014 old EV-036 `}` pairs against new EV-037 `}`), the new object sits inside `entries[]`, and the file tail (`]` \u2192 `}` \u2192 root close) is well-formed with no trailing comma. The full staged file re-traced end-to-end: root object, `_doc`/`_covenant`, 37 entry objects, closed cleanly. Manually validated as parseable.\n- New entry keys (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`) are unique, complete per the covenant, and no unescaped quotes/backslashes in any string value (single quotes `'base IS this branch'`, `'stale'` are legal JSON).\n- Indentation mirrors the file's 3-space field convention as claimed.\n\n**Content consistency**\n- ID `EV-037` is new and unique (EV-001\u2026036 exist); chronological append is correct placement in `entries`, not `entries_archived` (the EV-014 trap).\n- Internal arithmetic checks out: 5 new tests inside suite 7768 \u2192 file grows to 7 (7770) \u2192 9 (7772); \"fixed three of the four findings and documented the fourth\" matches the four findings enumerated (r1 HIGH warm-cache; r2 HIGH summarizer / MEDIUM content-dir / LOW coverage) and the stated open MEDIUM.\n- Round-3 CLEAR is cited (gate_20260906-011116.md) \u2014 not the EV-033/035 uncited-CLEAR class. No occurrence-count claims to miscount. No false statements about staged files (the EV-027/034/036 class) \u2014 the row makes no claims about this repo's staged set.\n- Author note's twin count 36\u219237 matches the actual entry count (37). External-repo artifacts (jcodemunch-mcp reviews, fe2afe5, test file) are not verifiable here and the row doesn't assert anything about bytes visible to this review.\n\nNo contract break, no schema drift, no misfiling, no false claim against the visible bytes.\n\nVERDICT: CLEAR"
+ }
+}
