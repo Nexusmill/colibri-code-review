@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "a6a9e8bf47f3faf6d6077fd8e4575e18e9fb7c63",
+ "when": "20260905-223312",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "01c1348297709ad1628ee3158d3a4250f73549a9e887cbe9e8e37e582b5a6206",
+   "model": "xai:grok-4.6",
+   "when": "20260905-223242",
+   "artifact": ".adversary\\reviews\\gate_20260905-223242.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260905-223242.md": "model: xai:grok-4.6 | usage: {'input_tokens': 26879, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 10594, 'output_tokens_details': {'reasoning_tokens': 10339}, 'total_tokens': 37473, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 1165540000, 'context_details': {'input_tokens': 26879, 'output_tokens': 10594}} | files: ['docs/gate_evidence.json']\n\nThe append is a single new docket object (EV-036) with the standing schema (id/date/repo/layer/caught/severity/author_initially/resolution/refs). The staged JSON is structurally valid: EV-035 closed with a comma, 36 sequential ids EV-001..EV-036, no duplicate keys, quoted findings use single quotes so the strings parse.\n\nOccurrence math matches the prior rows this change does not rewrite: EV-027 first, EV-034 second (itself corrected off a false \u201cthird\u201d), this cluster the third. The two-repo \u201ctwice in one session\u201d framing matches EV-034 counting two same-class findings as one occurrence. Cited BLOCK/CLEAR artifacts are named both inline and in `refs` (the EV-033/EV-035 uncited-CLEAR class is not repeated). Path-count arithmetic (19+19+1=39, 5+5+1=11) is internally consistent. The front-loaded name list is the documented mitigation for this exact scope class; treating the three sibling `.md` files as missing would re-enact EV-027/034/036.\n\nNo contract break, no uncited CLEAR, no invented prior instance.\n\nVERDICT: CLEAR"
+ }
+}
