@@ -518,6 +518,23 @@
     "colibri docs/GATE_SWEEP_2026-09-02_TRANCHE234_PENDING.md (status block: what the 24 gated records found)",
     "repo-memory repo_memory/colibri.py:253 (consumer resolves manifest output by basename)"
    ]
+  },
+  {
+   "id": "EV-037-GATE-FOUND-THE-FIX-WAS-INCOMPLETE-TWICE-WARM-CACHE-AND-NEWLY-LIVE-PATHS",
+   "date": "2026-09-06",
+   "repo": "jcodemunch-mcp (fe2afe5 on nexusmill-local: remediation item 3 of the post-gate audit - index_folder branch-delta mode was unreachable and no-change runs stamped the branch HEAD into the base index)",
+   "layer": "gate-review BLOCK round 1 (gate_20260906-003200.md, HIGH) and BLOCK round 2 (gate_20260906-005504.md, HIGH + MEDIUM + LOW), CLEAR round 3 (gate_20260906-011116.md) on bytes that fixed three of the four findings and documented the fourth",
+   "caught": "The author's first cut fixed the reviewed finding AND its deeper root cause (meta base_branch was written from a CodeIndex.branch nothing ever set and never read back, so delta mode could never trigger) - full suite 7768 green, 5 new RED->GREEN tests. Round 1 traced a path the tests never exercised: _patch_index_from_delta, the warm-cache rebuild behind every incremental_save, constructed its CodeIndex without branch=, so ONE base-mode incremental save in a long-lived MCP/watcher process erased the branch again and re-armed the exact 'base IS this branch' fallback the commit existed to remove - the fix only held until the first watcher event. Round 2 accepted that repair and then reasoned one step further than the author had: persisting base_branch turns on the whole previously-dead branch-delta machinery, so it audited the newly reachable paths and found two that still wrote into the base (the watcher fast path's deferred-summarizer thread saves the branch's symbols through a branch-less incremental_save under the tool's DEFAULT use_ai_summaries=True; _record_coverage on both delta paths rewrites the base's coverage contract with the branch's walk) plus a design defect (the per-repo content dir is not branch-scoped, so base-view source reads of a branch-modified file slice branch bytes while the delta exists).",
+   "severity": "HIGH (round 1) + HIGH/MEDIUM/LOW (round 2); all four CONFIRMED against the bytes by the author",
+   "author_initially": "Accepted every finding after tracing it - none was rebutted. Each fixed one got a RED-first test reproducing the reviewer's exact trigger in ONE process (warm module-level cache; a recorded threading.Thread through the module's own name; coverage dict equality) before the guard went in: 7 then 9 tests, suites 7770 and 7772 green. The MEDIUM content-dir defect was NOT fixed: it is pre-existing delta-subsystem design (branch-scoped content storage plus branch-aware readers is a feature, not a remediation), so it was recorded as an OPEN CONFIRMED MEDIUM in the staged review record with the trade-off stated plainly (before: a branch switch overwrote the ENTIRE base with branch content; after: only the modified files' source slices can be wrong while a delta exists) and the round-3 context asked the reviewer to treat it as documented-and-open. The reviewer re-verified that framing against the bytes and cleared.",
+   "resolution": "CLEAR round 3, commit fe2afe5 notarized and pushed with its note. Lesson recorded in the review record and the author's memory: when a fix ACTIVATES dormant machinery, the review unit is the machinery, not the diff - audit every path that becomes reachable before staging. Two LOW residuals the CLEAR round noted stay open in the record: a base-mode head-only bump makes every existing delta warn 'stale' on load (warning-only), and detached-HEAD checkouts accumulate one branch_meta row per SHA (cosmetic). The content-dir MEDIUM is the next docketed item for this file.",
+   "refs": [
+    "jcodemunch-mcp .adversary/reviews/gate_20260906-003200.md (BLOCK round 1, HIGH warm-cache branch loss)",
+    "jcodemunch-mcp .adversary/reviews/gate_20260906-005504.md (BLOCK round 2, HIGH summarizer thread / MEDIUM content dir / LOW coverage)",
+    "jcodemunch-mcp .adversary/reviews/gate_20260906-011116.md (CLEAR round 3)",
+    "jcodemunch-mcp fe2afe5 fix(index_folder) + tests/test_branch_no_change_head.py (9 tests)",
+    "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__tools__index_folder.py__bug__18b712cf.md (Fixed 2026-09-06 section: all four findings, the open MEDIUM, the trade-off)"
+   ]
   }
  ]
 }
