@@ -1,8 +1,16 @@
-# HARNESS_GUARD.md - the agent-side deny guard: every rule, its reason, and the 2026-09-04 arc
+# HARNESS_GUARD.md - the agent-side deny guard: every rule, its reason, and the hardening arcs
+
+> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). The
+> machine-wide-arming rules (2026-09-06) are added below; a full walk-through and audit of the
+> `decide()` function, including its documented residuals, is in
+> [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) Part 4.
 
 One-line abstract: the catalogue of what `Tools/adversary-gate/harness_guard.py` (the Claude Code
-PreToolUse guard) and its ZCode twin `Caliper/tools/git-guard.mjs` refuse, why each rule exists,
-the day both were hardened together, and the owner sweeps that followed.
+PreToolUse guard, and, through `codex_guard.py`, the Codex guard) and its ZCode twin
+`Caliper/tools/git-guard.mjs` refuse, why each rule exists, the days they were hardened, and the
+owner sweeps that followed. `harness_guard.py` is the **single source** of the policy - Claude
+Code runs it directly, Codex runs it through `codex_guard.py` (never a copy - see
+CODEX_GATE_IMPLEMENTATION.md).
 
 ## What the guard is, and is not
 
@@ -26,7 +34,11 @@ a file and run the file by path.
 | `FLAG=-n` / `FLAG=--no-verify` assignments, `set -- -n` | shell-variable smuggling of the flag (best-effort; the auditor backstops unbounded indirection) |
 | `git ... commit ... -<bundle>n` where no value-taking option (`m F c C t`) precedes the `n` | `-nm x` is `-n -m x` (deny) but `-mn x` is `-m "n"`, the hook RUNS - denying it was a live false positive until 2026-09-04 |
 | `$VAR ... commit ... -n` | a variable-built git word (`c=git; $c commit -n`) leaves a `commit` token with no `git` token in the segment (found by probe 2026-09-04) |
-| `hooksPath` anything except arming `.githooks` | re-pointing or unsetting `core.hooksPath` detaches the gate |
+| `hooksPath` set to anything except the **two** arming values | re-pointing or unsetting `core.hooksPath` detaches the gate. Since 2026-09-06 two values pass: the vendored `.githooks` (optional trailing slash) and the absolute canonical dispatcher dir `Tools/adversary-gate/hooks`. A trailing tab/NBSP, a quote followed by anything, or a spaced `=` all deny (each reaches git as a hookless value) |
+| any `--global`/`--system`/`--worktree`, `--remove-section`/`--rename-section`, `--edit`/`-e`, `--file`/`-f`, `include.path`/`includeIf` git-config write | literal-free ways to re-point or drop the hooks path; the GLOBAL value is the owner's machine-wide arming, never the harness's (2026-09-06, [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md)) |
+| any `GIT_CONFIG_{GLOBAL,SYSTEM,NOSYSTEM,PARAMETERS,COUNT,KEY_n,VALUE_n}` env var | config-override env vars re-point the machine-wide arming for that command; selftests set them in-process, never on a shell line |
+| the machine-wide dispatcher dir `adversary-gate/.../hooks`, in any spelling (intermediates, trailing dot/space, 8.3 alias) | the live gate of every armed repo; deleting or rewriting a dispatcher disarms them all. One exemption: a segment that is, in its entirety, the arming command or the inline `git -c core.hooksPath=<canonical> commit ...` form (whose tail admits no `$`/backtick/`<`/`>`) |
+| an 8.3 short-name path `NAME~1/.../hooks` | resolves to the live hook dir or the dispatcher dir under a spelling the literal rules cannot see; `HEAD~1` (no separator after) stays allowed |
 | `commit-tree`, `update-ref`, `fast-import`, `git replace` | plumbing that creates or moves commits without hooks |
 | mutating `git notes` subcommands | adversary notes are written only by `adversary_gate.py record` |
 | `ADVERSARY_FAKE` outside `*_selftest.py` | fakes the reviewer verdict |
@@ -49,9 +61,15 @@ all-dot/space segment (`...`, `.. `, `. .`) is AMBIGUOUS, because platforms disa
 it is a parent, the current directory or a literal name. The guard enumerates every assignment
 over the ambiguous segments (cap 8, more refuses outright) and refuses if ANY reading:
 
+- ends with an `~\d+` 8.3 short-name segment (which would hide any protected name),
 - contains a `.adversary` segment (clearance / OVERRIDE forgery),
 - contains a `skill_gate` segment (skill-gate ledger / OVERRIDE forgery),
-- has `.git` immediately followed by `hooks` (the live hook dir).
+- has `.git` immediately followed by `hooks` (the live hook dir), or
+- has `adversary-gate` immediately followed by `hooks` (the machine-wide dispatcher dir, 2026-09-06).
+
+Bash segments are additionally checked in **two views** - the raw text and the text with every
+quote character removed - because the shell reassembles a token split by a quote pair
+(`adversary-gate/"hooks"`, `core.hooks"Path=`); either view tripping a rule denies.
 
 Accepted over-denies in the deny-on-doubt direction: `.git/../hooks` (resolves outside the hook
 dir), and any path with more than eight ambiguous segments. `Read` is never refused.
@@ -76,7 +94,8 @@ across two repos:
 5. A whole-path all-pop / all-skip pair missed the mixed `x\...\..\hooks`.
 
 Final shape: the enumeration above, in both guards, with every form pinned in both batteries
-(harness guard selftest 91 to 148; Caliper battery 10 tests, full suite 351). Lessons, recorded
+(harness guard selftest 91 to 148, then to **231** with the 2026-09-06 machine-wide-arming rules;
+Caliper battery 10 tests, full suite 351). Lessons, recorded
 because they cost seven rounds: canonicalise the way the filesystem does BEFORE comparing; test
 every check against every reading, not just the one you added; a single-form timing probe does
 not reproduce backtracking, construct the input both alternatives can consume; and a second

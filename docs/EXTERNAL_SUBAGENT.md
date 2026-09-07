@@ -1,5 +1,8 @@
 # EXTERNAL_SUBAGENT.md - provisioning an external subagent that can arm the gate and run reviews
 
+> **Doc version: 1.1 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Prerequisite 5
+> notes machine-wide arming on the owner's machine; on any other machine it is per-clone.
+>
 > The checklist for getting everything in place so a HEADLESS agent session - another
 > machine, another checkout, a scheduled job, or a launcher-spawned worker - can run
 > `install_gate.py`, clear commits through the adversary gate, and drive colibri sweeps.

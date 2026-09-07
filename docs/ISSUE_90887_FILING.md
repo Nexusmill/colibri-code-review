@@ -1,5 +1,10 @@
 # ISSUE_90887_FILING.md - the posted evidence comment on anthropics/claude-code#90887
 
+> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Version 2 (the
+> universal-arming evidence) is DRAFTED at the bottom of this file, awaiting the owner to post
+> it; its comment URL goes in once posted. Version 1 below is the archived posted text -
+> never overwritten.
+>
 > The comment below was POSTED 2026-09-01 (owner's order, posted from the owner's gh
 > account by the session agent): 
 > <https://github.com/anthropics/claude-code/issues/90887#issuecomment-5503762795>
@@ -586,3 +591,100 @@ write paths. Detection, not prevention, by design.
 [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) (provisioning a second machine)
 
 </details>
+
+---
+
+## Version 2 - DRAFTED 2026-09-07 (not yet posted; comment URL: _pending_)
+
+> Draft of the next evidence update for the owner to post to
+> anthropics/claude-code#90887. When posted, record the comment URL here and above, and never
+> overwrite this text. New reference doc: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+
+**Update (2026-09-07): the userland implementation is now armed *machine-wide*, and building
+that change produced the densest single demonstration yet of this issue's thesis - a ~5-commit
+feature drew ~17 independent adversarial BLOCKs, every one a real defect in the enforcement
+code itself, caught by the enforcement code reviewing its own change.** The evidence docket is
+now 42 entries; two new rows (EV-041, EV-042) and the arming tranche are summarized below.
+Everything is drawn from the same machine-readable docket under the same covenant (one row per
+catch, filed in the same session, never deleted, false catches amended in place with proof).
+
+### 1. A correctness win the issue's readers will care about: arming is no longer per-clone
+
+Version 1's own threat-model doc listed "unarmed fresh clones still commit un-gated" as an
+accepted residual, on the belief that per-clone arming is a git limitation. **That belief was
+false, and testing it uncovered a live hole.** Under a real git process with a throwaway global
+config: a machine-global `core.hooksPath` arms a fresh init, clone, and worktree with no
+per-clone action; and, worse, a worktree of an *already armed* repo on a branch predating the
+vendored hooks directory was committing **un-gated** (the inherited relative value did not
+resolve; git ran no hook). Both are now closed: git's global `core.hooksPath` points at a
+dispatcher hook directory (owner-set once), and the installer additionally pins the same
+**absolute** value per repo. A `--census` command proves every checkout and worktree on the
+machine. This is docket row **EV-041** - a residual that had been *accepted on a false premise
+about git*, caught by the owner, then fixed under ~17 rounds of the gate blocking its own change.
+
+A second gap surfaced in the same work (**EV-042**): the gate's canonical hook shims are
+*extensionless files*, and the code-class check only gated files by extension or under
+`.githooks/`, so the single source of every vendored hook had never itself been gated code.
+Closed by classifying `pre-commit`/`post-commit`/`pre-push` as code wherever they live,
+confined by a per-repo "rules epoch" so the reclassification does not retroactively flag
+history - and hardening *that* epoch against a chain of committed-state grandfathering attacks
+(a later commit rewriting the epoch forward; a forged-date re-add on a merged side branch; a
+shallow clone; a case-variant filename; a symlink) took several more rounds.
+
+### 2. The thesis, reproduced at its densest
+
+The whole point of #90887 is that authors - AI agents included - defend invented claims, so
+self-review is untrustworthy. The universal-arming tranche is the sharpest instance to date,
+because the code under review *was the reviewer's own enforcement machinery*:
+
+- **Commit A (the dispatcher + installer + epoch): 6 BLOCKs before CLEAR.** Among them: the
+  staged tree could not pass its own selftest (the installer change was unstaged); an absolute
+  pin to a *missing* dispatcher directory printed "ARMED" (fail-open arming); partial dispatcher
+  loss still read "armed"; the dispatcher *content* was never verified, so an uncommitted edit
+  to a dispatcher would silently disarm every repo pinned to it; the selftests' own fixture
+  commits were not isolated from the very global pin the feature installs.
+- **Commit B (the agent-side guard + the Codex adapter): 10 BLOCKs before CLEAR.** The guard's
+  allowlist for the arming value was defeated, in successive rounds, by a trailing tab/NBSP, a
+  quote-then-anything, a spaced `=`, an 8.3 short-name alias, a quote-pair splitting the token,
+  and a quote-glued space; the newly-protected dispatcher directory was agent-writable via a
+  plain redirection and via a command substitution riding inside the arming exemption; the Codex
+  payload adapter fell open on an over-long payload (a fixed stdin cap truncated it mid-JSON), on
+  a missing tool-name alias, on a string-shaped argument bag, and on a bag whose only key was
+  null; and literal-free `--global`/`--system`/section-removal/include git-config writes (and the
+  `GIT_CONFIG_*` environment variables) could re-point the machine-wide arming without ever
+  naming the hooks path.
+- **The rules-epoch anchoring: several more BLOCKs**, each a committed-state bypass of the
+  reclassification confinement, as listed above.
+
+Every one of these was a real defect in the safety tooling, found by an independent reviewer
+reading the exact staged bytes, and fixed test-first with the reviewer's own trigger as a
+regression row. None shipped. Final selftest counts on the landed bytes: guard 231, installer
+72, gate 65, auditor 35, dispatcher 10, Codex adapter 19, new-repo installer 17.
+
+### 3. The Codex integration - and a concrete drift the single-source rule closed
+
+The same gate now binds a second harness (OpenAI Codex) through a small adapter that normalizes
+a Codex tool event and calls the identical decision function. The earlier Codex integration ran
+**private copies** of the guard scripts, which is exactly how two harnesses come to enforce
+different policies; the rebuild deletes the copies and points Codex at the one canonical guard,
+with a selftest that statically fails if any cached plugin version drifts back to a copy. This is
+the harness-diversity version of the issue's core ask: the *only* trustworthy place for the
+"is this action allowed" decision is a single shared authority, ideally the harness itself.
+
+### 4. Still not closable in userland (unchanged, and reinforced)
+
+The agent-side deny-guard remains regex over command strings, advisory by construction, failing
+open on anything it cannot parse. This tranche *widened* it substantially (the arming-value and
+config-write rules above), but it also produced a clean, honest catalogue of what a text guard
+**cannot** do (audited in [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) Part 4):
+it cannot tell "delete this path" from "invoke a tool at this path" once shadowing / PATH /
+aliases are in play (so deleting the gate's own directory is detected after the fact, not
+prevented); it cannot see a symlinked or string-concatenated spelling that never renders the
+protected literal; it cannot bound shell-variable indirection. Each is backstopped by the
+post-commit notary and the CI auditor - detection, not prevention. **Only the harness can make
+the commit tool-call itself conditional on a reviewer verdict, which is what this issue
+requests.** Two and a half more days of running it, and a feature whose entire purpose was to
+harden the gate, have not changed that conclusion - they have made the case for it sharper.
+
+The full suite (hooks, dispatcher, installer, auditor, guard, Codex adapter, selftests) is MIT
+and public: [`adversary-gate` plugin on the Nexusmill marketplace](https://github.com/Nexusmill/colibri-marketplace/tree/main/plugins/adversary-gate).

@@ -1,5 +1,13 @@
 # GATE_ADOPTION_PLAYBOOK.md - adopting the adversarial commit gate, end to end
 
+> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). This runbook is
+> for adopting the gate on **any machine** (the per-clone recipe below still applies there). On
+> the **owner's** machine, arming is now machine-wide (a global `core.hooksPath` + a per-repo
+> absolute pin) and layer 0 is a dispatcher; see [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md), and
+> add extensionless hook files (`pre-commit`/`post-commit`/`pre-push`) to the gated code class
+> (HOOK_NAMES, EV-042). This copy is also embedded verbatim in the Version-1 filing; the
+> Version-2 filing supersedes it for the machine-wide details.
+>
 > **The offering.** This is the complete, novice-grade runbook for the G39 adversarial
 > commit-gate solution: every commit of code is independently reviewed by an external
 > model before it can land, every landed commit carries durable cryptographic evidence

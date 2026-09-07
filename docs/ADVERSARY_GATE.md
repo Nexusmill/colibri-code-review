@@ -1,5 +1,9 @@
 # ADVERSARY_GATE.md - the mandatory adversarial commit gate (G39) in this repo
 
+> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Machine-wide
+> arming (the dispatcher hook dir, the census, HOOK_NAMES, the rules epoch) is its own doc:
+> [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+>
 > Source of truth: `C:\Users\User\source\repos\Tools\adversary-gate\adversary_gate.py`
 > (the tool) and `.githooks/pre-commit` here (the shim). Born 2026-08-30 from the owner's
 > order after plan-triangulation proved that authors - external models AND the in-session
@@ -25,6 +29,12 @@ clearance automatically - clearance follows bytes, not intentions.
   post-baseline history, which is the fail-closed direction)
 - **Anything under `.githooks/`** regardless of extension - a hook edit could neuter the
   gate itself (finding from the gate's own birth review, round 2)
+- **Extensionless git hook files (`pre-commit`, `post-commit`, `pre-push`) wherever they
+  live** (2026-09-06, EV-042): the canonical shims in `Tools/adversary-gate/` and the
+  dispatchers in `adversary-gate/hooks/` are the single source of every vendored hook and had
+  never been gated. `HOOK_NAMES` in the gate and the vendored auditor classifies them as code,
+  confined to commits after the per-repo rules epoch so history is not reclassified. See
+  [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md)
 - **Anything under `.github/workflows/`** - the CI audit workflow is enforcement config
   too; editing it un-gated would be the same hole (layered-enforcement review 2026-08-31)
 - **Deletions of code files and renames-away** (code renamed to a non-code extension) -
@@ -65,9 +75,11 @@ stale/unreviewed listing), `... status` (staged files vs clearance state).
   CLOSED (auto-BLOCK), never an exception.
 - **State:** `.adversary/` (gitignored) - `clearance.json` (per-file sha-keyed verdicts)
   and `reviews/gate_<timestamp>.md` artifacts (model, usage, files, full verdict text).
-- **Selftests:** `gate_selftest.py` (16 checks) and `install_selftest.py` (25 checks) in
-  the tool folder; both run offline via `ADVERSARY_FAKE`, which is honored ONLY inside
-  `advgate_*`-named selftest repos - it cannot stub the real gate (birth review, r2).
+- **Selftests** in the tool folder, all offline via `ADVERSARY_FAKE` (honored ONLY inside
+  `advgate_*`-named selftest repos - it cannot stub the real gate, birth review r2): as of
+  2026-09-07 `gate_selftest.py` 65, `install_selftest.py` 72, `guard_selftest.py` 231,
+  `audit_selftest.py` 35, `hooks_selftest.py` 10 (the dispatchers), `codex_guard_selftest.py`
+  19, and `arm-repo/arm_repo_selftest.py` 17.
 
 ## The escape hatch is not yours
 
@@ -75,14 +87,20 @@ stale/unreviewed listing), `... status` (staged files vs clearance state).
 through with a loud warning, then deletes itself. It exists for the OWNER's emergencies.
 An agent using it is a protocol violation, full stop - equivalent to disabling the gate.
 
-## Arming truth (per clone)
+## Arming truth (machine-wide since 2026-09-06)
 
-Git cannot ship config: **a fresh clone is UNARMED** until `git config core.hooksPath
-.githooks` runs in that working copy. This repo's checkout is armed; verify any clone
-with:
+**Superseded:** the old "a fresh clone is UNARMED until `git config core.hooksPath .githooks`"
+claim was retracted (EV-041 - the premise that per-clone arming is a git limitation was
+false). Arming is now **machine-wide**: git's GLOBAL `core.hooksPath` points at the dispatcher
+dir `Tools/adversary-gate/hooks` (owner-set, once), so every checkout and future clone/worktree
+on the owner's machine is armed for the commit wall; `install_gate.py` additionally pins the
+same **absolute** value per repo and vendors `.githooks/` for CI and other machines. Other
+machines still arm per clone with the installer. Full architecture: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+Verify any checkout, or the whole machine:
 
 ```bash
 python C:\Users\User\source\repos\Tools\adversary-gate\install_gate.py <repo> --verify-only
+python C:\Users\User\source\repos\Tools\adversary-gate\install_gate.py --census
 ```
 
 Two hardening facts learned in the field (2026-08-30, now baked into this repo's

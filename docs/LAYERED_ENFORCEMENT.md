@@ -1,5 +1,9 @@
 # LAYERED_ENFORCEMENT.md - the four layers around the adversarial commit gate
 
+> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Layer 0 is now a
+> **dispatcher**, armed **machine-wide**; layer 3 gained HOOK_NAMES and the rules epoch. Full
+> architecture: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+>
 > Added 2026-08-31 after the owner's observation that the gate is *git-centered*: a
 > pre-commit hook is advisory by construction, and git offers many ways around it
 > (`--no-verify`, `-n`, re-pointing `core.hooksPath`, plumbing via
@@ -18,11 +22,15 @@ operating through the harness*, plus detection for everything else:
 
 | Layer | Where | Mechanism | Stops |
 |---|---|---|---|
-| 0 (the wall) | pre-commit hook | `adversary_gate.py check` | ordinary ungated commits |
+| 0 (the wall) | pre-commit / post-commit / pre-push **dispatcher** hooks, armed **machine-wide** by the global `core.hooksPath` (owner-set) + a per-repo absolute pin | each dispatcher self-checks, runs `adversary_gate.py check`/`record`/`check-push`, then the repo's own default-dir hook | ordinary ungated commits, in every checkout and worktree on the machine ([UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md)) |
 | 1 | commit driver (`_git_do.py`, Nexusmill) | runs `check` directly before commit, `record` after | disarmed-clone commits through the driver |
-| 2 | Claude Code PreToolUse hook | `harness_guard.py` denies bypass + forgery commands | the agent-reachable workarounds |
+| 2 | Claude Code / Codex PreToolUse hook | `harness_guard.py` (Codex via `codex_guard.py`) denies bypass + forgery commands | the agent-reachable workarounds |
 | 3 (the catch-all) | post-commit notarization + auditor | durable git notes on `refs/notes/adversary`; `adversary_audit.py` re-verifies every commit | EVERYTHING, after the fact |
 | 4 | CI + branch protection | vendored auditor in GitHub Actions; required check on `main` | bypass reaching the shared remote |
+
+Layer 0 was a single per-clone `pre-commit` hook until 2026-09-06; it is now three dispatcher
+shims armed machine-wide. The [census](UNIVERSAL_ARMING.md#the-census-install_gatepy---census-root-)
+proves every checkout and worktree.
 
 ## Layer 3 - the tripwire (the load-bearing layer)
 
@@ -52,6 +60,14 @@ OVERRIDE provenance: consuming `.adversary/OVERRIDE` snapshots the staged shas i
 `override_used.json`; `record` converts it to an OVERRIDE note only while HEAD carries
 those exact blobs - a lingering override file cannot bless a later commit.
 
+**HOOK_NAMES + the rules epoch (2026-09-06, EV-042).** The extensionless hook files
+(`pre-commit`, `post-commit`, `pre-push`) are the single source of every vendored shim and had
+never been gated code. The gate and the vendored auditor now classify them as code wherever
+they live, confined to commits after a per-repo `.githooks/adversary_rules_epoch` - read from
+HEAD's tree only and anchored so the recorded sha must be an ancestor of every commit that ever
+added it (a moved, uncommitted, shallow or unreadable epoch fails closed). Details and the
+`--reanchor-epoch` recovery: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md#hook_names-hook-files-are-code-wherever-they-live-ev-042).
+
 ## Layer 2 - the harness guard
 
 `Tools/adversary-gate/harness_guard.py`, registered as a Claude Code PreToolUse hook
@@ -70,7 +86,10 @@ gate's state dir `skill_gate/`, and a variable-built `$VAR commit -n`; `git comm
 (a value-taking bundle, the hook runs) is no longer a false positive; and file-tool paths are
 canonicalised with every ambiguous dot/space segment read both ways before the compare. The
 full rule catalogue, the seven-round hardening arc (EV-028 to EV-030) and the Caliper twin are
-in `HARNESS_GUARD.md`.
+in `HARNESS_GUARD.md`. Since 2026-09-06 it also denies every agent write of a global/system
+hooks value and every literal-free config write that could re-point it, guards the machine-wide
+dispatcher dir like `.git/hooks`, admits the second arming spelling (the absolute dispatcher
+dir), and judges each Bash segment in a de-quoted view too.
 
 ## Layer 4 - CI + branch protection
 

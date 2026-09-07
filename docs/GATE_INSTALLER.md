@@ -1,7 +1,12 @@
 # GATE_INSTALLER.md - arming the gate on any repo (directly or via a subagent)
 
+> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). The installer now
+> pins the **absolute** dispatcher dir, writes and anchors the **rules epoch**, has `--census`
+> and `--reanchor-epoch`, and reports the epoch and dispatcher state in `--verify-only`. The
+> machine-wide architecture is [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+>
 > Source of truth: `C:\Users\User\source\repos\Tools\adversary-gate\install_gate.py`
-> (selftest `install_selftest.py`, 35/35). Shipped 2026-08-30; first live arming the same
+> (selftest `install_selftest.py`, 72/72 as of 2026-09-07). Shipped 2026-08-30; first live arming the same
 > day: `E:\AI\Caliper` (commit 63ebec8), whose adversary review immediately caught the
 > 100644 exec-mode fail-open now covered below - the installer's proving sequence works.
 > **v2 (2026-08-31)** also installs the layer-3 tripwire: the `post-commit` notarization
@@ -51,6 +56,20 @@
 | 0 | armed AND functional (shim canonical, hooksPath set, gate tool present) |
 | 3 | armed but **FAIL-CLOSED**: the Tools repo is not at the shim's canonical path on this machine - every commit will be refused and NONE can clear. A lockout, not a working gate ([EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) has the prerequisites) |
 | 1 | anything else: not a repo, conflict without `--force`, verification failed, unarmed (verify-only) |
+| 2 | `--census` only: no checkouts were found under the roots (inspecting nothing is not success), or a required argument is missing |
+
+### Census, epoch, and re-anchor (2026-09-06)
+
+- `... install_gate.py --census [ROOT ...]` walks every checkout and worktree under the roots
+  and reports `armed | stale | dangling | tampered | unset | overridden` per row (states defined
+  in [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md#the-census-install_gatepy---census-root-)); exit 0
+  only when all are `armed`.
+- The installer writes `.githooks/adversary_rules_epoch` once (the HOOK_NAMES confinement anchor)
+  and pins its LF; `--verify-only` reports the epoch state (`none | ok | moved | uncommitted |
+  unreadable`).
+- `... install_gate.py <repo> --reanchor-epoch` is the owner recovery for a `moved` epoch
+  (a squash/cherry-pick vendoring flow) - it rewrites the epoch to the common ancestor of the
+  parents of every add (never a forward move) and refuses a sound epoch.
 
 ### Audit mode
 
