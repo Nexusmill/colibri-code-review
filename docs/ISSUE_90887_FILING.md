@@ -604,7 +604,8 @@ write paths. Detection, not prevention, by design.
 that change produced the densest single demonstration yet of this issue's thesis - a ~5-commit
 feature drew ~17 independent adversarial BLOCKs, every one a real defect in the enforcement
 code itself, caught by the enforcement code reviewing its own change.** The evidence docket is
-now 42 entries; two new rows (EV-041, EV-042) and the arming tranche are summarized below.
+now 43 entries; the two arming-tranche rows (EV-041, EV-042) are summarized below, and one
+later catch (EV-043) is described at the end.
 Everything is drawn from the same machine-readable docket under the same covenant (one row per
 catch, filed in the same session, never deleted, false catches amended in place with proof).
 
