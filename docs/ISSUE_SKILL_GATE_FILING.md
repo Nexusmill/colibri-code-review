@@ -1,12 +1,11 @@
 # ISSUE_SKILL_GATE_FILING.md - draft post: structural enforcement of skill routing (G38)
 
-> **Doc version: 1.0 - 2026-09-07.** New. See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). A draft for
-> the owner to post - as a new issue or a comment relating to
-> anthropics/claude-code#90887 - about the G38 skill gate: the same "only the harness can make
-> a tool call conditional on prior state" argument, applied to skill/process-routing rather than
-> commit review. Source of truth: `Tools/skill-gate/` and
-> `Nexusmill/docs/superpowers/specs/2026-09-04-skill-gate-design.md`. When posted, record the URL
-> here and never overwrite the posted text.
+> **Doc version: 1.1 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). POSTED 2026-09-07
+> as its own issue: <https://github.com/anthropics/claude-code/issues/92656> - about the G38
+> skill gate: the same "only the harness can make a tool call conditional on prior state"
+> argument, applied to skill/process-routing rather than commit review. Source of truth:
+> `Tools/skill-gate/` and `Nexusmill/docs/superpowers/specs/2026-09-04-skill-gate-design.md`.
+> Archived verbatim below - never overwritten.
 
 ---
 

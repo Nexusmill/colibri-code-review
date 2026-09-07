@@ -28,8 +28,8 @@
 | [GATE_INSTALLER.md](GATE_INSTALLER.md) | 2.0 | installer reference; absolute pin, census, epoch, reanchor |
 | [GATE_ADOPTION_PLAYBOOK.md](GATE_ADOPTION_PLAYBOOK.md) | 2.0 | adoption runbook; hook-name code class, dispatcher layer 0 |
 | [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | 1.1 | machine prerequisites; machine-wide arming note |
-| [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.1 | the anthropics/claude-code#90887 archive; Version 2 evidence appended, EV-043 added to the draft |
-| [ISSUE_SKILL_GATE_FILING.md](ISSUE_SKILL_GATE_FILING.md) | 1.0 | draft filing / post for the G38 skill gate |
+| [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.2 | the anthropics/claude-code#90887 archive; Version 2 POSTED (issuecomment-5570626121) |
+| [ISSUE_SKILL_GATE_FILING.md](ISSUE_SKILL_GATE_FILING.md) | 1.1 | the G38 skill-gate post; POSTED as issue #92656 |
 | [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-043 |
 | gate_evidence.json | (docket) | machine-readable evidence docket; 43 entries, through EV-043 |
 | [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.1 | this register |
@@ -49,6 +49,16 @@ STATIC_SIGNALS.md, STORAGE.md, GATE_SWEEP_2026-09-02_*_PENDING.md.
 | `skill-gate/README.md` | (rolling) | G38 skill gate |
 
 ## Changelog
+
+### Filings posted 2026-09-07
+
+The two drafts were posted to anthropics/claude-code from the owner's gh account, and their URLs
+recorded (posted text archived verbatim, never overwritten):
+
+- **ISSUE_90887_FILING.md 2.1 -> 2.2** - Version 2 evidence posted as
+  <https://github.com/anthropics/claude-code/issues/90887#issuecomment-5570626121>.
+- **ISSUE_SKILL_GATE_FILING.md 1.0 -> 1.1** - posted as its own issue
+  <https://github.com/anthropics/claude-code/issues/92656>.
 
 ### Docs release 2026-09-07 (later) - EV-043 dispatcher self-check hardening
 

@@ -1,9 +1,9 @@
 # ISSUE_90887_FILING.md - the posted evidence comment on anthropics/claude-code#90887
 
-> **Doc version: 2.1 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Version 2 (the
-> universal-arming evidence) is DRAFTED at the bottom of this file, awaiting the owner to post
-> it; its comment URL goes in once posted. 2.1 adds the EV-043 catch (the gate BLOCKing its own
-> repair twice) to that draft. Version 1 below is the archived posted text - never overwritten.
+> **Doc version: 2.2 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Version 2 (the
+> universal-arming evidence, incl. the EV-043 catch) was POSTED 2026-09-07 from the owner's gh
+> account: <https://github.com/anthropics/claude-code/issues/90887#issuecomment-5570626121>.
+> Both Version 1 and Version 2 below are archived posted text - never overwritten.
 >
 > The comment below was POSTED 2026-09-01 (owner's order, posted from the owner's gh
 > account by the session agent): 
@@ -594,11 +594,11 @@ write paths. Detection, not prevention, by design.
 
 ---
 
-## Version 2 - DRAFTED 2026-09-07 (not yet posted; comment URL: _pending_)
+## Version 2 - POSTED 2026-09-07, issuecomment-5570626121
 
-> Draft of the next evidence update for the owner to post to
-> anthropics/claude-code#90887. When posted, record the comment URL here and above, and never
-> overwrite this text. New reference doc: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+> POSTED 2026-09-07 (owner's order, from the owner's gh account):
+> <https://github.com/anthropics/claude-code/issues/90887#issuecomment-5570626121>. Archived
+> verbatim - never overwritten. Reference doc: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
 
 **Update (2026-09-07): the userland implementation is now armed *machine-wide*, and building
 that change produced the densest single demonstration yet of this issue's thesis - a ~5-commit
