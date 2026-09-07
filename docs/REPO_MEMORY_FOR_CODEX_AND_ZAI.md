@@ -124,22 +124,37 @@ right, and that `E:\repo-memory` is reachable (it is on the E: drive - an extern
 
 ## Part 3 - Implement it for ZCode (z.ai / GLM-5.3)
 
-**ZCode is Claude Code family.** It runs the Claude Code agent loop on the z.ai coding plan
-(`builtin:zai-coding-plan/GLM-5.3`), rooted at **`~/.zcode/cli/`**, with global plugin hooks (the
-universal-tools plugin) rather than per-repo settings. Because MCP is model-agnostic, **repo-memory
-needs no GLM-specific work**: the same server, the same four tools, the same data.
+**ZCode is Claude Code family, but its MCP surface is a user-scope PLUGIN, not a repo file.**
+ZCode runs the Claude Code agent loop on the z.ai coding plan (`builtin:zai-coding-plan/GLM-5.3`),
+rooted at **`~/.zcode/cli/`**. Because MCP is model-agnostic, repo-memory needs no GLM-specific
+work - the same server, the same four tools, the same data. What differs from Claude Code CLI is
+*where the server is registered*. Verified on disk (this machine), MCP servers reach ZCode through
+a **plugin's own `.mcp.json`**, registered **user-scope** so it loads in every session and every
+repo:
 
-### 3.1 The wiring ZCode already understands
+- `~/.zcode/cli/plugins/cache/<marketplace>/<plugin>/<ver>/.mcp.json` carries an `mcpServers`
+  block (the Claude Code plugin format). The universal-tools plugin is mounted exactly this way.
+- `~/.zcode/cli/plugins/installed_plugins.json` records the plugin with `"scope": "user"`, and
+  `~/.zcode/cli/config.json` enables it under `plugins.enabledPlugins`.
+- `~/.zcode/cli/config.json` has **no `mcpServers` key**, and ZCode does **not** consume a
+  per-repo `.mcp.json`. The repo-root `.mcp.json` the bootstrap writes (Part 4) is read by
+  **Claude Code CLI / Cowork**, NOT by ZCode - do not expect arming a repo to arm ZCode.
 
-ZCode, like Claude Code CLI, reads a project **`.mcp.json`** at the repo root. The bootstrap
-(Part 4) writes exactly that file, so **arming a repo for Claude Code arms it for ZCode at the
-same time** - the server block is identical:
+The practical consequence mirrors Codex: **ZCode's MCP scope is GLOBAL.** Every server a
+user-scope plugin declares loads in every ZCode session; the *data* stays segmented (separate
+databases), and the slug-prefixed tool names pick the right store. Add only the repos you actually
+work in from ZCode.
+
+### 3.1 Add repo-memory to ZCode's plugin surface
+
+Put the server entries in a user-scope plugin's `.mcp.json` `mcpServers` block. The entry shape is
+the Claude Code plugin shape - the same block the bootstrap writes for Claude Code, including the
+four `env` vars (the `type` field is optional here):
 
 ```json
 {
   "mcpServers": {
     "nexusmill-memory": {
-      "type": "stdio",
       "command": "C:/Users/User/source/repos/repo-memory/.venv/Scripts/python.exe",
       "args": ["-B", "-m", "repo_memory.server"],
       "env": {
@@ -153,17 +168,20 @@ same time** - the server block is identical:
 }
 ```
 
-This is a **merge** target: the bootstrap adds/updates only its own server key and leaves every
-other MCP server in the file intact.
+Two ways to carry it, both user-scope:
 
-> **Confirm which config surface your ZCode build reads.** If your ZCode reads the project
-> `.mcp.json` (the Claude Code CLI default), you are done after the bootstrap - it is per-project
-> and isolated. If your build instead registers MCP servers in a **global** file under
-> `~/.zcode/` (the way Codex uses `config.toml` and the way the Claude **Desktop Chat** tab uses
-> `claude_desktop_config.json`), add the same server block there and treat it as global (slug
-> prefixes disambiguate, add only the repos you work in). Check with one look: if the repo root
-> has a `.mcp.json` and ZCode lists the `<slug>_memory_*` tools when launched in that repo, it is
-> reading the project file.
+1. **Append to an existing user-scope plugin's `.mcp.json`** - add the `nexusmill-memory` key
+   alongside the plugin's own servers (universal-tools' `.mcp.json` is the model). Quickest, but
+   the entry lives in a plugin **cache** dir (`.../plugins/cache/...`) that a plugin update can
+   overwrite - re-add it after an update.
+2. **A dedicated `repo-memory` plugin** whose `.mcp.json` lists one server per repo you want in
+   ZCode, installed through ZCode's normal plugin flow (so `installed_plugins.json` gets a
+   `"scope": "user"` row and `config.json` enables it). This keeps repo-memory's mounts in their
+   own plugin, out of universal-tools' way, and is the cleaner long-term home. As with every
+   mount, point `command`/env at the **canonical** repo-memory venv and DB - never a copy (the
+   single-source rule the universal-tools mount already follows).
+
+Whichever you choose, the four `env` vars are the whole contract, exactly as in Part 2.1.
 
 ### 3.2 The one ZCode-specific interaction: the G-MEM stub
 
@@ -199,10 +217,11 @@ $env:PYTHONPATH = "C:\Users\User\source\repos\repo-memory"
 
 - The bootstrap is **idempotent and merge-only**: existing MCP servers and config keys survive;
   running it twice changes nothing.
-- For **Codex**, copy the four `env` values from the `.mcp.json` it writes into a
-  `[mcp_servers.<name>]` + `[.env]` block in `~/.codex/config.toml` (Part 2.1). For **ZCode**, the
-  `.mcp.json` it writes is already what ZCode reads (Part 3.1) - nothing more to do unless your
-  build uses a global registry.
+- The repo-root `.mcp.json` it writes is what **Claude Code CLI / Cowork** reads directly (done).
+  For **Codex**, copy the four `env` values out of it into a `[mcp_servers.<name>]` + `[.env]`
+  block in `~/.codex/config.toml` (Part 2.1). For **ZCode**, copy the server block into a
+  user-scope plugin's `.mcp.json` `mcpServers` (Part 3.1) - ZCode does not read the repo file.
+  In every case the four env values are identical; only the destination differs.
 - **Re-seed** after large doc changes with `python -B -m repo_memory.indexer --repo <path>`
   (or `repo_memory.autoindex --repo <path> --force`). It chunks markdown on `##` headings, purges
   exactly the `docs/...` sources it re-adds, and never touches rows written by an agent's
@@ -226,7 +245,7 @@ $env:PYTHONPATH = "C:\Users\User\source\repos\repo-memory"
   | Harness | Config surface | Scope |
   | --- | --- | --- |
   | Claude Code CLI / Desktop **Code** tab | project `.mcp.json` | **per-project** (isolated) |
-  | **ZCode** (z.ai/GLM) | project `.mcp.json` (or a global `~/.zcode/` registry) | per-project, unless your build is global |
+  | **ZCode** (z.ai/GLM) | user-scope **plugin** `.mcp.json` under `~/.zcode/cli/plugins/` | **global** (does NOT read a repo `.mcp.json`) |
   | **Codex** | `~/.codex/config.toml` `[mcp_servers.*]` | **global** (all added repos load every session) |
   | Desktop **Chat** tab | `claude_desktop_config.json` | **global** |
 
