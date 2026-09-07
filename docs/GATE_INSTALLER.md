@@ -36,9 +36,13 @@
    readback), `chmod 0o755`, appends `pre-commit text eol=lf` to
    `.githooks/.gitattributes` (durable LF even under `autocrlf=true`) and `.adversary/`
    to the repo's `.gitignore` (transient gate state never gets committed) - both
-   idempotent - then sets `git config core.hooksPath .githooks` and re-reads everything
-   to verify, including that the gate tool the SHIM execs actually exists on this
-   machine.
+   idempotent - then pins the local hook path to the ABSOLUTE canonical dispatcher dir
+   `Tools/adversary-gate/hooks` (2026-09-06; the earlier relative `.githooks` value dangled
+   in worktrees on pre-vendoring branches and git ran no hook there - EV-041) and re-reads
+   everything to verify, including that the gate tool the SHIM execs actually exists on
+   this machine. `--verify-only` also reports the GLOBAL value and flags a DANGLING relative
+   value; `--census [ROOT ...]` reports every checkout and worktree under the roots as
+   `armed | dangling | unset | overridden` and exits 0 only when all are armed.
 
 ### Exit codes (automation keys on these)
 

@@ -90,5 +90,16 @@ changes without an independent CLEAR.
 3. **Notes live in the repo**: deleting `refs/notes/adversary` locally orphans evidence;
    the auditor then reports violations (fail-noisy), and the pushed copy survives on the
    remote once layer 4 is active.
-4. **Unarmed fresh clones** still commit locally un-gated (per-clone arming is a git
-   limitation); their commits carry no notes and fail the audit at push time.
+4. ~~**Unarmed fresh clones** still commit locally un-gated (per-clone arming is a git
+   limitation); their commits carry no notes and fail the audit at push time.~~
+   **RETRACTED 2026-09-06 (EV-041, caught by the owner while setting up Codex):** the premise
+   was false - a machine-global `core.hooksPath` arms a fresh init, clone and worktree with no
+   per-clone action (probed with real git under a temp global config). Worse, and live:
+   worktrees of ARMED repos on branches without `.githooks/` were committing un-gated - the
+   relative value dangled and git ran no hook (two cases on the owner's machine). Arming is now
+   MACHINE-WIDE: git's global hook path is the canonical dispatcher dir
+   `Tools/adversary-gate/hooks` (owner-set; gate first, then the repo's own default-dir hook)
+   and `install_gate.py` pins the same ABSOLUTE value per repo; `install_gate.py --census`
+   proves every checkout and worktree (`armed | dangling | unset | overridden`). A never-installed
+   repo is gated at commit immediately; its first push of old un-notarized code is refused until
+   the installer writes the baseline. Other machines and CI keep the per-clone recipe.

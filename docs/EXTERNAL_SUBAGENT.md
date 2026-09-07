@@ -14,7 +14,7 @@
 | 2 | **Python 3.11 at `C:\Users\User\AppData\Local\Programs\Python\Python311\python.exe`** - or ANY `python` on the hook's PATH | the shim's `PYBIN` tries the 3.11 path, then falls back to bare `python` | no python visible to `sh` -> the hook errors -> every commit refused |
 | 3 | **The Tools repo at `C:\Users\User\source\repos\Tools`** | the shim's `GATE=` and every documented command hardcode the canonical path; this is the single-operator ecosystem convention (TOOLS_MANIFEST.md) | `install_gate.py` exits **3**: armed but FAIL-CLOSED - commits refused, none clearable. Clone/sync the Tools repo to that exact path BEFORE arming anything |
 | 4 | **`OPENROUTER_API_KEY` in the PROCESS environment** | `adversary_gate.py run` refuses to run without it; colibri/`run_batch.py` read the same variable | gate runs impossible (checks still refuse commits); reviews return the no-key message |
-| 5 | **The target repo checked out, on the right branch** | clearances and commits are per-clone; `core.hooksPath` is per-clone config | arming the wrong clone gates nothing where you meant it |
+| 5 | **The target repo checked out, on the right branch** | clearances and commits are per-clone; on the owner's machine the hook path is machine-wide (global canonical dispatcher dir + per-repo ABSOLUTE pin, 2026-09-06), elsewhere it is per-clone config | arming the wrong clone gates nothing where you meant it |
 
 ### Getting the key into the process (without it ever transiting chat)
 

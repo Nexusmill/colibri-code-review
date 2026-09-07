@@ -162,8 +162,13 @@ changes without an independent CLEAR.
 3. **Notes live in the repo**: deleting `refs/notes/adversary` locally orphans evidence;
    the auditor then reports violations (fail-noisy), and the pushed copy survives on the
    remote once layer 4 is active.
-4. **Unarmed fresh clones** still commit locally un-gated (per-clone arming is a git
-   limitation); their commits carry no notes and fail the audit at push time.
+4. ~~**Unarmed fresh clones** still commit locally un-gated (per-clone arming is a git
+   limitation); their commits carry no notes and fail the audit at push time.~~
+   **RETRACTED 2026-09-06 (EV-041):** the premise was false - a machine-global `core.hooksPath`
+   arms fresh init/clone/worktree with no per-clone action, and worktrees of armed repos on
+   pre-vendoring branches were committing un-gated (dangling relative value). Arming is now
+   machine-wide (global canonical dispatcher dir + per-repo ABSOLUTE pin; `install_gate.py
+   --census` proves every checkout). See `LAYERED_ENFORCEMENT.md` residual 4.
 
 </details>
 
@@ -286,9 +291,11 @@ Expected output: `ARMED  <repo-root>` followed by a summary line and a numbered
 - pinned everything `eol=lf` in `.githooks/.gitattributes` (a CRLF-mangled shim is a
   script /bin/sh refuses to run);
 - added `.adversary/` to the repo's `.gitignore` (transient gate state, never history);
-- set `git config core.hooksPath .githooks` (THE arming - per clone, because git
-  cannot ship config; **a fresh clone of an armed repo is UNARMED until this installer
-  or that one config line runs in it**);
+- pinned the local hook path to the ABSOLUTE canonical dispatcher dir
+  `Tools/adversary-gate/hooks` (2026-09-06; before that the relative `.githooks`, which
+  dangled in worktrees on pre-vendoring branches - EV-041). **On the owner's machine the
+  GLOBAL value already arms every checkout; the local pin makes worktrees inherit an absolute
+  path and survives a global reset. Other machines still arm per clone with this installer.**
 - set `git config notes.rewriteRef refs/notes/adversary` (so amend/rebase carry the
   evidence notes onto rewritten commits instead of orphaning them).
 
