@@ -1,6 +1,7 @@
 # UNIVERSAL_ARMING.md - machine-wide arming of the adversarial commit gate
 
-> **Doc version: 1.0 - 2026-09-07.** New. Registered in [DOCS_VERSIONS.md](DOCS_VERSIONS.md).
+> **Doc version: 1.1 - 2026-09-07.** New at 1.0; 1.1 adds the EV-043 post-rollout hardening
+> section (the dispatcher self-check vs partial commits). Registered in [DOCS_VERSIONS.md](DOCS_VERSIONS.md).
 > Source of truth: `Tools/adversary-gate/` (`hooks/` dispatchers, `install_gate.py`,
 > `adversary_gate.py`, `adversary_audit.py`, `harness_guard.py`). Companions:
 > [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) (the four layers),
@@ -181,3 +182,34 @@ audit 35, codex 19, arm_repo 17.
 - **When a change alters the vendored auditor**, re-vendor *all* armed repos
   (`install_gate.py <repo>` each) and commit the refreshed `.githooks/` through the gate. A
   clearance obtained against a superseded auditor is abandoned, not reused.
+
+## Post-rollout hardening: EV-043 (the dispatcher self-check and partial commits, 2026-09-07)
+
+The rollout's ~17 rounds were all *plain* commits (`git commit`), so they never exercised a
+*partial* commit (`git commit -- <paths>`). The first partial commit after the machine-wide pin -
+landing these very gate docs under the stage-explicit-paths discipline - exposed a defect in the
+dispatcher self-check that the rollout could not have seen:
+
+- **The false positive.** A partial commit makes git build a temporary index and export an
+  ABSOLUTE `GIT_INDEX_FILE` to the hook. The self-check's `git -C "$SUITE"` commands inherited it
+  and read the *committing* repo's temp index instead of the suite's, so `ls-files
+  --error-unmatch hooks/pre-commit` failed and the check refused a byte-clean dispatcher with
+  `dispatcher hooks/pre-commit is MODIFIED ... failing CLOSED`. Every partial commit from any
+  armed non-suite repo was blocked with a misleading message. A plain commit leaks only a relative
+  `.git/index`, which is why the rollout never hit it.
+- **The dead-then-leaky exception.** The "suite may commit SELF fully staged" clause compared the
+  committing repo's toplevel to the adversary-gate *subdir*, never equal - dead code since gate
+  round 5. Reviving it (round 1) let an untracked dispatcher pass; narrowing it (round 2) still let
+  a staged edit ride a partial commit of *other* paths while the modified dispatcher executed and
+  was notarized clean.
+
+**Fix (Tools `7ba0e3b`, three gate review rounds, each catching a real hole in the author's own
+repair):** a `suite_git()` helper runs every suite-side git in a subshell with all repo-retargeting
+`GIT_*` variables unset (index, dir, work-tree, common-dir, object dirs, namespace, the two config
+channels, and the ceiling-directories variable), so `git -C "$SUITE"` always resolves the suite;
+the gate invocation keeps the inherited index so a partial commit is still reviewed against the
+partial set. The in-band exception is **removed entirely** - the self-check is now strictly
+fail-closed, and a dispatcher edit is committed through the repo's `.githooks` shim (execs the
+gate, no self-check) then re-pinned. No re-vendor was needed: every repo pins the dispatcher by
+absolute path, so one Tools commit fixed it machine-wide and the census stayed canonical.
+`hooks_selftest.py` rows 6-10 pin the behavior. Full record: `gate_evidence.json` EV-043.

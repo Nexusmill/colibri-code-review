@@ -1,6 +1,7 @@
 # CODEX_GATE_IMPLEMENTATION.md - the G39 adversarial commit gate on Codex, step by step
 
-> **Doc version: 1.0 - 2026-09-07.** New. Registered in [DOCS_VERSIONS.md](DOCS_VERSIONS.md).
+> **Doc version: 1.1 - 2026-09-07.** New at 1.0; 1.1 adds section 3.5 (partial commits and how to
+> commit a dispatcher edit) after the EV-043 self-check fix. Registered in [DOCS_VERSIONS.md](DOCS_VERSIONS.md).
 > Audience: a Codex session (OpenAI Codex CLI / app) that must operate under the same G39
 > adversarial commit gate as Claude Code and Cowork. Everything here is grounded in real
 > files: `Tools/adversary-gate/codex_guard.py`, `harness_guard.py`, `hooks/`,
@@ -211,6 +212,31 @@ python C:/Users/User/source/repos/Tools/adversary-gate/install_gate.py --census 
 `--census` lists every checkout and worktree (see [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md)).
 
 ---
+
+### 3.5 Committing: partial commits, and editing a dispatcher (EV-043, 2026-09-07)
+
+Two facts about the commit wall that bit the author and will bite Codex:
+
+- **Partial commits work, but there is history here.** `git commit -- <path>` (a *partial* commit)
+  makes git build a temporary index and hand the hook an ABSOLUTE `GIT_INDEX_FILE`. Before Tools
+  `7ba0e3b` the machine-wide dispatcher's self-check inherited that variable, read the *committing*
+  repo's temp index instead of the suite's, and refused every partial commit from an armed repo
+  with a misleading `dispatcher hooks/pre-commit is MODIFIED ... failing CLOSED` - on a byte-clean
+  dispatcher. The fix runs every suite-side git in a CLEAN git context (a `suite_git` helper with
+  all `GIT_*` context variables unset), so `git commit -- <paths>` is fine now from any armed repo.
+  If you see that message on a clone whose dispatcher you did not touch, the clone predates the
+  fix: re-vendor it (`install_gate.py <repo>`), or use a plain `git commit` after verifying
+  `git diff --cached --name-only` shows only your paths (a plain commit leaks only a relative
+  index and always worked).
+
+- **You cannot commit a dispatcher edit *through* the dispatcher.** The self-check is strictly
+  fail-closed: whenever `hooks/pre-commit` (or `post-commit` / `pre-push`) differs from its
+  committed blob or is untracked, it refuses to run - there is NO in-band exception (one was tried
+  and leaked a hole in three straight review rounds, so it was removed). To change a dispatcher,
+  commit through the repo's `.githooks` shim, which execs the gate with no self-check: point the
+  repo's `core.hooksPath` at `.githooks`, stage the edit, run `adversary_gate.py run` for a CLEAR,
+  `git commit`, then re-pin with `install_gate.py <repo>`. This is exactly how the EV-043 fix
+  itself landed. Full record: `gate_evidence.json` EV-043.
 
 ## Part 4 - The `decide()` function: what it does, and its audit
 

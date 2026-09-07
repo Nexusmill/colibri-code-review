@@ -615,6 +615,22 @@
     "Tools .adversary/reviews/gate_20260906-164747.md (status listed no shims), gate_20260906-165900.md (reclassification MEDIUM)",
     "Tools adversary-gate/gate_selftest.py rows hook_files_are_code_anywhere / hook_named_docs_still_not_code; audit_selftest.py rows epoch_*"
    ]
+  },
+  {
+   "id": "EV-043-DISPATCHER-SELF-CHECK-FALSE-FIRED-ON-PARTIAL-COMMITS",
+   "date": "2026-09-07",
+   "repo": "Tools (adversary-gate/hooks/{pre-commit,post-commit,pre-push} + hooks_selftest.py, main 7ba0e3b)",
+   "layer": "layer 0 dispatcher self-check (the machine-wide shim's own gate-round-5 tamper guard), surfaced while committing the gate DOCS to colibri under the stage-explicit-paths discipline",
+   "caught": "The self-check refused a commit with 'dispatcher hooks/pre-commit is MODIFIED or uncommitted ... failing CLOSED' on a byte-clean dispatcher, blocking EVERY partial commit (git commit -- <paths>) from any non-suite armed repo. Proven with an instrumented throwaway repo: a partial commit makes git build a temp index and export an ABSOLUTE GIT_INDEX_FILE (next-index-NNN.lock) into the hook env; the self-check's `git -C \"$SUITE\"` inherited it and read the COMMITTING repo's index (no hooks/pre-commit there) instead of the suite's, so ls-files --error-unmatch failed. A plain commit leaks only a relative .git/index and worked, which is why the ~17-round rollout (all plain commits) never hit it. Second defect in the same read: the line-21 'suite committing SELF fully staged' exception compared ROOT (committing-repo toplevel) to SUITE_LC (the adversary-gate SUBDIR), never equal, so it was dead code.",
+   "severity": "MEDIUM: fail-closed and honest (refused rather than admitted), but it broke the stage-explicit-paths / `git commit -- <paths>` discipline the docs themselves prescribe (the Blink lesson), so the safe form and the enforced form collided; any Codex/agent partial commit from an armed repo was blocked with a misleading message. Found by the author from the gate's own refusal while landing the gate docs.",
+   "author_initially": "Not disputed. Fixed RED-first over THREE adversarial gate rounds, each of which caught a real hole in the author's own fix (the gate reviewing its own repair): round 1 revived the dead exception via SUITE_ROOT but let an UNTRACKED dispatcher pass; round 2 added an ls-files membership check but a staged edit plus a PARTIAL commit of OTHER paths still passed while the modified dispatcher executed and post-commit notarized clean; round 3 CLEAR.",
+   "resolution": "Final fix (all three dispatchers, one commit 7ba0e3b): a suite_git() helper runs every suite-side git in a subshell with GIT_INDEX_FILE/GIT_DIR/GIT_WORK_TREE/GIT_COMMON_DIR/GIT_OBJECT_DIRECTORY/GIT_ALTERNATE_OBJECT_DIRECTORIES/GIT_NAMESPACE/GIT_CONFIG_PARAMETERS/GIT_CONFIG_COUNT/GIT_CEILING_DIRECTORIES unset, so `git -C \"$SUITE\"` always resolves the suite (the gate invocation keeps the inherited index, so a partial commit is still reviewed against the partial set). The in-band self-exception is REMOVED entirely - the check is strictly fail-closed (untracked or differs-from-HEAD refuses), because the exception produced a hole every round and was dead code since gate round 5 anyway; dispatcher edits are committed through the repo's .githooks shim (execs the gate, no self-check) then re-pinned, which is how 7ba0e3b itself was made. hooks_selftest rows 6-10 pin it. No re-vendor: every repo pins the dispatcher by ABSOLUTE path, so one Tools commit fixes it machine-wide; census stays canonical. Selftests: hooks 16/16, install 72/72, gate 65/65, audit 35/35, guard 231/231, codex 19/19, arm_repo 17/17.",
+   "refs": [
+    "Tools main 7ba0e3b (notarized refs/notes/adversary)",
+    "Tools .adversary/reviews/gate_20260907-010146.md (round 1 BLOCK), gate_20260907-011304.md (round 2 BLOCK), gate_20260907-012616.md (round 3 CLEAR)",
+    "Tools adversary-gate/hooks_selftest.py rows partial_docs_commit_passes / suite_staged_self_partial_other_paths_refused / suite_untracked_self_refused",
+    "colibri-code-review/docs/UNIVERSAL_ARMING.md, docs/CODEX_GATE_IMPLEMENTATION.md"
+   ]
   }
  ]
 }

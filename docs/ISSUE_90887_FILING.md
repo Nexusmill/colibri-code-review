@@ -1,9 +1,9 @@
 # ISSUE_90887_FILING.md - the posted evidence comment on anthropics/claude-code#90887
 
-> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Version 2 (the
+> **Doc version: 2.1 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Version 2 (the
 > universal-arming evidence) is DRAFTED at the bottom of this file, awaiting the owner to post
-> it; its comment URL goes in once posted. Version 1 below is the archived posted text -
-> never overwritten.
+> it; its comment URL goes in once posted. 2.1 adds the EV-043 catch (the gate BLOCKing its own
+> repair twice) to that draft. Version 1 below is the archived posted text - never overwritten.
 >
 > The comment below was POSTED 2026-09-01 (owner's order, posted from the owner's gh
 > account by the session agent): 
@@ -685,6 +685,22 @@ post-commit notary and the CI auditor - detection, not prevention. **Only the ha
 the commit tool-call itself conditional on a reviewer verdict, which is what this issue
 requests.** Two and a half more days of running it, and a feature whose entire purpose was to
 harden the gate, have not changed that conclusion - they have made the case for it sharper.
+
+**One more catch, worth stating because it is the sharpest example of the thesis (EV-043,
+2026-09-07).** The machine-wide dispatcher carries a self-check: it refuses to run while its own
+file differs from the committed, gate-reviewed blob. Landing *these very filing updates* - a
+partial commit, `git commit -- <paths>`, the stage-explicit-paths discipline the docs prescribe -
+tripped it: a partial commit makes git export an absolute `GIT_INDEX_FILE` to the hook, the
+self-check read the wrong index, and it refused a byte-clean dispatcher with a misleading
+"MODIFIED" message. The fix (a clean-git-context helper, and removing an in-band exception that
+leaked a hole in three consecutive review rounds) is itself instructive: **the gate reviewed its
+own repair three times and BLOCKed the author's first two fixes** - once for letting an untracked
+dispatcher pass, once for letting a staged dispatcher edit ride a partial commit of other paths
+while the modified hook executed and was notarized clean. The author wrote each fix, believed each
+was complete, and was wrong twice; an independent reviewer keyed to the bytes caught both. That is
+the entire argument for making the commit tool-call conditional on a verdict, restated in
+miniature: the same agent writing, reviewing, and shipping had already convinced itself the code
+was correct. Full record: `gate_evidence.json` EV-043; the three review artifacts are cited there.
 
 The full suite (hooks, dispatcher, installer, auditor, guard, Codex adapter, selftests) is MIT
 and public: [`adversary-gate` plugin on the Nexusmill marketplace](https://github.com/Nexusmill/colibri-marketplace/tree/main/plugins/adversary-gate).

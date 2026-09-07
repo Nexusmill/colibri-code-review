@@ -1,6 +1,6 @@
 # DOCS_VERSIONS.md - version register for the gate documentation
 
-> **Doc version: 1.0 - 2026-09-07.** New. This file is the authoritative register of every
+> **Doc version: 1.1 - 2026-09-07.** New at 1.0; 1.1 registers the EV-043 doc release. This file is the authoritative register of every
 > gate-related document, its current version, and what changed at each version. Each tracked
 > doc carries a `Doc version: N.N - DATE` line in its own header that must match its row here.
 
@@ -20,19 +20,19 @@
 
 | Doc | Version | Status |
 |---|---|---|
-| [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md) | 1.0 | machine-wide arming: dispatcher dir, absolute pin, census, HOOK_NAMES + rules epoch |
-| [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) | 1.0 | step-by-step gate implementation for Codex + the `decide()` audit |
+| [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md) | 1.1 | machine-wide arming: dispatcher dir, absolute pin, census, HOOK_NAMES + rules epoch; EV-043 hardening section |
+| [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) | 1.1 | step-by-step gate implementation for Codex + the `decide()` audit; §3.5 partial commits + EV-043 |
 | [ADVERSARY_GATE.md](ADVERSARY_GATE.md) | 2.0 | the wall; arming section now machine-wide; code-class includes hook-name files |
 | [HARNESS_GUARD.md](HARNESS_GUARD.md) | 2.0 | layer 2 `decide()` catalogue, with the 2026-09-06 arming-side rules |
 | [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) | 2.0 | the four layers; layer 0 is now the dispatcher, armed machine-wide |
 | [GATE_INSTALLER.md](GATE_INSTALLER.md) | 2.0 | installer reference; absolute pin, census, epoch, reanchor |
 | [GATE_ADOPTION_PLAYBOOK.md](GATE_ADOPTION_PLAYBOOK.md) | 2.0 | adoption runbook; hook-name code class, dispatcher layer 0 |
 | [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | 1.1 | machine prerequisites; machine-wide arming note |
-| [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.0 | the anthropics/claude-code#90887 archive; Version 2 evidence appended |
+| [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.1 | the anthropics/claude-code#90887 archive; Version 2 evidence appended, EV-043 added to the draft |
 | [ISSUE_SKILL_GATE_FILING.md](ISSUE_SKILL_GATE_FILING.md) | 1.0 | draft filing / post for the G38 skill gate |
-| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-042 |
-| gate_evidence.json | (docket) | machine-readable evidence docket; 42 entries, through EV-042 |
-| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.0 | this register |
+| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-043 |
+| gate_evidence.json | (docket) | machine-readable evidence docket; 43 entries, through EV-043 |
+| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.1 | this register |
 
 Docs about the colibri review tool itself (not the gate) are unversioned here and unchanged
 by the gate releases: README.md, BATCH.md, CONSOLE.md, MODES.md, SPEC_AUTHORING.md,
@@ -49,6 +49,22 @@ STATIC_SIGNALS.md, STORAGE.md, GATE_SWEEP_2026-09-02_*_PENDING.md.
 | `skill-gate/README.md` | (rolling) | G38 skill gate |
 
 ## Changelog
+
+### Docs release 2026-09-07 (later) - EV-043 dispatcher self-check hardening
+
+Landing the "universal arming" release below - a partial commit under the stage-explicit-paths
+discipline - exposed a defect in the machine-wide dispatcher self-check (it false-fired on every
+partial commit, and its in-band exception leaked a hole in three straight gate review rounds).
+Fixed in Tools `7ba0e3b` (strictly fail-closed self-check + a clean-git-context helper); docketed
+as EV-043. Doc changes:
+
+- **UNIVERSAL_ARMING.md 1.0 -> 1.1** - added the "Post-rollout hardening: EV-043" section.
+- **CODEX_GATE_IMPLEMENTATION.md 1.0 -> 1.1** - added §3.5 (partial commits, and how to commit a
+  dispatcher edit through the `.githooks` shim).
+- **ISSUE_90887_FILING.md 2.0 -> 2.1** - EV-043 added to the Version 2 draft (the gate BLOCKing
+  its own repair twice is the sharpest restatement of the thesis).
+- **gate_evidence.json / GATE_EVIDENCE_DOCKET.md** - EV-043 added (43 entries); scoreboard bumped.
+- **DOCS_VERSIONS.md 1.0 -> 1.1** - this entry and the register rows above.
 
 ### Docs release 2026-09-07 - universal arming + Codex implementation
 
