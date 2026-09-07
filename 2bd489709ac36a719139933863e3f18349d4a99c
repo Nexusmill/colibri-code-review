@@ -1,0 +1,28 @@
+{
+ "type": "CLEAR",
+ "commit": "2bd489709ac36a719139933863e3f18349d4a99c",
+ "when": "20260906-223859",
+ "files": {
+  ".githooks/.gitattributes": {
+   "sha": "5dc8356dc69e6e7c3db0c1f30effeae764868ed0322e4e556dd1d264e5cff416",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260906-223807",
+   "artifact": ".adversary\\reviews\\gate_20260906-223807.md"
+  },
+  ".githooks/adversary_audit.py": {
+   "sha": "fb3078fbab0fdd82898817da4f3dcd4f6f75410a2816bfdc756a9bdd2199486c",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260906-223807",
+   "artifact": ".adversary\\reviews\\gate_20260906-223807.md"
+  },
+  ".githooks/adversary_rules_epoch": {
+   "sha": "0f3595ab934f70e64d1da53adb62f41be185f590d69f1750190291953279eeeb",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260906-223807",
+   "artifact": ".adversary\\reviews\\gate_20260906-223807.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260906-223807.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 7260, 'completion_tokens': 17393, 'total_tokens': 24653, 'cost': 0.00487739, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 256, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00487739, 'upstream_inference_prompt_cost': 0.00052914, 'upstream_inference_completions_cost': 0.00434825}, 'completion_tokens_details': {'reasoning_tokens': 16617, 'image_tokens': 0, 'audio_tokens': 0}} | files: ['.githooks/.gitattributes', '.githooks/adversary_audit.py', '.githooks/adversary_rules_epoch']\n\n## Analysis\n\nI attempted to refute the change along several lines; here is what I verified against the provided bytes:\n\n**Epoch anchoring logic (`_epoch_uncached` / `_hook_names_apply`)**\n- Fail-closed paths check out: missing file \u2192 `none` \u2192 rule applies everywhere; garbage/non-ancestor sha \u2192 `merge-base --is-ancestor` nonzero \u2192 `moved` \u2192 violation + rule applies everywhere; failed/shallow history read \u2192 `unreadable` \u2192 same. The \"never committed\" branch (`adds` empty, file absent from `HEAD`) correctly returns `ok` only when `cat-file -e HEAD:` fails, and a garbage/unresolvable sha in that branch makes `is-ancestor rev sha` fail \u2192 rule applies (closed).\n- The descendant-rewrite attack the comments target is genuinely caught: a rewritten sha that is not an ancestor of every `--full-history --diff-filter=A` add commit yields `moved` and a hard violation. The residual \"lower the epoch to an older ancestor\" move only grandfathers commits already below the original sha (no coverage regression vs. the pre-change auditor, where extensionless hook files were never code), and grandfathering a *new* dirty commit requires moving the sha upward or to the add commit itself \u2014 both either caught or force an edit to a `.githooks/` path, which is code under `GATED_PREFIXES` regardless and needs a (forged) note \u2014 the already-documented game-over limit of this system.\n- Reflexivity of `--is-ancestor` (sha == add commit) only matters if the attacker is already forging notes; conceded by the documented threat model.\n\n**Call-site / logic consistency**\n- `_is_code` gained a defaulted parameter; all four call sites in `_changed_code` (A/C/M/T, R-new, R-old, D) were updated consistently; rename handling preserves the prior old-code/new-not-code removal semantics under both rule states.\n- `os.path.basename` on git's forward-slash `-z` paths works on both POSIX and Windows (`ntpath` treats `/` as a separator), so the \"wherever they live\" rule does not silently under-match on Windows hosts.\n- `_epoch` memoization is keyed on normalized abspath; `main` and the per-commit walker resolve the same `root`, so cache and reporting are consistent. The `main` epoch-violation row has the same shape as commit rows and correctly forces exit 1 (also under `--json`).\n- Parsing is robust: last `hook-names` line wins, `splitlines`/`split` tolerate CRLF (and the `.gitattributes` LF pin now covers the file anyway), missing trailing newline is fine, `:(top)` pathspec with `--` is correctly ordered, and `GIT_NO_REPLACE_OBJECTS` is already in force for all the new `git` calls.\n\n**Claims I could not falsify from the bytes** (gate byte-parity with `HOOK_NAMES`, installer provenance of sha `4f592e4d\u2026`, 31/31 selftests): the anchoring design is self-announcing for the dangerous direction \u2014 if the recorded sha is not an ancestor of the epoch-file's introducing commit (this staged commit), the very first post-landing audit reports `moved` and exits 1 rather than silently mis-grandfathering. Shallow-clone CI runs will hard-fail once this file lands, but that is the explicitly documented, gate-blessed fail-closed posture (round 3), not a defect.\n\nNo logic error, broken caller, unhandled path, or fail-open introduced by the staged bytes that survives scrutiny within the system's stated threat model.\n\nVERDICT: CLEAR"
+ }
+}
