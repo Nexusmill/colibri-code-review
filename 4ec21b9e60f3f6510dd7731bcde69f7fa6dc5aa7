@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "4ec21b9e60f3f6510dd7731bcde69f7fa6dc5aa7",
+ "when": "20260907-194518",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "c7aca69437deba5be6f19abc8c4d85201b18f2153c430fefde68b2ff14b81701",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260907-194443",
+   "artifact": ".adversary\\reviews\\gate_20260907-194443.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260907-194443.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 41323, 'completion_tokens': 1177, 'total_tokens': 42500, 'cost': 0.00454425, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00454425, 'upstream_inference_prompt_cost': 0.0041323, 'upstream_inference_completions_cost': 0.00041195}, 'completion_tokens_details': {'reasoning_tokens': 673, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nReviewed the staged docket addition (EV-048, EV-049) against the rebuttal:\n\n- **Structure/JSON**: the two new objects are appended before the closing `]` of `entries`; the rebuttal states the strict `object_pairs_hook` duplicate-key sweep was actually executed (not eyeballed) \u2014 49 entries, 49 unique ids, EV-048/EV-049 last, clean parse. Accepted; that closes the EV-011-class concern with a run, not a claim.\n- **Round-count consistency (EV-047)**: the previously flagged artifact mismatch is fixed \u2014 \"eight BLOCK, two CLEAR\" now matches the six scrub BLOCK rounds (six review files cited: -161313\u2026-165431) + push guard rounds 1-2, with CLEARs at -170354 (scrub r7) and -174944 (push r3). Counting the cited files: 6 BLOCK scrub + 2 BLOCK push = 8, plus 2 CLEAR artifacts. Consistent.\n- **EV-048**: severities, resolution (Tools 724d095, docscan 11/11, chunk cap noted as known limitation), and refs are internally consistent; the honest-limitation note about the whole-chunk-emergent regression not being carried by the selftest is stated rather than overclaimed. No byte contradiction.\n- **EV-049**: rounds 1/2/4 BLOCK, 3/5 CLEAR, all eight findings carried with fixes and structural guards enumerated; the round-4 timing (cache-key reorder after round-3 CLEAR) is explained, not papered over. Severity mapping matches findings.\n- **Rebuttal's staging claim**: `M docs/gate_evidence.json` (+32) and the .md hunk (two bullets + count 47\u219249 + EV-045/EV-046 label changes) are exactly what the diff shows; the code-only payload explanation for the invisible .md is consistent with the documented domain division and with EV-046's precedent.\n- EV-045/EV-046 \"(OPEN, owner ruling pending)\" label staleness in the .md is addressed per the rebuttal; the JSON rows themselves already carry their CLOSED tails.\n\nNo false claim, no uncited CLEAR, no miscount, no structural break found in the staged bytes.\n\nVERDICT: CLEAR"
+ }
+}
