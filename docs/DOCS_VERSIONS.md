@@ -22,17 +22,17 @@
 |---|---|---|
 | [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md) | 1.1 | machine-wide arming: dispatcher dir, absolute pin, census, HOOK_NAMES + rules epoch; EV-043 hardening section |
 | [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) | 1.1 | step-by-step gate implementation for Codex + the `decide()` audit; §3.5 partial commits + EV-043 |
-| [ADVERSARY_GATE.md](ADVERSARY_GATE.md) | 2.0 | the wall; arming section now machine-wide; code-class includes hook-name files |
+| [ADVERSARY_GATE.md](ADVERSARY_GATE.md) | 2.1 | the wall; machine-wide arming; 2.1 = fixture-repo skip (EV-045), secrets warn + scrub at commit, refused at push (EV-046) |
 | [HARNESS_GUARD.md](HARNESS_GUARD.md) | 2.0 | layer 2 `decide()` catalogue, with the 2026-09-06 arming-side rules |
-| [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) | 2.0 | the four layers; layer 0 is now the dispatcher, armed machine-wide |
+| [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) | 2.1 | the four layers; layer 0 is the dispatcher; 2.1 = the push-time secret barrier and the fixture skip |
 | [GATE_INSTALLER.md](GATE_INSTALLER.md) | 2.0 | installer reference; absolute pin, census, epoch, reanchor |
 | [GATE_ADOPTION_PLAYBOOK.md](GATE_ADOPTION_PLAYBOOK.md) | 2.0 | adoption runbook; hook-name code class, dispatcher layer 0 |
 | [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | 1.1 | machine prerequisites; machine-wide arming note |
 | [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.2 | the anthropics/claude-code#90887 archive; Version 2 POSTED (issuecomment-5570626121) |
 | [ISSUE_SKILL_GATE_FILING.md](ISSUE_SKILL_GATE_FILING.md) | 1.1 | the G38 skill-gate post; POSTED as issue #92656 |
-| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-043 |
-| gate_evidence.json | (docket) | machine-readable evidence docket; 43 entries, through EV-043 |
-| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.1 | this register |
+| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-047 |
+| gate_evidence.json | (docket) | machine-readable evidence docket; 47 entries, through EV-047 |
+| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.2 | this register |
 
 Docs about the colibri review tool itself (not the gate) are unversioned here and unchanged
 by the gate releases: README.md, BATCH.md, CONSOLE.md, MODES.md, SPEC_AUTHORING.md,
@@ -49,6 +49,18 @@ STATIC_SIGNALS.md, STORAGE.md, GATE_SWEEP_2026-09-02_*_PENDING.md.
 | `skill-gate/README.md` | (rolling) | G38 skill gate |
 
 ## Changelog
+
+### Docs release 2026-09-07 (evening) - EV-045 fixture skip, EV-046 warn / scrub / refuse-at-push
+
+Owner rulings of 2026-09-07 landed in Tools as three gated commits (1f287bb, 8245433,
+ad484fa; ten gate rounds in all, every BLOCK a real leak path or blindness - docket EV-047):
+
+- **ADVERSARY_GATE.md 2.0 -> 2.1** - new "Secrets" section: the fixture-repository skip, warn
+  + scrub at commit, the push-time barrier, the receipts.
+- **LAYERED_ENFORCEMENT.md 2.0 -> 2.1** - the secrets paragraph under the notes machinery.
+- **gate_evidence.json / GATE_EVIDENCE_DOCKET.md** - EV-045 and EV-046 closed in place with
+  their fix commits; EV-047 added (the gate reviewing its own scrub and push guard).
+- **DOCS_VERSIONS.md 1.1 -> 1.2** - this entry.
 
 ### Filings posted 2026-09-07
 

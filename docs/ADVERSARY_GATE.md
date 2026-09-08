@@ -1,8 +1,10 @@
 # ADVERSARY_GATE.md - the mandatory adversarial commit gate (G39) in this repo
 
-> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Machine-wide
+> **Doc version: 2.1 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Machine-wide
 > arming (the dispatcher hook dir, the census, HOOK_NAMES, the rules epoch) is its own doc:
-> [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+> [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md). 2.1 adds the owner rulings of 2026-09-07:
+> fixture repositories skip the review (EV-045); secrets warn and are scrubbed at commit and
+> are refused at push (EV-046) - see the "Secrets" section.
 >
 > Source of truth: `C:\Users\User\source\repos\Tools\adversary-gate\adversary_gate.py`
 > (the tool) and `.githooks/pre-commit` here (the shim). Born 2026-08-30 from the owner's
@@ -123,6 +125,43 @@ no match, no note - note ABSENCE is the tripwire signal); the vendored
 CI runs the same auditor on push. Owner OVERRIDEs become provenance-carrying OVERRIDE
 notes - visible forever, blessing only the exact blobs they were invoked for. **Push
 notes with the branch:** `git push origin refs/notes/adversary`.
+
+## Secrets: warn and scrub at commit, refuse at push; fixture repos skip the review (2026-09-07)
+
+Owner rulings of 2026-09-07, landed in Tools 1f287bb (EV-045), 8245433 and ad484fa (EV-046):
+
+- **Fixture repositories.** A repository whose git dir lies under the user profile's Temp
+  folder - resolved through the Windows known-folder API, never TMPDIR/TEMP (an env-keyed
+  locator would let a committer reclassify a real checkout); `/tmp` and `/var/tmp` on POSIX -
+  is a test fixture: `check` skips the review with a one-line notice and `record` writes no
+  note. Disabled under `ADVERSARY_SELFTEST=1`, so the selftests' own temp repos stay gated. The
+  push guard still runs there, so nothing pushed from such a repo escapes the audit: the lane
+  is local-only. Why: machine-wide arming plus auto-review-on-commit (Tools 9597241) had every
+  pytest fixture commit running a PAID external review (jcodemunch-mcp alone has 327 such
+  tests; a suite ran 35 minutes spending a review per commit before it was killed).
+- **Secrets at commit time WARN.** The local pattern floor and the local docs model no longer
+  block a commit or consume the OVERRIDE; hits are listed as file:line + label, values never
+  printed.
+- **Nothing unredacted is transmitted.** The exact review payload (the diff including removed
+  lines, the full staged files, the author's context) is scrubbed before it leaves the
+  machine: every matched value becomes `<REDACTED:label>` - every value on a line, whole
+  private-key blocks through their END line (bounded at 200 lines; an unterminated block is
+  warned), per `str.splitlines()` segment so a lone CR cannot hide a value behind the
+  4096-char heuristic gate - and a REDACTION NOTE heads the payload so the reviewer reads a
+  tag as a matched value, not a missing one. The vendor-documented AWS example key and the
+  bare-name idiom (`user:password@host`, the ssh flag given the word secret) are placeholders.
+- **The push guard is the barrier.** Before the note audit, every outgoing commit's ADDED
+  lines (first-parent diff; `--src-prefix`/`--dst-prefix` pinned against `diff.noprefix`;
+  `+++` treated as a header only outside a hunk; C-quoted paths unquoted; NUL lines dropped)
+  are scanned: a hard literal (known key prefixes, private-key blocks, ssh / URL credentials)
+  REFUSES the push with the rewrite recipe - a hook cannot scrub history; the assignment
+  heuristic warns; the outgoing doc lines are re-run through the local docs model (block
+  refuses, degraded or capped warns). Owner-OVERRIDE-notarized commits pass with a warning;
+  shallow-clone boundary commits are skipped loudly by the barrier and the note audit; an
+  unknown remote tip switches the recipe to "rotate, do not rewrite". A deliberate fixture is
+  built at runtime from parts - the gate's own selftests do.
+- **The receipts.** Landing the scrub took SEVEN gate rounds and the push guard THREE; every
+  BLOCK was a real leak path or blindness the author's own tests had missed (docket EV-047).
 
 ## Why it exists (the receipts)
 

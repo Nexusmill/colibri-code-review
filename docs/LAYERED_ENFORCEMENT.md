@@ -1,8 +1,10 @@
 # LAYERED_ENFORCEMENT.md - the four layers around the adversarial commit gate
 
-> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Layer 0 is now a
+> **Doc version: 2.1 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Layer 0 is now a
 > **dispatcher**, armed **machine-wide**; layer 3 gained HOOK_NAMES and the rules epoch. Full
-> architecture: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+> architecture: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md). 2.1: fixture repositories under
+> the profile Temp skip the layer-0 review (EV-045); secrets warn and are scrubbed at commit
+> and are refused by the push guard (EV-046) - [ADVERSARY_GATE.md](ADVERSARY_GATE.md) § Secrets.
 >
 > Added 2026-08-31 after the owner's observation that the gate is *git-centered*: a
 > pre-commit hook is advisory by construction, and git offers many ways around it
@@ -55,6 +57,13 @@ Machinery that keeps notes honest across history rewrites: the installer sets
 `notes.rewriteRef refs/notes/adversary`, so amend/rebase copy notes to rewritten
 commits - unchanged blobs keep their valid clearance, conflict-resolved blobs correctly
 flag. **When pushing, push the notes too:** `git push origin refs/notes/adversary`.
+
+Secrets (owner rulings 2026-09-07, EV-045/EV-046): layer 0 no longer blocks a commit on a
+secret-shaped hit - it warns, scrubs every matched value out of the review payload, and hands
+the enforcement to the pre-push dispatcher, which scans every outgoing commit's added lines
+and refuses a push carrying a secret literal (heuristic hits warn; outgoing docs re-run
+through the local docs model). Fixture repositories under the profile Temp skip the layer-0
+review entirely but never the push guard.
 
 OVERRIDE provenance: consuming `.adversary/OVERRIDE` snapshots the staged shas into
 `override_used.json`; `record` converts it to an OVERRIDE note only while HEAD carries
