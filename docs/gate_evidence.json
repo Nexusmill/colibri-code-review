@@ -709,7 +709,7 @@
    "refs": [
     "Tools main 724d095 (notarized, pushed)",
     "Tools .adversary/reviews/gate_20260907-183605.md",
-    "Nexusmill state/agent-state-r29 7d1f8576 (the amended reports with the scanner note)",
+    "Nexusmill state/agent-state-r29 7d1f8576 (the amended reports with the scanner note; REWRITTEN the same evening as 4259f049 when a quoted project id was removed for the main push - EV-050 - and landed on main in abc05e38)",
     "memory gate-domain-division-docscan (the whole-chunk lesson)"
    ]
   },
@@ -727,6 +727,21 @@
     "jcodemunch-mcp .adversary/reviews/gate_20260907-182123.md (round 1 BLOCK), gate_20260907-183923.md (round 2 BLOCK), gate_20260907-184750.md (round 3 CLEAR), gate_20260907-191533.md (round 4 BLOCK), gate_20260907-192024.md (round 5 CLEAR)",
     "jcodemunch-mcp tests/test_follow_checkout.py (guards + the round-1/2 regression tests), tests/test_branch_following.py",
     "Nexusmill docs/superpowers/plans/2026-09-07-jcm-branch-following.md (Task 6/7 outcome); docs/AGENT_STATE.md round 31"
+   ]
+  },
+  {
+   "id": "EV-050-PUSH-GUARD-CATCHES-A-QUOTED-PROJECT-ID-THEN-ITS-MODEL-QUOTES-NAMES-AS-VALUES",
+   "date": "2026-09-07",
+   "repo": "Nexusmill (caught) / Tools (fixed)",
+   "layer": "push guard docs re-run (the owner's first run of owner_ff_merge.py landing PR #2 on protected main), then gate-review BLOCK on the fix itself",
+   "caught": "PART 1 - a real catch: landing the Nexusmill state branch on main scans SIX commits' added doc lines in the guard's own order, and chunk 11 carried a concrete value the earlier state-branch pushes had chunked differently and passed: the real GCP project id and the owner's LangChain Hub handle, hard-coded in a CI workflow and quoted verbatim in the deepagents evaluation report. Identifiers, not credentials, but exactly the 'concrete value after a config name' the prompt says to quote - the model was right. PART 2 - after rewriting that commit (fixup + autosquash, the guard's own recipe), two more chunks blocked with the model's REASON line quoting a NAME or a DESCRIPTION as the value ('REPLICATE_API token variable'; the prose that replaced the project id). The 724d095 prompt calibration had reduced this class but it recurs at every new chunk boundary. PART 3 - the gate reviewing the fix caught a HIGH hole in it: the first evidence classifier accepted any ALL-CAPS alphanumeric token as an identifier NAME, so a BLOCK quoting an AWS key id (AKIA..., all caps, digits) or PASSWORD1 would have been WITHDRAWN - an under-block in a secret gate, and the new fixtures had no all-caps value to expose it.",
+   "severity": "LOW for part 1 (identifiers, no leak - the report was rewritten in its own commit); MEDIUM for part 2 (a barrier that refuses on names is unusable); HIGH for part 3 (a fail-open the fix would have shipped)",
+   "author_initially": "Part 1 accepted at once (the value was quotable). Part 2: first tried rewording the doc line; the model then quoted the new description itself as the value, proving the class is the model's, not the text's. Part 3 accepted at once; the fixture gap was real.",
+   "resolution": "Report rewritten inside its commit (Nexusmill 7d1f8576 -> 4259f049; tip 32e31665 -> abc05e38; force-pushed with lease, then landed on main by fast-forward). Tools f2fdfd4: docscan's EVIDENCE GATE - _run_one_full returns (verdict, reason); _evidence_is_name(reason) is a deterministic classifier of the model's own evidence: a BLOCK stands unless every token of the REASON is descriptive vocabulary, a provider name or an env-var NAME (underscored, no 3+ digit run) with at least one name present; any digit/symbol token, un-underscored ALL-CAPS string or unknown word is a VALUE; empty/none/filler keeps the block (fail closed); withdrawals are printed. Selftest rows: six name reasons withdraw, twelve value reasons hold (incl. the AWS example key id assembled from parts, PASSWORD1, ABC123, MY_SECRET_123, 'password makerbase'), 14/14 with the real model, 0 FN kept; gate_selftest 89/89. Both PRs then landed by fast-forward through owner_ff_merge.py (Tools ae014e0). Honest limits: the push guard still caps the semantic docs scan at 24 chunks; the classifier's vocabulary is a list, and a real password made only of those words would be withdrawn - the pattern floor and the reviewer still see it.",
+   "refs": [
+    "Tools main ae014e0 (owner_ff_merge.py), f2fdfd4 (evidence gate)",
+    "Tools .adversary/reviews/gate_20260907-211007.md (round 1 BLOCK on the fix - the all-caps hole), gate_20260907-211653.md (round 2 CLEAR)",
+    "Nexusmill main abc05e38 (landed by fast-forward), colibri main 4ec21b9e (landed the same way), memory gate-domain-division-docscan"
    ]
   }
  ]
