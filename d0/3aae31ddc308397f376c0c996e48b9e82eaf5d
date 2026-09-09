@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "d03aae31ddc308397f376c0c996e48b9e82eaf5d",
+ "when": "20260909-144321",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "6c5822cb690f7c80b485759285266fae55e133e396ff57d630c4db4532360496",
+   "model": "xai:grok-4.6",
+   "when": "20260909-144317",
+   "artifact": ".adversary\\reviews\\gate_20260909-144317.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260909-144317.md": "model: xai:grok-4.6 | usage: {'input_tokens': 51143, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 8957, 'output_tokens_details': {'reasoning_tokens': 8848}, 'total_tokens': 60100, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 1552600000, 'context_details': {'input_tokens': 51143, 'output_tokens': 8957}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nThe append is a single well-formed `entries[]` object (EV-001..EV-060 = 60). Arithmetic in the row is internally consistent (cases 35\u201341 = 7 cases, 9 checks via the two AND splits on 35 and 38; 90+9=99), both prior append BLOCKs and both Tools-fix reviews are named by file, and the sibling `.md` (59\u219260) is declared as staged-but-outside-payload.\n\nVERDICT: CLEAR"
+ }
+}
