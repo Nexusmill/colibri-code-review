@@ -743,6 +743,140 @@
     "Tools .adversary/reviews/gate_20260907-211007.md (round 1 BLOCK on the fix - the all-caps hole), gate_20260907-211653.md (round 2 CLEAR)",
     "Nexusmill main abc05e38 (landed by fast-forward), colibri main 4ec21b9e (landed the same way), memory gate-domain-division-docscan"
    ]
-  }
+  },
+ {
+  "id": "EV-051-FLEET-CARRY-POSTGRES-PASSWORD-FALLBACK",
+  "date": "2026-09-08",
+  "repo": "fleet",
+  "layer": "gate-review BLOCK (fleet tranche A1 round 1 of two: the DeepAgents core carry)",
+  "caught": "The verbatim carry of deepagents-quickstarts@4add20e0112e brought `os.getenv(\"POSTGRES_PASSWORD\", <literal>)` into atlas/agent_brain.py and atlas/persistence.py - a real Postgres password as the DEFAULT when the env var is unset, i.e. a credential that would have entered the fleet's first code commit and every clone. The author's carry policy ('verbatim; defects docketed, not fixed') had no carve-out for secrets, so the literal was staged as-is. The reviewer named both files and the exact fallback.",
+  "severity": "HIGH (credential in code; the source repo's history still carries it - rotation is an owner item)",
+  "author_initially": "Accepted on sight after verifying both files against the bytes; no rebuttal. The carry policy was amended the same round: secrets and tenant identifiers are scrubbed AT CARRY (remediation rows), everything else stays verbatim and docketed.",
+  "resolution": "Both defaults removed -> `os.getenv(\"POSTGRES_PASSWORD\")` (env-only; Postgres is optional for the fleet); remediation row FLEET-P0-PG-PASSWORD-FALLBACK in fleet docs/remediation_manifest.json; A1 round 2 CLEAR; fleet f22a9b2 (notarized). Owner item recorded in the fleet AGENT_STATE: rotate the password if it was ever live. AMENDMENT 2026-09-08: OWNER RULING - NO rotation; the Postgres instance is local with no external face (the same ruling EV-053 records).",
+  "refs": [
+   "fleet f22a9b2",
+   "fleet gate reviews gate_20260908-092725.md (round 1 BLOCK), gate_20260908-094337.md (round 2 CLEAR)",
+   "Nexusmill docs/superpowers/plans/2026-09-08-consolidation-phase0.md"
+  ]
+ },
+ {
+  "id": "EV-052-FLEET-CARRY-GCP-TENANT-ID-LITERAL",
+  "date": "2026-09-08",
+  "repo": "fleet",
+  "layer": "gate-review BLOCK (fleet tranche A2 round 1 of five: CommercialAgents/services/gui/tests carry)",
+  "caught": "The composer agent's Vertex Lyria route fell back to the owner's REAL GCP project id when no project was passed (`project_id or <literal>`), verbatim from the source. Not a credential, but the same tenant identifier the push guard refused one day earlier (EV-050) - it would have re-entered a repo destined for github.com/Nexusmill. The reviewer also surfaced four defects in the same round (dead finalize pass, dropped model params, mktemp race, duplicate preset ids) which were docketed, and rounds 2-4 surfaced eight more from the same 536 KB of prototype code (all docketed: 31 FLEET-P0-* rows now form the Phase 3 defect inventory).",
+  "severity": "MEDIUM (tenant identifier; push-guard-refusing class) - plus the process finding: a verbatim carry of prototype code does not converge under one review pass per round; each round samples a new region.",
+  "author_initially": "Accepted after locating the literal by regex (never typed); scrubbed to env-only the same round. No rebuttal.",
+  "resolution": "`target_project = project_id or os.getenv(\"GOOGLE_CLOUD_PROJECT\")`; remediation row FLEET-P0-GCP-PROJECT-LITERAL; the same id was found in docs/carried_3dprinting/AGENT_PROTOCOL.md:317 and scrubbed before tranche C; the attic copies (3dprinting/docs/AGENT_PROTOCOL.md:317, 3dprinting/projects/Dragon/generate_assets.py:21,43) are on the attic Phase 1 owner scrub list. The original A2 set (536 KB) drew five BLOCKs and was abandoned; the split A2a landed as fleet a3b510a (two rounds) and A2b as 0576102 (one round).",
+  "refs": [
+   "fleet gate reviews on the original A2 set, all BLOCK: gate_20260908-094929.md (r1), -100149 (r2), -100746 (r3), -101305 (r4), -102219 (r5) - the set was abandoned and split into A2a/A2b",
+   "fleet A2a a3b510a: gate_20260908-103550.md (r1 BLOCK), gate_20260908-104020.md (r2 CLEAR); A2b 0576102: gate_20260908-105020.md (CLEAR)",
+   "fleet docs/deferred_manifest.json (FLEET-P0-* rows), docs/remediation_manifest.json, docs/AGENT_STATE.md gate record"
+  ]
+ },
+ {
+  "id": "EV-053-PUSH-GUARD-ATTIC-FLOOR-LITERALS-IN-HISTORY",
+  "date": "2026-09-08",
+  "repo": "attic",
+  "layer": "push guard (pre-push, probe push to a local bare clone) after the pre-commit floor WARNED and the author proceeded",
+  "caught": "Two commits of the attic's first chain carried push-guard-refusing literals: 6ed2883 (media + docs) had the Postgres password segment of an example DSN in 3dprinting/docs/Agent_Almanac.md:155 and 3dprinting/docs/GITHUB_AGENT_BIRTH_KIT.md:370 (url-embedded-cred); 831a746 (environmental_monitoring backend) had the Data Commons trial API key (AIza-shaped, gcp-api-key) in backend/app/services/data_commons_client.py:191, frontend/config.py:20, frontend/data_commons_client.py:30. The pre-commit floor printed its WARNING banner at both commits (the EV-046 warn ruling) and the author continued the chain nine commits past the first warning; the code reviewer never sees .md files and judged the AIza value 'a publicly documented trial key, not a secret'. The barrier that caught it was the push guard, exercised deliberately by pushing to a scratch bare repository before any real remote existed: it REFUSED and listed all five hits by commit and file:line. AMENDMENT (same session): the F5a review's floor WARNING then surfaced a THIRD class the author's own scan had not covered - a 44-character Moltbook agent API key assigned to API_KEY in two root scripts (root_scripts_2026-01/check_rate_limit.py:5, post_announcement.py:7; the assignment heuristic, which only warns at push). Scrubbed at carry; the author's re-scan now runs the gate's full pattern table plus the assignment heuristic over both trees (zero hits). FOURTH and FIFTH classes, same session: the F5b review (gate_20260908-113211) READ the source repo's local Postgres password as an AgentComms(password=...) keyword argument in six console/probe files - the assignment heuristic sees `key = value`, never a keyword argument - and the author's widened re-scan (any quoted letters+digits value within 60 chars of a password keyword) then produced a FALSE POSITIVE: it flagged the env-var NAME Q2_SSH_PASSWORD (15 chars, one digit) in ten QIDI recovery scripts as a 'device password' and the author scrubbed it - the E1b re-review caught the placeholder sitting in an env-var-name position and the ten files were restored to source bytes (verified). The Postgres literal was real and is scrubbed; the chain was reset to E1 and rebuilt (clearances persisted, only F5b re-reviewed). Tools item: the floor's keyword-argument blind spot.",
+  "severity": "HIGH (a live Postgres password in the later catch; an example DSN password and a public trial key - low secrecy value, but a deterministic push refusal that a later commit cannot fix; on a repo with a remote this would have needed an owner history rewrite)",
+  "author_initially": "Proceeded past two WARN banners under the warn ruling, treating the archive as verbatim; had scrubbed the SAME DSN lines in the fleet's copies the same morning. No rebuttal once the guard listed the hits. Round 2 of F5a: the author's context claimed 'none remain per the floor scan' while the same payload carried the machine's redaction note - the reviewer called the contradiction; the claim was wrong (partial scan), withdrawn and fixed. E1b re-review: the author's 'device password' scrub was the reviewer's catch of the AUTHOR - a wrong scrub of a non-secret token, presented as a secret fix; accepted and reverted.",
+  "resolution": "Both trees scrubbed at carry (DSN password -> <password-redacted-in-carry>; trial key -> empty default with DATA_COMMONS_API_KEY); the attic chain reset to its birth commit and re-carried from captured per-commit file lists - the gate's clearances persist for identical code-class blobs, so only the scrubbed F4a needed a new external round; the fleet's probe push was ACCEPTED (its copies were scrubbed before their commits). Lesson recorded in the attic INDEX + fleet AGENT_STATE: run a probe push to a local bare clone before the chain grows; a floor WARNING on an archive commit is a stop, not a note. Observation for Tools: the probe printed 'docs SEMANTIC scan SKIPPED (docs scan error: no VERDICT in generated output)' - the local docscan model failed open to the pattern floor on both probes. Final state: three chain rebuilds' worth of scrubs (DSN docs, trial key, Moltbook key, Postgres password x6 files; one false-positive scrub of an env-var name caught by the reviewer and reverted) - every one recorded in attic docs/CARRY_LEDGER.md 'Scrubbed at carry'; rotation of the Postgres password is an owner item. OWNER RULING 2026-09-08 (amendment): NO rotation - the Moltbook service no longer exists and the Postgres instance is local with no external face; the literals remain in the SOURCE repo's history by ruling, the carried scrubs stand.",
+  "refs": [
+   "attic abandoned tip 831a746 (reflog only; birth 7f16291 kept)",
+   "scratchpad push_probe_attic.txt / push_probe_fleet.txt",
+   "attic docs/CARRY_LEDGER.md 'Scrubbed at carry (push-guard floor)'",
+   "Tools/adversary-gate/adversary_gate.py floor patterns lines 107 and 117"
+  ]
+ },
+ {
+  "id": "EV-054-PUSH-GUARD-DOCSCAN-PLACEHOLDER-HELD-AS-VALUE",
+  "date": "2026-09-08",
+  "repo": "Tools (adversary-gate/docscan.py)",
+  "layer": "push guard (docs semantic re-run) on the fleet's final probe push to a local bare clone",
+  "caught": "The docs model BLOCKed chunk 3 of the fleet's outgoing documentation with REASON 'yourpassword' - the placeholder password of the example DSN in the carried AGENT_MEMORY_WIRING.md (line 160). docscan's evidence gate (_evidence_is_name) treats any non-vocabulary word as a VALUE, so a placeholder the prompt itself lists as CLEAR ('export API_KEY=your-key-here -> placeholder') held the block and the push was refused. Also observed: the fleet's outgoing docs are 322 chunks against the 24-chunk cap, so 298 chunks get the pattern floor only (loud CAPPED note, not a defect).",
+  "severity": "MEDIUM (a deterministic false refusal on any repo whose docs carry a placeholder DSN; the fleet and attic pushes both depend on it)",
+  "author_initially": "Reproduced locally by rebuilding the guard's doc text and running only chunk 3 through the model (nothing left the machine); accepted as a docscan defect, not a docs defect - the placeholder stays.",
+  "resolution": "Tools 14d1f09 (two gate rounds: round 1 BLOCKed the author's first, substring-based rule for withdrawing real values that merely CONTAIN a placeholder morpheme - sample-key-9f2ac1b8, <sunshine-dragon-42> - so the rule became an anchored FULLMATCH with an all-caps carve-out; six new value fixtures + four name fixtures; docscan_selftest 14/14, gate_selftest 89/89). The fleet's re-probe push was then ACCEPTED with 'docscan: chunk 3 BLOCK withdrawn - the evidence names no value, only: yourpassword' printed visibly; the docs scan is CAPPED at 24 of 322 chunks (loud note). AMENDMENT 2026-09-08 (round 3): SECOND catch of the same class the same day: after two docs-only close-out commits shifted the chunk boundaries, the fleet's probe 4 was REFUSED on chunk 8 with REASON exactly 'pw' (a carried doc's user:pw@host DSN example). The round-2 fix covered placeholder MORPHEMES (your*, changeme, <...>) but not bare credential ROLE words, so 'pw' fell through as an unknown word and held as a value. Tools fb0d9a6 (1 gate round(s)): user/username/pw/pwd/pass/passwd/password/secret/token join the placeholder FULLMATCH; joined or digit-bearing forms (pw@host, pw1234, Passw0rd, user:s3cr3t) and all-caps (PW) stay values; empty/none still fail closed; docscan_selftest 14/14, gate_selftest 89/89. Lesson: the local model's verdicts depend on chunk boundaries, so a docs-only commit can re-open a refusal on unchanged text - probe after EVERY commit, not once per chain. AMENDMENT 2026-09-08 (round 4): THIRD catch of the class: probe 5 (round-3 docscan on disk) withdrew chunks 4 and 8 and was REFUSED on chunk 9, REASON exactly 'lsv2_sk_...' - a carried doc's ELIDED LangSmith key example. A local pass over all 24 capped chunks (batch_docscan.py, 2 s per chunk) showed chunk 9 the only remaining hold, so the fix was made once, not per probe. Tools d9876ff (2 gate round(s)): an ellipsis-terminated token whose stem is a short bare vendor prefix (<= 12 chars, at most one digit) names no value; a truncated real key holds. Gate round 1 BLOCKed the first cut (any <= 12-char stem) because a complete short password before prose ellipsis - makerbase..., hunter2..., Passw0rd... - would have been WITHDRAWN (a fail-open the existing value fixtures would have exposed with an ellipsis appended); tightened to prefix shapes (stem ends in _ or -, or a bare vendor prefix AKIA/ASIA/AIza), five value fixtures added, round 2 CLEAR. Fleet probe 6 (round-1 cut) and probe 7 (final cut) with that docscan on disk: ACCEPTED (probes 6 and 7 at fleet 9f3ce56, all three chunk blocks withdrawn visibly, docs scan CAPPED at 24 of 322). Three evidence-gate classes in one day (placeholder morpheme, DSN role word, elided prefix) - the local docs model quotes whatever token it dislikes and the deterministic classifier has to name every non-value shape; the 24-chunk cap hides the rest of the 322.",
+  "refs": [
+   "scratchpad repro_docscan.py (chunk 3 REASON masked)",
+   "Tools adversary-gate/docscan.py _evidence_is_name",
+   "fleet docs/carried_3dprinting/AGENT_MEMORY_WIRING.md:160",
+   "Tools 14d1f09 (notarized): gate_20260908-123322.md (r1 BLOCK), gate_20260908-124146.md (r2 CLEAR)",
+   "Tools fb0d9a6 (notarized): gate_20260908-131421.md (r1 CLEAR)",
+   "Tools d9876ff (notarized): gate_20260908-132916.md (r1 BLOCK), gate_20260908-133848.md (r2 CLEAR)"
+  ]
+ },
+ {
+  "id": "EV-055-ARMED-AT-BIRTH-THREE-FAIL-OPENS-IN-THE-AUTHORS-OWN-FIX",
+  "date": "2026-09-08",
+  "repo": "Tools (adversary-gate/install_gate.py, adversary_audit.py, adversary_gate.py) + fleet/attic .githooks re-anchors",
+  "layer": "gate-review BLOCK x3 on the Tools change (rounds 1-3 of 4), then gate-review BLOCK on both re-anchor commits (round 1 of 2)",
+  "caught": "Owner ruling: repos are armed at birth, every commit challenged. The change (baseline ROOT + epoch hook-names ROOT on an empty repo; the auditor walks every commit) BLOCKed three rounds running, each on the previous round's fix: round 1 (LOW) the auditor on an unborn HEAD with a ROOT baseline died with a raw git error and exit 1, the violations code; round 2 (MEDIUM) the fix for that read ANY rev-list failure as 'no commits yet - nothing to audit' with exit 0 - a broken clone (missing objects) would have audited CLEAN, the exact opposite of the tripwire's contract, plus (LOW) the push guard still resolved the baseline token as a revision so a ref literally named ROOT would have excluded history; round 3 (MEDIUM) the rev-parse discriminator that fixed round 2 was itself fooled by the third state, a branch ref that exists but is unresolvable (corrupt ref file) - exit 0 again on a repo with commits it cannot read. Then both re-anchor commits (fleet, attic) BLOCKed on a method finding: the author's 'auditor clean before staging' evidence structurally cannot cover an epoch flip, because the epoch is read from HEAD's tree - the reviewer demanded proof under the post-commit state.",
+  "severity": "HIGH in aggregate (each of rounds 2 and 3 shipped a silent-clean path in the one tool whose job is to detect tampered history; caught before landing) - the reviewer's own words: 'a broken clone must never read clean'.",
+  "author_initially": "Accepted every finding; each fix was written test-first (audit_selftest 12c unborn -> 0, 12d missing object -> 2, 12e corrupt ref -> 2; gate_selftest 15a a tag named ROOT does not narrow the push guard). Round 2's first cut used show-ref as the discriminator and the NEW test 12d caught that cut too (show-ref dies on a broken ref, so it read as unborn) before the gate saw it. The re-anchor method finding was settled by enumeration, not by re-assertion: git log --full-history --diff-filter=A over the hook basenames outside the gated prefixes is empty in both repos, so the ROOT epoch reclassifies nothing.",
+  "resolution": "Tools 9e46976 (four rounds; install_selftest 73/73, audit_selftest 42/42, gate_selftest 90/90), 83b45f1 (--json on an unborn head emits a document - the re-anchor gates' LOW, case 12f), fleet 203e843 and attic 428eeb5 re-anchored to ROOT (round 2 CLEAR on the enumeration evidence; both audit clean from the root). Lesson: a discriminator between 'empty' and 'broken' must be proven against every failure state git can produce (absent ref, missing object, corrupt ref, detached HEAD), and an epoch flip is proven by enumerating history, never by an audit run under the old epoch.",
+  "refs": [
+   "Tools 9e46976: gate_20260908-223749.md (r1 BLOCK), -224532 (r2 BLOCK), -230240 (r3 BLOCK), -231203 (r4 CLEAR)",
+   "Tools 83b45f1 (--json on an unborn head): gate_20260908-233303.md (r1 CLEAR)",
+   "fleet 203e843 re-anchor: gate_20260908-232156.md (r1 BLOCK), gate_20260908-233552.md (r2 CLEAR)",
+   "attic 428eeb5 re-anchor: gate_20260908-231849.md (r1 BLOCK), gate_20260908-233748.md (r2 CLEAR)",
+   "memory fleet-attic-phase0 (owner rulings 2026-09-08 evening)"
+  ]
+ },
+ {
+  "id": "EV-056-ARM-REPO-UTF8-FIX-LEFT-THE-PARENT-SIDE-OF-THE-PIPE-ON-CP1252",
+  "date": "2026-09-08",
+  "repo": "Tools (arm-repo/arm_repo.py, arm_repo_selftest.py)",
+  "layer": "gate-review BLOCK (round 1 of 2)",
+  "caught": "The fix for the cp1252 arming failure (the repo-memory indexer prints a non-ASCII arrow and died under the console codepage while arming fleet + attic) pinned the CHILD's stdio to UTF-8 and stopped there. The gate traced the other end of the same pipe: the parent's subprocess.run(text=True) still decoded the child with the console codepage - mojibake in every diagnostic by construction, a crash under a stricter console (exactly the ascii row the new test forced), and a reader-thread failure on cp1252's undefined bytes; PYTHONUTF8=1 was also broader than the stdio pin claimed (it flips the child's default file encoding); and the new selftest row could not see any of it because it asserted only ASCII substrings.",
+  "severity": "MEDIUM (arming would have kept failing or lying on non-UTF-8 consoles - the very defect the fix claimed to close).",
+  "author_initially": "Accepted all three. Making the round-trip assertion pass then exposed the SAME bug in the selftest harness: its run helper decoded the CLI with the console codepage, so the arrow arrived as mojibake and the new row failed for the harness's own defect, not the tool's.",
+  "resolution": "Tools a0683c3 (two rounds): the spawn decodes utf-8 with errors=replace, the child pins PYTHONIOENCODING only, the report degrades glyphs instead of dying and prints an installer's tail; rows 12 (ascii parent, no traceback) and 12b (utf-8 parent, the arrow round-trips with no U+FFFD / mojibake) RED first; harness decode fixed; 23/23.",
+  "refs": [
+   "Tools a0683c3 (notarized): gate_20260908-232023.md (r1 BLOCK), gate_20260908-233136.md (r2 CLEAR)"
+  ]
+ },
+ {
+  "id": "EV-057-DOCKET-ROW-COMMIT-LEFT-THREE-STALE-COUNT-LITERALS-IN-THE-SCRIPT-IT-GENERALIZED",
+  "date": "2026-09-08",
+  "repo": "Nexusmill (tools/owner_phase2_2026-09-08.py, docs/gate_evidence_pending_2026-09-08.json)",
+  "layer": "gate-review BLOCK (round 1 of 2) on the commit that added EV-055/EV-056",
+  "caught": "The change appended two pending rows (five became seven) and rewrote the script's branch name and docstring to follow the rows - and left three strings saying otherwise: step 4's gate context still told the reviewer the deletion followed 'five rows' appended, the pending file's own `_doc` header still said EV-051..EV-054, and the docket commit subject still characterized rows 050-054 only. The reviewer's sentence: the change's stated purpose ('every row present') is defeated in the one string the gate actually reads - the owner's step-4 review would have received a context contradicting its payload, the exact class EV-053 records.",
+  "severity": "MEDIUM (a deterministic self-inflicted refusal of the owner's step-4 commit, or a CLEAR on a false premise; the round-2 reviewer also named a pre-existing fail-open - `--skip-docket` without `--skip-pending` deletes the pending file while asserting its rows were appended in the same run).",
+  "author_initially": "Accepted all three; the count, the id range and the subject are now derived from the rows at run time. The `--skip-docket` fail-open was fixed in the follow-up commit RED-first: the script printed DONE under `--dry-run --skip-docket`, now it refuses with exit 2 before any step runs unless `--skip-pending` is also passed.",
+  "resolution": "Nexusmill c30db949 (two rounds) + the follow-up commit carrying this row and the flag guard. Lesson: generalizing a literal means finding every copy of it - the ones in strings the gate reads first.",
+  "refs": [
+   "Nexusmill gate reviews gate_20260908-234906 (r1 BLOCK), gate_20260908-235258 (r2 CLEAR)"
+  ]
+ },
+ {
+  "id": "EV-058-DOCKET-APPEND-BLOCKED-FOR-UNCITED-ROUNDS-AND-A-GUESSED-ARTIFACT-NAME",
+  "date": "2026-09-09",
+  "repo": "colibri-code-review (docs/gate_evidence.json) via the owner's run of Nexusmill tools/owner_phase2_2026-09-08.py",
+  "layer": "gate-review BLOCK on the docket append itself (the owner's second run of step 3)",
+  "caught": "The seven-row append was refused for the docket's own recorded class (EV-035, EV-047): rounds claimed without their artifacts. EV-054's two amendments named fb0d9a6 '1 gate round' and d9876ff 'round 1 BLOCKed ... round 2 CLEAR' while refs cited only 14d1f09's files; EV-055 and EV-056 each claimed 'round 2 CLEAR' while naming only the round-1 BLOCK file; and the round-1 names carried a '-era' suffix that exists nowhere on disk - the author had typed approximate filenames from memory instead of listing the review directory. The reviewer also noted the amendments sat under two new top-level keys while the docket amends in place, and asked whether EV-051's 'rotate' owner item was the same password EV-053 rules on (it is).",
+  "severity": "MEDIUM (unevidenced CLEAR verdicts and an unresolvable filename would have entered the permanent evidentiary record - in the batch that ships EV-057's lesson about stale strings surviving a docket edit).",
+  "author_initially": "Accepted every finding. Every round in the batch was then re-cited from the review directories themselves (Tools, fleet, attic - filename plus the verdict line each carries), the amendments were folded into EV-054's resolution in place, EV-052's 'see the fleet AGENT_STATE' pointer became the real A2/A2a/A2b artifacts, and EV-051 carries the no-rotation ruling.",
+  "resolution": "Nexusmill pending file corrected (gated); the failed run's worktree and branch removed; the owner re-runs step 3 - the review that lands this batch is the artifact for this row's round 2, so none is claimed here. Lesson: a docket ref is a filename read from the directory, never recalled; every claimed round needs its file.",
+  "refs": [
+   "colibri docket worktree gate review gate_20260909-073612.md (r1 BLOCK, model z-ai/glm-5.3-flash)"
+  ]
+ },
+ {
+  "id": "EV-059-DOCKET-APPEND-BLOCKED-FOR-A-STAGED-FILE-THE-REVIEWER-CANNOT-SEE",
+  "date": "2026-09-09",
+  "repo": "colibri-code-review (docs/gate_evidence.json + docs/GATE_EVIDENCE_DOCKET.md) via Nexusmill tools/owner_phase2_2026-09-08.py",
+  "layer": "gate-review BLOCK on the docket append (the owner's third run of step 3)",
+  "caught": "The eight-row append was refused on the author context, not the bytes: the context claimed the scoreboard .md was edited (bullets moved in, count 50 -> 58) while the reviewer's staged set held only docs/gate_evidence.json - because the gate ships code-class files only, the .md staged beside the JSON is outside the reviewer's payload by design, and the script's context never said so. To the reviewer that is an unevidenced edit claim riding a docket append, the EV-017/EV-057 stale-count class; it offered two settlements (stage the .md in the set, or name the sibling commit that carries it).",
+  "severity": "MEDIUM by the reviewer's adjudication (a claim in the record with no artifact in its bytes); a false positive in fact - the .md WAS staged (git diff --cached --numstat in the kept worktree: +10/-2 on the .md, +121/-1 on the JSON - the author first quoted the --stat figures misread, and the round-1 reviewer of the fix modelled the hunk correctly) - but the context was wrong to leave the domain division implicit. The 2026-09-07 docket append had cleared only because its author's rebuttal spelled out the invisible .md hunk (colibri gate_20260907-194443).",
+  "author_initially": "Accepted the finding as a context defect, not a byte defect. Fixed TDD: the script now builds the context from git diff --cached --numstat (every staged path with its counts), states that the .md is staged in the same change set but outside the code-only payload, and describes the .md hunk (bullet count, count line old -> new, date); selftest rows RED then GREEN. The same commit lets the script reclaim a worktree left by a blocked run when its branch has no commit (three owner re-runs had each needed a hand cleanup) and refuses one that carries a commit.",
+  "resolution": "Nexusmill follow-up commit (script + tools/owner_phase2_2026-09-08_selftest.py + this row, gated); the owner re-runs step 3 - that review is the artifact for this row's round 2, so none is claimed here. Lesson: a gate context must name every staged file and say which of them are outside the reviewer's payload; the reviewer can only reconcile what it is told exists.",
+  "refs": [
+   "colibri docket worktree gate review gate_20260909-075333.md (r1 BLOCK, model z-ai/glm-5.3-flash)",
+   "colibri gate_20260907-194443.md (the 2026-09-07 append's CLEAR on an explicit invisible-.md rebuttal)"
+  ]
+ }
  ]
 }
