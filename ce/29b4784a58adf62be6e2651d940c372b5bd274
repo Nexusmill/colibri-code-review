@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "ce29b4784a58adf62be6e2651d940c372b5bd274",
+ "when": "20260909-092702",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "2878cf393862135b84f989e1c41b1b2d00f8edcd9dc69f136de87cd119a004bf",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260909-092657",
+   "artifact": ".adversary\\reviews\\gate_20260909-092657.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260909-092657.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 54166, 'completion_tokens': 1337, 'total_tokens': 55503, 'cost': 0.00588455, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00588455, 'upstream_inference_prompt_cost': 0.0054166, 'upstream_inference_completions_cost': 0.00046795}, 'completion_tokens_details': {'reasoning_tokens': 856, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nI reviewed the staged `docs/gate_evidence.json` append (9 rows, EV-051..EV-059) against the docket's own covenant and the author's rebuttal claims, since the .md sibling is outside the payload by design.\n\nChecks performed:\n- **Count arithmetic**: 50 prior entries + 9 appended rows = 59; the rebuttal's scoreboard claim \"50 -> 59\" matches the staged JSON exactly. EV-059's rebuttal context correctly reconciles the invisible .md hunk (the EV-059 lesson itself, applied).\n- **Prior-finding classes (EV-035/EV-047/EV-057/EV-058/EV-059)**: every claimed round in the batch now carries a filename with its verdict line; the \"-era\" suffix filenames are gone; EV-051..EV-054's amendments are folded in place (no new top-level keys); EV-051/EV-053 both carry the no-rotation ruling consistently.\n- **JSON structure**: array/closing-brace integrity verified by inspection (EV-050 gained its trailing comma correctly); no duplicate ids; `json.loads` claim is consistent with the bytes.\n- **Internal consistency spot-checks**: EV-054's round citations (14d1f09 r1 BLOCK/r2 CLEAR, fb0d9a6 r1 CLEAR, d9876ff r1 BLOCK/r2 CLEAR) match its prose; EV-052's five A2 BLOCKs + A2a/A2b artifacts are cited; EV-055's r1-r3 BLOCK/r4 CLEAR sequence matches its refs; gate_selftest count lineage (89 -> 90 at EV-055) is monotonic and explained.\n- **Provisional-id claim**: ids carry no suffix, matching \"provisional-id suffix dropped\".\n\nNo uncited CLEAR verdicts, no stale count literals, no unevidenced edit claims, no schema drift, no data loss introduced by the append. The rows' own contents (EV-053's Q2_SSH_PASSWORD false-positive revert, EV-055's three fail-opens, EV-056's parent-side decode) are self-consistent and each carries its artifacts.\n\nVERDICT: CLEAR"
+ }
+}
