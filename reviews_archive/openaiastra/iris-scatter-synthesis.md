@@ -1,0 +1,2 @@
+# Scatter correction independent review
+Both exact hashes CLEAR for bug/spec/quality. Six canonical reports and mergeable canonical manifest alongside. Independent95tests pass. Original blocked drop542,300/recovered0 becomes clear506,300/recovered1 after30realframes. Valid-player fallback is guaranteed by unchanged terrain movement/spawn/teleport contracts. No RNG, voice/event, cap48, expiry4 or pickup-delay0.3 changes. No production writes.

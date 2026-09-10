@@ -1,0 +1,152 @@
+{
+ "_doc": "colibri-review sha-keyed cache (mode -> sha/output/reviewed_at)",
+ "files": {
+  "0-check-setup.bat": {
+   "bug": {
+    "sha": "ec24f5e6",
+    "output": ".colibri_reviews/0-check-setup.bat__bug__ec24f5e6.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "0b-check-passwords.bat": {
+   "bug": {
+    "sha": "d8fd6226",
+    "output": ".colibri_reviews/0b-check-passwords.bat__bug__d8fd6226.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "1-blink-login.bat": {
+   "bug": {
+    "sha": "2198fa42",
+    "output": ".colibri_reviews/1-blink-login.bat__bug__2198fa42.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "2-youtube-login.bat": {
+   "bug": {
+    "sha": "b8a93444",
+    "output": ".colibri_reviews/2-youtube-login.bat__bug__b8a93444.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "3-test-dry-run.bat": {
+   "bug": {
+    "sha": "ebf6db83",
+    "output": ".colibri_reviews/3-test-dry-run.bat__bug__ebf6db83.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "4-run-now.bat": {
+   "bug": {
+    "sha": "c4e037aa",
+    "output": ".colibri_reviews/4-run-now.bat__bug__c4e037aa.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "5-status.bat": {
+   "bug": {
+    "sha": "740c0620",
+    "output": ".colibri_reviews/5-status.bat__bug__740c0620.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/__init__.py": {
+   "bug": {
+    "sha": "4d191809",
+    "output": ".colibri_reviews/birdcam____init__.py__bug__4d191809.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/__main__.py": {
+   "bug": {
+    "sha": "307299fd",
+    "output": ".colibri_reviews/birdcam____main__.py__bug__307299fd.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  ".githooks/adversary_audit.py": {
+   "bug": {
+    "sha": "4eb437fc",
+    "output": ".colibri_reviews/.githooks__adversary_audit.py__bug__4eb437fc.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/blink_client.py": {
+   "bug": {
+    "sha": "f48357c5",
+    "output": ".colibri_reviews/birdcam__blink_client.py__bug__f48357c5.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/cli.py": {
+   "bug": {
+    "sha": "c0a0713b",
+    "output": ".colibri_reviews/birdcam__cli.py__bug__c0a0713b.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/compiler.py": {
+   "bug": {
+    "sha": "cbe32a04",
+    "output": ".colibri_reviews/birdcam__compiler.py__bug__cbe32a04.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/config.py": {
+   "bug": {
+    "sha": "a6da6b1d",
+    "output": ".colibri_reviews/birdcam__config.py__bug__a6da6b1d.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/pipeline.py": {
+   "bug": {
+    "sha": "a4da978f",
+    "output": ".colibri_reviews/birdcam__pipeline.py__bug__a4da978f.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/state.py": {
+   "bug": {
+    "sha": "9c1db7be",
+    "output": ".colibri_reviews/birdcam__state.py__bug__9c1db7be.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "birdcam/youtube_client.py": {
+   "bug": {
+    "sha": "8e230984",
+    "output": ".colibri_reviews/birdcam__youtube_client.py__bug__8e230984.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "scripts/bootstrap.ps1": {
+   "bug": {
+    "sha": "694f83f3",
+    "output": ".colibri_reviews/scripts__bootstrap.ps1__bug__694f83f3.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "scripts/check_password.py": {
+   "bug": {
+    "sha": "7ae74dfd",
+    "output": ".colibri_reviews/scripts__check_password.py__bug__7ae74dfd.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "scripts/register_schedule.ps1": {
+   "bug": {
+    "sha": "b25365fe",
+    "output": ".colibri_reviews/scripts__register_schedule.ps1__bug__b25365fe.md",
+    "reviewed_at": "2026-09-05"
+   }
+  },
+  "tests/test_state_and_pipeline.py": {
+   "bug": {
+    "sha": "0aba0cb8",
+    "output": ".colibri_reviews/tests__test_state_and_pipeline.py__bug__0aba0cb8.md",
+    "reviewed_at": "2026-09-05"
+   }
+  }
+ }
+}

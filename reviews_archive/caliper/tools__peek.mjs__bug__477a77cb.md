@@ -1,0 +1,22 @@
+# Colibri bug review — tools/peek.mjs
+
+reviewer: zcode-subagent-fresh-context (GLM-5.3) · mode: bug · date: 2026-09-03
+sha256: 477a77cb91c377a3991e2d0bfd7e545bfe45368438f7a2ec7c56d42f56ee668b
+
+### Meta
+- path: tools/peek.mjs | sha8: 477a77cb | lines: 26 | context-pack: one-shot Queue-surface probe (born in the f99809f "probe tooling" / d4a096c era); referenced only by AGENTS.md:26; no script or code invokes it; shares the 9223 puppeteer-core connect pattern with see.mjs/ui-harness.mjs.
+
+### Review
+
+## Verdict
+Functionally harmless to the app (one guided click on the correct nav plate), but its reported flags cannot be trusted as evidence: one flag is structurally near-always-true, the excerpt degrades to garbage when its anchor is missing, and there is no readiness wait before it snapshots the DOM. As a "truthful status" probe it falls short of the repo's own rule.
+
+## Bugs & vulnerabilities
+- **[MEDIUM] `promptShown` is an always-true predicate — it can never fail when it matters** - `line 19` — CONFIRMED. What: `txt.includes("eb68ab76") || txt.includes("…")`. The second disjunct matches a literal U+2026 in ANY rendered text node: QueueSurface.tsx:98 renders every queue entry as `{e.promptId.slice(0, 13)}…` (a literal ellipsis text node in innerText), and DeckControls.tsx:64-66 renders the optimizer status label `"…"` on the Generate deck. So `promptShown` reduces to "the Queue surface (or deck) shows any entry/optimizer state" — it is true whenever the specific eb68ab76 entry is absent, which is exactly the case the flag exists to detect. Impact: the probe reports the untracked server entry as "shown" regardless of reality — an always-green check masquerading as verification. Fix: drop the `…` disjunct, or match the truncated id prefix the surface actually renders (`eb68ab76` sliced to 13 chars) as an anchored line match.
+- **[LOW] Excerpt slice with `indexOf` -1 produces empty/garbage output with no not-found signal** - `lines 23-24` — CONFIRMED. What: `txt.indexOf("Queue")` returns -1 when the word is absent (e.g., slow load, click missed); `txt.slice(-1, 399)` then yields `""` for long text or the final character for short text, printed under "--- queue surface excerpt:" as if meaningful. Impact: the diagnostic silently degrades exactly when the diagnostic is needed. Fix: `if (i < 0) { console.log("(no 'Queue' text found in body)") } else { ... }`.
+- **[LOW] Fixed sleeps replace any readiness wait — a slow boot yields a misleading all-false report** - `lines 6-13` — PLAUSIBLE. What: 2s after `networkidle2` and 3s after the click, with no `waitForSelector`; unlike see.mjs:21 and ui-harness.mjs:108 there is nothing anchoring the read to the app actually being hydrated. Trigger: dev-server cold transform or a lazy chunk making first paint late. Impact: pre-hydration `document.body.innerText` (near-empty) produces `serverSection:false, benchRow:false, removeBtn:false…` — indistinguishable from a genuinely broken surface, exit 0. Why PLAUSIBLE not CONFIRMED: on a warm local dev server the 2s+networkidle budget virtually always suffices; could not be reproduced without running the app (out of scope).
+
+## Missing safeguards
+- The button matcher (line 10) is an inclusive substring over ALL buttons and performs a side-effecting click in what the sibling harness calls a read-only discipline (ui-harness.mjs:3). It lands on the right target today only because ChassisNav.tsx:19 sets `aria-label="Queue"` (line 9 reads aria-label first) and ChassisNav precedes DeckControls in DOM order (App.tsx:96-97). If the nav plates ever lose their aria-label (their legends are CSS-only, ChassisNav.tsx:6-7) or any earlier "queue"-containing button appears, the click falls through to the deck's "Queue render" (DeckControls.tsx:122) — queueing a real GPU render from a DOM-dump probe. Also the first clause `t.toLowerCase() === "queue" ||` is dead code, subsumed by `.includes("queue")`.
+- One-shot hardcoded expectations (`bench render`, `RUNNING`, prompt id `eb68ab76`) with no header caveat that absence means "no bench job running right now", not "surface broken" — the header (line 1) implies a general Queue-surface check the flags don't deliver when reused.
+- Always exits 0 and has no try/finally around `page.close()`/`browser.disconnect()` — same orphan-tab and raw-stack failure mode as see.mjs (installed puppeteer-core 25.8.0 `getWSEndpoint` fails fast on Edge-down: exit 1, but with an unhelpful fetch error and no cleanup).

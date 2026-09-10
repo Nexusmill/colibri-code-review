@@ -1,0 +1,370 @@
+{
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\engine.js": {
+    "rel": "implementations/emberline/engine.js",
+    "modes": {
+      "bug": {
+        "sha": "61d17b65a9cb051b63cb952cf38863bd309e3060d470e158a0d437249809944c",
+        "output": ".colibri_reviews/implementations__emberline__engine.js__bug__61d17b65.md",
+        "reviewed_at": "2026-09-08T19:20:00.760455+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "61d17b65a9cb051b63cb952cf38863bd309e3060d470e158a0d437249809944c",
+        "output": ".colibri_reviews/implementations__emberline__engine.js__spec__61d17b65.md",
+        "reviewed_at": "2026-09-08T19:20:00.760955+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "61d17b65a9cb051b63cb952cf38863bd309e3060d470e158a0d437249809944c",
+        "output": ".colibri_reviews/implementations__emberline__engine.js__quality__61d17b65.md",
+        "reviewed_at": "2026-09-08T19:20:00.760955+00:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\engine.test.cjs": {
+    "rel": "implementations/emberline/engine.test.cjs",
+    "modes": {
+      "bug": {
+        "sha": "2980b70195f165429a9ba2dbc41af7b3e3c5c553828139723d4e6d6262fd3490",
+        "output": ".colibri_reviews/implementations__emberline__engine.test.cjs__bug__2980b701.md",
+        "reviewed_at": "2026-09-08T18:47:48.225Z",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "2980b70195f165429a9ba2dbc41af7b3e3c5c553828139723d4e6d6262fd3490",
+        "output": ".colibri_reviews/implementations__emberline__engine.test.cjs__spec__2980b701.md",
+        "reviewed_at": "2026-09-08T18:47:48.225Z",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "2980b70195f165429a9ba2dbc41af7b3e3c5c553828139723d4e6d6262fd3490",
+        "output": ".colibri_reviews/implementations__emberline__engine.test.cjs__quality__2980b701.md",
+        "reviewed_at": "2026-09-08T18:47:48.225Z",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\spectrum.js": {
+    "rel": "implementations/emberline/spectrum.js",
+    "modes": {
+      "bug": {
+        "sha": "f343606f2602f0590bffdfc49714321cd448645afd8353511da51661277bfdab",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.js__bug__f343606f.md",
+        "reviewed_at": "2026-09-08T13:48:10.782746+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "f343606f2602f0590bffdfc49714321cd448645afd8353511da51661277bfdab",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.js__spec__f343606f.md",
+        "reviewed_at": "2026-09-08T13:48:10.782746+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "f343606f2602f0590bffdfc49714321cd448645afd8353511da51661277bfdab",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.js__quality__f343606f.md",
+        "reviewed_at": "2026-09-08T13:48:10.782746+00:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\spectrum.test.cjs": {
+    "rel": "implementations/emberline/spectrum.test.cjs",
+    "modes": {
+      "bug": {
+        "sha": "8883acc09eaecb57014ac257d01c450cd60c0b4a22f74c0a01a27aee50323539",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.test.cjs__bug__8883acc0.md",
+        "reviewed_at": "2026-09-08T18:47:48.226Z",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "8883acc09eaecb57014ac257d01c450cd60c0b4a22f74c0a01a27aee50323539",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.test.cjs__spec__8883acc0.md",
+        "reviewed_at": "2026-09-08T18:47:48.226Z",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "8883acc09eaecb57014ac257d01c450cd60c0b4a22f74c0a01a27aee50323539",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.test.cjs__quality__8883acc0.md",
+        "reviewed_at": "2026-09-08T18:47:48.227Z",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\game.js": {
+    "rel": "implementations/emberline/game.js",
+    "modes": {
+      "bug": {
+        "sha": "c3cc74a1be8a35834fc2dbd34530e4cb413805f210ead5c63bebe3fc02785d4e",
+        "output": ".colibri_reviews/implementations__emberline__game.js__bug__c3cc74a1.md",
+        "reviewed_at": "2026-09-09T03:47:25.059654+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "c3cc74a1be8a35834fc2dbd34530e4cb413805f210ead5c63bebe3fc02785d4e",
+        "output": ".colibri_reviews/implementations__emberline__game.js__spec__c3cc74a1.md",
+        "reviewed_at": "2026-09-09T03:47:25.060153+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "c3cc74a1be8a35834fc2dbd34530e4cb413805f210ead5c63bebe3fc02785d4e",
+        "output": ".colibri_reviews/implementations__emberline__game.js__quality__c3cc74a1.md",
+        "reviewed_at": "2026-09-09T03:47:25.060651+00:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\index.html": {
+    "rel": "implementations/emberline/index.html",
+    "modes": {
+      "bug": {
+        "sha": "b22dead6fbbf77bb675b98af8095437d69949160dc762518728e06d160864ecf",
+        "output": ".colibri_reviews/implementations__emberline__index.html__bug__b22dead6.md",
+        "reviewed_at": "2026-09-09T03:47:25.061152+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "b22dead6fbbf77bb675b98af8095437d69949160dc762518728e06d160864ecf",
+        "output": ".colibri_reviews/implementations__emberline__index.html__spec__b22dead6.md",
+        "reviewed_at": "2026-09-09T03:47:25.061651+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "b22dead6fbbf77bb675b98af8095437d69949160dc762518728e06d160864ecf",
+        "output": ".colibri_reviews/implementations__emberline__index.html__quality__b22dead6.md",
+        "reviewed_at": "2026-09-09T03:47:25.061651+00:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\style.css": {
+    "rel": "implementations/emberline/style.css",
+    "modes": {
+      "bug": {
+        "sha": "cde78eb24ee809ad00ce8cef79bdb83edf04b8299467eeeaaafe4cc232139f42",
+        "output": ".colibri_reviews/implementations__emberline__style.css__bug__cde78eb2.md",
+        "reviewed_at": "2026-09-08T19:02:05.701585+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "cde78eb24ee809ad00ce8cef79bdb83edf04b8299467eeeaaafe4cc232139f42",
+        "output": ".colibri_reviews/implementations__emberline__style.css__spec__cde78eb2.md",
+        "reviewed_at": "2026-09-08T19:02:05.702588+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "cde78eb24ee809ad00ce8cef79bdb83edf04b8299467eeeaaafe4cc232139f42",
+        "output": ".colibri_reviews/implementations__emberline__style.css__quality__cde78eb2.md",
+        "reviewed_at": "2026-09-08T19:02:05.703091+00:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\ui.test.cjs": {
+    "rel": "implementations/emberline/ui.test.cjs",
+    "modes": {
+      "bug": {
+        "sha": "5ae66eac6bc1c73f0350ad3c7ba72586161f27da005ae96bd6002df0d817fb00",
+        "output": ".colibri_reviews/implementations__emberline__ui.test.cjs__bug__5ae66eac.md",
+        "reviewed_at": "2026-09-09T03:47:25.062152+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "5ae66eac6bc1c73f0350ad3c7ba72586161f27da005ae96bd6002df0d817fb00",
+        "output": ".colibri_reviews/implementations__emberline__ui.test.cjs__spec__5ae66eac.md",
+        "reviewed_at": "2026-09-09T03:47:25.062652+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "5ae66eac6bc1c73f0350ad3c7ba72586161f27da005ae96bd6002df0d817fb00",
+        "output": ".colibri_reviews/implementations__emberline__ui.test.cjs__quality__5ae66eac.md",
+        "reviewed_at": "2026-09-09T03:47:25.063152+00:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\music.js": {
+    "rel": "implementations/emberline/music.js",
+    "modes": {
+      "bug": {
+        "sha": "aaa191ad12f4739b5567b5f5efee1f6ab366d38bf541851c1cde17f06cb5a57a",
+        "output": ".colibri_reviews/implementations__emberline__music.js__bug__aaa191ad.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "aaa191ad12f4739b5567b5f5efee1f6ab366d38bf541851c1cde17f06cb5a57a",
+        "output": ".colibri_reviews/implementations__emberline__music.js__spec__aaa191ad.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "aaa191ad12f4739b5567b5f5efee1f6ab366d38bf541851c1cde17f06cb5a57a",
+        "output": ".colibri_reviews/implementations__emberline__music.js__quality__aaa191ad.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\music.test.cjs": {
+    "rel": "implementations/emberline/music.test.cjs",
+    "modes": {
+      "bug": {
+        "sha": "3fec6ad9e0d4f479dbc4a53545eb4021a176aedebb9c22a8513de40e6d0cf277",
+        "output": ".colibri_reviews/implementations__emberline__music.test.cjs__bug__3fec6ad9.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "3fec6ad9e0d4f479dbc4a53545eb4021a176aedebb9c22a8513de40e6d0cf277",
+        "output": ".colibri_reviews/implementations__emberline__music.test.cjs__spec__3fec6ad9.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "3fec6ad9e0d4f479dbc4a53545eb4021a176aedebb9c22a8513de40e6d0cf277",
+        "output": ".colibri_reviews/implementations__emberline__music.test.cjs__quality__3fec6ad9.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\terrain.js": {
+    "rel": "implementations/emberline/terrain.js",
+    "modes": {
+      "bug": {
+        "sha": "d234643fabfe42ad6335c976bbe4c4afeebdd144afa8043e75e2d1d2afed012a",
+        "output": ".colibri_reviews/implementations__emberline__terrain.js__bug__d234643f.md",
+        "reviewed_at": "2026-09-08T18:47:48.223Z",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "d234643fabfe42ad6335c976bbe4c4afeebdd144afa8043e75e2d1d2afed012a",
+        "output": ".colibri_reviews/implementations__emberline__terrain.js__spec__d234643f.md",
+        "reviewed_at": "2026-09-08T18:47:48.224Z",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "d234643fabfe42ad6335c976bbe4c4afeebdd144afa8043e75e2d1d2afed012a",
+        "output": ".colibri_reviews/implementations__emberline__terrain.js__quality__d234643f.md",
+        "reviewed_at": "2026-09-08T18:47:48.224Z",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\terrain.test.cjs": {
+    "rel": "implementations/emberline/terrain.test.cjs",
+    "modes": {
+      "bug": {
+        "sha": "7783e72c81cfc72277876c6c59ff0f199e59b1e03e6793c77c8f2f1cc1656699",
+        "output": ".colibri_reviews/implementations__emberline__terrain.test.cjs__bug__7783e72c.md",
+        "reviewed_at": "2026-09-08T19:20:00.761957+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "7783e72c81cfc72277876c6c59ff0f199e59b1e03e6793c77c8f2f1cc1656699",
+        "output": ".colibri_reviews/implementations__emberline__terrain.test.cjs__spec__7783e72c.md",
+        "reviewed_at": "2026-09-08T19:20:00.762456+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "7783e72c81cfc72277876c6c59ff0f199e59b1e03e6793c77c8f2f1cc1656699",
+        "output": ".colibri_reviews/implementations__emberline__terrain.test.cjs__quality__7783e72c.md",
+        "reviewed_at": "2026-09-08T19:20:00.762456+00:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\voice.js": {
+    "rel": "implementations/emberline/voice.js",
+    "modes": {
+      "bug": {
+        "sha": "3121593a917c09e147e8e6121015f266838786902f64b0abd60d11fc06b653f8",
+        "output": ".colibri_reviews/implementations__emberline__voice.js__bug__3121593a.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "3121593a917c09e147e8e6121015f266838786902f64b0abd60d11fc06b653f8",
+        "output": ".colibri_reviews/implementations__emberline__voice.js__spec__3121593a.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "3121593a917c09e147e8e6121015f266838786902f64b0abd60d11fc06b653f8",
+        "output": ".colibri_reviews/implementations__emberline__voice.js__quality__3121593a.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\voice.test.cjs": {
+    "rel": "implementations/emberline/voice.test.cjs",
+    "modes": {
+      "bug": {
+        "sha": "c261f7b11dc364cd61f95c6282873b824bd7643b12c020c0322ba7e6711bce66",
+        "output": ".colibri_reviews/implementations__emberline__voice.test.cjs__bug__c261f7b1.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "c261f7b11dc364cd61f95c6282873b824bd7643b12c020c0322ba7e6711bce66",
+        "output": ".colibri_reviews/implementations__emberline__voice.test.cjs__spec__c261f7b1.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "c261f7b11dc364cd61f95c6282873b824bd7643b12c020c0322ba7e6711bce66",
+        "output": ".colibri_reviews/implementations__emberline__voice.test.cjs__quality__c261f7b1.md",
+        "reviewed_at": "2026-09-08",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\world3d.js": {
+    "rel": "implementations/emberline/world3d.js",
+    "modes": {
+      "bug": {
+        "sha": "534f6a83a48c72ab9656213967cc362f8a14c898a5f553514a9eb1014ef3c966",
+        "output": ".colibri_reviews/implementations__emberline__world3d.js__bug__534f6a83.md",
+        "reviewed_at": "2026-09-08T19:02:05.705094+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "534f6a83a48c72ab9656213967cc362f8a14c898a5f553514a9eb1014ef3c966",
+        "output": ".colibri_reviews/implementations__emberline__world3d.js__spec__534f6a83.md",
+        "reviewed_at": "2026-09-08T19:02:05.705094+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "534f6a83a48c72ab9656213967cc362f8a14c898a5f553514a9eb1014ef3c966",
+        "output": ".colibri_reviews/implementations__emberline__world3d.js__quality__534f6a83.md",
+        "reviewed_at": "2026-09-08T19:02:05.706097+00:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\world3d.test.cjs": {
+    "rel": "implementations/emberline/world3d.test.cjs",
+    "modes": {
+      "bug": {
+        "sha": "dc2a9b3707fe2fd11f0129cfbfd7d4c6451b5ba7d9af3b5eee569e0ea8d7b65c",
+        "output": ".colibri_reviews/implementations__emberline__world3d.test.cjs__bug__dc2a9b37.md",
+        "reviewed_at": "2026-09-08T19:02:05.706600+00:00",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "dc2a9b3707fe2fd11f0129cfbfd7d4c6451b5ba7d9af3b5eee569e0ea8d7b65c",
+        "output": ".colibri_reviews/implementations__emberline__world3d.test.cjs__spec__dc2a9b37.md",
+        "reviewed_at": "2026-09-08T19:02:05.707101+00:00",
+        "cost": 0
+      },
+      "quality": {
+        "sha": "dc2a9b3707fe2fd11f0129cfbfd7d4c6451b5ba7d9af3b5eee569e0ea8d7b65c",
+        "output": ".colibri_reviews/implementations__emberline__world3d.test.cjs__quality__dc2a9b37.md",
+        "reviewed_at": "2026-09-08T19:02:05.707600+00:00",
+        "cost": 0
+      }
+    }
+  }
+}
