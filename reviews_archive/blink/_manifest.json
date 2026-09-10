@@ -1,147 +1,208 @@
 {
   "_doc": "colibri-review sha-keyed cache (mode -> sha/output/reviewed_at)",
-  "files": {
-    "0-check-setup.bat": {
+  "C:\\Users\\User\\source\\repos\\Blink\\0-check-setup.bat": {
+    "rel": "0-check-setup.bat",
+    "modes": {
       "bug": {
         "sha": "ec24f5e6",
         "output": ".colibri_reviews/0-check-setup.bat__bug__ec24f5e6.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "0b-check-passwords.bat": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\0b-check-passwords.bat": {
+    "rel": "0b-check-passwords.bat",
+    "modes": {
       "bug": {
         "sha": "d8fd6226",
         "output": ".colibri_reviews/0b-check-passwords.bat__bug__d8fd6226.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "1-blink-login.bat": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\1-blink-login.bat": {
+    "rel": "1-blink-login.bat",
+    "modes": {
       "bug": {
         "sha": "2198fa42",
         "output": ".colibri_reviews/1-blink-login.bat__bug__2198fa42.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "2-youtube-login.bat": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\2-youtube-login.bat": {
+    "rel": "2-youtube-login.bat",
+    "modes": {
       "bug": {
         "sha": "b8a93444",
         "output": ".colibri_reviews/2-youtube-login.bat__bug__b8a93444.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "3-test-dry-run.bat": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\3-test-dry-run.bat": {
+    "rel": "3-test-dry-run.bat",
+    "modes": {
       "bug": {
         "sha": "ebf6db83",
         "output": ".colibri_reviews/3-test-dry-run.bat__bug__ebf6db83.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "4-run-now.bat": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\4-run-now.bat": {
+    "rel": "4-run-now.bat",
+    "modes": {
       "bug": {
         "sha": "c4e037aa",
         "output": ".colibri_reviews/4-run-now.bat__bug__c4e037aa.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "5-status.bat": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\5-status.bat": {
+    "rel": "5-status.bat",
+    "modes": {
       "bug": {
         "sha": "740c0620",
         "output": ".colibri_reviews/5-status.bat__bug__740c0620.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "birdcam/__init__.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\__init__.py": {
+    "rel": "birdcam/__init__.py",
+    "modes": {
       "bug": {
         "sha": "4d191809",
         "output": ".colibri_reviews/birdcam____init__.py__bug__4d191809.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "birdcam/__main__.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\__main__.py": {
+    "rel": "birdcam/__main__.py",
+    "modes": {
       "bug": {
         "sha": "307299fd",
         "output": ".colibri_reviews/birdcam____main__.py__bug__307299fd.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    ".githooks/adversary_audit.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\.githooks\\adversary_audit.py": {
+    "rel": ".githooks/adversary_audit.py",
+    "modes": {
       "bug": {
         "sha": "f9bf4713",
         "output": ".colibri_reviews/.githooks__adversary_audit.py__bug__f9bf4713.md",
         "reviewed_at": "2026-09-10"
       }
-    },
-    "birdcam/blink_client.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\blink_client.py": {
+    "rel": "birdcam/blink_client.py",
+    "modes": {
       "bug": {
         "sha": "f48357c5",
         "output": ".colibri_reviews/birdcam__blink_client.py__bug__f48357c5.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "birdcam/cli.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\cli.py": {
+    "rel": "birdcam/cli.py",
+    "modes": {
       "bug": {
         "sha": "c0a0713b",
         "output": ".colibri_reviews/birdcam__cli.py__bug__c0a0713b.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "birdcam/compiler.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\compiler.py": {
+    "rel": "birdcam/compiler.py",
+    "modes": {
       "bug": {
         "sha": "cbe32a04",
         "output": ".colibri_reviews/birdcam__compiler.py__bug__cbe32a04.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "birdcam/config.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\config.py": {
+    "rel": "birdcam/config.py",
+    "modes": {
       "bug": {
         "sha": "a6da6b1d",
         "output": ".colibri_reviews/birdcam__config.py__bug__a6da6b1d.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "birdcam/pipeline.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\pipeline.py": {
+    "rel": "birdcam/pipeline.py",
+    "modes": {
       "bug": {
         "sha": "a4da978f",
         "output": ".colibri_reviews/birdcam__pipeline.py__bug__a4da978f.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "birdcam/state.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\state.py": {
+    "rel": "birdcam/state.py",
+    "modes": {
       "bug": {
         "sha": "9c1db7be",
         "output": ".colibri_reviews/birdcam__state.py__bug__9c1db7be.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "birdcam/youtube_client.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\youtube_client.py": {
+    "rel": "birdcam/youtube_client.py",
+    "modes": {
       "bug": {
         "sha": "8e230984",
         "output": ".colibri_reviews/birdcam__youtube_client.py__bug__8e230984.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "scripts/bootstrap.ps1": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\scripts\\bootstrap.ps1": {
+    "rel": "scripts/bootstrap.ps1",
+    "modes": {
       "bug": {
         "sha": "694f83f3",
         "output": ".colibri_reviews/scripts__bootstrap.ps1__bug__694f83f3.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "scripts/check_password.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\scripts\\check_password.py": {
+    "rel": "scripts/check_password.py",
+    "modes": {
       "bug": {
         "sha": "7ae74dfd",
         "output": ".colibri_reviews/scripts__check_password.py__bug__7ae74dfd.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "scripts/register_schedule.ps1": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\scripts\\register_schedule.ps1": {
+    "rel": "scripts/register_schedule.ps1",
+    "modes": {
       "bug": {
         "sha": "b25365fe",
         "output": ".colibri_reviews/scripts__register_schedule.ps1__bug__b25365fe.md",
         "reviewed_at": "2026-09-05"
       }
-    },
-    "tests/test_state_and_pipeline.py": {
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\tests\\test_state_and_pipeline.py": {
+    "rel": "tests/test_state_and_pipeline.py",
+    "modes": {
       "bug": {
         "sha": "0aba0cb8",
         "output": ".colibri_reviews/tests__test_state_and_pipeline.py__bug__0aba0cb8.md",
