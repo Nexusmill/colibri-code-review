@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-09)
 
-- **61 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **62 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -55,6 +55,7 @@
   - EV-059: the docket append was BLOCKed AGAIN, this time on the author context: it claimed the scoreboard .md edit while the reviewer's payload (code-class files only) held just the JSON - the .md was staged, the context never said it was outside the payload; the script now builds its context from git diff --cached --numstat and names what the reviewer cannot see (colibri worktree gate_20260909-075333, r1).
   - EV-060: the OWNER found that Tools 8245433 (09-07) removed _scan_text_secrets while the Codex reviewed-write broker still called it - the gate had CLEARed it because the caller was not staged (a reviewer cannot see an unstaged caller); every reviewed write since had crashed; fixed with the wrapper restored AND a deterministic in-gate refusal of any symbol removal with a live caller in the frozen index, whose own round 1 BLOCKed on a cwd-scoped listing that would have left the guard inert from a subdirectory (Tools de3f953, two rounds; this row's own append round 1 caught its selftest arithmetic).
   - EV-061: the push guard REFUSED a four-commit Nexusmill docs branch on a doc published two days earlier: a NEW ref excluded only the baseline and re-fed 124 published commits to the docs model, whose REASON glued an elided `AIza` prefix to the next word so the classifier held it; fixed in FIVE rounds, each on the author's own cut - unvalidated tips, a sha list on argv, then the exclusion narrowing the security barrier itself (restructured to the docs feed only), then a context claiming 113/113 against a log saying 111/112 (Tools 6d24c55).
+  - EV-062: the archive-mirror commit of three scanned repos' review records was BLOCKed on three caliper rows whose recorded sha was the post-fix bytes while the review file hashed the pre-fix bytes, with no note (every other such row had one); the author's first bytes check read the archive schema one level too shallow and reported zero mismatches; fixed at the source (Caliper 874b2ea) and re-mirrored, colibri 0ea3f50
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -

@@ -909,6 +909,22 @@
    "docs/evaluations/2026-09-07-eval-3dprinting.md (the published line the model quoted; it names a pattern, not a value)",
    "Nexusmill PR #5 -> main 4b86217f"
   ]
+ },
+ {
+  "id": "EV-062-ARCHIVE-MIRROR-REVIEW-CAUGHT-THREE-RE-STAMPED-SHAS-WITHOUT-A-NOTE-IN-THE-SOURCE-MANIFEST",
+  "date": "2026-09-09",
+  "repo": "colibri-code-review (reviews_archive/caliper/_manifest.json, a repo-memory mirror of E:/AI/Caliper/.colibri_reviews/_manifest.json); fixed in Caliper",
+  "layer": "gate-review BLOCK on a docs/archive commit (round 1 of 2)",
+  "caught": "Committing the untracked archive mirrors of three scanned repos (blink 24, caliper 365, openaiastra 128 files) was BLOCKed: three caliper bug rows (src/stores/queueStore.ts, src/surfaces/QueueSurface.tsx, vite.library.ts) recorded a sha whose first eight hex digits did not match the hash embedded in their output filename, with no note - while every other deviating row in the same manifest carried one. Verified against bytes: in all three the manifest sha equals the CURRENT post-remediation file bytes in Caliper, the named review file's header sha is the pre-fix bytes, each review ends in a same-session remediation postscript, and Caliper's own history re-stamped the shas in 9102b79 and 04e1c02 - the StatusFooter pattern minus its note. A sha-keyed consumer would resolve those rows to an artifact named for different content. A second, LOW finding (openaiastra manifest keyed by absolute machine paths) was the source writer's format mirrored verbatim; the reader relativises on read (repo_memory/colibri.py) and precedent e47de7e archives writer-side drift as-is.",
+  "severity": "MEDIUM (provenance rows silently claiming review coverage of bytes the review never hashed; three rows in a 135-row manifest; no runtime consumer affected).",
+  "author_initially": "Verified the finding before answering and nearly refuted it on a false negative: the author's first bytes check walked the archive manifest one level too shallow (the archive copy nests rows under `modes`) and printed zero mismatches for all three archives; only a second pass at the right depth reproduced the reviewer's three rows exactly. Fixed AT THE SOURCE rather than in the copy: three `note` lines added to Caliper's manifest via safe-edit (Caliper gate CLEAR round 1, commit 874b2ea), then the archive re-synced with the designed path `repo_memory.colibri --mirror`, whose only delta to the staged archive was those three lines. The round-2 rebuttal of the LOW finding was passed to `--context` as a scratchpad PATH, not text - the argument is an inline string - so the reviewer read nothing of it and cleared on the staged bytes alone, dismissing the same finding itself as inherent to the archive.",
+  "resolution": "Caliper 874b2ea (three inserted note lines, no sha changed; gate CLEAR gate_20260909-210104); colibri 0ea3f50 on branch chore/archive-sync-2026-09-10 (round 2 CLEAR gate_20260909-210254). Lessons: an archive mirror is reviewed as data and its defects belong to the writer - fix the source and re-run the mirror, never hand-edit the copy; a bytes check that disagrees with the reviewer is re-run at the schema's real depth before any rebuttal; `--context` is inline text.",
+  "refs": [
+   "colibri gate reviews gate_20260909-205543.md (r1 BLOCK), gate_20260909-210254.md (r2 CLEAR)",
+   "Caliper gate review gate_20260909-210104.md (CLEAR on the note fix)",
+   "Caliper .colibri_reviews/src__stores__queueStore.ts__bug__ce261672.md, src__surfaces__QueueSurface.tsx__bug__595e53b6.md, vite.library.ts__bug__d378317d.md (header sha = pre-fix bytes, remediation postscript at the tail)",
+   "Caliper commits 9102b79 and 04e1c02 (the sha re-stamps), 874b2ea (the notes); colibri 0ea3f50"
+  ]
  }
  ]
 }
