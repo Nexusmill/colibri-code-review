@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "27c4fab62e20fee8caadf2848c30dcbc7607564b",
+ "when": "20260909-231127",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "16c607b2b86a8c482d4f8e31277ed800b8f32b9476b332aad71f31c41097d4cd",
+   "model": "xai:grok-4.6",
+   "when": "20260909-231123",
+   "artifact": ".adversary\\reviews\\gate_20260909-231123.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260909-231123.md": "model: xai:grok-4.6 | usage: {'input_tokens': 53574, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 9243, 'output_tokens_details': {'reasoning_tokens': 9152}, 'total_tokens': 62817, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 1618380000, 'context_details': {'input_tokens': 53574, 'output_tokens': 9243}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nThe two appended rows are well-formed, sequential EV-063/EV-064, and internally consistent (64 entries vs count64; 47+3 regressions vs suite 50/50). Required docket fields are present, refs name the claimed CLEAR artifacts, and the human-view sibling is explicitly called out as same-commit / outside the code-only payload (EV-059 class, not a byte defect).\n\nVERDICT: CLEAR"
+ }
+}
