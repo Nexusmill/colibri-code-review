@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-09)
 
-- **62 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **64 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -124,3 +124,9 @@ catch (gate-review BLOCK, pre-commit wall, post-commit notary, push guard, audit
 harness guard, CI, advisor second-reviewer); `author_initially` records whether the
 author disputed the finding - the false-rebuttal rows quote what was claimed and how
 it was disproven; `resolution` links the fix and its regression coverage.
+
+
+## 2026-09-09 ROOT history audit catches (EV-063 / EV-064)
+
+- **EV-063 (HIGH):** Deleting the current branch ref made a ROOT-baseline repository with remaining commits read clean. Tools 3c1243aff8de now requires successful object enumeration with no commits; four regressions caught the old behavior,47/47 passed after repair. Independent prewrite and automatic Git CLEAR; notarized blobs verified.
+- **EV-064 (MEDIUM):** Blink gate_20260909-212210 caught the ROOT epoch shortcut skipping the shallow-history probe. A real shallow clone with valid notes returned clean. The shortcut now follows the probe; three failing-first regressions pass and the full suite is50/50. Tools/Blink copies match, Blink is ARMED. Automatic Git CLEAR and committed: Tools 70835b6448da (gate_20260909-224351), Blink a9f9fe6ee214 (gate_20260909-224734).

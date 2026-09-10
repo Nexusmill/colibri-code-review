@@ -925,6 +925,42 @@
    "Caliper .colibri_reviews/src__stores__queueStore.ts__bug__ce261672.md, src__surfaces__QueueSurface.tsx__bug__595e53b6.md, vite.library.ts__bug__d378317d.md (header sha = pre-fix bytes, remediation postscript at the tail)",
    "Caliper commits 9102b79 and 04e1c02 (the sha re-stamps), 874b2ea (the notes); colibri 0ea3f50"
   ]
- }
+ },
+  {
+   "id": "EV-063-ROOT-DELETED-REF-FALSE-CLEAN",
+   "date": "2026-09-09",
+   "repo": "Tools (canonical auditor; reported by OpenAIAstra gate)",
+   "layer": "gate-review BLOCK",
+   "caught": "ROOT baseline treated an absent branch ref as proof of no commits. Deleting the current branch ref left unreachable commit objects but yielded exit 0 and no commits yet. Confirmed in an isolated real Git repository.",
+   "severity": "HIGH",
+   "author_initially": "Accepted after reproduction; no rebuttal.",
+   "resolution": "Tools 3c1243aff8de requires successful object enumeration containing no commit objects before clean unborn classification. Four loose/packed text/JSON regressions failed before repair; complete suite47/47 passed after. Independent prewrite CLEAR and automatic Git CLEAR; four notarized committed blobs verified. OpenAIAstra staged copy left to its owning task.",
+   "refs": [
+    "OpenAIAstra gate_20260909-222546.md (user-supplied finding)",
+    "Tools .adversary/reviews/gate_20260909-223604.md",
+    "Tools 3c1243aff8de",
+    "Tools .colibri_reviews/adversary-gate__adversary_audit.py__bug__86cd4dc3.md (independent exact prewrite CLEAR report)"
+   ]
+  },
+  {
+   "id": "EV-064-ROOT-EPOCH-SHALLOW-SHORT-CIRCUIT",
+   "date": "2026-09-09",
+   "repo": "Blink and Tools canonical auditor",
+   "layer": "gate-review BLOCK",
+   "caught": "ROOT epoch returned ok before probing shallow history. A real shallow notarized ROOT fixture returned clean JSON with no violations; a failed shallow probe was also skipped. The more elaborate retained-parent scenario in the original finding was not independently reproduced.",
+   "severity": "MEDIUM",
+   "author_initially": "Accepted after checking source and reproducing shallow=true with epoch ROOT/ok; no rebuttal.",
+   "resolution": "Tools 70835b6448da moved the ROOT shortcut below the shallow/error check and updated its own vendor; Blink a9f9fe6ee214 refreshed its vendor identically. Three regressions failed before repair; complete audit suite50/50 passed after. Independent exact prewrite review is recorded in the cited SHA-keyed review report. Automatic Git reviews CLEAR: Tools gate_20260909-224351 and Blink gate_20260909-224734, distinct from the original Blink BLOCK gate_20260909-212210. Blink arming verification ARMED. The human-view sibling is updated in the same commit (count64 and EV-063/064 bullets); its Markdown is outside the code-only reviewer file list.",
+   "refs": [
+    "Blink .adversary/reviews/gate_20260909-212210.md",
+    "Tools adversary-gate/audit_selftest.py",
+    "Blink .colibri_reviews/.githooks__adversary_audit.py__bug__f9bf4713.md",
+    "Tools 70835b6448da3ece08cd5ae7829acc84dc5bae5a (canonical and Tools vendor)",
+    "Blink a9f9fe6ee214 (Blink vendor)",
+    "Tools .adversary/reviews/gate_20260909-224351.md (automatic CLEAR)",
+    "Blink .adversary/reviews/gate_20260909-224734.md (automatic CLEAR)",
+    "GATE_EVIDENCE_DOCKET.md (same-commit human summary)"
+   ]
+  }
  ]
 }
