@@ -1,2131 +1,2142 @@
 {
- "docs/CHASSIS_SPEC.md": {
-  "rel": "docs/CHASSIS_SPEC.md",
-  "modes": {
-   "audit": {
-    "sha": "29a0127f810115ce8efe4dc66cf1a1fa909bdb00099c129dad12d08649edc129",
-    "output": "docs__CHASSIS_SPEC.md__audit__29a0127f.md",
-    "reviewed_at": "2026-08-18",
-    "model": "claude-fable-5",
-    "cost": 0
-   }
+  "E:\\AI\\Caliper\\.githooks\\adversary_audit.py": {
+    "rel": ".githooks/adversary_audit.py",
+    "modes": {
+      "bug": {
+        "sha": "f9bf47136092e8d4710720edfbe33c7595ad4f1e7c1144dc9f8ae121b0fad4a0",
+        "output": "E:\\AI\\Caliper\\.colibri_reviews\\.githooks__adversary_audit.py__bug__f9bf4713.md",
+        "reviewed_at": "2026-09-10T05:38:46.780542+00:00",
+        "cost": null
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\docs\\CHASSIS_SPEC.md": {
+    "rel": "docs/CHASSIS_SPEC.md",
+    "modes": {
+      "audit": {
+        "sha": "29a0127f810115ce8efe4dc66cf1a1fa909bdb00099c129dad12d08649edc129",
+        "output": "docs__CHASSIS_SPEC.md__audit__29a0127f.md",
+        "reviewed_at": "2026-08-18",
+        "model": "claude-fable-5",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\docs\\CHASSIS_PLAN.md": {
+    "rel": "docs/CHASSIS_PLAN.md",
+    "modes": {
+      "audit": {
+        "sha": "84701b53a7ad471d288b4c0aba07e3c035db3e67e68a8c2b4450015158c2aa60",
+        "output": "docs__CHASSIS_PLAN.md__audit__84701b53.md",
+        "reviewed_at": "2026-08-18",
+        "model": "claude-fable-5",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\GameScreen.tsx": {
+    "rel": "src/components/GameScreen.tsx",
+    "modes": {
+      "feature": {
+        "sha": "74810a45ed97fa43f387d4b8f67a5b592c093a06a1e05a9c75a99358b97d45ea",
+        "output": "src__components__GameScreen.tsx__feature__74810a45.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      },
+      "bug": {
+        "sha": "74810a45ed97fa43f387d4b8f67a5b592c093a06a1e05a9c75a99358b97d45ea",
+        "output": "src__components__GameScreen.tsx__bug__74810a45.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\client.ts": {
+    "rel": "src/api/client.ts",
+    "modes": {
+      "bug": {
+        "sha": "e5904c0d41c87aa6344907e8da1fe9e8f168b4f3d70378201375d10f287cef6a",
+        "output": "src__api__client.ts__bug__e5904c0d.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "vram-preflight wave delta"
+      },
+      "spec": {
+        "sha": "9f5e8b48e71cf315960bfc0c870fa88f1340d6fd4834707be4c77ef718792258",
+        "output": "src__api__client.ts__spec__9f5e8b48.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "9f5e8b48e71cf315960bfc0c870fa88f1340d6fd4834707be4c77ef718792258",
+        "output": "src__api__client.ts__feature__9f5e8b48.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\types.ts": {
+    "rel": "src/api/types.ts",
+    "modes": {
+      "spec": {
+        "sha": "c1fba39816e6f5c82f577303a73322babd8fbf3897d90f0ae093a4db906dd708",
+        "output": "src__api__types.ts__spec__c1fba398.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "bug": {
+        "sha": "6cdf2c4639e1b5b96523d4c6dde15a9e2f7075b9cf840c31970dcf293ae87867",
+        "output": "src__api__types.ts__bug__6cdf2c46.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "note": "2026-09-05: prior bug-row sha had a one-hex-char transcription typo (ec7f vs ec7c); corrected to disk bytes, same review stands"
+      },
+      "feature": {
+        "sha": "89a28024e2f50038a81edca7df420641ec7f58c0ee0c31405e7d2e3c5d6af73b",
+        "output": "src__api__types.ts__feature__89a28024.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\ws.ts": {
+    "rel": "src/api/ws.ts",
+    "modes": {
+      "bug": {
+        "sha": "8d535ac7773dc1d129aae7079b7c1c3268554d6a7f89e58e56c6ab99856ceaf4",
+        "output": "src__api__ws.ts__bug__8d535ac7.md",
+        "reviewed_at": "2026-08-19T07:55:05"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\queueStore.ts": {
+    "rel": "src/stores/queueStore.ts",
+    "modes": {
+      "bug": {
+        "sha": "70d77bf87de319823a6e7b4255a0e1c51a858a7aa553b885b41a782021c81cc9",
+        "output": "src__stores__queueStore.ts__bug__ce261672.md",
+        "note": "sha is the post-remediation bytes (re-stamped in 9102b79); the ce261672 review hashed the pre-fix bytes and carries the same-session remediation postscript",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "vram-preflight wave delta"
+      },
+      "feature": {
+        "sha": "ec4e6b241d629ca2cf64593cb20284d6a5186425a69b77d1ba6b4ccfe31aff99",
+        "output": "src__stores__queueStore.ts__feature__ec4e6b24.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\bundlesStore.ts": {
+    "rel": "src/stores/bundlesStore.ts",
+    "modes": {
+      "bug": {
+        "sha": "575055aee4d70777d4d34725fd034a37dc3dae6249c253d24a2d7ab7de8c1821",
+        "output": "src__stores__bundlesStore.ts__bug__575055ae.md",
+        "reviewed_at": "2026-08-26T00:10:00"
+      },
+      "spec": {
+        "sha": "575055ae (see review file; agent-hashed)",
+        "output": "src__stores__bundlesStore.ts__spec__575055ae.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "575055aee4d70777d4d34725fd034a37dc3dae6249c253d24a2d7ab7de8c1821",
+        "output": "src__stores__bundlesStore.ts__feature__575055ae.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\provenance.ts": {
+    "rel": "src/stores/provenance.ts",
+    "modes": {
+      "bug": {
+        "sha": "d34dd68587cef3469a9833ebc6369c33be0c6821e2e56fc3bed10455bbf6d8d4",
+        "output": "src__stores__provenance.ts__bug__d34dd685.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "d34dd68587cef3469a9833ebc6369c33be0c6821e2e56fc3bed10455bbf6d8d4",
+        "output": "src__stores__provenance.ts__feature__d34dd685.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\screenStore.ts": {
+    "rel": "src/stores/screenStore.ts",
+    "modes": {
+      "bug": {
+        "sha": "33d0507de10878309d9ed2d48937e25dd69c98677322d4044599ce8b0e79ca3b",
+        "output": "src__stores__screenStore.ts__bug__33d0507d.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "408e1830 (see review file; agent-hashed)",
+        "output": "src__stores__screenStore.ts__spec__408e1830.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "33d0507de10878309d9ed2d48937e25dd69c98677322d4044599ce8b0e79ca3b",
+        "output": "src__stores__screenStore.ts__feature__33d0507d.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\assetsStore.ts": {
+    "rel": "src/stores/assetsStore.ts",
+    "modes": {
+      "bug": {
+        "sha": "d9fc93f3af31e0d377e11d9fc62284f9ee10217c78348ca4c08c24bf014a3100",
+        "output": "src__stores__assetsStore.ts__bug__d9fc93f3.md",
+        "reviewed_at": "2026-08-26T20:20:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\bundles\\schema.ts": {
+    "rel": "src/bundles/schema.ts",
+    "modes": {
+      "bug": {
+        "sha": "d0cc311e2198a170c9820b60e967f1f4654f742b169827b7bb58320a04668198",
+        "output": "src__bundles__schema.ts__bug__d0cc311e.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "0c73be86e4efc2ef0933e8d7d231e9f4b72572d4d9b314996468e8bf9a56041a",
+        "output": "src__bundles__schema.ts__spec__0c73be86.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "d0cc311e2198a170c9820b60e967f1f4654f742b169827b7bb58320a04668198",
+        "output": "src__bundles__schema.ts__feature__d0cc311e.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\workflows\\fill.ts": {
+    "rel": "src/workflows/fill.ts",
+    "modes": {
+      "bug": {
+        "sha": "46a9ea98abf53575cf50a9cf438d30cf94ca6e17fe9ddd4998990d8b5626c23e",
+        "output": "src__workflows__fill.ts__bug__46a9ea98.md",
+        "reviewed_at": "2026-08-19T07:55:05"
+      },
+      "feature": {
+        "sha": "46a9ea98abf53575cf50a9cf438d30cf94ca6e17fe9ddd4998990d8b5626c23e",
+        "output": "src__workflows__fill.ts__feature__46a9ea98.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\ScreenStage.tsx": {
+    "rel": "src/components/ScreenStage.tsx",
+    "modes": {
+      "bug": {
+        "sha": "f3b3054de101fa7f757e0d1082c3b884d9b15f1b5ae78ac25badcd7f908aa38d",
+        "output": "src__components__ScreenStage.tsx__bug__f3b3054d.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "catalog-brain-rows wave + adversary round-2 fixes"
+      },
+      "feature": {
+        "sha": "838a818bcfe28a744b3267a55a0adf9689ca9f671994384faeaa276a44d1cf9b",
+        "output": "src__components__ScreenStage.tsx__feature__838a818b.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\DeckControls.tsx": {
+    "rel": "src/components/DeckControls.tsx",
+    "modes": {
+      "bug": {
+        "sha": "b64cbd06b3670ae3725df1e2bc7928c9e8f3aa1f7d4d7ee0e82eb82e0d7a2702",
+        "output": "src__components__DeckControls.tsx__bug__b64cbd06.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "vram-preflight wave delta"
+      },
+      "feature": {
+        "sha": "be37f2c1d817a81d1bb1a9d1aa5d701400a405becc9465c1e36127a956e91e55",
+        "output": "src__components__DeckControls.tsx__feature__be37f2c1.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\StatusFooter.tsx": {
+    "rel": "src/components/StatusFooter.tsx",
+    "modes": {
+      "bug": {
+        "sha": "c97dbfbab5c786ffadec5c29929567e7418bb44fb0c91d12979eadcb020fbfd8",
+        "output": "src__components__StatusFooter.tsx__bug__024ddaa6.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "note": "tooltip remediation post-gate, see postscript in 0199b97c review"
+      },
+      "feature": {
+        "sha": "47f263c696402413753695c0e599c994641f45228aa9e1771a0ce5c494a59e21",
+        "output": "src__components__StatusFooter.tsx__feature__47f263c6.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\MediaView.tsx": {
+    "rel": "src/components/MediaView.tsx",
+    "modes": {
+      "bug": {
+        "sha": "5dc0e38c269f41dbeb23bb46e63f349c6baff2017e925989e1e48cad865ae2da",
+        "output": "POST-FIX-2026-09-05-remediation-wave.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "note": "post-fix delta recorded in the shared remediation-wave bundle"
+      },
+      "feature": {
+        "sha": "5dc0e38c269f41dbeb23bb46e63f349c6baff2017e925989e1e48cad865ae2da",
+        "output": "src__components__MediaView.tsx__feature__5dc0e38c.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\GenerateSurface.tsx": {
+    "rel": "src/surfaces/GenerateSurface.tsx",
+    "modes": {
+      "bug": {
+        "sha": "f943cbc4b350989e4a66bfcce7789bb6569253b5505ca4254100d40b552c3c7d",
+        "output": "src__surfaces__GenerateSurface.tsx__bug__f943cbc4.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "1334981e (see review file; agent-hashed)",
+        "output": "src__surfaces__GenerateSurface.tsx__spec__1334981e.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "f943cbc4b350989e4a66bfcce7789bb6569253b5505ca4254100d40b552c3c7d",
+        "output": "src__surfaces__GenerateSurface.tsx__feature__f943cbc4.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\GraphSurface.tsx": {
+    "rel": "src/surfaces/GraphSurface.tsx",
+    "modes": {
+      "bug": {
+        "sha": "1aab8ef52bafa4da80549925030278ce34fe2a9dbed239210c18a7b3861b5140",
+        "output": "src__surfaces__GraphSurface.tsx__bug__1aab8ef5.md",
+        "reviewed_at": "2026-09-06"
+      },
+      "feature": {
+        "sha": "af17e99a41dd9bb9e56e33d4025f04f10cf9d5807bc552beb6d55755a101293a",
+        "output": "src__surfaces__GraphSurface.tsx__feature__af17e99a.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\OutputsSurface.tsx": {
+    "rel": "src/surfaces/OutputsSurface.tsx",
+    "modes": {
+      "bug": {
+        "sha": "0b4e589086fd1b315c376bb8664ed673f251f4183d0e25ca74aee3dd90db099d",
+        "output": "src__surfaces__OutputsSurface.tsx__bug__0b4e5890.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "992a88e6 (see review file; agent-hashed)",
+        "output": "src__surfaces__OutputsSurface.tsx__spec__992a88e6.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "ba7219d043acc0b9482430a1b2f4d03cca3ac760fbb4173093e2599cbd9f4f88",
+        "output": "src__surfaces__OutputsSurface.tsx__feature__ba7219d0.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.film.ts": {
+    "rel": "vite.film.ts",
+    "modes": {
+      "bug": {
+        "sha": "c698195211073f4b423234b7361630cb8ef48d7c0b0a4872d18ec5002499bac4",
+        "output": "vite.film.ts__bug__c6981952.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "streamed-brain-answers wave delta"
+      },
+      "spec": {
+        "sha": "ba2db7fe3a3298fff9c996bd0997e89092947a2060fbe3b2fa04d29b00d725c7",
+        "output": "vite.film.ts__spec__ba2db7fe.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "af1eb46f6bfc4128e7cb97bc42e14182f60bc7af68a1eb77bd4506131311ca36",
+        "output": "vite.film.ts__feature__af1eb46f.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\FilmWizard.tsx": {
+    "rel": "src/components/FilmWizard.tsx",
+    "modes": {
+      "bug": {
+        "sha": "1a6f58febea1c3e80e69627588ef1cb08bf78eef5dd51ad219a69e4e3257a1be",
+        "output": "src__components__FilmWizard.tsx__bug__1a6f58fe.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "streamed-brain-answers wave delta"
+      },
+      "spec": {
+        "sha": "cff01eec (see review file; agent-hashed)",
+        "output": "src__components__FilmWizard.tsx__spec__cff01eec.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "77eb22829c7cfd1cbcd4910814b3f776d35a8a122b0e883093949377077fe494",
+        "output": "src__components__FilmWizard.tsx__feature__77eb2282.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\bundles\\constraints.ts": {
+    "rel": "src/bundles/constraints.ts",
+    "modes": {
+      "bug": {
+        "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
+        "output": "src__bundles__constraints.ts__bug__01434323.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
+        "output": "src__bundles__constraints.ts__spec__01434323.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
+        "output": "src__bundles__constraints.ts__feature__01434323.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.agent.ts": {
+    "rel": "vite.agent.ts",
+    "modes": {
+      "bug": {
+        "sha": "f1c231c8855e6837fabb0789079d7c145dddb2a74cb03a8d34448ab4ff5bb315",
+        "output": "vite.agent.ts__bug__f1c231c8.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "streamed-brain-answers wave delta"
+      },
+      "spec": {
+        "sha": "663172ab8c6e2b84e496768dc9a570c91435f71734368c2b29fee6bf2d04d263",
+        "output": "vite.agent.ts__spec__663172ab.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "c25dadcbf368b69a8966e3571916e350fc3b602c4a5fe8176638ee888af7eef2",
+        "output": "vite.agent.ts__feature__c25dadcb.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\ModelPicker.tsx": {
+    "rel": "src/components/ModelPicker.tsx",
+    "modes": {
+      "bug": {
+        "sha": "c8bdd8a990b73b196ff2d67ad68b7692474ef0ea00502c352d7964b621156981",
+        "output": "src__components__ModelPicker.tsx__bug__c8bdd8a9.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "c8bdd8a990b73b196ff2d67ad68b7692474ef0ea00502c352d7964b621156981",
+        "output": "src__components__ModelPicker.tsx__feature__c8bdd8a9.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\autopilot.ts": {
+    "rel": "src/film/autopilot.ts",
+    "modes": {
+      "bug": {
+        "sha": "15ed117c432de24b22a60063485cdfd44174eaf9160ab190aa58887e554d27bb",
+        "output": "POST-FIX-2026-09-05-remediation-wave.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "note": "post-fix delta recorded in the shared remediation-wave bundle"
+      },
+      "spec": {
+        "sha": "32b00e7e442885f9f61bb2e2c2ae7af3a72d9cdcdbb89e32ceaa8e4f0a2cfc9f",
+        "output": "src__film__autopilot.ts__spec__32b00e7e.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "15ed117c432de24b22a60063485cdfd44174eaf9160ab190aa58887e554d27bb",
+        "output": "src__film__autopilot.ts__feature__15ed117c.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\analysis.ts": {
+    "rel": "src/film/analysis.ts",
+    "modes": {
+      "bug": {
+        "sha": "067464bef31c37eef75298edaa5dc5485f683a83d4b0b4aae4ae9b7a2a8c641a",
+        "output": "src__film__analysis.ts__bug__067464be.md",
+        "reviewed_at": "2026-08-26T00:10:00"
+      },
+      "spec": {
+        "sha": "067464bef31c37eef75298edaa5dc5485f683a83d4b0b4aae4ae9b7a2a8c641a",
+        "output": "src__film__analysis.ts__spec__067464be.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "067464bef31c37eef75298edaa5dc5485f683a83d4b0b4aae4ae9b7a2a8c641a",
+        "output": "src__film__analysis.ts__feature__067464be.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\budget.ts": {
+    "rel": "src/film/budget.ts",
+    "modes": {
+      "bug": {
+        "sha": "cb3572757532e0ab3be6712bbd02d5a6c8c0b44ed2cadd42b94b3f5d3803ef84",
+        "output": "POST-FIX-2026-09-05-remediation-wave.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "note": "post-fix delta recorded in the shared remediation-wave bundle"
+      },
+      "feature": {
+        "sha": "cb3572757532e0ab3be6712bbd02d5a6c8c0b44ed2cadd42b94b3f5d3803ef84",
+        "output": "src__film__budget.ts__feature__cb357275.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.replicate.ts": {
+    "rel": "vite.replicate.ts",
+    "modes": {
+      "bug": {
+        "sha": "f4c56c4e2395cb9bba67b2b1b944f961e9e43db851be3ebd77831b5ab4857b07",
+        "output": "vite.replicate.ts__bug__f4c56c4e.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "f4c56c4e2395cb9bba67b2b1b944f961e9e43db851be3ebd77831b5ab4857b07",
+        "output": "vite.replicate.ts__feature__f4c56c4e.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\llm\\tools.ts": {
+    "rel": "src/llm/tools.ts",
+    "modes": {
+      "bug": {
+        "sha": "0737954d856681589a061ab69743239af45a4fe50da1b752bd43f8291025194d",
+        "output": "src__llm__tools.ts__bug__0737954d.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "streamed-brain-answers wave delta"
+      },
+      "feature": {
+        "sha": "84daa792e1fd7fd0e9c4877977dd73a779c138a108804d40f20b2796a4e7c1e3",
+        "output": "src__llm__tools.ts__feature__84daa792.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\modelRoutes.ts": {
+    "rel": "src/providers/modelRoutes.ts",
+    "modes": {
+      "bug": {
+        "sha": "dbe64730efe313405323b8dbe59e1607ea2828be7556de2d6478b164dbb3470f",
+        "output": "src__providers__modelRoutes.ts__bug__dbe64730.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "cc62d7711f1abdaca0d111a004d983e505f2ec3de65d14cf1f87f145bcdc4544",
+        "output": "src__providers__modelRoutes.ts__spec__cc62d771.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "dbe64730efe313405323b8dbe59e1607ea2828be7556de2d6478b164dbb3470f",
+        "output": "src__providers__modelRoutes.ts__feature__dbe64730.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.caliper.ts": {
+    "rel": "vite.caliper.ts",
+    "modes": {
+      "bug": {
+        "sha": "6e01a0ac04220a995001829254a9869ae369aaaee3d21a48ea5ccf2eae4911ac",
+        "output": "vite.caliper.ts__bug__6e01a0ac.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "vram-preflight wave delta"
+      },
+      "feature": {
+        "sha": "c65d6bbaa204e01e65e3c8160f93dc8a9c77018298647367bc0b67c8f735a492",
+        "output": "vite.caliper.ts__feature__c65d6bba.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.llm.ts": {
+    "rel": "vite.llm.ts",
+    "modes": {
+      "bug": {
+        "sha": "eff2b006f82481af97bdf8c783b1fc887393c807f717eccb7982cb806c654103",
+        "output": "vite.llm.ts__bug__eff2b006.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "catalog-brain-rows wave + adversary round-2 fixes"
+      },
+      "feature": {
+        "sha": "921fbfd279ac61ae066aec330fb91b1261aa79a66c0468848ed85ebd28d9cff4",
+        "output": "vite.llm.ts__feature__921fbfd2.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\produce.ts": {
+    "rel": "src/film/produce.ts",
+    "modes": {
+      "bug": {
+        "sha": "d90075d8513bd8a8e04b9c3cadb3cf61c18f2d8601386ae7c4cf4e6d03aecbb3",
+        "output": "src__film__produce.ts__bug__d90075d8.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "d3dc06d2 (see review file; agent-hashed)",
+        "output": "src__film__produce.ts__spec__d3dc06d2.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "d90075d8513bd8a8e04b9c3cadb3cf61c18f2d8601386ae7c4cf4e6d03aecbb3",
+        "output": "src__film__produce.ts__feature__d90075d8.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\zipWriter.ts": {
+    "rel": "zipWriter.ts",
+    "modes": {
+      "bug": {
+        "sha": "8b340ce99cf6baee8687efdfbbc96f7185f21154c1a58dc976025e5428090c90",
+        "output": "zipWriter.ts__bug__8b340ce9.md",
+        "reviewed_at": "2026-09-06"
+      },
+      "feature": {
+        "sha": "c542eddda337a9dbde7c117459f9dad979b1c0b699c7ddbea532d2aab3be04be",
+        "output": "zipWriter.ts__feature__c542eddd.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\App.tsx": {
+    "rel": "src/App.tsx",
+    "modes": {
+      "bug": {
+        "sha": "1050686b567f9bd51fa51991e339c6634891a05d3de3856dac5c5c6632ff3d5f",
+        "output": "src__App.tsx__bug__1050686b.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "1050686b567f9bd51fa51991e339c6634891a05d3de3856dac5c5c6632ff3d5f",
+        "output": "src__App.tsx__feature__1050686b.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\catalog.ts": {
+    "rel": "src/api/catalog.ts",
+    "modes": {
+      "bug": {
+        "sha": "93147b7abfe0953df47b67831e86eb7b66ec0eb3d01fc8dd8a5b10ae940f9b9a",
+        "output": "src__api__catalog.ts__bug__93147b7a.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\eachlabs.ts": {
+    "rel": "src/api/eachlabs.ts",
+    "modes": {
+      "bug": {
+        "sha": "39e84cf015e848707cad7b1de41b572002e9a32ca39838f2332ef11e386b6a8a",
+        "output": "src__api__eachlabs.ts__bug__39e84cf0.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\film.ts": {
+    "rel": "src/api/film.ts",
+    "modes": {
+      "bug": {
+        "sha": "31373dd4ded5dcbde8cb811755ce90f0866a27fe8b9199bbff5e3e5d5db1e7d2",
+        "output": "src__api__film.ts__bug__31373dd4.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "streamed-brain-answers wave delta"
+      },
+      "feature": {
+        "sha": "d0059d5706a7a2bb83c9da75a63184307446ad06ae95f575a2be9453a92bb2e8",
+        "output": "src__api__film.ts__feature__d0059d57.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\keys.ts": {
+    "rel": "src/api/keys.ts",
+    "modes": {
+      "bug": {
+        "sha": "44371440a7aa466736a274e352c7ed47610e3ff092b8fa4732d469d2c77d49b9",
+        "output": "src__api__keys.ts__bug__44371440.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\library.ts": {
+    "rel": "src/api/library.ts",
+    "modes": {
+      "bug": {
+        "sha": "131d216241bb142f709a8344e6f13827c8ede338fc961af1f1dfc2686403dc30",
+        "output": "src__api__library.ts__bug__131d2162.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\modelRoutes.ts": {
+    "rel": "src/api/modelRoutes.ts",
+    "modes": {
+      "bug": {
+        "sha": "e305c11774e83cb939037538e98556606eff680ab130307c406771414d454250",
+        "output": "src__api__modelRoutes.ts__bug__e305c117.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\openrouter.ts": {
+    "rel": "src/api/openrouter.ts",
+    "modes": {
+      "bug": {
+        "sha": "8c56915089f5e140673b1ba6e1f99d22ee5e90d1315105134138f691969f326f",
+        "output": "src__api__openrouter.ts__bug__8c569150.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\replicate.ts": {
+    "rel": "src/api/replicate.ts",
+    "modes": {
+      "bug": {
+        "sha": "340deb8c32bc0f3288468e52949969074f26776a66d2ad68bfc1321f97204fb9",
+        "output": "src__api__replicate.ts__bug__340deb8c.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\bundles\\enums.ts": {
+    "rel": "src/bundles/enums.ts",
+    "modes": {
+      "bug": {
+        "sha": "96788c068810d4cc31252c05860fc5437ff71660554000340a64089c1232202d",
+        "output": "src__bundles__enums.ts__bug__96788c06.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\bundles\\files.ts": {
+    "rel": "src/bundles/files.ts",
+    "modes": {
+      "bug": {
+        "sha": "92a3b7b99d6b457fb410725e18fcaf0f39b309a1380312d49f64fa225a226fce",
+        "output": "src__bundles__files.ts__bug__92a3b7b9.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "feature": {
+        "sha": "92a3b7b99d6b457fb410725e18fcaf0f39b309a1380312d49f64fa225a226fce",
+        "output": "src__bundles__files.ts__feature__92a3b7b9.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\AdvancedDrawer.tsx": {
+    "rel": "src/components/AdvancedDrawer.tsx",
+    "modes": {
+      "bug": {
+        "sha": "02fc86065bf60b718301508c013653b712e7929b0c115860e3f83cf7e9bcdfff",
+        "output": "src__components__AdvancedDrawer.tsx__bug__02fc8606.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\ChassisNav.tsx": {
+    "rel": "src/components/ChassisNav.tsx",
+    "modes": {
+      "bug": {
+        "sha": "e829bc0ac5037e08bc1dd1cfcf2a0554833dbc0db529f53d960930f2464e1ce5",
+        "output": "src__components__ChassisNav.tsx__bug__e829bc0a.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\CloudPane.tsx": {
+    "rel": "src/components/CloudPane.tsx",
+    "modes": {
+      "bug": {
+        "sha": "fd956975b354603c8de5d5e0dc734b57c5228ebc5e7af4d2f78251d08d2264a4",
+        "output": "src__components__CloudPane.tsx__bug__fd956975.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "fd956975b354603c8de5d5e0dc734b57c5228ebc5e7af4d2f78251d08d2264a4",
+        "output": "src__components__CloudPane.tsx__feature__fd956975.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\CommandPalette.tsx": {
+    "rel": "src/components/CommandPalette.tsx",
+    "modes": {
+      "bug": {
+        "sha": "accf5df86e3669bb1b5a6525eed7f108532eb767eaa0ab63bc7ba54b4cf01271",
+        "output": "src__components__CommandPalette.tsx__bug__accf5df8.md",
+        "reviewed_at": "2026-09-06"
+      },
+      "feature": {
+        "sha": "4bf4ae9016664480a24654c41db23a75f8f040ae9d44668b9d1175d832d09abd",
+        "output": "src__components__CommandPalette.tsx__feature__4bf4ae90.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\GaugeLine.tsx": {
+    "rel": "src/components/GaugeLine.tsx",
+    "modes": {
+      "bug": {
+        "sha": "e1f9a1565ad3f43f20c1650c7c2ddcddcc0db555b848b419654c26e3d59c743d",
+        "output": "src__components__GaugeLine.tsx__bug__e1f9a156.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\Icons.tsx": {
+    "rel": "src/components/Icons.tsx",
+    "modes": {
+      "bug": {
+        "sha": "ef6fec47a1fdc4514f58b5dcf024525a1e9b88ed0b3c2b17ed11259896c4a276",
+        "output": "src__components__Icons.tsx__bug__ef6fec47.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\Latch.tsx": {
+    "rel": "src/components/Latch.tsx",
+    "modes": {
+      "bug": {
+        "sha": "19fab0af5d450d57d4fa93c47c4970a1beefcb551a268903aa7e2b74a12077e6",
+        "output": "src__components__Latch.tsx__bug__19fab0af.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\OrnateSlider.tsx": {
+    "rel": "src/components/OrnateSlider.tsx",
+    "modes": {
+      "bug": {
+        "sha": "7104cc21a1d4fe40d89eb0186458c715c170fbd804a38cfc91e81a4f22026374",
+        "output": "src__components__OrnateSlider.tsx__bug__7104cc21.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\Rail.tsx": {
+    "rel": "src/components/Rail.tsx",
+    "modes": {
+      "bug": {
+        "sha": "c148b09fc8bbade11f53e6312bce8812864b3c53294886777e42cacef199177f",
+        "output": "src__components__Rail.tsx__bug__c148b09f.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\ReproduceSheet.tsx": {
+    "rel": "src/components/ReproduceSheet.tsx",
+    "modes": {
+      "bug": {
+        "sha": "f2e83f37e19dd82839e267f28389d2ee1e53cc97633b6322168fa21ed683e0be",
+        "output": "src__components__ReproduceSheet.tsx__bug__f2e83f37.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "feature": {
+        "sha": "f2e83f37e19dd82839e267f28389d2ee1e53cc97633b6322168fa21ed683e0be",
+        "output": "src__components__ReproduceSheet.tsx__feature__f2e83f37.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\ScrubInput.tsx": {
+    "rel": "src/components/ScrubInput.tsx",
+    "modes": {
+      "bug": {
+        "sha": "c985b9521267b5c3c358e1724a3d23d8e07980be9bd72c22a1159ecbfb2af628",
+        "output": "src__components__ScrubInput.tsx__bug__c985b952.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\SettingsConsole.tsx": {
+    "rel": "src/components/SettingsConsole.tsx",
+    "modes": {
+      "bug": {
+        "sha": "4d6928456cf55a57bd2b26550b06e6befb39598a9dc669a8959ebc9ba8fd9364",
+        "output": "src__components__SettingsConsole.tsx__bug__4d692845.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "e85ad0d240f636c8f7e9327f15bfcea8dbea2314b4b4eed5d3f9c41064bab836",
+        "output": "src__components__SettingsConsole.tsx__feature__e85ad0d2.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\Stepper.tsx": {
+    "rel": "src/components/Stepper.tsx",
+    "modes": {
+      "bug": {
+        "sha": "91f83a3a6f311dad6b09bea61c9092cc91af74c39b5cec43a79208cb665f5406",
+        "output": "src__components__Stepper.tsx__bug__91f83a3a.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\VernierScale.tsx": {
+    "rel": "src/components/VernierScale.tsx",
+    "modes": {
+      "bug": {
+        "sha": "3ac523652e7b91dfc50e8b96958433ec8056903c062fea7bc00141908dfe221b",
+        "output": "src__components__VernierScale.tsx__bug__3ac52365.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\arcadeSound.ts": {
+    "rel": "src/components/arcadeSound.ts",
+    "modes": {
+      "bug": {
+        "sha": "31e13d0bd819dcea0557f2ec4842892c4a34c69fac5bd87611c2ccf5344139ef",
+        "output": "src__components__arcadeSound.ts__bug__31e13d0b.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\calibrate.ts": {
+    "rel": "src/film/calibrate.ts",
+    "modes": {
+      "bug": {
+        "sha": "13542250628177a545e4c29824ea22dc181a1f8ad296a39457648f584d7819f3",
+        "output": "src__film__calibrate.ts__bug__13542250.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "feature": {
+        "sha": "13542250628177a545e4c29824ea22dc181a1f8ad296a39457648f584d7819f3",
+        "output": "src__film__calibrate.ts__feature__13542250.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\grader.ts": {
+    "rel": "src/film/grader.ts",
+    "modes": {
+      "bug": {
+        "sha": "89057503cc69f96ad4b857a4cecbde78cad47516b698361631d24764e969fc92",
+        "output": "src__film__grader.ts__bug__89057503.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "feature": {
+        "sha": "89057503cc69f96ad4b857a4cecbde78cad47516b698361631d24764e969fc92",
+        "output": "src__film__grader.ts__feature__89057503.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\i2v.ts": {
+    "rel": "src/film/i2v.ts",
+    "modes": {
+      "bug": {
+        "sha": "03a7b8d2a913a5293dbe3281681fa9010f654d70163146b9445026d88eba5020",
+        "output": "src__film__i2v.ts__bug__03a7b8d2.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\store.ts": {
+    "rel": "src/film/store.ts",
+    "modes": {
+      "bug": {
+        "sha": "e31e742c28d7af17597b26fc6a5de77320a4b2060cca118b634e6c26d0aa15b0",
+        "output": "src__film__store.ts__bug__e31e742c.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "e31e742c28d7af17597b26fc6a5de77320a4b2060cca118b634e6c26d0aa15b0",
+        "output": "src__film__store.ts__feature__e31e742c.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\install\\catalog.ts": {
+    "rel": "src/install/catalog.ts",
+    "modes": {
+      "bug": {
+        "sha": "a52e4d3575b7290a64846d69d76045f5fefc91de7d94406bb762f7b573532def",
+        "output": "src__install__catalog.ts__bug__a52e4d35.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "catalog-brain-rows wave delta"
+      },
+      "spec": {
+        "sha": "UNHASHED-2026-08-31 (harness hook denied read-only hashing for this path, 4 attempts; content-read identity: 142 lines)",
+        "output": "src__install__catalog.ts__spec__NOHASH.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\install\\client.ts": {
+    "rel": "src/install/client.ts",
+    "modes": {
+      "bug": {
+        "sha": "8963de0ba1c6863c886a83545d6b835c7f1823d3d86a77cfe877166a7df2ecb9",
+        "output": "src__install__client.ts__bug__8963de0b.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\install\\plan.ts": {
+    "rel": "src/install/plan.ts",
+    "modes": {
+      "bug": {
+        "sha": "cf18f4a0e7ec2f1740904101b6a27768a6e7a1348758f55d90edb0b4d9db6c0c",
+        "output": "src__install__plan.ts__bug__cf18f4a0.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\kb\\bm25.ts": {
+    "rel": "src/kb/bm25.ts",
+    "modes": {
+      "bug": {
+        "sha": "927454f8c627976c90f016c2f60d889d3bfd7e2b9484f6b89cabbbafdf6588dc",
+        "output": "src__kb__bm25.ts__bug__927454f8.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "feature": {
+        "sha": "927454f8c627976c90f016c2f60d889d3bfd7e2b9484f6b89cabbbafdf6588dc",
+        "output": "src__kb__bm25.ts__feature__927454f8.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\kb\\chunk.ts": {
+    "rel": "src/kb/chunk.ts",
+    "modes": {
+      "bug": {
+        "sha": "1ff1ccadf080388bb71e172cf36eeff44a9967987740c52b7455da9dbd4b44cd",
+        "output": "src__kb__chunk.ts__bug__1ff1ccad.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "feature": {
+        "sha": "1ff1ccadf080388bb71e172cf36eeff44a9967987740c52b7455da9dbd4b44cd",
+        "output": "src__kb__chunk.ts__feature__1ff1ccad.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\llm\\client.ts": {
+    "rel": "src/llm/client.ts",
+    "modes": {
+      "bug": {
+        "sha": "956c31513cb0e5e8d26e3b1241180ddc8fced89992b3aa2dcf174d86e2246ab2",
+        "output": "src__llm__client.ts__bug__956c3151.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "catalog-brain-rows wave + adversary round-2 fixes"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\main.tsx": {
+    "rel": "src/main.tsx",
+    "modes": {
+      "bug": {
+        "sha": "b7f930d41d50d715ebc772ba063f9a18d0ecc1f41dce51134cf5d2201f4607e4",
+        "output": "src__main.tsx__bug__b7f930d4.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\power\\state.ts": {
+    "rel": "src/power/state.ts",
+    "modes": {
+      "bug": {
+        "sha": "0ae69c27d2efa25314e1a862968d6b9167b1ecc3d46c2b5600b962df9539e392",
+        "output": "src__power__state.ts__bug__0ae69c27.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\brainProviders.ts": {
+    "rel": "src/providers/brainProviders.ts",
+    "modes": {
+      "bug": {
+        "sha": "83e54c4d12cebf466bc4c2212cce8c650ddc71c21ad025d3ded8fb76ccd6b407",
+        "output": "src__providers__brainProviders.ts__bug__83e54c4d.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "83e54c4d12cebf466bc4c2212cce8c650ddc71c21ad025d3ded8fb76ccd6b407",
+        "output": "src__providers__brainProviders.ts__feature__83e54c4d.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\catalog.ts": {
+    "rel": "src/providers/catalog.ts",
+    "modes": {
+      "bug": {
+        "sha": "87bf59d424165cc6e9d2a374c809a87c6edd29a327db4135a43679222f9b46c4",
+        "output": "src__providers__catalog.ts__bug__87bf59d4.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "87bf59d424165cc6e9d2a374c809a87c6edd29a327db4135a43679222f9b46c4",
+        "output": "src__providers__catalog.ts__feature__87bf59d4.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\eachlabs.ts": {
+    "rel": "src/providers/eachlabs.ts",
+    "modes": {
+      "bug": {
+        "sha": "3a8b7aa8d9f0815c20a66dfb1142c32b60d976ad9a631ccb65465fe8d1ca46fd",
+        "output": "src__providers__eachlabs.ts__bug__3a8b7aa8.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\openrouter.ts": {
+    "rel": "src/providers/openrouter.ts",
+    "modes": {
+      "bug": {
+        "sha": "2de5cc81e6b3f446a882251c2f9e9710f333de23e495c4f7ba9fae88ac5775ea",
+        "output": "src__providers__openrouter.ts__bug__2de5cc81.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "streamed-brain-answers wave delta"
+      },
+      "feature": {
+        "sha": "a195fd9c258896b355a90415a61f08bcf2caf195692a88fad27b87003e9b3fd5",
+        "output": "src__providers__openrouter.ts__feature__a195fd9c.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\openrouterVideo.ts": {
+    "rel": "src/providers/openrouterVideo.ts",
+    "modes": {
+      "bug": {
+        "sha": "c09230c474a77ac522d870c0603cbdb7cd1a4d9c5e8df50d7e5e4703e64178fa",
+        "output": "src__providers__openrouterVideo.ts__bug__c09230c4.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "feature": {
+        "sha": "c09230c474a77ac522d870c0603cbdb7cd1a4d9c5e8df50d7e5e4703e64178fa",
+        "output": "src__providers__openrouterVideo.ts__feature__c09230c4.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\replicate.ts": {
+    "rel": "src/providers/replicate.ts",
+    "modes": {
+      "bug": {
+        "sha": "fce70ebe7a498969b6fdd474e87ccfda122fd7066db3b3782fd754aeef96db03",
+        "output": "src__providers__replicate.ts__bug__fce70ebe.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "fce70ebe7a498969b6fdd474e87ccfda122fd7066db3b3782fd754aeef96db03",
+        "output": "src__providers__replicate.ts__feature__fce70ebe.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\replicateBrowser.ts": {
+    "rel": "src/providers/replicateBrowser.ts",
+    "modes": {
+      "bug": {
+        "sha": "c800ee9fd51d23e671e724842a52acca3e27d29b2b809a69491eccb5770a8c3c",
+        "output": "src__providers__replicateBrowser.ts__bug__c800ee9f.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "feature": {
+        "sha": "c800ee9fd51d23e671e724842a52acca3e27d29b2b809a69491eccb5770a8c3c",
+        "output": "src__providers__replicateBrowser.ts__feature__c800ee9f.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\serviceKeys.ts": {
+    "rel": "src/providers/serviceKeys.ts",
+    "modes": {
+      "bug": {
+        "sha": "e00a12673bda4731ee9b933ad7ebaf0edf986d9ac8e43a82f25c2688e8654002",
+        "output": "src__providers__serviceKeys.ts__bug__e00a1267.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "spec": {
+        "sha": "e00a12673bda4731ee9b933ad7ebaf0edf986d9ac8e43a82f25c2688e8654002",
+        "output": "src__providers__serviceKeys.ts__spec__e00a1267.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\generateStore.ts": {
+    "rel": "src/stores/generateStore.ts",
+    "modes": {
+      "bug": {
+        "sha": "0f60d3c8fea9d85b0650a437cfb58a41245c6c7dd44e3508c342075b2dc665e1",
+        "output": "src__stores__generateStore.ts__bug__0f60d3c8.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      },
+      "spec": {
+        "sha": "0f60d3c8 (see review file; agent-hashed)",
+        "output": "src__stores__generateStore.ts__spec__0f60d3c8.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\routesStore.ts": {
+    "rel": "src/stores/routesStore.ts",
+    "modes": {
+      "bug": {
+        "sha": "e148531d6c45df292f7a710e6dbd30bc466c0866c970c6152d1f7b85fa690bc0",
+        "output": "src__stores__routesStore.ts__bug__e148531d.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\uiStore.ts": {
+    "rel": "src/stores/uiStore.ts",
+    "modes": {
+      "bug": {
+        "sha": "4cd8e2d3c246f20cf1640bfdfe6fce5848d42a3265cc21e30d21ca390b1a3d14",
+        "output": "src__stores__uiStore.ts__bug__4cd8e2d3.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "7435c1927e719fd97e66082802405cd1cba941199dd55b989e86a11dfa44fb2e",
+        "output": "src__stores__uiStore.ts__spec__7435c192.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "4cd8e2d3c246f20cf1640bfdfe6fce5848d42a3265cc21e30d21ca390b1a3d14",
+        "output": "src__stores__uiStore.ts__feature__4cd8e2d3.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\BundlesSurface.tsx": {
+    "rel": "src/surfaces/BundlesSurface.tsx",
+    "modes": {
+      "bug": {
+        "sha": "f1d1976984d83bc54a48d2ecd72bd6a43d4a6001ff388a22cb8f2df698bc1deb",
+        "output": "src__surfaces__BundlesSurface.tsx__bug__f1d19769.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "fbcd3d33 (see review file; agent-hashed)",
+        "output": "src__surfaces__BundlesSurface.tsx__spec__fbcd3d33.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "962baf9549ade9e9c400392bd05eb765306b0aab1df642a194805025f981f7c2",
+        "output": "src__surfaces__BundlesSurface.tsx__feature__962baf95.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\QueueSurface.tsx": {
+    "rel": "src/surfaces/QueueSurface.tsx",
+    "modes": {
+      "bug": {
+        "sha": "5e4ec9f23874f9f000e50a46f60e3043cbf9c5c383c39faaf39bafa5f9610b6c",
+        "output": "src__surfaces__QueueSurface.tsx__bug__595e53b6.md",
+        "note": "sha is the post-remediation bytes (re-stamped in 9102b79); the 595e53b6 review hashed the pre-fix bytes and carries the same-session remediation postscript",
+        "reviewed_at": "2026-09-06"
+      },
+      "feature": {
+        "sha": "a679ed2b44dc43011d15729fb33b76ac2bbc1f0fcd6d6caa20bfe466c7ee56b0",
+        "output": "src__surfaces__QueueSurface.tsx__feature__a679ed2b.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\workflows\\toUiGraph.ts": {
+    "rel": "src/workflows/toUiGraph.ts",
+    "modes": {
+      "bug": {
+        "sha": "bcb7d913389ca2452d65bd2986b115c8b6800d907c3ff631bbf85fe0569d2961",
+        "output": "src__workflows__toUiGraph.ts__bug__bcb7d913.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.bench.ts": {
+    "rel": "vite.bench.ts",
+    "modes": {
+      "bug": {
+        "sha": "d8f385abb4b171d81880e824381864fa3dcbb734658a912ca61ff1380f855b80",
+        "output": "vite.bench.ts__bug__d8f385ab.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "d8f385abb4b171d81880e824381864fa3dcbb734658a912ca61ff1380f855b80",
+        "output": "vite.bench.ts__feature__d8f385ab.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.config.ts": {
+    "rel": "vite.config.ts",
+    "modes": {
+      "bug": {
+        "sha": "f8ce84f651f6b7af5497f7376fde03fb39ffc57c664f1b527fcaed9abbe807bc",
+        "output": "vite.config.ts__bug__f8ce84f6.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.eachlabs.ts": {
+    "rel": "vite.eachlabs.ts",
+    "modes": {
+      "bug": {
+        "sha": "d7d1f9a1f47b0cf92405c82716da1d88affdee409864fad1791160b0cc19c85f",
+        "output": "vite.eachlabs.ts__bug__d7d1f9a1.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.kb.ts": {
+    "rel": "vite.kb.ts",
+    "modes": {
+      "bug": {
+        "sha": "0507f81aa47469492530369f164cafdfe23192d961535f9af0d5c59814b49978",
+        "output": "vite.kb.ts__bug__0507f81a.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "0507f81aa47469492530369f164cafdfe23192d961535f9af0d5c59814b49978",
+        "output": "vite.kb.ts__feature__0507f81a.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.keys.ts": {
+    "rel": "vite.keys.ts",
+    "modes": {
+      "bug": {
+        "sha": "5e7938407f3a948ee098850d755ee578afdfecba45c2cacb6ae36dafac667c15",
+        "output": "vite.keys.ts__bug__5e793840.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "be9fe8c0 (see review file; agent-hashed)",
+        "output": "vite.keys.ts__spec__be9fe8c0.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.library.ts": {
+    "rel": "vite.library.ts",
+    "modes": {
+      "bug": {
+        "sha": "b72699f3beedd4ca95ffd4cea281c5da7c5d1a83d4a25e324cbda956eee1be09",
+        "output": "vite.library.ts__bug__d378317d.md",
+        "note": "sha is the post-remediation bytes (re-stamped in 04e1c02); the d378317d review hashed the pre-fix bytes and carries the same-session remediation postscript",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "spec": {
+        "sha": "804a37c0 (see review file; agent-hashed)",
+        "output": "vite.library.ts__spec__804a37c0.md",
+        "reviewed_at": "2026-08-31",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "f3c1d6a2a35732fa452b5e07530b51a3e6e32bfa589833b089b98ef76a1ae330",
+        "output": "vite.library.ts__feature__f3c1d6a2.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.openrouter.ts": {
+    "rel": "vite.openrouter.ts",
+    "modes": {
+      "bug": {
+        "sha": "ce80adca2e8412e3fd0211521025a8f5f83a566a4eeb4439f3a808742435eb34",
+        "output": "vite.openrouter.ts__bug__ce80adca.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.power.ts": {
+    "rel": "vite.power.ts",
+    "modes": {
+      "bug": {
+        "sha": "a07e80b6486931f4dc8a413335b0c3180c0dd7ea3fb254b046d36e274042dc21",
+        "output": "vite.power.ts__bug__a07e80b6.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "b5fa8896910f2aca3357269235bc8ca1b996c3643bf291a55c9d35eaceca11a4",
+        "output": "vite.power.ts__feature__b5fa8896.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.routes.ts": {
+    "rel": "vite.routes.ts",
+    "modes": {
+      "bug": {
+        "sha": "54c9654cb82b28c715ae69abd9f84b2654d89bab578ef3cf3bb40da02fe2be2d",
+        "output": "vite.routes.ts__bug__54c9654c.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.tokens.ts": {
+    "rel": "vite.tokens.ts",
+    "modes": {
+      "bug": {
+        "sha": "4ade1406c4706234576f04f3befc1c96f3b687bd1b2be8594657bb104790e3fb",
+        "output": "vite.tokens.ts__bug__4ade1406.md",
+        "reviewed_at": "2026-08-27T12:00:00"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\FirstRun.tsx": {
+    "rel": "src/components/FirstRun.tsx",
+    "modes": {
+      "bug": {
+        "sha": "6f236b82c3384eda005a7d51aaf85e43899fa99e9d175dc084533a8f2dfccc8e",
+        "output": "src__components__FirstRun.tsx__bug__6f236b82.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "6f236b82c3384eda005a7d51aaf85e43899fa99e9d175dc084533a8f2dfccc8e",
+        "output": "src__components__FirstRun.tsx__feature__6f236b82.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\install\\tiers.ts": {
+    "rel": "src/install/tiers.ts",
+    "modes": {
+      "bug": {
+        "sha": "e622496ba2c94bac6870f123fdeee648ddc13d2a0a7c5bf47c0133eb872a1feb",
+        "output": "src__install__tiers.ts__bug__e622496b.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "e622496ba2c94bac6870f123fdeee648ddc13d2a0a7c5bf47c0133eb872a1feb",
+        "output": "src__install__tiers.ts__feature__e622496b.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.comfy.ts": {
+    "rel": "vite.comfy.ts",
+    "modes": {
+      "bug": {
+        "sha": "8df4e10ced1ed6ce30b83331d34b3fc8998d47b658a6c2ecabce3f9919589d33",
+        "output": "vite.comfy.ts__bug__8df4e10c.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "8df4e10ced1ed6ce30b83331d34b3fc8998d47b658a6c2ecabce3f9919589d33",
+        "output": "vite.comfy.ts__feature__8df4e10c.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\firstrun.ts": {
+    "rel": "src/api/firstrun.ts",
+    "modes": {
+      "bug": {
+        "sha": "dc3978abb0eb409f43aeed1f55f9e11526927bb17af8cc6c18d08a75410a61ff",
+        "output": "src__api__firstrun.ts__bug__dc3978ab.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\worldmodel.ts": {
+    "rel": "src/film/worldmodel.ts",
+    "modes": {
+      "bug": {
+        "sha": "2e218153e4b12d3b102772cc7383ba78c563555203b6bd06b5c1f6e6e2ae6c2d",
+        "output": "src__film__worldmodel.ts__bug__2e218153.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "2e218153e4b12d3b102772cc7383ba78c563555203b6bd06b5c1f6e6e2ae6c2d",
+        "output": "src__film__worldmodel.ts__feature__2e218153.md",
+        "reviewed_at": "2026-09-05T12:40:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\adversary.ts": {
+    "rel": "src/film/adversary.ts",
+    "modes": {
+      "bug": {
+        "sha": "9f3313f1e493861c8f80fcda100e7b87bee71f0c61a5a7bc7a4934c34dd1900f",
+        "output": "POST-FIX-2026-09-05-remediation-wave.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "note": "post-fix delta recorded in the shared remediation-wave bundle"
+      },
+      "feature": {
+        "sha": "9f3313f1e493861c8f80fcda100e7b87bee71f0c61a5a7bc7a4934c34dd1900f",
+        "output": "src__film__adversary.ts__feature__9f3313f1.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\storyboard-doc.ts": {
+    "rel": "src/film/storyboard-doc.ts",
+    "modes": {
+      "bug": {
+        "sha": "e667d077798c75dff7346fbaeb64d164e1d8b142847530ba3f0c0c3c0074a84e",
+        "output": "src__film__storyboard-doc.ts__bug__e667d077.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\DocView.tsx": {
+    "rel": "src/components/DocView.tsx",
+    "modes": {
+      "bug": {
+        "sha": "ca53db504f4b0feb48c33567842b718d34a37552c974621db4a53771574ee722",
+        "output": "src__components__DocView.tsx__bug__ca53db50.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "e1f8a0beaf6ff44b6968b5729753212d3b82aec28c019d014ccce0f850e15d76",
+        "output": "src__components__DocView.tsx__feature__e1f8a0be.md",
+        "reviewed_at": "2026-09-05T13:20:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\comfy\\caliper_vram.py": {
+    "rel": "comfy/caliper_vram.py",
+    "modes": {
+      "bug": {
+        "sha": "f2dbb57bbe372d7da9db08a5385df719fcb75b63b0a78ed836932ef462c971d3",
+        "output": "comfy__caliper_vram.py__bug__f2dbb57b.md",
+        "reviewed_at": "2026-09-06",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "note": "lineage: the 2026-09-03 review (6fa39b24) hashed a pure-CRLF rendering of byte-identical content - normalized to disk bytes (5b8fc1e7) same-day; 6d0712f5 is the 2026-09-05 remediation (503-on-degraded + power origin guard), sha-synced into custom_nodes and activating at the next backend start"
+      },
+      "feature": {
+        "sha": "6d0712f5859fc082538f2e16e1e981d17c3ec148d549727eb1732c4bfc16a2dc",
+        "output": "comfy__caliper_vram.py__feature__6d0712f5.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\see.mjs": {
+    "rel": "tools/see.mjs",
+    "modes": {
+      "bug": {
+        "sha": "76fcc075a0a0f58e95bd5c9fc3155842b42d36d3ef94dff4cfd81fc48a2e68de",
+        "output": "tools__see.mjs__bug__76fcc075.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\peek.mjs": {
+    "rel": "tools/peek.mjs",
+    "modes": {
+      "bug": {
+        "sha": "d1db4a8babcd056ad98787f1e152ffbcfaee79f345ae1a9202f8874cf6e4dc57",
+        "output": "tools__peek.mjs__bug__d1db4a8b.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\ui-harness.mjs": {
+    "rel": "tools/ui-harness.mjs",
+    "modes": {
+      "bug": {
+        "sha": "939eb7f99762bbbf9f396ea5264d63d37be11823baab333c5b392a0dee8c2402",
+        "output": "tools__ui-harness.mjs__bug__939eb7f9.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "catalog-brain-rows wave + adversary round-3 fix"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\git-guard.mjs": {
+    "rel": "tools/git-guard.mjs",
+    "modes": {
+      "bug": {
+        "sha": "21c089e1a29a7d051548a5fecf95777cc2f71a306c21d702682e69191a44b0f1",
+        "output": "tools__git-guard.mjs__bug__21c089e1.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\install-git-guard.mjs": {
+    "rel": "tools/install-git-guard.mjs",
+    "modes": {
+      "bug": {
+        "sha": "6fb925bc71cd553ecc01c2ca4685eea01a92b172d46f55649f04ecce52549ea1",
+        "output": "tools__install-git-guard.mjs__bug__6fb925bc.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\analyze-song.mjs": {
+    "rel": "tools/analyze-song.mjs",
+    "modes": {
+      "bug": {
+        "sha": "36232a610f59a6268e7a1724d5ed26c3a70680143e2fff8dcd569bcf1a8d6933",
+        "output": "tools__analyze-song.mjs__bug__36232a61.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\film-proof.mjs": {
+    "rel": "tools/film-proof.mjs",
+    "modes": {
+      "bug": {
+        "sha": "9583a4248bd229a522ae97bfc3e86f2259a4416cb8829fa2589f17d731488f5c",
+        "output": "tools__film-proof.mjs__bug__9583a424.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\rebaseline.mjs": {
+    "rel": "tools/rebaseline.mjs",
+    "modes": {
+      "bug": {
+        "sha": "2453a0bf192e1758e16fcd9d45bc4a829fcd7ba252bf9521194e60f9ebf8bc7a",
+        "output": "tools__rebaseline.mjs__bug__2453a0bf.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\see-ui-720p.mjs": {
+    "rel": "tools/see-ui-720p.mjs",
+    "modes": {
+      "bug": {
+        "sha": "68458e5bede12599f87b4a8c4e88b2b0c1eb36e38a2f5c83e74ed03b07a24d50",
+        "output": "tools__see-ui-720p.mjs__bug__68458e5b.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\gui-test-phase4.mjs": {
+    "rel": "tools/gui-test-phase4.mjs",
+    "modes": {
+      "bug": {
+        "sha": "3f41d32993ee8af414449e76ad7c03630d1eb679136db28dd6c0afe0cddbc9ac",
+        "output": "tools__gui-test-phase4.mjs__bug__3f41d329.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\tools\\ltx-720p-test.mjs": {
+    "rel": "tools/ltx-720p-test.mjs",
+    "modes": {
+      "bug": {
+        "sha": "ffaed57c22a15e848e21e4d6c1c797973373a80e27d0a0589f7270a967c9864b",
+        "output": "tools__ltx-720p-test.mjs__bug__ffaed57c.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vitest.setup.ts": {
+    "rel": "vitest.setup.ts",
+    "modes": {
+      "bug": {
+        "sha": "cea2f5be1bd6c44ad5f89cc692aa3e0b06a4dbaf4d0f72dc3684833e4789e29b",
+        "output": "vitest.setup.ts__bug__cea2f5be.md",
+        "reviewed_at": "2026-09-03",
+        "model": "zcode-subagent-fresh-context",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\joins.ts": {
+    "rel": "src/film/joins.ts",
+    "modes": {
+      "bug": {
+        "sha": "d95bc4b8515b9c503919e3a269d53098be5f25e0c63c0d001dfa2c5bff7bc592",
+        "output": "src__film__joins.ts__bug__d95bc4b8.md",
+        "reviewed_at": "2026-09-05",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "d95bc4b8515b9c503919e3a269d53098be5f25e0c63c0d001dfa2c5bff7bc592",
+        "output": "src__film__joins.ts__feature__d95bc4b8.md",
+        "reviewed_at": "2026-09-05T14:05:00",
+        "model": "glm-5.3-zai-in-session",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\vram\\preflight.ts": {
+    "rel": "src/vram/preflight.ts",
+    "modes": {
+      "bug": {
+        "sha": "71a04a5a9fa62f1bc0d6cbf2349d56e029da0080bfd222a6e3ea664907786e29",
+        "output": "src__vram__preflight.ts__bug__71a04a5a.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "vram-preflight wave delta + contract fix"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\brainProviders.test.ts": {
+    "rel": "src/providers/brainProviders.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "6f4625f82bb5e79aa44b85179600fc9ba843d7104bbfd5466b3b6b25a594286b",
+        "output": "src__providers__brainProviders.test.ts__bug__6f4625f8.md",
+        "reviewed_at": "2026-09-06",
+        "mode": "bug",
+        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
+        "scope": "catalog-brain-rows wave delta"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\vram\\nodeSync.ts": {
+    "rel": "src/vram/nodeSync.ts",
+    "modes": {
+      "bug": {
+        "sha": "0094a2b48f14179ac8183d16bc194b1ed422c81e3b5c1388a0da74a0c6c1e1ca",
+        "output": "src__vram__nodeSync.ts__bug__0094a2b4.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\vram\\nodeSync.test.ts": {
+    "rel": "src/vram/nodeSync.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "5b4f436ee5d98c7170af5676e44727f5fb062474598375e76dee0054fd3bcd6f",
+        "output": "src__vram__nodeSync.test.ts__bug__5b4f436e.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\docs\\FEATURES.md": {
+    "rel": "docs/FEATURES.md",
+    "modes": {
+      "bug": {
+        "sha": "3302f04744301cefb2b8d49ef2cbad623d734f35de951c54500ea131087c2fbd",
+        "output": "docs__FEATURES.md__bug__3302f047.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\keyLiveness.ts": {
+    "rel": "src/providers/keyLiveness.ts",
+    "modes": {
+      "bug": {
+        "sha": "52cea5a1cd79d78c11cf310b4253c00b02a10c5efcc4c7655a53fad18028ed8d",
+        "output": "src__providers__keyLiveness.ts__bug__52cea5a1.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\keyLiveness.test.ts": {
+    "rel": "src/providers/keyLiveness.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "e0783b67dcd8e33990153144ad781ecc1493dc3e43414dd2c78d1756359b4dfb",
+        "output": "src__providers__keyLiveness.test.ts__bug__e0783b67.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\SettingsConsole.test.tsx": {
+    "rel": "src/components/SettingsConsole.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "a15ef9e8c6b78f46f47d2011516daffbcdd6276107ea69139be8e4b3d1785d08",
+        "output": "src__components__SettingsConsole.test.tsx__bug__a15ef9e8.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\power\\state.test.ts": {
+    "rel": "src/power/state.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "3eff0a29192c8a877ddf8b02f5a05841e2eef48ce69ac9eb7f9f299e5d71e1db",
+        "output": "src__power__state.test.ts__bug__3eff0a29.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\queueNodes.ts": {
+    "rel": "src/api/queueNodes.ts",
+    "modes": {
+      "bug": {
+        "sha": "7d97c64277e892b03ce1779d88155369b5b7996f0030042bd6b0f0a442f0b063",
+        "output": "src__api__queueNodes.ts__bug__7d97c642.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\queueNodes.test.ts": {
+    "rel": "src/api/queueNodes.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "b0bbf6ebc366e0cb29a82d17d5dd3ddbdb0ce2d7399b28fddceed67f17df83f3",
+        "output": "src__api__queueNodes.test.ts__bug__b0bbf6eb.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\vram\\preflight.test.ts": {
+    "rel": "src/vram/preflight.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "6ec8fa21bbd904e2365e1b02fe18f8eff6422964ea7154e26a483ac901146e05",
+        "output": "src__vram__preflight.test.ts__bug__6ec8fa21.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\vite.recycle.ts": {
+    "rel": "vite.recycle.ts",
+    "modes": {
+      "bug": {
+        "sha": "d6a05a8afa67eae1b309d4592755e10146fc567caf13d82b43bedfb730aa16f6",
+        "output": "vite.recycle.ts__bug__d6a05a8a.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\zipWriter.test.ts": {
+    "rel": "zipWriter.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "645971d8c989decef0daecd63cbd7ddc6eac9535d23572a6b0202fc1a4ec9243",
+        "output": "zipWriter.test.ts__bug__645971d8.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\BundlesSurface.test.tsx": {
+    "rel": "src/surfaces/BundlesSurface.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "c9023f7292acb5c63427dfa5fdfa2926ccd3e555db19988f60426b21e4d781b6",
+        "output": "src__surfaces__BundlesSurface.test.tsx__bug__c9023f72.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\DocView.test.tsx": {
+    "rel": "src/components/DocView.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "eb478db36f839a966ff6e702d0bafafafb97ae2a591a7799901390e069d050b9",
+        "output": "src__components__DocView.test.tsx__bug__eb478db3.md",
+        "reviewed_at": "2026-09-06"
+      }
+    }
   }
- },
- "docs/CHASSIS_PLAN.md": {
-  "rel": "docs/CHASSIS_PLAN.md",
-  "modes": {
-   "audit": {
-    "sha": "84701b53a7ad471d288b4c0aba07e3c035db3e67e68a8c2b4450015158c2aa60",
-    "output": "docs__CHASSIS_PLAN.md__audit__84701b53.md",
-    "reviewed_at": "2026-08-18",
-    "model": "claude-fable-5",
-    "cost": 0
-   }
-  }
- },
- "src/components/GameScreen.tsx": {
-  "rel": "src/components/GameScreen.tsx",
-  "modes": {
-   "feature": {
-    "sha": "74810a45ed97fa43f387d4b8f67a5b592c093a06a1e05a9c75a99358b97d45ea",
-    "output": "src__components__GameScreen.tsx__feature__74810a45.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   },
-   "bug": {
-    "sha": "74810a45ed97fa43f387d4b8f67a5b592c093a06a1e05a9c75a99358b97d45ea",
-    "output": "src__components__GameScreen.tsx__bug__74810a45.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "src/api/client.ts": {
-  "rel": "src/api/client.ts",
-  "modes": {
-   "bug": {
-    "sha": "e5904c0d41c87aa6344907e8da1fe9e8f168b4f3d70378201375d10f287cef6a",
-    "output": "src__api__client.ts__bug__e5904c0d.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "vram-preflight wave delta"
-   },
-   "spec": {
-    "sha": "9f5e8b48e71cf315960bfc0c870fa88f1340d6fd4834707be4c77ef718792258",
-    "output": "src__api__client.ts__spec__9f5e8b48.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "9f5e8b48e71cf315960bfc0c870fa88f1340d6fd4834707be4c77ef718792258",
-    "output": "src__api__client.ts__feature__9f5e8b48.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/api/types.ts": {
-  "rel": "src/api/types.ts",
-  "modes": {
-   "spec": {
-    "sha": "c1fba39816e6f5c82f577303a73322babd8fbf3897d90f0ae093a4db906dd708",
-    "output": "src__api__types.ts__spec__c1fba398.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "bug": {
-    "sha": "6cdf2c4639e1b5b96523d4c6dde15a9e2f7075b9cf840c31970dcf293ae87867",
-    "output": "src__api__types.ts__bug__6cdf2c46.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0,
-    "note": "2026-09-05: prior bug-row sha had a one-hex-char transcription typo (ec7f vs ec7c); corrected to disk bytes, same review stands"
-   },
-   "feature": {
-    "sha": "89a28024e2f50038a81edca7df420641ec7f58c0ee0c31405e7d2e3c5d6af73b",
-    "output": "src__api__types.ts__feature__89a28024.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/api/ws.ts": {
-  "rel": "src/api/ws.ts",
-  "modes": {
-   "bug": {
-    "sha": "8d535ac7773dc1d129aae7079b7c1c3268554d6a7f89e58e56c6ab99856ceaf4",
-    "output": "src__api__ws.ts__bug__8d535ac7.md",
-    "reviewed_at": "2026-08-19T07:55:05"
-   }
-  }
- },
- "src/stores/queueStore.ts": {
-  "rel": "src/stores/queueStore.ts",
-  "modes": {
-   "bug": {
-    "sha": "70d77bf87de319823a6e7b4255a0e1c51a858a7aa553b885b41a782021c81cc9",
-    "output": "src__stores__queueStore.ts__bug__ce261672.md",
-    "note": "sha is the post-remediation bytes (re-stamped in 9102b79); the ce261672 review hashed the pre-fix bytes and carries the same-session remediation postscript",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "vram-preflight wave delta"
-   },
-   "feature": {
-    "sha": "ec4e6b241d629ca2cf64593cb20284d6a5186425a69b77d1ba6b4ccfe31aff99",
-    "output": "src__stores__queueStore.ts__feature__ec4e6b24.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/stores/bundlesStore.ts": {
-  "rel": "src/stores/bundlesStore.ts",
-  "modes": {
-   "bug": {
-    "sha": "575055aee4d70777d4d34725fd034a37dc3dae6249c253d24a2d7ab7de8c1821",
-    "output": "src__stores__bundlesStore.ts__bug__575055ae.md",
-    "reviewed_at": "2026-08-26T00:10:00"
-   },
-   "spec": {
-    "sha": "575055ae (see review file; agent-hashed)",
-    "output": "src__stores__bundlesStore.ts__spec__575055ae.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "575055aee4d70777d4d34725fd034a37dc3dae6249c253d24a2d7ab7de8c1821",
-    "output": "src__stores__bundlesStore.ts__feature__575055ae.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/stores/provenance.ts": {
-  "rel": "src/stores/provenance.ts",
-  "modes": {
-   "bug": {
-    "sha": "d34dd68587cef3469a9833ebc6369c33be0c6821e2e56fc3bed10455bbf6d8d4",
-    "output": "src__stores__provenance.ts__bug__d34dd685.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "d34dd68587cef3469a9833ebc6369c33be0c6821e2e56fc3bed10455bbf6d8d4",
-    "output": "src__stores__provenance.ts__feature__d34dd685.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/stores/screenStore.ts": {
-  "rel": "src/stores/screenStore.ts",
-  "modes": {
-   "bug": {
-    "sha": "33d0507de10878309d9ed2d48937e25dd69c98677322d4044599ce8b0e79ca3b",
-    "output": "src__stores__screenStore.ts__bug__33d0507d.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "408e1830 (see review file; agent-hashed)",
-    "output": "src__stores__screenStore.ts__spec__408e1830.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "33d0507de10878309d9ed2d48937e25dd69c98677322d4044599ce8b0e79ca3b",
-    "output": "src__stores__screenStore.ts__feature__33d0507d.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/stores/assetsStore.ts": {
-  "rel": "src/stores/assetsStore.ts",
-  "modes": {
-   "bug": {
-    "sha": "d9fc93f3af31e0d377e11d9fc62284f9ee10217c78348ca4c08c24bf014a3100",
-    "output": "src__stores__assetsStore.ts__bug__d9fc93f3.md",
-    "reviewed_at": "2026-08-26T20:20:00"
-   }
-  }
- },
- "src/bundles/schema.ts": {
-  "rel": "src/bundles/schema.ts",
-  "modes": {
-   "bug": {
-    "sha": "d0cc311e2198a170c9820b60e967f1f4654f742b169827b7bb58320a04668198",
-    "output": "src__bundles__schema.ts__bug__d0cc311e.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "0c73be86e4efc2ef0933e8d7d231e9f4b72572d4d9b314996468e8bf9a56041a",
-    "output": "src__bundles__schema.ts__spec__0c73be86.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "d0cc311e2198a170c9820b60e967f1f4654f742b169827b7bb58320a04668198",
-    "output": "src__bundles__schema.ts__feature__d0cc311e.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/workflows/fill.ts": {
-  "rel": "src/workflows/fill.ts",
-  "modes": {
-   "bug": {
-    "sha": "46a9ea98abf53575cf50a9cf438d30cf94ca6e17fe9ddd4998990d8b5626c23e",
-    "output": "src__workflows__fill.ts__bug__46a9ea98.md",
-    "reviewed_at": "2026-08-19T07:55:05"
-   },
-   "feature": {
-    "sha": "46a9ea98abf53575cf50a9cf438d30cf94ca6e17fe9ddd4998990d8b5626c23e",
-    "output": "src__workflows__fill.ts__feature__46a9ea98.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/ScreenStage.tsx": {
-  "rel": "src/components/ScreenStage.tsx",
-  "modes": {
-   "bug": {
-    "sha": "f3b3054de101fa7f757e0d1082c3b884d9b15f1b5ae78ac25badcd7f908aa38d",
-    "output": "src__components__ScreenStage.tsx__bug__f3b3054d.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "catalog-brain-rows wave + adversary round-2 fixes"
-   },
-   "feature": {
-    "sha": "838a818bcfe28a744b3267a55a0adf9689ca9f671994384faeaa276a44d1cf9b",
-    "output": "src__components__ScreenStage.tsx__feature__838a818b.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/DeckControls.tsx": {
-  "rel": "src/components/DeckControls.tsx",
-  "modes": {
-   "bug": {
-    "sha": "b64cbd06b3670ae3725df1e2bc7928c9e8f3aa1f7d4d7ee0e82eb82e0d7a2702",
-    "output": "src__components__DeckControls.tsx__bug__b64cbd06.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "vram-preflight wave delta"
-   },
-   "feature": {
-    "sha": "be37f2c1d817a81d1bb1a9d1aa5d701400a405becc9465c1e36127a956e91e55",
-    "output": "src__components__DeckControls.tsx__feature__be37f2c1.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/StatusFooter.tsx": {
-  "rel": "src/components/StatusFooter.tsx",
-  "modes": {
-   "bug": {
-    "sha": "c97dbfbab5c786ffadec5c29929567e7418bb44fb0c91d12979eadcb020fbfd8",
-    "output": "src__components__StatusFooter.tsx__bug__024ddaa6.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0,
-    "note": "tooltip remediation post-gate, see postscript in 0199b97c review"
-   },
-   "feature": {
-    "sha": "47f263c696402413753695c0e599c994641f45228aa9e1771a0ce5c494a59e21",
-    "output": "src__components__StatusFooter.tsx__feature__47f263c6.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/MediaView.tsx": {
-  "rel": "src/components/MediaView.tsx",
-  "modes": {
-   "bug": {
-    "sha": "5dc0e38c269f41dbeb23bb46e63f349c6baff2017e925989e1e48cad865ae2da",
-    "output": "POST-FIX-2026-09-05-remediation-wave.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0,
-    "note": "post-fix delta recorded in the shared remediation-wave bundle"
-   },
-   "feature": {
-    "sha": "5dc0e38c269f41dbeb23bb46e63f349c6baff2017e925989e1e48cad865ae2da",
-    "output": "src__components__MediaView.tsx__feature__5dc0e38c.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/surfaces/GenerateSurface.tsx": {
-  "rel": "src/surfaces/GenerateSurface.tsx",
-  "modes": {
-   "bug": {
-    "sha": "f943cbc4b350989e4a66bfcce7789bb6569253b5505ca4254100d40b552c3c7d",
-    "output": "src__surfaces__GenerateSurface.tsx__bug__f943cbc4.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "1334981e (see review file; agent-hashed)",
-    "output": "src__surfaces__GenerateSurface.tsx__spec__1334981e.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "f943cbc4b350989e4a66bfcce7789bb6569253b5505ca4254100d40b552c3c7d",
-    "output": "src__surfaces__GenerateSurface.tsx__feature__f943cbc4.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/surfaces/GraphSurface.tsx": {
-  "rel": "src/surfaces/GraphSurface.tsx",
-  "modes": {
-   "bug": {
-    "sha": "1aab8ef52bafa4da80549925030278ce34fe2a9dbed239210c18a7b3861b5140",
-    "output": "src__surfaces__GraphSurface.tsx__bug__1aab8ef5.md",
-    "reviewed_at": "2026-09-06"
-   },
-   "feature": {
-    "sha": "af17e99a41dd9bb9e56e33d4025f04f10cf9d5807bc552beb6d55755a101293a",
-    "output": "src__surfaces__GraphSurface.tsx__feature__af17e99a.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/surfaces/OutputsSurface.tsx": {
-  "rel": "src/surfaces/OutputsSurface.tsx",
-  "modes": {
-   "bug": {
-    "sha": "0b4e589086fd1b315c376bb8664ed673f251f4183d0e25ca74aee3dd90db099d",
-    "output": "src__surfaces__OutputsSurface.tsx__bug__0b4e5890.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "992a88e6 (see review file; agent-hashed)",
-    "output": "src__surfaces__OutputsSurface.tsx__spec__992a88e6.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "ba7219d043acc0b9482430a1b2f4d03cca3ac760fbb4173093e2599cbd9f4f88",
-    "output": "src__surfaces__OutputsSurface.tsx__feature__ba7219d0.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.film.ts": {
-  "rel": "vite.film.ts",
-  "modes": {
-   "bug": {
-    "sha": "c698195211073f4b423234b7361630cb8ef48d7c0b0a4872d18ec5002499bac4",
-    "output": "vite.film.ts__bug__c6981952.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "streamed-brain-answers wave delta"
-   },
-   "spec": {
-    "sha": "ba2db7fe3a3298fff9c996bd0997e89092947a2060fbe3b2fa04d29b00d725c7",
-    "output": "vite.film.ts__spec__ba2db7fe.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "af1eb46f6bfc4128e7cb97bc42e14182f60bc7af68a1eb77bd4506131311ca36",
-    "output": "vite.film.ts__feature__af1eb46f.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/FilmWizard.tsx": {
-  "rel": "src/components/FilmWizard.tsx",
-  "modes": {
-   "bug": {
-    "sha": "1a6f58febea1c3e80e69627588ef1cb08bf78eef5dd51ad219a69e4e3257a1be",
-    "output": "src__components__FilmWizard.tsx__bug__1a6f58fe.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "streamed-brain-answers wave delta"
-   },
-   "spec": {
-    "sha": "cff01eec (see review file; agent-hashed)",
-    "output": "src__components__FilmWizard.tsx__spec__cff01eec.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "77eb22829c7cfd1cbcd4910814b3f776d35a8a122b0e883093949377077fe494",
-    "output": "src__components__FilmWizard.tsx__feature__77eb2282.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/bundles/constraints.ts": {
-  "rel": "src/bundles/constraints.ts",
-  "modes": {
-   "bug": {
-    "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
-    "output": "src__bundles__constraints.ts__bug__01434323.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
-    "output": "src__bundles__constraints.ts__spec__01434323.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
-    "output": "src__bundles__constraints.ts__feature__01434323.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.agent.ts": {
-  "rel": "vite.agent.ts",
-  "modes": {
-   "bug": {
-    "sha": "f1c231c8855e6837fabb0789079d7c145dddb2a74cb03a8d34448ab4ff5bb315",
-    "output": "vite.agent.ts__bug__f1c231c8.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "streamed-brain-answers wave delta"
-   },
-   "spec": {
-    "sha": "663172ab8c6e2b84e496768dc9a570c91435f71734368c2b29fee6bf2d04d263",
-    "output": "vite.agent.ts__spec__663172ab.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "c25dadcbf368b69a8966e3571916e350fc3b602c4a5fe8176638ee888af7eef2",
-    "output": "vite.agent.ts__feature__c25dadcb.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/ModelPicker.tsx": {
-  "rel": "src/components/ModelPicker.tsx",
-  "modes": {
-   "bug": {
-    "sha": "c8bdd8a990b73b196ff2d67ad68b7692474ef0ea00502c352d7964b621156981",
-    "output": "src__components__ModelPicker.tsx__bug__c8bdd8a9.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "c8bdd8a990b73b196ff2d67ad68b7692474ef0ea00502c352d7964b621156981",
-    "output": "src__components__ModelPicker.tsx__feature__c8bdd8a9.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/film/autopilot.ts": {
-  "rel": "src/film/autopilot.ts",
-  "modes": {
-   "bug": {
-    "sha": "15ed117c432de24b22a60063485cdfd44174eaf9160ab190aa58887e554d27bb",
-    "output": "POST-FIX-2026-09-05-remediation-wave.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0,
-    "note": "post-fix delta recorded in the shared remediation-wave bundle"
-   },
-   "spec": {
-    "sha": "32b00e7e442885f9f61bb2e2c2ae7af3a72d9cdcdbb89e32ceaa8e4f0a2cfc9f",
-    "output": "src__film__autopilot.ts__spec__32b00e7e.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "15ed117c432de24b22a60063485cdfd44174eaf9160ab190aa58887e554d27bb",
-    "output": "src__film__autopilot.ts__feature__15ed117c.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/film/analysis.ts": {
-  "rel": "src/film/analysis.ts",
-  "modes": {
-   "bug": {
-    "sha": "067464bef31c37eef75298edaa5dc5485f683a83d4b0b4aae4ae9b7a2a8c641a",
-    "output": "src__film__analysis.ts__bug__067464be.md",
-    "reviewed_at": "2026-08-26T00:10:00"
-   },
-   "spec": {
-    "sha": "067464bef31c37eef75298edaa5dc5485f683a83d4b0b4aae4ae9b7a2a8c641a",
-    "output": "src__film__analysis.ts__spec__067464be.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "067464bef31c37eef75298edaa5dc5485f683a83d4b0b4aae4ae9b7a2a8c641a",
-    "output": "src__film__analysis.ts__feature__067464be.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/film/budget.ts": {
-  "rel": "src/film/budget.ts",
-  "modes": {
-   "bug": {
-    "sha": "cb3572757532e0ab3be6712bbd02d5a6c8c0b44ed2cadd42b94b3f5d3803ef84",
-    "output": "POST-FIX-2026-09-05-remediation-wave.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0,
-    "note": "post-fix delta recorded in the shared remediation-wave bundle"
-   },
-   "feature": {
-    "sha": "cb3572757532e0ab3be6712bbd02d5a6c8c0b44ed2cadd42b94b3f5d3803ef84",
-    "output": "src__film__budget.ts__feature__cb357275.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.replicate.ts": {
-  "rel": "vite.replicate.ts",
-  "modes": {
-   "bug": {
-    "sha": "f4c56c4e2395cb9bba67b2b1b944f961e9e43db851be3ebd77831b5ab4857b07",
-    "output": "vite.replicate.ts__bug__f4c56c4e.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "f4c56c4e2395cb9bba67b2b1b944f961e9e43db851be3ebd77831b5ab4857b07",
-    "output": "vite.replicate.ts__feature__f4c56c4e.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/llm/tools.ts": {
-  "rel": "src/llm/tools.ts",
-  "modes": {
-   "bug": {
-    "sha": "0737954d856681589a061ab69743239af45a4fe50da1b752bd43f8291025194d",
-    "output": "src__llm__tools.ts__bug__0737954d.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "streamed-brain-answers wave delta"
-   },
-   "feature": {
-    "sha": "84daa792e1fd7fd0e9c4877977dd73a779c138a108804d40f20b2796a4e7c1e3",
-    "output": "src__llm__tools.ts__feature__84daa792.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/providers/modelRoutes.ts": {
-  "rel": "src/providers/modelRoutes.ts",
-  "modes": {
-   "bug": {
-    "sha": "dbe64730efe313405323b8dbe59e1607ea2828be7556de2d6478b164dbb3470f",
-    "output": "src__providers__modelRoutes.ts__bug__dbe64730.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "cc62d7711f1abdaca0d111a004d983e505f2ec3de65d14cf1f87f145bcdc4544",
-    "output": "src__providers__modelRoutes.ts__spec__cc62d771.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "dbe64730efe313405323b8dbe59e1607ea2828be7556de2d6478b164dbb3470f",
-    "output": "src__providers__modelRoutes.ts__feature__dbe64730.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.caliper.ts": {
-  "rel": "vite.caliper.ts",
-  "modes": {
-   "bug": {
-    "sha": "6e01a0ac04220a995001829254a9869ae369aaaee3d21a48ea5ccf2eae4911ac",
-    "output": "vite.caliper.ts__bug__6e01a0ac.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "vram-preflight wave delta"
-   },
-   "feature": {
-    "sha": "c65d6bbaa204e01e65e3c8160f93dc8a9c77018298647367bc0b67c8f735a492",
-    "output": "vite.caliper.ts__feature__c65d6bba.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.llm.ts": {
-  "rel": "vite.llm.ts",
-  "modes": {
-   "bug": {
-    "sha": "eff2b006f82481af97bdf8c783b1fc887393c807f717eccb7982cb806c654103",
-    "output": "vite.llm.ts__bug__eff2b006.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "catalog-brain-rows wave + adversary round-2 fixes"
-   },
-   "feature": {
-    "sha": "921fbfd279ac61ae066aec330fb91b1261aa79a66c0468848ed85ebd28d9cff4",
-    "output": "vite.llm.ts__feature__921fbfd2.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/film/produce.ts": {
-  "rel": "src/film/produce.ts",
-  "modes": {
-   "bug": {
-    "sha": "d90075d8513bd8a8e04b9c3cadb3cf61c18f2d8601386ae7c4cf4e6d03aecbb3",
-    "output": "src__film__produce.ts__bug__d90075d8.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "d3dc06d2 (see review file; agent-hashed)",
-    "output": "src__film__produce.ts__spec__d3dc06d2.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "d90075d8513bd8a8e04b9c3cadb3cf61c18f2d8601386ae7c4cf4e6d03aecbb3",
-    "output": "src__film__produce.ts__feature__d90075d8.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "zipWriter.ts": {
-  "rel": "zipWriter.ts",
-  "modes": {
-   "bug": {
-    "sha": "8b340ce99cf6baee8687efdfbbc96f7185f21154c1a58dc976025e5428090c90",
-    "output": "zipWriter.ts__bug__8b340ce9.md",
-    "reviewed_at": "2026-09-06"
-   },
-   "feature": {
-    "sha": "c542eddda337a9dbde7c117459f9dad979b1c0b699c7ddbea532d2aab3be04be",
-    "output": "zipWriter.ts__feature__c542eddd.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/App.tsx": {
-  "rel": "src/App.tsx",
-  "modes": {
-   "bug": {
-    "sha": "1050686b567f9bd51fa51991e339c6634891a05d3de3856dac5c5c6632ff3d5f",
-    "output": "src__App.tsx__bug__1050686b.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "1050686b567f9bd51fa51991e339c6634891a05d3de3856dac5c5c6632ff3d5f",
-    "output": "src__App.tsx__feature__1050686b.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/api/catalog.ts": {
-  "rel": "src/api/catalog.ts",
-  "modes": {
-   "bug": {
-    "sha": "93147b7abfe0953df47b67831e86eb7b66ec0eb3d01fc8dd8a5b10ae940f9b9a",
-    "output": "src__api__catalog.ts__bug__93147b7a.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/api/eachlabs.ts": {
-  "rel": "src/api/eachlabs.ts",
-  "modes": {
-   "bug": {
-    "sha": "39e84cf015e848707cad7b1de41b572002e9a32ca39838f2332ef11e386b6a8a",
-    "output": "src__api__eachlabs.ts__bug__39e84cf0.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/api/film.ts": {
-  "rel": "src/api/film.ts",
-  "modes": {
-   "bug": {
-    "sha": "31373dd4ded5dcbde8cb811755ce90f0866a27fe8b9199bbff5e3e5d5db1e7d2",
-    "output": "src__api__film.ts__bug__31373dd4.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "streamed-brain-answers wave delta"
-   },
-   "feature": {
-    "sha": "d0059d5706a7a2bb83c9da75a63184307446ad06ae95f575a2be9453a92bb2e8",
-    "output": "src__api__film.ts__feature__d0059d57.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/api/keys.ts": {
-  "rel": "src/api/keys.ts",
-  "modes": {
-   "bug": {
-    "sha": "44371440a7aa466736a274e352c7ed47610e3ff092b8fa4732d469d2c77d49b9",
-    "output": "src__api__keys.ts__bug__44371440.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/api/library.ts": {
-  "rel": "src/api/library.ts",
-  "modes": {
-   "bug": {
-    "sha": "131d216241bb142f709a8344e6f13827c8ede338fc961af1f1dfc2686403dc30",
-    "output": "src__api__library.ts__bug__131d2162.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/api/modelRoutes.ts": {
-  "rel": "src/api/modelRoutes.ts",
-  "modes": {
-   "bug": {
-    "sha": "e305c11774e83cb939037538e98556606eff680ab130307c406771414d454250",
-    "output": "src__api__modelRoutes.ts__bug__e305c117.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/api/openrouter.ts": {
-  "rel": "src/api/openrouter.ts",
-  "modes": {
-   "bug": {
-    "sha": "8c56915089f5e140673b1ba6e1f99d22ee5e90d1315105134138f691969f326f",
-    "output": "src__api__openrouter.ts__bug__8c569150.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/api/replicate.ts": {
-  "rel": "src/api/replicate.ts",
-  "modes": {
-   "bug": {
-    "sha": "340deb8c32bc0f3288468e52949969074f26776a66d2ad68bfc1321f97204fb9",
-    "output": "src__api__replicate.ts__bug__340deb8c.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/bundles/enums.ts": {
-  "rel": "src/bundles/enums.ts",
-  "modes": {
-   "bug": {
-    "sha": "96788c068810d4cc31252c05860fc5437ff71660554000340a64089c1232202d",
-    "output": "src__bundles__enums.ts__bug__96788c06.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/bundles/files.ts": {
-  "rel": "src/bundles/files.ts",
-  "modes": {
-   "bug": {
-    "sha": "92a3b7b99d6b457fb410725e18fcaf0f39b309a1380312d49f64fa225a226fce",
-    "output": "src__bundles__files.ts__bug__92a3b7b9.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "feature": {
-    "sha": "92a3b7b99d6b457fb410725e18fcaf0f39b309a1380312d49f64fa225a226fce",
-    "output": "src__bundles__files.ts__feature__92a3b7b9.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/AdvancedDrawer.tsx": {
-  "rel": "src/components/AdvancedDrawer.tsx",
-  "modes": {
-   "bug": {
-    "sha": "02fc86065bf60b718301508c013653b712e7929b0c115860e3f83cf7e9bcdfff",
-    "output": "src__components__AdvancedDrawer.tsx__bug__02fc8606.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/ChassisNav.tsx": {
-  "rel": "src/components/ChassisNav.tsx",
-  "modes": {
-   "bug": {
-    "sha": "e829bc0ac5037e08bc1dd1cfcf2a0554833dbc0db529f53d960930f2464e1ce5",
-    "output": "src__components__ChassisNav.tsx__bug__e829bc0a.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/CloudPane.tsx": {
-  "rel": "src/components/CloudPane.tsx",
-  "modes": {
-   "bug": {
-    "sha": "fd956975b354603c8de5d5e0dc734b57c5228ebc5e7af4d2f78251d08d2264a4",
-    "output": "src__components__CloudPane.tsx__bug__fd956975.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "fd956975b354603c8de5d5e0dc734b57c5228ebc5e7af4d2f78251d08d2264a4",
-    "output": "src__components__CloudPane.tsx__feature__fd956975.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/CommandPalette.tsx": {
-  "rel": "src/components/CommandPalette.tsx",
-  "modes": {
-   "bug": {
-    "sha": "accf5df86e3669bb1b5a6525eed7f108532eb767eaa0ab63bc7ba54b4cf01271",
-    "output": "src__components__CommandPalette.tsx__bug__accf5df8.md",
-    "reviewed_at": "2026-09-06"
-   },
-   "feature": {
-    "sha": "4bf4ae9016664480a24654c41db23a75f8f040ae9d44668b9d1175d832d09abd",
-    "output": "src__components__CommandPalette.tsx__feature__4bf4ae90.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/GaugeLine.tsx": {
-  "rel": "src/components/GaugeLine.tsx",
-  "modes": {
-   "bug": {
-    "sha": "e1f9a1565ad3f43f20c1650c7c2ddcddcc0db555b848b419654c26e3d59c743d",
-    "output": "src__components__GaugeLine.tsx__bug__e1f9a156.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/Icons.tsx": {
-  "rel": "src/components/Icons.tsx",
-  "modes": {
-   "bug": {
-    "sha": "ef6fec47a1fdc4514f58b5dcf024525a1e9b88ed0b3c2b17ed11259896c4a276",
-    "output": "src__components__Icons.tsx__bug__ef6fec47.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/Latch.tsx": {
-  "rel": "src/components/Latch.tsx",
-  "modes": {
-   "bug": {
-    "sha": "19fab0af5d450d57d4fa93c47c4970a1beefcb551a268903aa7e2b74a12077e6",
-    "output": "src__components__Latch.tsx__bug__19fab0af.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/OrnateSlider.tsx": {
-  "rel": "src/components/OrnateSlider.tsx",
-  "modes": {
-   "bug": {
-    "sha": "7104cc21a1d4fe40d89eb0186458c715c170fbd804a38cfc91e81a4f22026374",
-    "output": "src__components__OrnateSlider.tsx__bug__7104cc21.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/Rail.tsx": {
-  "rel": "src/components/Rail.tsx",
-  "modes": {
-   "bug": {
-    "sha": "c148b09fc8bbade11f53e6312bce8812864b3c53294886777e42cacef199177f",
-    "output": "src__components__Rail.tsx__bug__c148b09f.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/ReproduceSheet.tsx": {
-  "rel": "src/components/ReproduceSheet.tsx",
-  "modes": {
-   "bug": {
-    "sha": "f2e83f37e19dd82839e267f28389d2ee1e53cc97633b6322168fa21ed683e0be",
-    "output": "src__components__ReproduceSheet.tsx__bug__f2e83f37.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "feature": {
-    "sha": "f2e83f37e19dd82839e267f28389d2ee1e53cc97633b6322168fa21ed683e0be",
-    "output": "src__components__ReproduceSheet.tsx__feature__f2e83f37.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/ScrubInput.tsx": {
-  "rel": "src/components/ScrubInput.tsx",
-  "modes": {
-   "bug": {
-    "sha": "c985b9521267b5c3c358e1724a3d23d8e07980be9bd72c22a1159ecbfb2af628",
-    "output": "src__components__ScrubInput.tsx__bug__c985b952.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/SettingsConsole.tsx": {
-  "rel": "src/components/SettingsConsole.tsx",
-  "modes": {
-   "bug": {
-    "sha": "4d6928456cf55a57bd2b26550b06e6befb39598a9dc669a8959ebc9ba8fd9364",
-    "output": "src__components__SettingsConsole.tsx__bug__4d692845.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "e85ad0d240f636c8f7e9327f15bfcea8dbea2314b4b4eed5d3f9c41064bab836",
-    "output": "src__components__SettingsConsole.tsx__feature__e85ad0d2.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/components/Stepper.tsx": {
-  "rel": "src/components/Stepper.tsx",
-  "modes": {
-   "bug": {
-    "sha": "91f83a3a6f311dad6b09bea61c9092cc91af74c39b5cec43a79208cb665f5406",
-    "output": "src__components__Stepper.tsx__bug__91f83a3a.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/VernierScale.tsx": {
-  "rel": "src/components/VernierScale.tsx",
-  "modes": {
-   "bug": {
-    "sha": "3ac523652e7b91dfc50e8b96958433ec8056903c062fea7bc00141908dfe221b",
-    "output": "src__components__VernierScale.tsx__bug__3ac52365.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/arcadeSound.ts": {
-  "rel": "src/components/arcadeSound.ts",
-  "modes": {
-   "bug": {
-    "sha": "31e13d0bd819dcea0557f2ec4842892c4a34c69fac5bd87611c2ccf5344139ef",
-    "output": "src__components__arcadeSound.ts__bug__31e13d0b.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/film/calibrate.ts": {
-  "rel": "src/film/calibrate.ts",
-  "modes": {
-   "bug": {
-    "sha": "13542250628177a545e4c29824ea22dc181a1f8ad296a39457648f584d7819f3",
-    "output": "src__film__calibrate.ts__bug__13542250.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "feature": {
-    "sha": "13542250628177a545e4c29824ea22dc181a1f8ad296a39457648f584d7819f3",
-    "output": "src__film__calibrate.ts__feature__13542250.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/film/grader.ts": {
-  "rel": "src/film/grader.ts",
-  "modes": {
-   "bug": {
-    "sha": "89057503cc69f96ad4b857a4cecbde78cad47516b698361631d24764e969fc92",
-    "output": "src__film__grader.ts__bug__89057503.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "feature": {
-    "sha": "89057503cc69f96ad4b857a4cecbde78cad47516b698361631d24764e969fc92",
-    "output": "src__film__grader.ts__feature__89057503.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/film/i2v.ts": {
-  "rel": "src/film/i2v.ts",
-  "modes": {
-   "bug": {
-    "sha": "03a7b8d2a913a5293dbe3281681fa9010f654d70163146b9445026d88eba5020",
-    "output": "src__film__i2v.ts__bug__03a7b8d2.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/film/store.ts": {
-  "rel": "src/film/store.ts",
-  "modes": {
-   "bug": {
-    "sha": "e31e742c28d7af17597b26fc6a5de77320a4b2060cca118b634e6c26d0aa15b0",
-    "output": "src__film__store.ts__bug__e31e742c.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "e31e742c28d7af17597b26fc6a5de77320a4b2060cca118b634e6c26d0aa15b0",
-    "output": "src__film__store.ts__feature__e31e742c.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/install/catalog.ts": {
-  "rel": "src/install/catalog.ts",
-  "modes": {
-   "bug": {
-    "sha": "a52e4d3575b7290a64846d69d76045f5fefc91de7d94406bb762f7b573532def",
-    "output": "src__install__catalog.ts__bug__a52e4d35.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "catalog-brain-rows wave delta"
-   },
-   "spec": {
-    "sha": "UNHASHED-2026-08-31 (harness hook denied read-only hashing for this path, 4 attempts; content-read identity: 142 lines)",
-    "output": "src__install__catalog.ts__spec__NOHASH.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "src/install/client.ts": {
-  "rel": "src/install/client.ts",
-  "modes": {
-   "bug": {
-    "sha": "8963de0ba1c6863c886a83545d6b835c7f1823d3d86a77cfe877166a7df2ecb9",
-    "output": "src__install__client.ts__bug__8963de0b.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "src/install/plan.ts": {
-  "rel": "src/install/plan.ts",
-  "modes": {
-   "bug": {
-    "sha": "cf18f4a0e7ec2f1740904101b6a27768a6e7a1348758f55d90edb0b4d9db6c0c",
-    "output": "src__install__plan.ts__bug__cf18f4a0.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/kb/bm25.ts": {
-  "rel": "src/kb/bm25.ts",
-  "modes": {
-   "bug": {
-    "sha": "927454f8c627976c90f016c2f60d889d3bfd7e2b9484f6b89cabbbafdf6588dc",
-    "output": "src__kb__bm25.ts__bug__927454f8.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "feature": {
-    "sha": "927454f8c627976c90f016c2f60d889d3bfd7e2b9484f6b89cabbbafdf6588dc",
-    "output": "src__kb__bm25.ts__feature__927454f8.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/kb/chunk.ts": {
-  "rel": "src/kb/chunk.ts",
-  "modes": {
-   "bug": {
-    "sha": "1ff1ccadf080388bb71e172cf36eeff44a9967987740c52b7455da9dbd4b44cd",
-    "output": "src__kb__chunk.ts__bug__1ff1ccad.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "feature": {
-    "sha": "1ff1ccadf080388bb71e172cf36eeff44a9967987740c52b7455da9dbd4b44cd",
-    "output": "src__kb__chunk.ts__feature__1ff1ccad.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/llm/client.ts": {
-  "rel": "src/llm/client.ts",
-  "modes": {
-   "bug": {
-    "sha": "956c31513cb0e5e8d26e3b1241180ddc8fced89992b3aa2dcf174d86e2246ab2",
-    "output": "src__llm__client.ts__bug__956c3151.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "catalog-brain-rows wave + adversary round-2 fixes"
-   }
-  }
- },
- "src/main.tsx": {
-  "rel": "src/main.tsx",
-  "modes": {
-   "bug": {
-    "sha": "b7f930d41d50d715ebc772ba063f9a18d0ecc1f41dce51134cf5d2201f4607e4",
-    "output": "src__main.tsx__bug__b7f930d4.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/power/state.ts": {
-  "rel": "src/power/state.ts",
-  "modes": {
-   "bug": {
-    "sha": "0ae69c27d2efa25314e1a862968d6b9167b1ecc3d46c2b5600b962df9539e392",
-    "output": "src__power__state.ts__bug__0ae69c27.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/providers/brainProviders.ts": {
-  "rel": "src/providers/brainProviders.ts",
-  "modes": {
-   "bug": {
-    "sha": "83e54c4d12cebf466bc4c2212cce8c650ddc71c21ad025d3ded8fb76ccd6b407",
-    "output": "src__providers__brainProviders.ts__bug__83e54c4d.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "83e54c4d12cebf466bc4c2212cce8c650ddc71c21ad025d3ded8fb76ccd6b407",
-    "output": "src__providers__brainProviders.ts__feature__83e54c4d.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/providers/catalog.ts": {
-  "rel": "src/providers/catalog.ts",
-  "modes": {
-   "bug": {
-    "sha": "87bf59d424165cc6e9d2a374c809a87c6edd29a327db4135a43679222f9b46c4",
-    "output": "src__providers__catalog.ts__bug__87bf59d4.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "87bf59d424165cc6e9d2a374c809a87c6edd29a327db4135a43679222f9b46c4",
-    "output": "src__providers__catalog.ts__feature__87bf59d4.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/providers/eachlabs.ts": {
-  "rel": "src/providers/eachlabs.ts",
-  "modes": {
-   "bug": {
-    "sha": "3a8b7aa8d9f0815c20a66dfb1142c32b60d976ad9a631ccb65465fe8d1ca46fd",
-    "output": "src__providers__eachlabs.ts__bug__3a8b7aa8.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/providers/openrouter.ts": {
-  "rel": "src/providers/openrouter.ts",
-  "modes": {
-   "bug": {
-    "sha": "2de5cc81e6b3f446a882251c2f9e9710f333de23e495c4f7ba9fae88ac5775ea",
-    "output": "src__providers__openrouter.ts__bug__2de5cc81.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "streamed-brain-answers wave delta"
-   },
-   "feature": {
-    "sha": "a195fd9c258896b355a90415a61f08bcf2caf195692a88fad27b87003e9b3fd5",
-    "output": "src__providers__openrouter.ts__feature__a195fd9c.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/providers/openrouterVideo.ts": {
-  "rel": "src/providers/openrouterVideo.ts",
-  "modes": {
-   "bug": {
-    "sha": "c09230c474a77ac522d870c0603cbdb7cd1a4d9c5e8df50d7e5e4703e64178fa",
-    "output": "src__providers__openrouterVideo.ts__bug__c09230c4.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "feature": {
-    "sha": "c09230c474a77ac522d870c0603cbdb7cd1a4d9c5e8df50d7e5e4703e64178fa",
-    "output": "src__providers__openrouterVideo.ts__feature__c09230c4.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/providers/replicate.ts": {
-  "rel": "src/providers/replicate.ts",
-  "modes": {
-   "bug": {
-    "sha": "fce70ebe7a498969b6fdd474e87ccfda122fd7066db3b3782fd754aeef96db03",
-    "output": "src__providers__replicate.ts__bug__fce70ebe.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "fce70ebe7a498969b6fdd474e87ccfda122fd7066db3b3782fd754aeef96db03",
-    "output": "src__providers__replicate.ts__feature__fce70ebe.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/providers/replicateBrowser.ts": {
-  "rel": "src/providers/replicateBrowser.ts",
-  "modes": {
-   "bug": {
-    "sha": "c800ee9fd51d23e671e724842a52acca3e27d29b2b809a69491eccb5770a8c3c",
-    "output": "src__providers__replicateBrowser.ts__bug__c800ee9f.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "feature": {
-    "sha": "c800ee9fd51d23e671e724842a52acca3e27d29b2b809a69491eccb5770a8c3c",
-    "output": "src__providers__replicateBrowser.ts__feature__c800ee9f.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/providers/serviceKeys.ts": {
-  "rel": "src/providers/serviceKeys.ts",
-  "modes": {
-   "bug": {
-    "sha": "e00a12673bda4731ee9b933ad7ebaf0edf986d9ac8e43a82f25c2688e8654002",
-    "output": "src__providers__serviceKeys.ts__bug__e00a1267.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "spec": {
-    "sha": "e00a12673bda4731ee9b933ad7ebaf0edf986d9ac8e43a82f25c2688e8654002",
-    "output": "src__providers__serviceKeys.ts__spec__e00a1267.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "src/stores/generateStore.ts": {
-  "rel": "src/stores/generateStore.ts",
-  "modes": {
-   "bug": {
-    "sha": "0f60d3c8fea9d85b0650a437cfb58a41245c6c7dd44e3508c342075b2dc665e1",
-    "output": "src__stores__generateStore.ts__bug__0f60d3c8.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   },
-   "spec": {
-    "sha": "0f60d3c8 (see review file; agent-hashed)",
-    "output": "src__stores__generateStore.ts__spec__0f60d3c8.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "src/stores/routesStore.ts": {
-  "rel": "src/stores/routesStore.ts",
-  "modes": {
-   "bug": {
-    "sha": "e148531d6c45df292f7a710e6dbd30bc466c0866c970c6152d1f7b85fa690bc0",
-    "output": "src__stores__routesStore.ts__bug__e148531d.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "src/stores/uiStore.ts": {
-  "rel": "src/stores/uiStore.ts",
-  "modes": {
-   "bug": {
-    "sha": "4cd8e2d3c246f20cf1640bfdfe6fce5848d42a3265cc21e30d21ca390b1a3d14",
-    "output": "src__stores__uiStore.ts__bug__4cd8e2d3.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "7435c1927e719fd97e66082802405cd1cba941199dd55b989e86a11dfa44fb2e",
-    "output": "src__stores__uiStore.ts__spec__7435c192.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "4cd8e2d3c246f20cf1640bfdfe6fce5848d42a3265cc21e30d21ca390b1a3d14",
-    "output": "src__stores__uiStore.ts__feature__4cd8e2d3.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/surfaces/BundlesSurface.tsx": {
-  "rel": "src/surfaces/BundlesSurface.tsx",
-  "modes": {
-   "bug": {
-    "sha": "f1d1976984d83bc54a48d2ecd72bd6a43d4a6001ff388a22cb8f2df698bc1deb",
-    "output": "src__surfaces__BundlesSurface.tsx__bug__f1d19769.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "fbcd3d33 (see review file; agent-hashed)",
-    "output": "src__surfaces__BundlesSurface.tsx__spec__fbcd3d33.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "962baf9549ade9e9c400392bd05eb765306b0aab1df642a194805025f981f7c2",
-    "output": "src__surfaces__BundlesSurface.tsx__feature__962baf95.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/surfaces/QueueSurface.tsx": {
-  "rel": "src/surfaces/QueueSurface.tsx",
-  "modes": {
-   "bug": {
-    "sha": "5e4ec9f23874f9f000e50a46f60e3043cbf9c5c383c39faaf39bafa5f9610b6c",
-    "output": "src__surfaces__QueueSurface.tsx__bug__595e53b6.md",
-    "note": "sha is the post-remediation bytes (re-stamped in 9102b79); the 595e53b6 review hashed the pre-fix bytes and carries the same-session remediation postscript",
-    "reviewed_at": "2026-09-06"
-   },
-   "feature": {
-    "sha": "a679ed2b44dc43011d15729fb33b76ac2bbc1f0fcd6d6caa20bfe466c7ee56b0",
-    "output": "src__surfaces__QueueSurface.tsx__feature__a679ed2b.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/workflows/toUiGraph.ts": {
-  "rel": "src/workflows/toUiGraph.ts",
-  "modes": {
-   "bug": {
-    "sha": "bcb7d913389ca2452d65bd2986b115c8b6800d907c3ff631bbf85fe0569d2961",
-    "output": "src__workflows__toUiGraph.ts__bug__bcb7d913.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "vite.bench.ts": {
-  "rel": "vite.bench.ts",
-  "modes": {
-   "bug": {
-    "sha": "d8f385abb4b171d81880e824381864fa3dcbb734658a912ca61ff1380f855b80",
-    "output": "vite.bench.ts__bug__d8f385ab.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "d8f385abb4b171d81880e824381864fa3dcbb734658a912ca61ff1380f855b80",
-    "output": "vite.bench.ts__feature__d8f385ab.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.config.ts": {
-  "rel": "vite.config.ts",
-  "modes": {
-   "bug": {
-    "sha": "f8ce84f651f6b7af5497f7376fde03fb39ffc57c664f1b527fcaed9abbe807bc",
-    "output": "vite.config.ts__bug__f8ce84f6.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "vite.eachlabs.ts": {
-  "rel": "vite.eachlabs.ts",
-  "modes": {
-   "bug": {
-    "sha": "d7d1f9a1f47b0cf92405c82716da1d88affdee409864fad1791160b0cc19c85f",
-    "output": "vite.eachlabs.ts__bug__d7d1f9a1.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "vite.kb.ts": {
-  "rel": "vite.kb.ts",
-  "modes": {
-   "bug": {
-    "sha": "0507f81aa47469492530369f164cafdfe23192d961535f9af0d5c59814b49978",
-    "output": "vite.kb.ts__bug__0507f81a.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "0507f81aa47469492530369f164cafdfe23192d961535f9af0d5c59814b49978",
-    "output": "vite.kb.ts__feature__0507f81a.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.keys.ts": {
-  "rel": "vite.keys.ts",
-  "modes": {
-   "bug": {
-    "sha": "5e7938407f3a948ee098850d755ee578afdfecba45c2cacb6ae36dafac667c15",
-    "output": "vite.keys.ts__bug__5e793840.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "be9fe8c0 (see review file; agent-hashed)",
-    "output": "vite.keys.ts__spec__be9fe8c0.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "vite.library.ts": {
-  "rel": "vite.library.ts",
-  "modes": {
-   "bug": {
-    "sha": "b72699f3beedd4ca95ffd4cea281c5da7c5d1a83d4a25e324cbda956eee1be09",
-    "output": "vite.library.ts__bug__d378317d.md",
-    "note": "sha is the post-remediation bytes (re-stamped in 04e1c02); the d378317d review hashed the pre-fix bytes and carries the same-session remediation postscript",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "spec": {
-    "sha": "804a37c0 (see review file; agent-hashed)",
-    "output": "vite.library.ts__spec__804a37c0.md",
-    "reviewed_at": "2026-08-31",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "f3c1d6a2a35732fa452b5e07530b51a3e6e32bfa589833b089b98ef76a1ae330",
-    "output": "vite.library.ts__feature__f3c1d6a2.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.openrouter.ts": {
-  "rel": "vite.openrouter.ts",
-  "modes": {
-   "bug": {
-    "sha": "ce80adca2e8412e3fd0211521025a8f5f83a566a4eeb4439f3a808742435eb34",
-    "output": "vite.openrouter.ts__bug__ce80adca.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "vite.power.ts": {
-  "rel": "vite.power.ts",
-  "modes": {
-   "bug": {
-    "sha": "a07e80b6486931f4dc8a413335b0c3180c0dd7ea3fb254b046d36e274042dc21",
-    "output": "vite.power.ts__bug__a07e80b6.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "b5fa8896910f2aca3357269235bc8ca1b996c3643bf291a55c9d35eaceca11a4",
-    "output": "vite.power.ts__feature__b5fa8896.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.routes.ts": {
-  "rel": "vite.routes.ts",
-  "modes": {
-   "bug": {
-    "sha": "54c9654cb82b28c715ae69abd9f84b2654d89bab578ef3cf3bb40da02fe2be2d",
-    "output": "vite.routes.ts__bug__54c9654c.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "vite.tokens.ts": {
-  "rel": "vite.tokens.ts",
-  "modes": {
-   "bug": {
-    "sha": "4ade1406c4706234576f04f3befc1c96f3b687bd1b2be8594657bb104790e3fb",
-    "output": "vite.tokens.ts__bug__4ade1406.md",
-    "reviewed_at": "2026-08-27T12:00:00"
-   }
-  }
- },
- "src/components/FirstRun.tsx": {
-  "rel": "src/components/FirstRun.tsx",
-  "modes": {
-   "bug": {
-    "sha": "6f236b82c3384eda005a7d51aaf85e43899fa99e9d175dc084533a8f2dfccc8e",
-    "output": "src__components__FirstRun.tsx__bug__6f236b82.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "6f236b82c3384eda005a7d51aaf85e43899fa99e9d175dc084533a8f2dfccc8e",
-    "output": "src__components__FirstRun.tsx__feature__6f236b82.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/install/tiers.ts": {
-  "rel": "src/install/tiers.ts",
-  "modes": {
-   "bug": {
-    "sha": "e622496ba2c94bac6870f123fdeee648ddc13d2a0a7c5bf47c0133eb872a1feb",
-    "output": "src__install__tiers.ts__bug__e622496b.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "e622496ba2c94bac6870f123fdeee648ddc13d2a0a7c5bf47c0133eb872a1feb",
-    "output": "src__install__tiers.ts__feature__e622496b.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "vite.comfy.ts": {
-  "rel": "vite.comfy.ts",
-  "modes": {
-   "bug": {
-    "sha": "8df4e10ced1ed6ce30b83331d34b3fc8998d47b658a6c2ecabce3f9919589d33",
-    "output": "vite.comfy.ts__bug__8df4e10c.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "8df4e10ced1ed6ce30b83331d34b3fc8998d47b658a6c2ecabce3f9919589d33",
-    "output": "vite.comfy.ts__feature__8df4e10c.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/api/firstrun.ts": {
-  "rel": "src/api/firstrun.ts",
-  "modes": {
-   "bug": {
-    "sha": "dc3978abb0eb409f43aeed1f55f9e11526927bb17af8cc6c18d08a75410a61ff",
-    "output": "src__api__firstrun.ts__bug__dc3978ab.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "src/film/worldmodel.ts": {
-  "rel": "src/film/worldmodel.ts",
-  "modes": {
-   "bug": {
-    "sha": "2e218153e4b12d3b102772cc7383ba78c563555203b6bd06b5c1f6e6e2ae6c2d",
-    "output": "src__film__worldmodel.ts__bug__2e218153.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "2e218153e4b12d3b102772cc7383ba78c563555203b6bd06b5c1f6e6e2ae6c2d",
-    "output": "src__film__worldmodel.ts__feature__2e218153.md",
-    "reviewed_at": "2026-09-05T12:40:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/film/adversary.ts": {
-  "rel": "src/film/adversary.ts",
-  "modes": {
-   "bug": {
-    "sha": "9f3313f1e493861c8f80fcda100e7b87bee71f0c61a5a7bc7a4934c34dd1900f",
-    "output": "POST-FIX-2026-09-05-remediation-wave.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0,
-    "note": "post-fix delta recorded in the shared remediation-wave bundle"
-   },
-   "feature": {
-    "sha": "9f3313f1e493861c8f80fcda100e7b87bee71f0c61a5a7bc7a4934c34dd1900f",
-    "output": "src__film__adversary.ts__feature__9f3313f1.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/film/storyboard-doc.ts": {
-  "rel": "src/film/storyboard-doc.ts",
-  "modes": {
-   "bug": {
-    "sha": "e667d077798c75dff7346fbaeb64d164e1d8b142847530ba3f0c0c3c0074a84e",
-    "output": "src__film__storyboard-doc.ts__bug__e667d077.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "src/components/DocView.tsx": {
-  "rel": "src/components/DocView.tsx",
-  "modes": {
-   "bug": {
-    "sha": "ca53db504f4b0feb48c33567842b718d34a37552c974621db4a53771574ee722",
-    "output": "src__components__DocView.tsx__bug__ca53db50.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "e1f8a0beaf6ff44b6968b5729753212d3b82aec28c019d014ccce0f850e15d76",
-    "output": "src__components__DocView.tsx__feature__e1f8a0be.md",
-    "reviewed_at": "2026-09-05T13:20:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "comfy/caliper_vram.py": {
-  "rel": "comfy/caliper_vram.py",
-  "modes": {
-   "bug": {
-    "sha": "f2dbb57bbe372d7da9db08a5385df719fcb75b63b0a78ed836932ef462c971d3",
-    "output": "comfy__caliper_vram.py__bug__f2dbb57b.md",
-    "reviewed_at": "2026-09-06",
-    "model": "zcode-glm-5.3",
-    "cost": 0,
-    "note": "lineage: the 2026-09-03 review (6fa39b24) hashed a pure-CRLF rendering of byte-identical content - normalized to disk bytes (5b8fc1e7) same-day; 6d0712f5 is the 2026-09-05 remediation (503-on-degraded + power origin guard), sha-synced into custom_nodes and activating at the next backend start"
-   },
-   "feature": {
-    "sha": "6d0712f5859fc082538f2e16e1e981d17c3ec148d549727eb1732c4bfc16a2dc",
-    "output": "comfy__caliper_vram.py__feature__6d0712f5.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "tools/see.mjs": {
-  "rel": "tools/see.mjs",
-  "modes": {
-   "bug": {
-    "sha": "76fcc075a0a0f58e95bd5c9fc3155842b42d36d3ef94dff4cfd81fc48a2e68de",
-    "output": "tools__see.mjs__bug__76fcc075.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "tools/peek.mjs": {
-  "rel": "tools/peek.mjs",
-  "modes": {
-   "bug": {
-    "sha": "d1db4a8babcd056ad98787f1e152ffbcfaee79f345ae1a9202f8874cf6e4dc57",
-    "output": "tools__peek.mjs__bug__d1db4a8b.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "tools/ui-harness.mjs": {
-  "rel": "tools/ui-harness.mjs",
-  "modes": {
-   "bug": {
-    "sha": "939eb7f99762bbbf9f396ea5264d63d37be11823baab333c5b392a0dee8c2402",
-    "output": "tools__ui-harness.mjs__bug__939eb7f9.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "catalog-brain-rows wave + adversary round-3 fix"
-   }
-  }
- },
- "tools/git-guard.mjs": {
-  "rel": "tools/git-guard.mjs",
-  "modes": {
-   "bug": {
-    "sha": "21c089e1a29a7d051548a5fecf95777cc2f71a306c21d702682e69191a44b0f1",
-    "output": "tools__git-guard.mjs__bug__21c089e1.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "tools/install-git-guard.mjs": {
-  "rel": "tools/install-git-guard.mjs",
-  "modes": {
-   "bug": {
-    "sha": "6fb925bc71cd553ecc01c2ca4685eea01a92b172d46f55649f04ecce52549ea1",
-    "output": "tools__install-git-guard.mjs__bug__6fb925bc.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "tools/analyze-song.mjs": {
-  "rel": "tools/analyze-song.mjs",
-  "modes": {
-   "bug": {
-    "sha": "36232a610f59a6268e7a1724d5ed26c3a70680143e2fff8dcd569bcf1a8d6933",
-    "output": "tools__analyze-song.mjs__bug__36232a61.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   }
-  }
- },
- "tools/film-proof.mjs": {
-  "rel": "tools/film-proof.mjs",
-  "modes": {
-   "bug": {
-    "sha": "9583a4248bd229a522ae97bfc3e86f2259a4416cb8829fa2589f17d731488f5c",
-    "output": "tools__film-proof.mjs__bug__9583a424.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "tools/rebaseline.mjs": {
-  "rel": "tools/rebaseline.mjs",
-  "modes": {
-   "bug": {
-    "sha": "2453a0bf192e1758e16fcd9d45bc4a829fcd7ba252bf9521194e60f9ebf8bc7a",
-    "output": "tools__rebaseline.mjs__bug__2453a0bf.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "tools/see-ui-720p.mjs": {
-  "rel": "tools/see-ui-720p.mjs",
-  "modes": {
-   "bug": {
-    "sha": "68458e5bede12599f87b4a8c4e88b2b0c1eb36e38a2f5c83e74ed03b07a24d50",
-    "output": "tools__see-ui-720p.mjs__bug__68458e5b.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "tools/gui-test-phase4.mjs": {
-  "rel": "tools/gui-test-phase4.mjs",
-  "modes": {
-   "bug": {
-    "sha": "3f41d32993ee8af414449e76ad7c03630d1eb679136db28dd6c0afe0cddbc9ac",
-    "output": "tools__gui-test-phase4.mjs__bug__3f41d329.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "tools/ltx-720p-test.mjs": {
-  "rel": "tools/ltx-720p-test.mjs",
-  "modes": {
-   "bug": {
-    "sha": "ffaed57c22a15e848e21e4d6c1c797973373a80e27d0a0589f7270a967c9864b",
-    "output": "tools__ltx-720p-test.mjs__bug__ffaed57c.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "vitest.setup.ts": {
-  "rel": "vitest.setup.ts",
-  "modes": {
-   "bug": {
-    "sha": "cea2f5be1bd6c44ad5f89cc692aa3e0b06a4dbaf4d0f72dc3684833e4789e29b",
-    "output": "vitest.setup.ts__bug__cea2f5be.md",
-    "reviewed_at": "2026-09-03",
-    "model": "zcode-subagent-fresh-context",
-    "cost": 0
-   }
-  }
- },
- "src/film/joins.ts": {
-  "rel": "src/film/joins.ts",
-  "modes": {
-   "bug": {
-    "sha": "d95bc4b8515b9c503919e3a269d53098be5f25e0c63c0d001dfa2c5bff7bc592",
-    "output": "src__film__joins.ts__bug__d95bc4b8.md",
-    "reviewed_at": "2026-09-05",
-    "model": "zcode-glm-5.3",
-    "cost": 0
-   },
-   "feature": {
-    "sha": "d95bc4b8515b9c503919e3a269d53098be5f25e0c63c0d001dfa2c5bff7bc592",
-    "output": "src__film__joins.ts__feature__d95bc4b8.md",
-    "reviewed_at": "2026-09-05T14:05:00",
-    "model": "glm-5.3-zai-in-session",
-    "cost": 0
-   }
-  }
- },
- "src/vram/preflight.ts": {
-  "rel": "src/vram/preflight.ts",
-  "modes": {
-   "bug": {
-    "sha": "71a04a5a9fa62f1bc0d6cbf2349d56e029da0080bfd222a6e3ea664907786e29",
-    "output": "src__vram__preflight.ts__bug__71a04a5a.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "vram-preflight wave delta + contract fix"
-   }
-  }
- },
- "src/providers/brainProviders.test.ts": {
-  "rel": "src/providers/brainProviders.test.ts",
-  "modes": {
-   "bug": {
-    "sha": "6f4625f82bb5e79aa44b85179600fc9ba843d7104bbfd5466b3b6b25a594286b",
-    "output": "src__providers__brainProviders.test.ts__bug__6f4625f8.md",
-    "reviewed_at": "2026-09-06",
-    "mode": "bug",
-    "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-    "scope": "catalog-brain-rows wave delta"
-   }
-  }
- },
- "src/vram/nodeSync.ts": {
-  "rel": "src/vram/nodeSync.ts",
-  "modes": {
-   "bug": {
-    "sha": "0094a2b48f14179ac8183d16bc194b1ed422c81e3b5c1388a0da74a0c6c1e1ca",
-    "output": "src__vram__nodeSync.ts__bug__0094a2b4.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/vram/nodeSync.test.ts": {
-  "rel": "src/vram/nodeSync.test.ts",
-  "modes": {
-   "bug": {
-    "sha": "5b4f436ee5d98c7170af5676e44727f5fb062474598375e76dee0054fd3bcd6f",
-    "output": "src__vram__nodeSync.test.ts__bug__5b4f436e.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "docs/FEATURES.md": {
-  "rel": "docs/FEATURES.md",
-  "modes": {
-   "bug": {
-    "sha": "3302f04744301cefb2b8d49ef2cbad623d734f35de951c54500ea131087c2fbd",
-    "output": "docs__FEATURES.md__bug__3302f047.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/providers/keyLiveness.ts": {
-  "rel": "src/providers/keyLiveness.ts",
-  "modes": {
-   "bug": {
-    "sha": "52cea5a1cd79d78c11cf310b4253c00b02a10c5efcc4c7655a53fad18028ed8d",
-    "output": "src__providers__keyLiveness.ts__bug__52cea5a1.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/providers/keyLiveness.test.ts": {
-  "rel": "src/providers/keyLiveness.test.ts",
-  "modes": {
-   "bug": {
-    "sha": "e0783b67dcd8e33990153144ad781ecc1493dc3e43414dd2c78d1756359b4dfb",
-    "output": "src__providers__keyLiveness.test.ts__bug__e0783b67.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/components/SettingsConsole.test.tsx": {
-  "rel": "src/components/SettingsConsole.test.tsx",
-  "modes": {
-   "bug": {
-    "sha": "a15ef9e8c6b78f46f47d2011516daffbcdd6276107ea69139be8e4b3d1785d08",
-    "output": "src__components__SettingsConsole.test.tsx__bug__a15ef9e8.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/power/state.test.ts": {
-  "rel": "src/power/state.test.ts",
-  "modes": {
-   "bug": {
-    "sha": "3eff0a29192c8a877ddf8b02f5a05841e2eef48ce69ac9eb7f9f299e5d71e1db",
-    "output": "src__power__state.test.ts__bug__3eff0a29.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/api/queueNodes.ts": {
-  "rel": "src/api/queueNodes.ts",
-  "modes": {
-   "bug": {
-    "sha": "7d97c64277e892b03ce1779d88155369b5b7996f0030042bd6b0f0a442f0b063",
-    "output": "src__api__queueNodes.ts__bug__7d97c642.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/api/queueNodes.test.ts": {
-  "rel": "src/api/queueNodes.test.ts",
-  "modes": {
-   "bug": {
-    "sha": "b0bbf6ebc366e0cb29a82d17d5dd3ddbdb0ce2d7399b28fddceed67f17df83f3",
-    "output": "src__api__queueNodes.test.ts__bug__b0bbf6eb.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/vram/preflight.test.ts": {
-  "rel": "src/vram/preflight.test.ts",
-  "modes": {
-   "bug": {
-    "sha": "6ec8fa21bbd904e2365e1b02fe18f8eff6422964ea7154e26a483ac901146e05",
-    "output": "src__vram__preflight.test.ts__bug__6ec8fa21.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "vite.recycle.ts": {
-  "rel": "vite.recycle.ts",
-  "modes": {
-   "bug": {
-    "sha": "d6a05a8afa67eae1b309d4592755e10146fc567caf13d82b43bedfb730aa16f6",
-    "output": "vite.recycle.ts__bug__d6a05a8a.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "zipWriter.test.ts": {
-  "rel": "zipWriter.test.ts",
-  "modes": {
-   "bug": {
-    "sha": "645971d8c989decef0daecd63cbd7ddc6eac9535d23572a6b0202fc1a4ec9243",
-    "output": "zipWriter.test.ts__bug__645971d8.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/surfaces/BundlesSurface.test.tsx": {
-  "rel": "src/surfaces/BundlesSurface.test.tsx",
-  "modes": {
-   "bug": {
-    "sha": "c9023f7292acb5c63427dfa5fdfa2926ccd3e555db19988f60426b21e4d781b6",
-    "output": "src__surfaces__BundlesSurface.test.tsx__bug__c9023f72.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- },
- "src/components/DocView.test.tsx": {
-  "rel": "src/components/DocView.test.tsx",
-  "modes": {
-   "bug": {
-    "sha": "eb478db36f839a966ff6e702d0bafafafb97ae2a591a7799901390e069d050b9",
-    "output": "src__components__DocView.test.tsx__bug__eb478db3.md",
-    "reviewed_at": "2026-09-06"
-   }
-  }
- }
 }
