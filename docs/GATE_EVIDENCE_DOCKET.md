@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-10)
 
-- **65 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **66 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -57,6 +57,7 @@
   - EV-061: the push guard REFUSED a four-commit Nexusmill docs branch on a doc published two days earlier: a NEW ref excluded only the baseline and re-fed 124 published commits to the docs model, whose REASON glued an elided `AIza` prefix to the next word so the classifier held it; fixed in FIVE rounds, each on the author's own cut - unvalidated tips, a sha list on argv, then the exclusion narrowing the security barrier itself (restructured to the docs feed only), then a context claiming 113/113 against a log saying 111/112 (Tools 6d24c55).
   - EV-062: the archive-mirror commit of three scanned repos' review records was BLOCKed on three caliper rows whose recorded sha was the post-fix bytes while the review file hashed the pre-fix bytes, with no note (every other such row had one); the author's first bytes check read the archive schema one level too shallow and reported zero mismatches; fixed at the source (Caliper 874b2ea) and re-mirrored, colibri 0ea3f50
   - EV-065: the sweep's own fix for a stuck paid-button guard registered its release timer non-persistent - Blender purges it on the very file load that triggers the defect; caught in round 1, persistent=True + a battery assertion, the battery had been green on a fix that did not work for its headline path
+  - EV-066: the full re-audit batch's own busy-guard fix dropped the old `finally`, so a Ctrl+C mid-bake re-opened the stuck-busy class on a narrower path, and two of its nineteen new batteries were bound to the author's machine (PowerShell, a ROCm venv) with no SKIP; caught in round 1 on a 73-file tranche whose 26 fixes all held
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -

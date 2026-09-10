@@ -979,6 +979,25 @@
    "Nexusmill docs/remediation_manifest.json (PS-GENLIB-GUARD-STUCK)",
    "Nexusmill a396f6b7"
   ]
+ },
+ {
+  "id": "EV-066-THE-BUSY-GUARD-FIX-DROPPED-ITS-FINALLY-AND-TWO-BATTERIES-WERE-BOUND-TO-ONE-MACHINE",
+  "date": "2026-09-10",
+  "repo": "Nexusmill (PatternSkin/__init__.py; tests/harness/runner.py + two new batteries)",
+  "layer": "gate-review BLOCK (round 1, glm-5.3-flash)",
+  "caught": "The full re-audit batch (19 Pattern Skin + Asset Forge cores, 26 fixes) was BLOCKed on two regressions the change itself introduced. (1) PS-BUSY-BG: the fix that releases the per-object busy guard BEFORE the _ps_item_done handoff (so headless multi-item bakes process every item) replaced the old unconditional `finally: _ps_release_busy()` with releases on the Exception path and before the callbacks - a BaseException (Ctrl+C on a `blender -b` batch, SystemExit from a wrapper) raised mid-apply now propagated without releasing, leaving the object in _PS_APPLY_BUSY for the session: the exact stuck-busy class the fix was closing, reopened on a narrower path. The lead had verified the fork's snippet against the modal branch and the batteries (all green) and missed the dropped guarantee. (2) Two of the nineteen new batteries were wired unconditionally into the specs tier while bound to this machine: sweep_accel_worker_r4_token.py read the worker's command line through PowerShell/Win32_Process (FileNotFoundError off-Windows) and sweep_accel_r4_bpy.py hard-asserted ~/.patternskin/mlvenv exists at main() scope, outside any check() - on any other machine the specs tier would report failures unrelated to a regression.",
+  "severity": "LOW x2",
+  "author_initially": "Both accepted on re-reading the bytes: _ps_release_busy is idempotent (name -> None), so the old finally could simply be kept around the new early releases; the batteries had been run only on the author's box.",
+  "resolution": "(1) The background section is wrapped in try/finally calling the idempotent release again - the early releases (the fix) stay, BaseException exits release too; sweep_ps_init_r4_bpy + r3 re-run GREEN. (2) The token battery reads PowerShell on win32, /proc/<pid>/cmdline on Linux and records a SKIP elsewhere; the Blender worker battery prints 'SKIP worker venv not installed' + 'VERDICT: SKIP' and exits 0 before any assert when the venv is absent. Round 2 CLEAR: gate_20260910-125312. Landed as Nexusmill 7e12b526.",
+  "refs": [
+   "Nexusmill .adversary/reviews/gate_20260910-124259.md (round 1 BLOCK)",
+   "Nexusmill .adversary/reviews/gate_20260910-125312.md (round 2 CLEAR)",
+   "Nexusmill .colibri_reviews/PatternSkin____init__.py__bug__5f4f0473.md (Gate record section)",
+   "Nexusmill tests/harness/probes/sweep_ps_init_r4_bpy.py (the busy-guard battery)",
+   "Nexusmill tests/harness/probes/sweep_accel_worker_r4_token.py + sweep_accel_r4_bpy.py (the SKIP paths)",
+   "Nexusmill docs/remediation_manifest.json (PS-BUSY-BG)",
+   "Nexusmill 7e12b526"
+  ]
  }
  ]
 }
