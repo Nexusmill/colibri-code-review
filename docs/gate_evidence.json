@@ -961,6 +961,24 @@
     "Blink .adversary/reviews/gate_20260909-224734.md (automatic CLEAR)",
     "GATE_EVIDENCE_DOCKET.md (same-commit human summary)"
    ]
-  }
+  },
+ {
+  "id": "EV-065-GUARD-RELEASE-TIMER-DIED-ON-THE-FILE-LOAD-IT-WAS-BUILT-FOR",
+  "date": "2026-09-10",
+  "repo": "Nexusmill (PatternSkin/__init__.py)",
+  "layer": "gate-review BLOCK (round 1, glm-5.3-flash)",
+  "caught": "The colibri sweep fixed PS-GENLIB-GUARD-STUCK (generate_default_library's _GEN_LIB['active'] never cleared after a forced cancel(), so the paid button refused with 'already running' for the rest of the session) by scheduling a bpy.app.timers release callback from cancel(). The reviewer traced that the headline trigger of the defect IS a file load (File > New/Open) and that Blender removes NON-persistent timers on file load - the callback was registered with the default persistent=False, so it died with the modal it was meant to outlive. The manifest row, the review record and the hunt-plan round all called the defect fixed; the RED-first battery tested the helper's semantics and the cancel() wiring, which cannot see the purge.",
+  "severity": "MEDIUM",
+  "author_initially": "Accepted after verifying the contract against the installed Blender 5.1.2 build (bpy.app.timers.register docstring: 'persistent: Don't remove timer when a new file is loaded'); no rebuttal.",
+  "resolution": "persistent=True on the registration; the battery (tests/harness/probes/sweep_ps_init_r3_bpy.py section B) now asserts the flag in the cancel() body - watched RED on the round-1 bytes, GREEN after; the remediation row PS-GENLIB-GUARD-STUCK, the review record's new 'Gate record' section and AGENT_STATE round 38 name the catch. Round 2 CLEAR: gate_20260910-075221. Landed as Nexusmill a396f6b7.",
+  "refs": [
+   "Nexusmill .adversary/reviews/gate_20260910-073917.md (round 1 BLOCK)",
+   "Nexusmill .adversary/reviews/gate_20260910-075221.md (round 2 CLEAR)",
+   "Nexusmill .colibri_reviews/PatternSkin____init__.py__bug__6b3a5138.md (Gate record section)",
+   "Nexusmill tests/harness/probes/sweep_ps_init_r3_bpy.py (section B, the persistent assertion)",
+   "Nexusmill docs/remediation_manifest.json (PS-GENLIB-GUARD-STUCK)",
+   "Nexusmill a396f6b7"
+  ]
+ }
  ]
 }
