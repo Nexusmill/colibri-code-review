@@ -998,6 +998,25 @@
    "Nexusmill docs/remediation_manifest.json (PS-BUSY-BG)",
    "Nexusmill 7e12b526"
   ]
+ },
+ {
+  "id": "EV-067-THE-STYLE-REFERENCE-MOVE-TOOK-THREE-GATE-ROUNDS-A-PICKER-EXCLUSION-ORPHANED-INSTALLS-A-FIX-WITH-ITS-OWN-HOLE",
+  "date": "2026-09-10",
+  "repo": "Nexusmill (asset-forge/forge/userlib.py, forge/imagegen/config.py, tests/harness/features/assetforge.json)",
+  "layer": "gate-review BLOCK (rounds 1 AND 2, glm-5.3-flash)",
+  "caught": "An owner-ordered feature change (the Asset Forge library defaults to Documents/Asset Forge/Library and the img2img style references live inside it at style-references/) was BLOCKed on three findings. (1) MED: the change grew app.py's _LIB_EXTRA and updated its three in-file enumerators, but the repo's own doctrine - restated verbatim in the hunk being committed - names userlib.list_items as a library-folder enumerator that must track _LIB_EXTRA; it was not updated, so the Studio's own-textures picker would have surfaced the 5,821 reference rasters already copied onto the owner machine as the user's own output. (2) MED: the default relocation orphaned every install that relied on the previous default without ever saving library_dir - on next launch the app would mkdir the new empty folder and the user's textures, flagged/ menu and remediated/ history would read as empty, with no migration or notice; the author's context claimed only that saved settings survive. (3) LOW: eight feature rows carried their 2026-09-10 sentence twice - the author's apply script had imported the earlier amendment module, which re-ran its module-level amend() calls - and AF-LIB-FLAGGED's text still asserted the two-member _LIB_EXTRA. ROUND 2 then caught the author's own round-1 fix: the adoption rule required the NEW default folder to be absent, but the app's own mkdir creates it empty on a fresh launch, so a user who restores their old library beside it would never be adopted - the exact abandonment the new docstring promised could not happen; plus the manifest row cited '5 checks' for a 7-check probe, and one probe check resolved the default against the real home folder (machine-dependent, a flaky-test risk).",
+  "severity": "MEDIUM x3, LOW x3 over two rounds",
+  "author_initially": "All six accepted on re-reading the bytes (no rebuttal): userlib.list_items rglobs the whole library with a flagged-only exclusion; library_dir() had no old-default fallback; the registry duplicates were verifiable in the decoded values; the round-1 adoption condition really did require the new folder to be missing.",
+  "resolution": "(1) list_items skips any path carrying style-references, like flagged/. (2) _default_library_dir(home): adoption fires when the new default is missing OR empty and the old one is a directory (a new folder with content is a choice); adopted into settings.json, nothing moved. (3) The eight rows deduplicated positionally; AF-LIB-FLAGGED re-stated; the manifest row's count corrected. (4) The machine-dependent check proves the default on a temp home. The battery grew to 8 checks (RED 6/8 against a git-archive export of HEAD, GREEN after); the full features tier re-run each round: critic 0 FAIL / 0 DRIFT. Round 3 CLEAR: gate_20260910-212111. Landed as Nexusmill 2c80d87b.",
+  "refs": [
+   "Nexusmill .adversary/reviews/gate_20260910-204558.md (round 1 BLOCK)",
+   "Nexusmill .adversary/reviews/gate_20260910-210928.md (round 2 BLOCK)",
+   "Nexusmill .adversary/reviews/gate_20260910-212111.md (round 3 CLEAR)",
+   "Nexusmill tests/harness/probes/sweep_af_library_r1.py (8 checks)",
+   "Nexusmill asset-forge/forge/userlib.py + forge/imagegen/config.py (both editions)",
+   "Nexusmill tests/harness/features/assetforge.json (AF-LIB-FLAGGED)",
+   "Nexusmill 2c80d87b"
+  ]
  }
  ]
 }
