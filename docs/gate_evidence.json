@@ -1137,6 +1137,23 @@
    "jcodemunch-mcp tests/test_assemble_task_context_reaudit.py::test_cross_repo_layer_refused_for_budget_is_named_too",
    "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__tools__assemble_task_context.py__bug__d84e593a.md (postscript)"
   ]
+ },
+ {
+  "id": "EV-075-A-TEST-ISOLATION-FIXTURE-THAT-GUARDED-THE-WRONG-COPY-OF-THE-MODULE",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (tests/test_credentials_reaudit.py; the sibling tests/test_credentials.py)",
+  "layer": "gate-review BLOCK (round 1, glm-5.3-flash)",
+  "caught": "LOW-MEDIUM, tests only. The credentials tranche's new battery drove resolve_credentials_in_env, which writes the module global credentials._resolution_source (the source of config --check's keyring diagnostics) outside monkeypatch's reach, and never cleared it - so GROQ_API_KEY -> groq and JCODEMUNCH_LICENSE_KEY -> lic persisted into every module collected afterwards. The reviewer noted the sibling tests/test_credentials.py installs an autouse fixture for exactly this, and that the new file had no analogue; the suite was green only because of alphabetical collection order.",
+  "severity": "LOW-MEDIUM",
+  "author_initially": "Accepted on reading the sibling (no rebuttal) - and found it worse than stated: the sibling imports `src.jcodemunch_mcp.credentials`, a SECOND module instance, so its isolation fixture had never guarded the `jcodemunch_mcp.credentials` instance the new battery and the server use. The author had modelled the battery on the audit probe, not on the sibling's fixture.",
+  "resolution": "An autouse fixture in the new battery delenv's every CREDENTIAL_ENV_VARS name and clears credentials._resolution_source before and after each test, on the right module instance; verified empty after the battery, the sibling and the config-check tests run together. Round 2 CLEAR (gate_20260913-165331.md), landed as jcodemunch-mcp 1aefece. Lesson: a global written by the code under test needs its own isolation in every test file that drives it - a sibling's fixture proves nothing across module instances (`src.pkg` vs `pkg` imports are two modules).",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-165100.md (round 1 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-165331.md (round 2 CLEAR)",
+   "jcodemunch-mcp 1aefece",
+   "jcodemunch-mcp tests/test_credentials_reaudit.py::_isolate_resolution_source",
+   "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__credentials.py__bug__e044d55f.md (postscript)"
+  ]
  }
  ]
 }
