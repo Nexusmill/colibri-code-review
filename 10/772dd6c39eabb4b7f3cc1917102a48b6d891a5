@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "10772dd6c39eabb4b7f3cc1917102a48b6d891a5",
+ "when": "20260913-133717",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "ec8d25c23adc98ee51ffa82628049771a83358f8b2930c56321f1d8f0b0e3259",
+   "model": "xai:grok-4.6",
+   "when": "20260913-133713",
+   "artifact": ".adversary\\reviews\\gate_20260913-133713.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260913-133713.md": "model: xai:grok-4.6 | usage: {'input_tokens': 57339, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 10701, 'output_tokens_details': {'reasoning_tokens': 10562}, 'total_tokens': 68040, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 1781160000, 'context_details': {'input_tokens': 57339, 'output_tokens': 10701}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nThe two new docket objects are well-formed JSON (required fields present, no duplicate keys, no trailing comma, sequential EV-068/EV-069). Claimed rounds match cited artifacts; EV-068 arithmetic (100 \u00d7 $0.003 = $0.30; \u201cfraction of a cent\u201d is >30\u00d7 off) and EV-069 digest length (12-char prefix vs 64-char sha256 `18b10068e44f\u20268708`, filename sha8 `18b10068`) are internally consistent. Truncated `sha` is the defect class doctrine already names; the row does not relitigate absolute keys.\n\nVERDICT: CLEAR"
+ }
+}
