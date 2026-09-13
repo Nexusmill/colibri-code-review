@@ -1017,6 +1017,39 @@
    "Nexusmill tests/harness/features/assetforge.json (AF-LIB-FLAGGED)",
    "Nexusmill 2c80d87b"
   ]
+ },
+ {
+  "id": "EV-068-THE-WEBSITE-COPY-SCRUB-INVENTED-A-COST-AND-LEFT-THE-GUIDE-CONTRADICTING-THE-PRIVACY-PAGE",
+  "date": "2026-09-12",
+  "repo": "Nexusmill (website/assetforge/index.html, website/guide/index.html, website/privacy/index.html)",
+  "layer": "gate-review BLOCK (round 1)",
+  "caught": "An owner-ordered copy pass (strip every visible dollar figure from nexusmill.com pending a pricing revisit; fix three stale claims) was BLOCKed on two findings. (1) HIGH money misstatement: the author replaced 'A 100-texture library costs about $0.30 of Replicate credit' with 'a small fraction of a cent' - false by more than 30x against the $0.003/texture rate the same change set was deleting elsewhere (100 x $0.003 = $0.30), on the section whose job is cost honesty. (2) MEDIUM contradictory security claims: the author rewrote the privacy page's key-storage line from 'Windows DPAPI / macOS Keychain' to 'a local passphrase-protected vault' but left the in-app guide's identical DPAPI claim untouched - and the guide was IN the same staged change set (edited two hunks earlier for a dollar removal), so the two customer-facing documents now made mutually exclusive claims about where the API key lives.",
+  "severity": "HIGH x1, MEDIUM x1",
+  "author_initially": "Both accepted on re-reading the bytes (no rebuttal). The 'fraction of a cent' phrasing was an unforced arithmetic error introduced while trying to avoid a dollar figure; the guide line was a search miss - the author had grepped for DPAPI only in the privacy page.",
+  "resolution": "Asset Forge's line now says 'a small amount of Replicate credit' (true, no figure); the guide's key-storage sentence was aligned to the privacy page ('in a local passphrase-protected vault'). Round 2 CLEAR; Nexusmill a4cc0fa5; both pages verified live on nexusmill.com after redeploy.",
+  "refs": [
+   "Nexusmill .adversary/reviews/gate_20260912-174717.md (round 1 BLOCK)",
+   "Nexusmill .adversary/reviews/gate_20260912-175042.md (round 2 CLEAR)",
+   "Nexusmill a4cc0fa5",
+   "Nexusmill website/assetforge/index.html, website/guide/index.html, website/privacy/index.html"
+  ]
+ },
+ {
+  "id": "EV-069-A-REVIEW-MANIFEST-ROW-CARRIED-A-12-CHAR-SHA-BECAUSE-THE-WRITER-TRUSTED-THE-AUDIT-SUMMARY-S-PREFIX",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (.colibri_reviews/_manifest.json, the sql_preprocessor.py review row)",
+  "layer": "gate-review BLOCK (round 1)",
+  "caught": "MEDIUM: the staged review-manifest row for parser/sql_preprocessor.py recorded sha '18b10068e44f' - twelve hex characters, where every other row (27 of them, including the sibling extractor.py row added thirty minutes earlier) carries the full 64-char sha256 the canonical writer emits. The author's persist script took the sha from the 2026-09-11 sub-agent summary JSON, which had stored only a truncated digest for this unit, and its guard checked only that the value STARTED with the expected prefix. A truncated digest makes the row unmatchable by any consumer that compares sha against sha256(file): the record would have been permanently unverifiable.",
+  "severity": "MEDIUM",
+  "author_initially": "Accepted on re-reading (no rebuttal). Noted while fixing: `git show HEAD:` yields LF bytes (sha eeb69e7c...) while the reviewed on-disk file is CRLF; the full digest was reconstructed by re-applying the file's CRLF newlines to the HEAD blob and verified to start with the audited 12-char prefix before it was written.",
+  "resolution": "Manifest row and record header carry the full 64-char digest 18b10068e44f64b2fca61ca2a8c8cb873bfd8bdaee7b8ee22ba74f94ee948708; the persist scripts for the remaining units now assert len(sha) == 64 rather than a prefix match; every existing row audited (0 short shas). Round 2 CLEAR (gate_20260913-132330), landed as a4214ce.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-131911.md (round 1 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-132330.md (round 2 CLEAR)",
+   "jcodemunch-mcp a4214ce",
+   "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__parser__sql_preprocessor.py__bug__18b10068.md",
+   "jcodemunch-mcp .colibri_reviews/_manifest.json"
+  ]
  }
  ]
 }
