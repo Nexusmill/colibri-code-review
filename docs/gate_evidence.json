@@ -1120,6 +1120,23 @@
    "jcodemunch-mcp tests/test_redact_reaudit.py::test_a_stray_banner_does_not_swallow_the_text_up_to_a_later_key",
    "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__redact.py__bug__86a1e34e.md (postscript + amended refuted-list)"
   ]
+ },
+ {
+  "id": "EV-074-THE-ONE-STAGE-OUTSIDE-THE-LOOP-KEPT-THE-BUG-THE-LOOP-HAD-JUST-BEEN-CURED-OF",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (src/jcodemunch_mcp/tools/assemble_task_context.py, the cross-repo layer)",
+  "layer": "gate-review BLOCK (round 1, glm-5.3-flash)",
+  "caught": "LOW, in the fix for the class it belongs to. The assemble_task_context tranche closed the re-audit's 'stages_run lists a stage that delivered nothing, with no flag' finding by making the dispatch loop record stages_without_entries and budget_exhausted for every strategy stage. The optional cross-repo layer runs AFTER that loop, in its own block, and the same diff edited it (adding the budget_hit branch for the layer being skipped) - yet left its `stages_run.append(\"cross_repo\")` unconditional, ignoring _add_entry's refusal. With cross_repo=True and the budget already spent, cross_repo was listed with no entry and no per-stage flag: the exact class the commit claimed to close, and a violation of the invariant the staged battery itself encodes (set(stages_run) - delivered <= set(stages_without_entries)) - which never fired because no test set cross_repo=True.",
+  "severity": "LOW",
+  "author_initially": "Accepted on reading the block (no rebuttal). The author had fixed the loop and touched the layer without re-reading the layer against the new contract; the battery exercised the loop only.",
+  "resolution": "The layer keeps _add_entry's return, still lists itself in stages_run (it ran) and adds itself to stages_without_entries when refused. Pinned by test_cross_repo_layer_refused_for_budget_is_named_too (get_cross_repo_map stood in, anchor-only budget; RED on the round-1 bytes at the invariant assertion - assert {'cross_repo'} <= set() - GREEN after). Round 2 CLEAR (gate_20260913-145957.md), landed as jcodemunch-mcp c5a6f7e. Lesson: when a fix establishes a contract for a family of branches, every sibling branch the diff touches is held to it - and the test that encodes the invariant has to be driven through every branch, not only the loop.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-145049.md (round 1 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-145957.md (round 2 CLEAR)",
+   "jcodemunch-mcp c5a6f7e",
+   "jcodemunch-mcp tests/test_assemble_task_context_reaudit.py::test_cross_repo_layer_refused_for_budget_is_named_too",
+   "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__tools__assemble_task_context.py__bug__d84e593a.md (postscript)"
+  ]
  }
  ]
 }
