@@ -1154,6 +1154,23 @@
    "jcodemunch-mcp tests/test_credentials_reaudit.py::_isolate_resolution_source",
    "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__credentials.py__bug__e044d55f.md (postscript)"
   ]
+ },
+ {
+  "id": "EV-076-A-PREFIX-NORMALISED-FOR-THE-FILTER-BUT-NOT-FOR-THE-SLICE",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (src/jcodemunch_mcp/tools/get_file_tree.py)",
+  "layer": "gate-review BLOCK (round 1, glm-5.3-flash)",
+  "caught": "LOW-MEDIUM, a half-applied fix. The get_file_tree tranche replaced a bare startswith prefix filter with a segment-boundary filter over a normalised prefix (rstrip('/')) - and still handed _build_tree the RAW prefix, whose slice `file_path[len(path_prefix):]` then cut one character too many for any prefix with two or more trailing slashes ('src//', a realistic dir + '/' double-join). Every relative path lost a character, nodes landed at the wrong depth under mangled keys, and two files that collapsed to the same relative name (src/x/a.py, src/y/a.py -> a.py) silently merged with no error and no truncated flag. The old bytes returned an empty tree for that input - degenerate but safe; the fix replaced it with silent wrong output. The author's own pins (src, src/, empty, an exact file) all missed the class: 'src/' works only because one slash is exactly what the normalisation removes.",
+  "severity": "LOW-MEDIUM",
+  "author_initially": "Accepted on reading the slice (no rebuttal). The author normalised once at the filter and did not follow the prefix into the helper that consumes it two lines later.",
+  "resolution": "_build_tree normalises the prefix itself and slices by that; get_file_tree passes the normalised prefix. Pinned by a two-file collision test with 'src//' that was RED on the round-1 bytes, and by 'src/', 'src//' and 'src///' all yielding the 'src' baseline tree end to end. Round 2 CLEAR (gate_20260913-173408.md), landed as jcodemunch-mcp ad9f01c. Lesson: when a fix normalises an input, every consumer of the raw input in the same call path is part of the fix - and the pins must include the shape the normalisation exists for, not only the shapes that already worked.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-173112.md (round 1 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-173408.md (round 2 CLEAR)",
+   "jcodemunch-mcp ad9f01c",
+   "jcodemunch-mcp tests/test_get_file_tree_reaudit.py::test_a_doubled_trailing_slash_keeps_structure_and_every_file",
+   "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__tools__get_file_tree.py__bug__397ff254.md (postscript)"
+  ]
  }
  ]
 }

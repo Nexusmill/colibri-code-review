@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-13)
 
-- **75 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **76 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -67,6 +67,7 @@
   - EV-073: the same tranche's whole-block private-key rule (`.*?` to the END banner) had been cleared by the author's own refuted-list as 'linear, no nested repetition' - the gate pointed out linear per ATTEMPT is not linear per sub(): every unterminated BEGIN banner walked to end of text (5.4 s for 224 KB of banners, minutes for 1 MB, per tool call) and a banner quoted in prose swallowed 200 legitimate lines up to the next real key; accepted on measurement, fixed with a tempered span that stops at the next `-----` (1 MB in 0.09 s, large real keys still redacted whole; a size cap was rejected because exceeding it would leak the key), the refuted-list amended in place; round 3 CLEAR (gate_20260913-144119.md), landed fd1069c
   - EV-074: the assemble_task_context tranche in jcodemunch-mcp closed 'a stage listed in stages_run with no entry and no flag' for the dispatch loop, and the same diff touched the cross-repo layer that runs after the loop without holding it to the new contract - with cross_repo=True and the budget spent it was listed unflagged, breaking the invariant the staged battery encoded but never drove through that branch; accepted, fixed, RED-first test at the invariant assertion; round 2 CLEAR (gate_20260913-145957.md), landed c5a6f7e
   - EV-075: the credentials tranche's new test battery left credentials._resolution_source populated (the keyring-diagnostics global, written outside monkeypatch's reach) with no isolation fixture - green only by collection order; on reading the sibling test file that DOES isolate it, the author found it guards a second copy of the module (`src.jcodemunch_mcp` import), so nothing had ever isolated the real one; accepted, fixture added on the right module; round 2 CLEAR (gate_20260913-165331.md), landed 1aefece
+  - EV-076: the get_file_tree tranche in jcodemunch-mcp normalised the path prefix for the filter and left _build_tree slicing by the raw prefix - 'src//' cut one character too many off every relative path and silently merged colliding files where the old bytes returned an empty tree; the author's pins missed the very shape the normalisation exists for; accepted, the helper normalises too, RED-first collision test; round 2 CLEAR (gate_20260913-173408.md), landed ad9f01c
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -
