@@ -1050,6 +1050,23 @@
    "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__parser__sql_preprocessor.py__bug__18b10068.md",
    "jcodemunch-mcp .colibri_reviews/_manifest.json"
   ]
+ },
+ {
+  "id": "EV-070-THE-DOCKET-ROWS-FOR-TWO-GATE-CATCHES-CLAIMED-ROUND-2-CLEARS-WHILE-CITING-ONLY-THE-ROUND-1-FILES",
+  "date": "2026-09-13",
+  "repo": "colibri-code-review (docs/gate_evidence.json, EV-068 and EV-069)",
+  "layer": "gate-review BLOCK (round 1, glm-5.3-flash -> grok-4.6 fallback)",
+  "caught": "MEDIUM x2, the EV-058 class re-introduced in the very commit set that carries a row teaching against it. As FIRST STAGED (the pre-image exists only in the round-1 review artifact gate_20260913-132459.md, which quotes it - it never landed in any commit), EV-068's resolution claimed 'Round 2 CLEAR; Nexusmill a4cc0fa5; both pages verified live' and EV-069's claimed 'Round 2 recommitted', while each row's refs named only its round-1 BLOCK file plus a commit sha. A commit sha is not a review artifact by this docket's own convention (EV-058: 'every claimed round needs its file'); an unevidenced CLEAR would have entered the permanent record.",
+  "severity": "MEDIUM x2",
+  "author_initially": "Accepted on re-reading (no rebuttal). The author had the round-2 files on disk in both repos and simply did not cite them - the same omission EV-058 documents, made while writing the rows that cite EV-058's lesson. The first draft of THIS row was then itself BLOCKed (gate_20260913-134109.md) for describing the pre-correction rows as if they were the committed bytes and for attributing the correction to a diff that did not contain it; reworded to anchor every claim to the artifact that holds it.",
+  "resolution": "The two rows were corrected in place BEFORE the docket commit landed: colibri 10772dd (round 2 CLEAR, gate_20260913-133713.md) already carries EV-068 citing Nexusmill gate_20260912-175042.md and EV-069 citing jcodemunch-mcp gate_20260913-132330.md plus the landed shas, so the HEAD bytes of those rows show the fix, not the catch. This row adds nothing to EV-068/069; it records the catch itself, which is otherwise visible only in the round-1 artifact.",
+  "refs": [
+   "colibri-code-review .adversary/reviews/gate_20260913-132459.md (round 1 BLOCK)",
+   "colibri-code-review .adversary/reviews/gate_20260913-133713.md (round 2 CLEAR)",
+   "colibri-code-review 10772dd",
+   "EV-058 (the precedent row)",
+   "colibri-code-review .adversary/reviews/gate_20260913-134109.md (round 1 BLOCK of this row's own first draft)"
+  ]
  }
  ]
 }
