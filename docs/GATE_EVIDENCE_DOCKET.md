@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-13)
 
-- **70 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **71 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -62,6 +62,7 @@
   - EV-068: a website copy scrub (owner order: no visible dollar figures) replaced '$0.30 per 100 textures' with 'a small fraction of a cent' - false by 30x against the per-texture rate the same change was deleting - and left the in-app guide contradicting the privacy page on where the API key lives, though the guide was in the same staged set; both caught in round 1, both accepted
   - EV-069: a review-manifest row carried a 12-char sha because the persist script trusted a truncated digest in the sub-agent's audit summary and only checked the prefix; caught in round 1 against the 27 full-length sibling rows; the full digest was reconstructed from the HEAD blob with the file's CRLF newlines and verified against the prefix, and the writers now assert the length
   - EV-070: the docket commit carrying EV-068/069 was itself BLOCKed - as first staged both rows claimed a round-2 CLEAR while citing only their round-1 files (the EV-058 class, re-introduced beside EV-058's lesson); corrected before landing, so 10772dd carries the fixed rows and the catch survives only in the round-1 artifact - which is why this row exists; its own first draft was BLOCKed for narrating the pre-correction bytes as committed
+  - EV-071: a char-to-byte offset sweep in jcodemunch-mcp's AL extractor retyped the function's line table to character units and converted Passes 1-13, leaving Pass 14 (~800 lines below the last hunk, unseen by the reviewer) storing the raw character index as byte_offset - the very defect class the commit claimed to close; the reviewer reasoned it from the retyped shared state, the author had counted hunks; fixed at the root with a RED-first test, round 2 CLEAR (gate_20260913-141605.md), landed 857a4d5
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -

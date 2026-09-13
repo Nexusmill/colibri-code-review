@@ -1067,6 +1067,23 @@
    "EV-058 (the precedent row)",
    "colibri-code-review .adversary/reviews/gate_20260913-134109.md (round 1 BLOCK of this row's own first draft)"
   ]
+ },
+ {
+  "id": "EV-071-A-CHAR-TO-BYTE-OFFSET-SWEEP-RETYPED-SHARED-STATE-AND-MISSED-THE-PASS-800-LINES-BELOW-THE-LAST-HUNK",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (src/jcodemunch_mcp/parser/extractor.py, _parse_al_symbols)",
+  "layer": "gate-review BLOCK (round 1, glm-5.3-flash)",
+  "caught": "MEDIUM, a real regression the remediation itself introduced. The sweep converting the template extractors' stored positions from character to byte offsets rebuilt AL's function-local line_start_offsets table in character units and renamed byte_to_line to char_to_line, then routed every position in Passes 1-13 through the new CharToByte cursor - and stopped. Pass 14 (variable declarations inside var sections) sits ~800 lines below the last converted hunk, outside the diff, and read line_start_offsets[i] straight into Symbol.byte_offset: a character index stored as a byte offset for every .al file with a multi-byte character before a var section - the exact defect class the commit claimed to close. The staged AL test had no var section, so nothing executed the pass; the author's in-function comment asserted 'every stored position goes through to_byte' for the whole function. The reviewer could not see Pass 14's lines; it reasoned from the retyped shared state that any unshown consumer of the table was now wrong-typed, and named the falsification path.",
+  "severity": "MEDIUM",
+  "author_initially": "Accepted on reading the lines (no rebuttal). The author had verified the sweep by counting converted call sites within the diff, not by enumerating every reader of the state it retyped - the full suite was green on the round-1 bytes (7982 passed) and proved nothing, because no fixture reached the pass.",
+  "resolution": "Fixed at the root (line_char = line_start_offsets[i]; byte_offset=to_byte(line_char)) and pinned by test_al_var_section_offsets_after_non_ascii, RED on the round-1 bytes and GREEN after; full suite 7992 passed. Round 2 CLEAR (gate_20260913-141605.md), landed as jcodemunch-mcp 857a4d5. Lesson: when a change retypes a variable, the review unit is every reader of that variable, not the hunks that happen to be visible - the same 'audit the retyped state' law the reviewer applied.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-134623.md (round 1 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-141605.md (round 2 CLEAR)",
+   "jcodemunch-mcp 857a4d5",
+   "jcodemunch-mcp tests/test_extractor_template_offsets.py::test_al_var_section_offsets_after_non_ascii",
+   "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__parser__extractor.py__bug__359c0eab.md (postscript)"
+  ]
  }
  ]
 }
