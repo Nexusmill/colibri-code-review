@@ -1084,6 +1084,42 @@
    "jcodemunch-mcp tests/test_extractor_template_offsets.py::test_al_var_section_offsets_after_non_ascii",
    "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__parser__extractor.py__bug__359c0eab.md (postscript)"
   ]
+ },
+ {
+  "id": "EV-072-A-REDACTOR-TAUGHT-TO-WALK-TUPLES-LEFT-ITS-DEPTH-CAP-RETURNING-DEEP-TUPLES-RAW",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (src/jcodemunch_mcp/redact.py, redact_dict)",
+  "layer": "gate-review BLOCK (round 1, glm-5.3-flash)",
+  "caught": "MEDIUM, in a security fix. The redact tranche taught redact_dict to descend into tuples (the audit's finding: tuple values fell through to the scalar return and were never scanned). Three branches above the new (list, tuple) walk, the depth-cap guard - whose own comment declares 'Don't return raw data past the cap - that would leak secrets' (audit finding F10) - still enumerated (str, dict, list): a tuple sitting past depth 20 fell to `return data, 0` with its strings unscanned, while a list at the same depth collapsed to the sentinel. The change shipped tuple support with the two branches of one function disagreeing about whether a tuple is a container. Before the change tuple contents leaked at every depth, so the aggregate was not worsened - but a redactor with inconsistent containment is a defect, and the reviewer said so.",
+  "severity": "MEDIUM",
+  "author_initially": "Accepted on reading the guard (no rebuttal). The author had verified the new branch's return shape and the four probe scenarios, not the sibling guard the new branch now had to agree with. The first regression test written for the catch nested the tuple inside lists and PASSED on the round-1 bytes (the list wrapper at depth 21 collapsed first) - it was corrected to nest tuples in tuples before it went RED, so the pinned test reaches the exact branch the reviewer named.",
+  "resolution": "One token: tuple added to the cap guard's isinstance. Pinned by test_depth_cap_collapses_a_tuple_like_any_container (a 26-deep tuple nest carrying a synthetic bearer header; RED on the round-1 bytes - the token came back in the output - GREEN after). Round 2 (gate_20260913-143014.md) verified the fix settled ('reaches the named branch') and BLOCKed on a different, new finding (EV-073); the tranche CLEARed in round 3 (gate_20260913-144119.md) and landed as jcodemunch-mcp fd1069c. Lesson: when a fix adds a type to one branch of a dispatcher, every sibling branch that enumerates types is part of the change - and a regression test must be shown to reach the named branch, not merely to fail somewhere.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-142436.md (round 1 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-143014.md (round 2 BLOCK on EV-073; the tuple fix verified settled)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-144119.md (round 3 CLEAR)",
+   "jcodemunch-mcp fd1069c",
+   "jcodemunch-mcp tests/test_redact_reaudit.py::test_depth_cap_collapses_a_tuple_like_any_container",
+   "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__redact.py__bug__86a1e34e.md (postscript)"
+  ]
+ },
+ {
+  "id": "EV-073-LINEAR-PER-ATTEMPT-IS-NOT-LINEAR-PER-SUB-A-WHOLE-BLOCK-KEY-REDACTION-WENT-QUADRATIC-AND-SWALLOWED-PROSE",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (src/jcodemunch_mcp/redact.py, the private_key and pgp_private_key patterns)",
+  "layer": "gate-review BLOCK (round 2, glm-5.3-flash)",
+  "caught": "MEDIUM, new in the diff and waved through by the author's own refuted-list. The redact tranche replaced a banner-only private-key rule (which left the key body in the output) with a whole-block rule `-----BEGIN ...-----.*?-----END ...-----` under DOTALL, and the review record's refuted-list dismissed 'catastrophic backtracking' as impossible: 'a single lazy span against a fixed literal anchor, no nested repetition; linear'. The reviewer pointed out that a lazy span is linear per ATTEMPT, not per sub(): every BEGIN banner that lacks an END walks to end of text, so a file of repeated banners - which get_file_content / get_symbol_source hand to the redactor whole - costs O(banners x length), a repeatable multi-minute stall per tool call on a 1 MB banner file in any indexed repo. The same unbounded span let a BEGIN banner quoted in prose swallow everything up to the next real key's END - silent loss of legitimate returned source. Both reproduced on the bytes before anything was changed: 5.39 s for 224 KB of bare banners; 200 legitimate lines collapsed into one marker.",
+  "severity": "MEDIUM",
+  "author_initially": "Accepted on measurement (no rebuttal). The author had refuted the ReDoS worry by the absence of nested quantifiers - the exponential class - and never costed the k-attempts case, then re-cited that refutation to the gate in the round-2 context. The reviewer's suggested fix shapes were a length cap or a tempered dot; the cap was rejected by the author because a large PGP export exceeding it would leak the whole key.",
+  "resolution": "A tempered span, `(?:(?!-----).)*?`, in both block rules: the body may not contain the start of a `-----` banner, so an attempt stops at the next banner of any kind and a stray banner cannot reach past the next one; no real PEM or PGP-armoured key body contains `-----`. Measured on the fixed bytes: 40,000 banners (1.09 MB) 0.094 s; a 150 KB single real block still redacted whole. Pinned by test_unterminated_banners_do_not_go_quadratic (8000 banners under 1 s; 4.7 s RED) and test_a_stray_banner_does_not_swallow_the_text_up_to_a_later_key (all 200 lines kept, real key redacted; RED kept 0). The review record's refuted-list line is amended in place to say the refutation was too narrow. Round 3 CLEAR (gate_20260913-144119.md), landed as jcodemunch-mcp fd1069c. Lesson: 'no nested repetition' rules out the exponential case only; a pattern applied by sub() over attacker-shaped text has to be costed per attempt times attempts, and a refutation is a claim the gate will test.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-143014.md (round 2 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-144119.md (round 3 CLEAR)",
+   "jcodemunch-mcp fd1069c",
+   "jcodemunch-mcp tests/test_redact_reaudit.py::test_unterminated_banners_do_not_go_quadratic",
+   "jcodemunch-mcp tests/test_redact_reaudit.py::test_a_stray_banner_does_not_swallow_the_text_up_to_a_later_key",
+   "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__redact.py__bug__86a1e34e.md (postscript + amended refuted-list)"
+  ]
  }
  ]
 }
