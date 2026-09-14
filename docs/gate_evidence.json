@@ -1235,6 +1235,40 @@
    "colibri-code-review 7b86439 (EV-077..079 landed with the corrected sentence)",
    "EV-060 (the row that carries the true provenance)"
   ]
+ },
+ {
+  "id": "EV-081-A-HEARTBEAT-THAT-SLEPT-THROUGH-THE-BATCH-AND-A-RELEASE-THAT-DELETED-THE-NEXT-RUNS-LOCK",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (src/jcodemunch_mcp/tools/refresh.py, tail batch 5 of the 2026-09-11 re-audit)",
+  "layer": "gate-review BLOCK (round 1, MEDIUM)",
+  "caught": "The per-repo slice lock added in this very tranche could re-enable the defect it exists to prevent. (1) The stale rule judged the lock's mtime and the holder touched it only at the TOP of each batch, so one batch longer than budget + 300 s (batch_size is an unbounded CLI int; slow storage is the module's stated target) went silent and a second run broke a LIVE lock. (2) _release_lock unlinked unconditionally, so when the first run's finally fired it deleted the SECOND run's lock (ABA) and a third run started beside it - two slices with no lock at all. The reviewer traced both from the module's own docstring ('a running parse cannot be preempted') against the author's context claim that a live slice 'cannot overshoot by much'.",
+  "severity": "MEDIUM (the fix's own failure mode: a lock that can be broken while live and deleted by a stranger)",
+  "author_initially": "Shipped a heartbeat that only fired between batches and wrote in the gate context that a live slice 'cannot overshoot by much' - contradicted by the module docstring the author had read and quoted earlier in the same session. The advisor had already pushed the heartbeat idea; the author implemented the cheap half (touch per batch) and asserted the property the expensive half (touch DURING the batch) would have provided.",
+  "resolution": "The lock carries a random token; touch and release act only on a lock carrying it (_lock_owned); a daemon thread heartbeats every 15 s for as long as the process runs, during batches too; losing the lock stops the slice with stopped_because 'lock_lost', success False, and does NOT write the cursor. Three tests RED on the round-1 bytes (the in-batch heartbeat, the lock-lost refusal, the foreign lock surviving our release). Round 2 CLEAR (gate_20260913-234116.md), landed jcodemunch-mcp 17e5a44. Lesson: a liveness rule must be judged against the longest un-preemptable step, not the loop granularity, and a lock without an owner check is a lock anyone can delete.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-232653.md (round 1 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-234116.md (round 2 CLEAR)",
+   "jcodemunch-mcp 17e5a44 (landed)",
+   "jcodemunch-mcp tests/test_refresh_reaudit.py",
+   ".colibri_reviews/src__jcodemunch_mcp__tools__refresh.py__bug__62c71b5b.md"
+  ]
+ },
+ {
+  "id": "EV-082-A-PAIR-OFF-THAT-HID-A-SCOPE-MOVE-AND-MISSED-THE-INTERIOR-SHIFT",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (src/jcodemunch_mcp/tools/get_changed_symbols.py, tail batch 5 of the 2026-09-11 re-audit)",
+  "layer": "gate-review BLOCK (round 1, two LOWs)",
+  "caught": "The renumbering pair-off the author added after the advisor's review keyed on (name, kind, content_hash) with no qualified name, so a byte-identical body moved into another parent (A.f -> B.f - an id-changing, reference-breaking move) was paired off and HIDDEN where the old keying reported removed + added. And it only caught renumbering that crossed the added/removed boundary: deleting the first of THREE same-named siblings read as 1 removed + 2 spurious 'modified' rows - directly contradicting the author's own context claim that 'a deletion is exactly one removal'. The reviewer constructed both shapes from the ordinal semantics the author had described.",
+  "severity": "LOW x2 (a hidden move; false 'modified' rows that inflate changed_count)",
+  "author_initially": "Fixed the one deletion shape the advisor named (first of two), asserted the general property ('exactly one removal, exactly one addition') from that single case, and shipped a pairing key that dropped the qualified name the ids carry. Two tests covered exactly the two shapes that passed.",
+  "resolution": "The diff is aligned per sibling GROUP - the parser's id with its trailing ~N stripped, qualified name and kind included: byte-identical bodies pair off as unchanged, equal leftovers pair positionally as modified, the surplus is removed/added; the intersection loop is gone. Four tests RED on the round-1 bytes (first of three; insert before two; the A.f -> B.f move with fixture validity asserted; both-edited as control). Round 2 CLEAR (gate_20260913-234116.md), landed jcodemunch-mcp 17e5a44. Lesson: when a fix normalises identity (strip an ordinal, pair by content), the pairing key must keep every part of the identity the original key carried - and a property claimed for 'N' must be tested at N=3, not N=2.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-232653.md (round 1 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-234116.md (round 2 CLEAR)",
+   "jcodemunch-mcp 17e5a44 (landed)",
+   "jcodemunch-mcp tests/test_get_changed_symbols_reaudit.py",
+   ".colibri_reviews/src__jcodemunch_mcp__tools__get_changed_symbols.py__bug__fa98ac86.md"
+  ]
  }
  ]
 }

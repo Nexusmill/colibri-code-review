@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-13)
 
-- **80 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **82 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -72,6 +72,8 @@
   - EV-078: the same tranche's context claimed the review ledger gained two rows while the staged manifest carried four - two belonged to an uncommitted later tranche the driver re-staged by accident; the reviewer counted the staged blob; manifest rebuilt from HEAD; round 4 CLEAR (gate_20260913-201642.md), landed d9f2521
   - EV-079: the same tranche's corrupt-gzip test sliced a few-hundred-byte blob at byte 2000, never truncating it, and passed through the wrong ValueError; the fixture now halves the blob and asserts the wrapper's message; round 4 CLEAR (gate_20260913-201642.md), landed d9f2521
   - EV-080: the EV-077..079 docket commit itself cited Tools 8245433 as the commit that closed the unstaged-caller hole - per EV-060 it is the incident and de3f953 the fix; the reviewer reconciled the new row against EV-060 in the same file; corrected in place; round 2 CLEAR (gate_20260913-210200.md), landed 7b86439
+  - EV-081: the refresh slice lock (tail batch 5) heartbeated only between batches, so one long batch went silent past budget + grace and a second run broke a LIVE lock; and release unlinked without an owner check, deleting the next run's lock (ABA) - a token, an in-batch heartbeat thread, owner-only touch/release and a lock-lost refusal that never writes the cursor; three tests RED on the round-1 bytes; round 2 CLEAR (gate_20260913-234116.md), landed 17e5a44
+  - EV-082: get_changed_symbols' sibling pair-off (tail batch 5) keyed on (name, kind, body) and hid a byte-identical A.f -> B.f move, and caught only boundary renumbering so deleting the first of three read as 1 removed + 2 spurious modified - the author's 'exactly one removal' claim tested at N=2 only; group alignment on the ordinal-stripped id; four tests RED on the round-1 bytes; round 2 CLEAR (gate_20260913-234116.md), landed 17e5a44
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -
