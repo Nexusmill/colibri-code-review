@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "cb0bc28477250830d906f39524657147e270df0d",
+ "when": "20260914-000500",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "7fcaf1aa6cdd3ac9125c9deecdf39db4bf6449d19d1d4eeac0aef145084bc6f4",
+   "model": "xai:grok-4.6",
+   "when": "20260914-000442",
+   "artifact": ".adversary\\reviews\\gate_20260914-000442.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260914-000442.md": "model: xai:grok-4.6 | usage: {'input_tokens': 67399, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 12818, 'output_tokens_details': {'reasoning_tokens': 12701}, 'total_tokens': 80217, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 2109380000, 'context_details': {'input_tokens': 67399, 'output_tokens': 12818}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nThe append is two well-formed rows (EV-081, EV-082) on the existing `entries` array. Required covenant fields are present; both claimed rounds cite a real `gate_YYYYMMDD-HHMMSS.md` path; ids are 82/82 unique; no internal contradiction with EV-060/EV-077/EV-080; no secret-shaped literals. The sibling `.md` (numstat 3/1) is the documented code/docs split, not a missing-file defect.\n\nVERDICT: CLEAR"
+ }
+}
