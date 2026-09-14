@@ -1171,6 +1171,54 @@
    "jcodemunch-mcp tests/test_get_file_tree_reaudit.py::test_a_doubled_trailing_slash_keeps_structure_and_every_file",
    "jcodemunch-mcp .colibri_reviews/src__jcodemunch_mcp__tools__get_file_tree.py__bug__397ff254.md (postscript)"
   ]
+ },
+ {
+  "id": "EV-077-REMOVED-SYMBOL-PRECHECK-DOES-NOT-SEE-AN-ALIAS",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (src/jcodemunch_mcp/runtime/http_routes.py -> security.py, import-scip input-cap tranche)",
+  "layer": "gate pre-review REFUSED (removed-symbol check, rounds 1 and 2)",
+  "caught": "A FALSE refusal, twice, recorded because it is evidence about the layer: the tranche moved `_bounded_gunzip` from runtime/http_routes.py to security.bounded_gunzip so import-scip could share the gzip-bomb guard. Round 1 kept the old name bound with `from ..security import bounded_gunzip as _bounded_gunzip`; round 2 with a module-level `_bounded_gunzip = bounded_gunzip` assignment. The pre-check compares DEFINITIONS (def/class) between the old and new bytes, saw the def gone with six unstaged references in tests/test_v1_108_95.py, and refused before any review - both times, while that test file passed on both trees. Only staging the caller re-pointed (the test now imports the helper from its new home) let the review run.",
+  "severity": "NONE (false positive of the layer) - the code was correct on all three trees",
+  "author_initially": "Believed an import alias was a binding the check would honour; then believed an assignment would be. Neither is: the check is definition-based by design - Tools de3f953 added it after Tools 8245433 shipped exactly the hole where a reviewer never sees unstaged callers (EV-060) - and an alias is exactly what a reviewer cannot verify without the callers staged.",
+  "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import … as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/ (rounds 1-2 wrote NO artifact - a REFUSED pre-check exits before the review; the captures are the session scratchpad gate_scipcap_r1.txt / gate_scipcap_r2.txt)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK, first round the pre-check let through)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-201642.md (round 4 CLEAR)",
+   "jcodemunch-mcp d9f2521",
+   "jcodemunch-mcp tests/test_v1_108_95.py (import re-pointed)"
+  ]
+ },
+ {
+  "id": "EV-078-A-REVIEW-LEDGER-STAGED-WITH-ROWS-FOR-A-TRANCHE-NOT-IN-THE-COMMIT",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (.colibri_reviews/_manifest.json, import-scip input-cap tranche)",
+  "layer": "gate-review BLOCK (round 3, MEDIUM)",
+  "caught": "MEDIUM, a process catch on the author. The commit's context claimed 'the manifest gains two entries (55)'; the staged bytes carried FOUR new rows (57): two for the tranche and two for org/http_routes.py + org/store.py, whose fixes and review records were in the working tree for a LATER commit. The gate driver re-ran `git add` on the manifest after the author had written the org rows into the working-tree file, so the ledger would have been committed pointing at two review artifacts the commit did not deliver - dangling `output` paths, and a rebuttal claim that did not match the staged diff on a point the reviewer could count directly.",
+  "severity": "MEDIUM (ledger integrity; no code defect)",
+  "author_initially": "Asserted 'two entries (55)' from memory of the earlier staging, without re-reading the staged blob after touching the working tree for another tranche.",
+  "resolution": "Manifest restored from HEAD and rebuilt with exactly the two tranche rows (55); the org rows are re-added only when that tranche is committed. Round 4 CLEAR (gate_20260913-201642.md), landed as jcodemunch-mcp d9f2521. Lesson: when several tranches share one ledger file, (re)build the staged ledger from HEAD immediately before each gate run and count the rows in the STAGED blob, never in the working tree.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-201642.md (round 4 CLEAR)",
+   "jcodemunch-mcp d9f2521"
+  ]
+ },
+ {
+  "id": "EV-079-A-CORRUPT-GZIP-FIXTURE-THAT-NEVER-TRUNCATED",
+  "date": "2026-09-13",
+  "repo": "jcodemunch-mcp (tests/test_scip_import_cap_reaudit.py, import-scip input-cap tranche)",
+  "layer": "gate-review BLOCK (round 3, LOW)",
+  "caught": "LOW, a vacuous test. The battery's corrupt-gzip case wrote `gzip.compress(b'\\x00' * 100000)[:2000]` - but 100 KB of zeros compress to a few hundred bytes, so the slice never cut anything; the file was a complete, valid gzip member, and the test passed through parse_scip_bytes's own 'not a SCIP index' ValueError rather than the new `except (zlib.error, EOFError, OSError) -> ValueError` wrapper it was written to pin. The wrapper was correct by inspection and uncovered by the battery.",
+  "severity": "LOW (test coverage; shipped code correct)",
+  "author_initially": "Picked a fixed truncation offset without checking the compressed size of the fixture.",
+  "resolution": "The fixture cuts the compressed blob in HALF (`blob[: len(blob) // 2]`) and asserts the wrapper's message ('gzip'), so it fails on either the untruncated fixture or the missing wrapper. Round 4 CLEAR (gate_20260913-201642.md), landed as jcodemunch-mcp d9f2521. Lesson: a truncation fixture must derive its cut from the artifact's real length, and a test written to pin an error path must assert that path's own message.",
+  "refs": [
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK)",
+   "jcodemunch-mcp .adversary/reviews/gate_20260913-201642.md (round 4 CLEAR)",
+   "jcodemunch-mcp d9f2521",
+   "jcodemunch-mcp tests/test_scip_import_cap_reaudit.py::test_a_corrupt_gzip_is_a_value_error_like_any_other_non_scip_input"
+  ]
  }
  ]
 }

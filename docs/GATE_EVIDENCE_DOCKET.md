@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-13)
 
-- **76 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **79 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -68,6 +68,9 @@
   - EV-074: the assemble_task_context tranche in jcodemunch-mcp closed 'a stage listed in stages_run with no entry and no flag' for the dispatch loop, and the same diff touched the cross-repo layer that runs after the loop without holding it to the new contract - with cross_repo=True and the budget spent it was listed unflagged, breaking the invariant the staged battery encoded but never drove through that branch; accepted, fixed, RED-first test at the invariant assertion; round 2 CLEAR (gate_20260913-145957.md), landed c5a6f7e
   - EV-075: the credentials tranche's new test battery left credentials._resolution_source populated (the keyring-diagnostics global, written outside monkeypatch's reach) with no isolation fixture - green only by collection order; on reading the sibling test file that DOES isolate it, the author found it guards a second copy of the module (`src.jcodemunch_mcp` import), so nothing had ever isolated the real one; accepted, fixture added on the right module; round 2 CLEAR (gate_20260913-165331.md), landed 1aefece
   - EV-076: the get_file_tree tranche in jcodemunch-mcp normalised the path prefix for the filter and left _build_tree slicing by the raw prefix - 'src//' cut one character too many off every relative path and silently merged colliding files where the old bytes returned an empty tree; the author's pins missed the very shape the normalisation exists for; accepted, the helper normalises too, RED-first collision test; round 2 CLEAR (gate_20260913-173408.md), landed ad9f01c
+  - EV-077: the import-scip tranche in jcodemunch-mcp moved _bounded_gunzip to security.py and kept the old name bound (an import alias, then a module-level assignment) - the removed-symbol pre-check REFUSED both rounds before any review because it compares definitions and saw unstaged callers; a false refusal recorded as data about the layer, resolved by staging the caller re-pointed; round 4 CLEAR (gate_20260913-201642.md), landed d9f2521
+  - EV-078: the same tranche's context claimed the review ledger gained two rows while the staged manifest carried four - two belonged to an uncommitted later tranche the driver re-staged by accident; the reviewer counted the staged blob; manifest rebuilt from HEAD; round 4 CLEAR (gate_20260913-201642.md), landed d9f2521
+  - EV-079: the same tranche's corrupt-gzip test sliced a few-hundred-byte blob at byte 2000, never truncating it, and passed through the wrong ValueError; the fixture now halves the blob and asserts the wrapper's message; round 4 CLEAR (gate_20260913-201642.md), landed d9f2521
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -
