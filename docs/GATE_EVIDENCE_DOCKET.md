@@ -9,9 +9,9 @@
 > founding thesis - authors, AI agents included, defend invented claims about code
 > they have not read.
 
-## The scoreboard (as of 2026-09-13)
+## The scoreboard (as of 2026-09-14)
 
-- **82 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **84 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -74,6 +74,8 @@
   - EV-080: the EV-077..079 docket commit itself cited Tools 8245433 as the commit that closed the unstaged-caller hole - per EV-060 it is the incident and de3f953 the fix; the reviewer reconciled the new row against EV-060 in the same file; corrected in place; round 2 CLEAR (gate_20260913-210200.md), landed 7b86439
   - EV-081: the refresh slice lock (tail batch 5) heartbeated only between batches, so one long batch went silent past budget + grace and a second run broke a LIVE lock; and release unlinked without an owner check, deleting the next run's lock (ABA) - a token, an in-batch heartbeat thread, owner-only touch/release and a lock-lost refusal that never writes the cursor; three tests RED on the round-1 bytes; round 2 CLEAR (gate_20260913-234116.md), landed 17e5a44
   - EV-082: get_changed_symbols' sibling pair-off (tail batch 5) keyed on (name, kind, body) and hid a byte-identical A.f -> B.f move, and caught only boundary renumbering so deleting the first of three read as 1 removed + 2 spurious modified - the author's 'exactly one removal' claim tested at N=2 only; group alignment on the ordinal-stripped id; four tests RED on the round-1 bytes; round 2 CLEAR (gate_20260913-234116.md), landed 17e5a44
+  - EV-083: pushing the marketplace 0.3.0 re-vendor, the push guard's docs lane (the local docscan model) refused the branch because the README named the default reviewer by its OpenRouter model id and the 4B model quoted that id as 'the secret value' (3/3 on-machine, captured); _evidence_is_name holds any slash/digit/dot token as a value, so a FALSE POSITIVE stood. Owner ruling: reword (models named in prose, ids left to DEFAULT_MODEL) + docket; the reworded text was pre-tested with docscan before re-gating; the two unpushed commits were rebuilt, re-gated CLEAR (gate_20260914-171625 / -173319) and re-notarized. OWED in Tools: teach the heuristic that a provider-slash-model slug names no value (TDD, gated), then re-vendor docscan.py.
+  - EV-084: the first EV-083 row claimed the rebuilt commits' CLEARs while citing the superseded branch's review artifacts, and its run claims (3/3 repro, bisect, pre-test, refusal) had no captures - the docket's own gate reconciled verdicts against refs (EV-058/EV-070 class) and BLOCKed; refs re-derived per sha, every claim pointed at its capture. Lesson: placeholder-sha rows must have their refs re-derived when filled.
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -

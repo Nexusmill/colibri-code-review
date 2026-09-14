@@ -1269,6 +1269,40 @@
    "jcodemunch-mcp tests/test_get_changed_symbols_reaudit.py",
    ".colibri_reviews/src__jcodemunch_mcp__tools__get_changed_symbols.py__bug__fa98ac86.md"
   ]
+ },
+ {
+  "id": "EV-083-THE-DOCS-LANE-HELD-AN-OPENROUTER-MODEL-ID-AS-A-SECRET-VALUE",
+  "date": "2026-09-14",
+  "repo": "colibri-marketplace (plugins/adversary-gate/README.md, the 0.3.0 re-vendor branch fix/plugin-metadata-2026-09-14)",
+  "layer": "push guard - docs lane (local docscan model), a FALSE POSITIVE recorded as data",
+  "caught": "Pushing the two re-vendor commits, the push guard's on-machine docs reviewer refused the branch: the README trust-model line named the gate's shipped default reviewer by its OpenRouter model id (z-ai/glm-5.3-flash) and the 4B model quoted that id, three runs out of three, as 'the secret value'. docscan._evidence_is_name held it as value-shaped by rule (a token carrying '/', digits and dots is never a name), so the block stood although nothing secret was in the diff. Reproduced on-machine with docscan._run_one_full over the exact outgoing added lines (capture: mp_docscan_reason.txt); no 10-line window blocked alone - a whole-text judgement (capture: mp_docscan_repro_out.txt).",
+  "severity": "false positive (docs lane) - a real recall/precision gap in the value-vs-name heuristic: any adopter doc that names the default model id is refused at push",
+  "author_initially": "Wrote the model id into the README so adopters know the default chain (replacing an older, wrong id from the 5cd90e7 snapshot).",
+  "resolution": "Owner ruling 2026-09-14: reword + docket. The two unpushed commits were rebuilt (cherry-pick onto f636f4f, no history published) with the README naming the models in prose ('GLM-5.3-Flash via OpenRouter, xAI Grok-4.6 fallback - exact ids in DEFAULT_MODEL in tools/adversary_gate.py'); the reworded outgoing text was pre-tested on-machine BEFORE re-gating (the model then quoted the env-var NAME OPENROUTER_API_KEY, which _evidence_is_name withdraws; scan() clear - capture: mp_docscan_pretest_out.txt). Re-gated: a89fef8 CLEAR gate_20260914-171625.md, fa47712 CLEAR gate_20260914-173319.md (one round each; the staged payload blobs were re-verified identical to Tools HEAD before the run); re-notarized by post-commit; pushed with the docs lane's block WITHDRAWN on the name-only evidence (capture: mp_push_out2.txt); PR #3. OWED in Tools (separate TDD tranche, gated): teach docscan._evidence_is_name that a provider-slash-model slug names no value (RED fixture built from parts, like this row), then re-vendor docscan.py into the plugin.",
+  "refs": [
+   "colibri-marketplace a89fef8 (metadata; CLEAR .adversary/reviews/gate_20260914-171625.md), fa47712 (0.3.0 re-vendor; CLEAR .adversary/reviews/gate_20260914-173319.md) - the rebuilt, pushed commits; PR https://github.com/Nexusmill/colibri-marketplace/pull/3",
+   "the REFUSED push (original tip a6adaba, never published): capture C:\\Users\\User\\AppData\\Local\\Temp\\claude\\C--Users-User-source-repos-Nexusmill\\a6dfcbcf-bdee-4e6c-a482-090b99a69494\\scratchpad\\mp_push_out.txt",
+   "on-machine repro of the 3/3 quoted value: C:\\Users\\User\\AppData\\Local\\Temp\\claude\\C--Users-User-source-repos-Nexusmill\\a6dfcbcf-bdee-4e6c-a482-090b99a69494\\scratchpad\\mp_docscan_reason.py -> mp_docscan_reason.txt; window bisect mp_docscan_repro.py -> mp_docscan_repro_out.txt",
+   "pre-test of the reworded text: C:\\Users\\User\\AppData\\Local\\Temp\\claude\\C--Users-User-source-repos-Nexusmill\\a6dfcbcf-bdee-4e6c-a482-090b99a69494\\scratchpad\\mp_docscan_pretest.py -> mp_docscan_pretest_out.txt (BLOCK withdrawn on OPENROUTER_API_KEY; scan() clear)",
+   "the accepted push: C:\\Users\\User\\AppData\\Local\\Temp\\claude\\C--Users-User-source-repos-Nexusmill\\a6dfcbcf-bdee-4e6c-a482-090b99a69494\\scratchpad\\mp_push_out2.txt (docscan: chunk 1 BLOCK withdrawn - the evidence names no value)",
+   "the original re-vendor's gate rounds (superseded commit a6adaba): round 1 BLOCK gate_20260914-164535.md was a scope false positive (the reviewer never sees non-code files and declared the staged hooks/.gitattributes missing; rebutted with git ls-files -s bytes), round 2 CLEAR gate_20260914-165307.md",
+   "Tools adversary-gate/docscan.py _evidence_is_name (the heuristic; precedent fixes 14d1f09 / fb0d9a6 / d9876ff)",
+   "Nexusmill memory marketplace-remediation-arc-2026-09-14"
+  ]
+ },
+ {
+  "id": "EV-084-THE-EV-083-ROW-CITED-THE-SUPERSEDED-BRANCHS-CLEARS-AND-NO-RUN-CAPTURES",
+  "date": "2026-09-14",
+  "repo": "colibri-code-review (docs/gate_evidence.json, the EV-083 append)",
+  "layer": "gate-review BLOCK on the docket itself (round 1: one MEDIUM, one LOW)",
+  "caught": "The first EV-083 row claimed 'Re-gated CLEAR, re-notarized, pushed' for the REBUILT commits but cited only the ORIGINAL re-vendor's review artifacts (gate_20260914-164535 / -165307, which cover a different README blob) - the rebuilt commits' own CLEARs (gate_20260914-171625 / -173319) were uncited; and the row's central evidence (the 3/3 quoted value, the window bisect, the pre-test, the refusal) rested on narrative with no run capture, against the docket's own recorded standard (EV-033, EV-046, EV-054, EV-061). The reviewer reconciled the claimed verdicts against the refs exactly as EV-058 / EV-070 record.",
+  "severity": "MEDIUM (an unevidenced CLEAR claim in the evidentiary record) + LOW (uncited run claims)",
+  "author_initially": "Drafted the row before the rebuilt commits existed (their shas were parameters) and pasted the original branch's artifact names into refs without re-deriving them for the rebuilt bytes.",
+  "resolution": "EV-083 rewritten in the same commit: the rebuilt commits' CLEAR artifacts named per sha, and every run claim pointed at its capture (the refused push, the 3/3 repro, the bisect, the pre-test, the accepted push). Lesson: a row drafted with placeholder shas must have its refs re-derived when the shas are filled in - a superseded branch's artifacts never evidence a rebuilt commit.",
+  "refs": [
+   "colibri-code-review .adversary/reviews/gate_20260914-174215.md (round 1 BLOCK)",
+   "the EV-083 row as landed in this commit"
+  ]
  }
  ]
 }
