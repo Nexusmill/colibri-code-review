@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "7b86439767d384be0c26f22241a46a0204299cb7",
+ "when": "20260913-210624",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "5ca74fb40603564c28804d7747e393702ca100db7b8fe0ca1f64b2f0b50690dd",
+   "model": "xai:grok-4.6",
+   "when": "20260913-210200",
+   "artifact": ".adversary\\reviews\\gate_20260913-210200.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260913-210200.md": "model: xai:grok-4.6 | usage: {'input_tokens': 65947, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 9835, 'output_tokens_details': {'reasoning_tokens': 9730}, 'total_tokens': 75782, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 1901360000, 'context_details': {'input_tokens': 65947, 'output_tokens': 9835}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nRound-1 attribution error is fixed in the staged bytes: EV-077 now names Tools de3f953 as the removed-symbol pre-check and 8245433 as the EV-060 incident, matching EV-060 in this file. New rows EV-077/078/079 have unique ids (79/79), required covenant fields, and CLEAR/BLOCK citations that match the claimed round counts. JSON structure, sibling-md disclosure, and +48/-0 numstat are consistent.\n\nVERDICT: CLEAR"
+ }
+}
