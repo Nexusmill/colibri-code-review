@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-13)
 
-- **79 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **80 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -71,6 +71,7 @@
   - EV-077: the import-scip tranche in jcodemunch-mcp moved _bounded_gunzip to security.py and kept the old name bound (an import alias, then a module-level assignment) - the removed-symbol pre-check REFUSED both rounds before any review because it compares definitions and saw unstaged callers; a false refusal recorded as data about the layer, resolved by staging the caller re-pointed; round 4 CLEAR (gate_20260913-201642.md), landed d9f2521
   - EV-078: the same tranche's context claimed the review ledger gained two rows while the staged manifest carried four - two belonged to an uncommitted later tranche the driver re-staged by accident; the reviewer counted the staged blob; manifest rebuilt from HEAD; round 4 CLEAR (gate_20260913-201642.md), landed d9f2521
   - EV-079: the same tranche's corrupt-gzip test sliced a few-hundred-byte blob at byte 2000, never truncating it, and passed through the wrong ValueError; the fixture now halves the blob and asserts the wrapper's message; round 4 CLEAR (gate_20260913-201642.md), landed d9f2521
+  - EV-080: the EV-077..079 docket commit itself cited Tools 8245433 as the commit that closed the unstaged-caller hole - per EV-060 it is the incident and de3f953 the fix; the reviewer reconciled the new row against EV-060 in the same file; corrected in place; round 2 CLEAR (gate_20260913-210200.md), landed 7b86439
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -

@@ -1219,6 +1219,22 @@
    "jcodemunch-mcp d9f2521",
    "jcodemunch-mcp tests/test_scip_import_cap_reaudit.py::test_a_corrupt_gzip_is_a_value_error_like_any_other_non_scip_input"
   ]
+ },
+ {
+  "id": "EV-080-THE-INCIDENT-COMMIT-CITED-AS-THE-FIX-COMMIT",
+  "date": "2026-09-13",
+  "repo": "colibri-code-review (docs/gate_evidence.json, the EV-077..079 docket commit)",
+  "layer": "gate-review BLOCK (round 1, LOW-MEDIUM, docs-class review)",
+  "caught": "A wrong sha in the permanent record, on the row's analytical core. EV-077's author_initially said the removed-symbol pre-check is 'definition-based by design (Tools 8245433 closed the hole where a reviewer never sees unstaged callers)'. The docket's own EV-060 says the opposite: 8245433 is the EV-046 warn-and-scrub commit that REMOVED a symbol while a live caller still used it and CLEARed - the incident - and Tools de3f953 is the deterministic pre-check that closed it, the very check that refused EV-077's rounds 1-2. The reviewer reconciled the new row against EV-060 in the same staged file and found the incident cited as the fix.",
+  "severity": "LOW-MEDIUM (citation integrity in the evidentiary record; EV-020/EV-058/EV-070 class)",
+  "author_initially": "Copied the sha from the gate's own REFUSED message - 'Tools 8245433 shipped exactly this hole' - and inverted its meaning while paraphrasing ('shipped the hole' became 'closed the hole'). Confident, sourced, and wrong.",
+  "resolution": "One sentence corrected in place before any commit: 'Tools de3f953 added it after Tools 8245433 shipped exactly the hole where a reviewer never sees unstaged callers (EV-060)'. Round 2 CLEAR (gate_20260913-210200.md); the three rows landed as colibri-code-review 7b86439. Lesson: a sha quoted from a message is still a claim about history - resolve it against the docket (or git) before it enters a row, and never paraphrase a provenance sentence; quote it.",
+  "refs": [
+   "colibri-code-review .adversary/reviews/gate_20260913-203953.md (round 1 BLOCK)",
+   "colibri-code-review .adversary/reviews/gate_20260913-210200.md (round 2 CLEAR)",
+   "colibri-code-review 7b86439 (EV-077..079 landed with the corrected sentence)",
+   "EV-060 (the row that carries the true provenance)"
+  ]
  }
  ]
 }
