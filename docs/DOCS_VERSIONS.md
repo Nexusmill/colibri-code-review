@@ -1,6 +1,6 @@
 # DOCS_VERSIONS.md - version register for the gate documentation
 
-> **Doc version: 1.6 - 2026-09-15.** New at 1.0; 1.1 registers the EV-043 doc release; 1.2 the EV-045/046 release; 1.3 the 2026-09-14 re-baseline on Tools 6773f97; 1.4 the docket extent EV-085; 1.5 EV-086 (the docs lane refused this release's own landing - fixed in Tools 51ba4b3); 1.6 EV-087 (the gate's own transport crash - fixed in Tools 26280c7). This file is the authoritative register of every
+> **Doc version: 1.7 - 2026-09-15.** New at 1.0; 1.1 registers the EV-043 doc release; 1.2 the EV-045/046 release; 1.3 the 2026-09-14 re-baseline on Tools 6773f97; 1.4 the docket extent EV-085; 1.5 EV-086 (the docs lane refused this release's own landing - fixed in Tools 51ba4b3); 1.6 EV-087 (the gate's own transport crash - fixed in Tools 26280c7); 1.7 EV-088/089 (the removed-symbol guard's false refusal, six rounds; the docs lane's one-character false positive - fixed in Tools ca686ed / c33a704). This file is the authoritative register of every
 > gate-related document, its current version, and what changed at each version. Each tracked
 > doc carries a `Doc version: N.N - DATE` line in its own header that must match its row here.
 
@@ -30,9 +30,9 @@
 | [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | 1.2 | machine prerequisites; machine-wide arming note; 1.2 = git PATH fallback, the optional docs-lane model, the marketplace plugin as the no-Tools-clone distribution |
 | [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.2 | the anthropics/claude-code#90887 archive; Version 2 POSTED (issuecomment-5570626121) - an archive of posted text, deliberately NOT re-baselined |
 | [ISSUE_SKILL_GATE_FILING.md](ISSUE_SKILL_GATE_FILING.md) | 1.1 | the G38 skill-gate post; POSTED as issue #92656 |
-| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-087 |
-| gate_evidence.json | (docket) | machine-readable evidence docket; 87 entries, through EV-087 |
-| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.6 | this register |
+| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-089 |
+| gate_evidence.json | (docket) | machine-readable evidence docket; 89 entries, through EV-089 |
+| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.7 | this register |
 
 Docs about the colibri review tool itself (not the gate) are unversioned here and unchanged
 by the gate releases: README.md, BATCH.md, CONSOLE.md, MODES.md, SPEC_AUTHORING.md,
@@ -50,6 +50,18 @@ STATIC_SIGNALS.md, STORAGE.md, GATE_SWEEP_2026-09-02_*_PENDING.md.
 | `colibri-marketplace/plugins/adversary-gate/README.md` + `SKILL.md` | 0.3.0 (plugin) | the distributed copy's docs; re-baselined 2026-09-14 with the payload |
 
 ## Changelog
+
+### Docket 2026-09-15 (later) - EV-088 and EV-089, the fleet Atlas deletion and first push (Tools ca686ed, c33a704)
+
+No gate doc changed. Two rows from the fleet Atlas rewrite: the gate's deterministic removed-symbol guard
+refused a legitimate whole-package deletion (unqualified name matching) and its fix took six review rounds,
+two of which caught false verification claims by the agent; and the docs lane held a one-letter test fake
+(`"k"`) as a secret on the repository's first push. Both fixed the same session under TDD, both Tools commits
+LOCAL-ONLY (with 26280c7; the owner pushes); the hooks run the working tree. The marketplace plugin's vendored
+adversary_gate.py and docscan.py are now further behind - the 0.3.2 re-vendor covers all of it.
+
+- **gate_evidence.json / GATE_EVIDENCE_DOCKET.md** - EV-088, EV-089 added (89 entries); scoreboard bumped.
+- **DOCS_VERSIONS.md 1.6 -> 1.7** - this entry.
 
 ### Docket 2026-09-15 - EV-087, the gate's own transport crash (Tools 26280c7)
 
