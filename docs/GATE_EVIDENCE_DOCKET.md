@@ -9,9 +9,9 @@
 > founding thesis - authors, AI agents included, defend invented claims about code
 > they have not read.
 
-## The scoreboard (as of 2026-09-14)
+## The scoreboard (as of 2026-09-15)
 
-- **86 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **87 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -78,6 +78,7 @@
   - EV-084: the first EV-083 row claimed the rebuilt commits' CLEARs while citing the superseded branch's review artifacts, and its run claims (3/3 repro, bisect, pre-test, refusal) had no captures - the docket's own gate reconciled verdicts against refs (EV-058/EV-070 class) and BLOCKed; refs re-derived per sha, every claim pointed at its capture. Lesson: placeholder-sha rows must have their refs re-derived when filled.
   - EV-085: the Tools docs-release commit (install_gate.py's printed NEXT steps rewritten to the auto-review contract) BLOCKed round 1: the file's own module docstring still taught 'attempt the commit (EXPECT refusal)' - REAL, fixed in the tranche (a selftest checks flags, not prose); and the deleted 'ALSO push the notes' step was called the file's 'own prior testimony' that the shim does not push refs/notes/adversary - FALSE by scope (the mechanism lives in pre-push + cmd_check_push, outside the staged set), rebutted with the lines and the same-day live notes ref; round 2 CLEAR. The reviewer-scope class again (EV-027/034/036/059 and the marketplace 0.3.0 round 1 under EV-083): cite the out-of-set mechanism in the FIRST --context.
   - EV-086: the OWNER's fast-forward of this PR (14 commits to main) was refused by the push guard's docs lane - chunk 3 of the 14-commit feed (the 4fbab93 docs release) drew 'needs `OPENROUTER_API_KEY`' 3/3, and the verb 'needs' was not in the vocabulary, so the name-only withdrawal never fired; the same lines had passed when pushed to the branch in smaller pieces (chunk boundaries elsewhere), and a known remote tip re-feeds even published, already-scanned commits. Root cause fixed in Tools 51ba4b3 (TDD 13/14 -> 14/14; the EV-083 slug rule landed in the same tranche, bounded to known providers and model-id shapes); the exact refused feed re-run 3/3 clear; the owner re-runs the same command. Follow-up: extend the tracking-ref exclusion to the known-remote path.
+  - EV-087: the gate CRASHED on its own transport while gating fleet unit 2 - the primary model's chunked body broke mid-stream, `r.read()` raised `http.client.IncompleteRead`, and both transport handlers caught `OSError` only (IncompleteRead is an HTTPException), so the exception escaped the chain handler: raw traceback, no failover, no verdict. The retry cleared through the KNOWN empty-response path, which proved nothing about the unknown family. Fixed in Tools 26280c7 (TDD: two new CHECKS, 4/6 -> 6/6; gate CLEAR r1): both handlers catch `(OSError, http.client.HTTPException)` - the OpenRouter side advances the chain, the xAI backup fails closed cleanly. Third transport family found live (EV-018 empty, EV-021 non-JSON 200, now a truncated 200). Tools main is local-only on this fix; the hooks run the working tree, so it is live.
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -
