@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "1d9388910f97f6818b511fbffcb2c216bbf7a222",
+ "when": "20260915-175934",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "0abb5d22cabce076df056205d0960a7caf6584050a65b9680d7171820c4a3f02",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260915-175909",
+   "artifact": ".adversary\\reviews\\gate_20260915-175909.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260915-175909.md": "model: z-ai/glm-5.3-flash | usage: {'prompt_tokens': 3830, 'completion_tokens': 3471, 'total_tokens': 7301, 'cost': 0.00173019, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00173019, 'upstream_inference_prompt_cost': 0.0004303005, 'upstream_inference_completions_cost': 0.0012998895}, 'completion_tokens_details': {'reasoning_tokens': 2966, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nVerification of the amendment's claims against the bytes available:\n\n**Arithmetic consistency (the core of the amendment).** \"Checks 43-51 (nine numbered cases)\": 51\u221243+1 = 9. \u2714 \"TEN check() calls \u2014 48 carries two\": cross-checked against the row's own unchanged measured-run chain. The pre-work floor is 113 (r2's old-bytes run 113/116 = 113 pre-existing passes + 3 draft-added failing checks), and the final green run is 123/123. Delta = 10 check calls added \u2014 exactly the ten the amendment attributes to cases 43-51. If case 48 carried only one call, the final would be 122, contradicting the unchanged \"r6 121/123 -> 123/123\" in the same string. The new count and the row's pre-existing numbers are mutually locking. \u2714\n\n**Consistency with the row's unchanged text.** Case 48 carrying two items (\"untracked source AND external source\") was already asserted verbatim in the pre-amendment resolution (\"untracked source AND external source (48) all refuse\"); the amendment makes the check()-call count agree with that enumeration rather than inventing it. \u2714\n\n**JSON integrity.** The hunk is a single-line in-place string replacement (-1362,17 +1362,17, line count preserved). The new text contains no embedded double quotes or backslashes (single quotes around 'nine new'), the line terminates with `\",` correctly, and an in-place string swap cannot change array length or ids \u2014 the \"89 entries re-parsed, ids unchanged\" claim is structurally guaranteed by the diff shape. \u2714\n\n**Scope.** No code, no callers, no manifest rows \u2014 the colibri manifest doctrine is not implicated (this is docs/gate_evidence.json, not .colibri_reviews/_manifest.json). Recording that the landed ca686ed commit message still says \"nine\" rather than silently letting the two counts diverge is exactly what an evidence log should do. The one claim I cannot independently verify from the provided bytes (that both of case 48's calls live in gate_selftest case 48 in the Tools repo) is corroborated by the floor arithmetic above; blocking on an unreachable file in another repo would be speculation, not a found defect.\n\nNo contradiction introduced, no count left ambiguous, no structural damage.\n\nVERDICT: CLEAR"
+ }
+}
