@@ -11,7 +11,7 @@
 
 ## The scoreboard (as of 2026-09-14)
 
-- **84 evidence rows**, one line each (the running summary from EV-020; the full rows, including
+- **85 evidence rows**, one line each (the running summary from EV-020; the full rows, including
   EV-001 through EV-019, are in `gate_evidence.json`):
   - EV-020: a phase-2-sweep gate BLOCK caught two confident-wrong claims in the agent's OWN gated review deliverables — a dropped finding + a false "ten locations" count.
   - EV-021: while gating the sweep's OWN remediation, the gate CRASHED on a malformed-200 from OpenRouter — a documented-but-deferred MEDIUM in the gate's own `_call_one_model` — blocking its own commit until fixed; the fail-closed crash is what surfaced it.
@@ -76,6 +76,7 @@
   - EV-082: get_changed_symbols' sibling pair-off (tail batch 5) keyed on (name, kind, body) and hid a byte-identical A.f -> B.f move, and caught only boundary renumbering so deleting the first of three read as 1 removed + 2 spurious modified - the author's 'exactly one removal' claim tested at N=2 only; group alignment on the ordinal-stripped id; four tests RED on the round-1 bytes; round 2 CLEAR (gate_20260913-234116.md), landed 17e5a44
   - EV-083: pushing the marketplace 0.3.0 re-vendor, the push guard's docs lane (the local docscan model) refused the branch because the README named the default reviewer by its OpenRouter model id and the 4B model quoted that id as 'the secret value' (3/3 on-machine, captured); _evidence_is_name holds any slash/digit/dot token as a value, so a FALSE POSITIVE stood. Owner ruling: reword (models named in prose, ids left to DEFAULT_MODEL) + docket; the reworded text was pre-tested with docscan before re-gating; the two unpushed commits were rebuilt, re-gated CLEAR (gate_20260914-171625 / -173319) and re-notarized. OWED in Tools: teach the heuristic that a provider-slash-model slug names no value (TDD, gated), then re-vendor docscan.py.
   - EV-084: the first EV-083 row claimed the rebuilt commits' CLEARs while citing the superseded branch's review artifacts, and its run claims (3/3 repro, bisect, pre-test, refusal) had no captures - the docket's own gate reconciled verdicts against refs (EV-058/EV-070 class) and BLOCKed; refs re-derived per sha, every claim pointed at its capture. Lesson: placeholder-sha rows must have their refs re-derived when filled.
+  - EV-085: the Tools docs-release commit (install_gate.py's printed NEXT steps rewritten to the auto-review contract) BLOCKed round 1: the file's own module docstring still taught 'attempt the commit (EXPECT refusal)' - REAL, fixed in the tranche (a selftest checks flags, not prose); and the deleted 'ALSO push the notes' step was called the file's 'own prior testimony' that the shim does not push refs/notes/adversary - FALSE by scope (the mechanism lives in pre-push + cmd_check_push, outside the staged set), rebutted with the lines and the same-day live notes ref; round 2 CLEAR. Third instance of the EV-027/EV-059 class: cite the out-of-set mechanism in the FIRST --context.
 - **A false-green test-coverage construction caught before it landed** (EV-019): the
   new PS-LIB battery's run-integrity guards each failed only one of its two rows, so
   a missing Blender, a pre-check crash, or the packaged add-on failing to enable -

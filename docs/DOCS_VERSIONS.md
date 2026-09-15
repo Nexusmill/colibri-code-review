@@ -1,6 +1,6 @@
 # DOCS_VERSIONS.md - version register for the gate documentation
 
-> **Doc version: 1.3 - 2026-09-14.** New at 1.0; 1.1 registers the EV-043 doc release; 1.2 the EV-045/046 release; 1.3 the 2026-09-14 re-baseline on Tools 6773f97. This file is the authoritative register of every
+> **Doc version: 1.4 - 2026-09-14.** New at 1.0; 1.1 registers the EV-043 doc release; 1.2 the EV-045/046 release; 1.3 the 2026-09-14 re-baseline on Tools 6773f97; 1.4 the docket extent EV-085. This file is the authoritative register of every
 > gate-related document, its current version, and what changed at each version. Each tracked
 > doc carries a `Doc version: N.N - DATE` line in its own header that must match its row here.
 
@@ -30,9 +30,9 @@
 | [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | 1.2 | machine prerequisites; machine-wide arming note; 1.2 = git PATH fallback, the optional docs-lane model, the marketplace plugin as the no-Tools-clone distribution |
 | [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.2 | the anthropics/claude-code#90887 archive; Version 2 POSTED (issuecomment-5570626121) - an archive of posted text, deliberately NOT re-baselined |
 | [ISSUE_SKILL_GATE_FILING.md](ISSUE_SKILL_GATE_FILING.md) | 1.1 | the G38 skill-gate post; POSTED as issue #92656 |
-| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-084 |
-| gate_evidence.json | (docket) | machine-readable evidence docket; 84 entries, through EV-084 |
-| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.3 | this register |
+| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-085 |
+| gate_evidence.json | (docket) | machine-readable evidence docket; 85 entries, through EV-085 |
+| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.4 | this register |
 
 Docs about the colibri review tool itself (not the gate) are unversioned here and unchanged
 by the gate releases: README.md, BATCH.md, CONSOLE.md, MODES.md, SPEC_AUTHORING.md,
@@ -76,8 +76,8 @@ before it was written; selftest counts are from runs on 2026-09-14.
 - **Tools:** `adversary-gate/CODEX_INTEGRATION.md 2.0 -> 2.1`, `arm-repo/README.md 1.1 -> 1.2`,
   `TOOLS_MANIFEST.md` addendum + two rows; `install_gate.py`'s printed NEXT steps now describe
   the auto-review proof (a gated code change in Tools).
-- **Docket:** through EV-084.
-- **DOCS_VERSIONS.md 1.2 -> 1.3** - this entry.
+- **Docket:** through EV-085 (EV-085 = the gate round on the Tools half of this very release, added the same evening).
+- **DOCS_VERSIONS.md 1.2 -> 1.3** - this entry; **1.3 -> 1.4** the EV-085 extent (same release day).
 
 ### Docs release 2026-09-07 (evening) - EV-045 fixture skip, EV-046 warn / scrub / refuse-at-push
 
