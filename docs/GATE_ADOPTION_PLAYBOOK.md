@@ -1,6 +1,12 @@
 # GATE_ADOPTION_PLAYBOOK.md - adopting the adversarial commit gate, end to end
 
-> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). This runbook is
+> **Doc version: 3.0 - 2026-09-14.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). 3.0 re-baselines
+> the runbook on Tools 6773f97: the hook REQUESTS the review itself (Chapter 2's proof is the
+> gate line, not a refusal), the reviewer is a fallback chain, docs run through a local
+> evidence-gated model, an empty repo is armed at birth, removed symbols with live callers are
+> refused before any model call, and protected branches land by `owner_ff_merge.py`. The
+> adopter without a Tools clone installs the marketplace plugin `adversary-gate` (0.3.0 = the
+> same bytes). This runbook is
 > for adopting the gate on **any machine** (the per-clone recipe below still applies there). On
 > the **owner's** machine, arming is now machine-wide (a global `core.hooksPath` + a per-repo
 > absolute pin) and layer 0 is a dispatcher; see [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md), and
@@ -51,12 +57,16 @@ owner anyway. Layers 1-2 bind agents operating through the harness; layer 3 dete
 everything else; layer 4 makes bypass fail at the remote. Detection is the guarantee.
 Prevention is not claimed.
 
-**What counts as code** (the gated set): files with extensions `.py .js .json .ts .jsx
-.tsx .html .css .ps1 .sh .bat .c .cpp .h .rs .go .java .glsl .osl`; ANYTHING under
+**What counts as code** (the gated set): files with extensions `.py .js .mjs .cjs .json .ts
+.mts .cts .jsx .tsx .html .css .ps1 .sh .bat .c .cpp .h .rs .go .java .glsl .osl`; any file
+named `pre-commit` / `post-commit` / `pre-push` wherever it lives; ANYTHING under
 `.githooks/` or `.github/workflows/` (enforcement config is gated config); deletions of
 code files and renames-away; merges. `.json` is deliberately included (since
 2026-08-31): manifests, registries and configs are load-bearing - a forged manifest row
-is a code change. Plain `.md` documentation passes free.
+is a code change. Documentation is never sent to the external reviewer, but its added lines
+pass the local pattern floor and, when a local model is installed, the on-machine docs
+reviewer - warnings at commit, and a push is refused on a secret literal or an
+evidence-backed docs block (Chapter 3, step 6).
 
 ---
 
@@ -73,8 +83,14 @@ You need, on the machine that will commit:
    refused, none clearable) - that is fail-closed design, not a bug. Provision the
    machine first. Full machine-provisioning list: [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md).
 4. **An OpenRouter key** in the environment as `OPENROUTER_API_KEY`. The reviewer runs
-   on OpenRouter. Cost is real but small (roughly a cent per commit with the
-   recommended model).
+   on OpenRouter (the shipped default chain falls back to xAI Grok-4.6 on `XAI_API_KEY`
+   when the OpenRouter model fails or returns nothing). Cost is real and small; the exact
+   per-review usage and cost are printed in the header of every review artifact.
+5b. **Optional - a local model for the docs lane.** llama.cpp's `llama-cli` on PATH (or
+   `NEXUSMILL_LLAMA_CLI`) and the Qwen3-4B GGUF at `~/.nexusmill/docscan/` (or
+   `NEXUSMILL_DOCSCAN_MODEL`, with `NEXUSMILL_DOCSCAN_MODEL_SHA` to pin it;
+   `NEXUSMILL_DOCSCAN_NGL=0` for CPU). Without it the docs lane degrades LOUDLY to the
+   pattern floor on every docs commit and `gate_selftest.py` reports the gap; nothing blocks.
 5. **The gh CLI authenticated** (only needed for the CI/branch-protection chapters):
    `gh auth status` must show a logged-in keyring account, and the token must carry
    the **`workflow` scope** if you will ever push a repo containing
@@ -114,11 +130,15 @@ Expected output: `ARMED  <repo-root>` followed by a summary line and a numbered
   byte-verified;
 - vendored the self-contained auditor `adversary_audit.py` beside them (so CI can run
   it with no external tooling);
-- wrote `.githooks/adversary_baseline` = the current HEAD sha. This anchors the
-  tripwire: commits BEFORE this moment were never notarized and can never be
+- wrote `.githooks/adversary_baseline` = the current HEAD sha, or `ROOT` when the repo
+  is still empty (armed at birth, 2026-09-08 - the root commit is audited too). This
+  anchors the tripwire: commits BEFORE this moment were never notarized and can never be
   retroactively proven, so the auditor starts here. **The baseline is written once and
   never moved by a re-run** - if you think it is wrong, that is an installer bug, not
   a thing to hand-edit;
+- wrote `.githooks/adversary_rules_epoch` (`hook-names <sha>`, or `hook-names ROOT` on an
+  empty repo) - the anchor that confines the hook-file code class to later commits
+  ([UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md));
 - pinned everything `eol=lf` in `.githooks/.gitattributes` (a CRLF-mangled shim is a
   script /bin/sh refuses to run);
 - added `.adversary/` to the repo's `.gitignore` (transient gate state, never history);
@@ -149,35 +169,39 @@ the entire mandatory gate into a no-op on any Linux/macOS checkout. Three repos
 shipped exactly that fail-open before it was caught. The index mode is what clones
 inherit; record it.
 
-### Step 2.3 - attempt the commit and WATCH IT GET REFUSED
+### Step 2.3 - give the reviewer the context, obtain the clearance
+
+```
+python C:\Users\User\source\repos\Tools\adversary-gate\adversary_gate.py run --context "arming commit: canonical shims + vendored auditor installed by install_gate.py"
+```
+
+Expected: the reviewer's analysis, then `VERDICT: CLEAR`, then `Clearance written for N
+file(s)`. This step is optional - the commit in 2.4 would request a review by itself - but
+the automatic review carries NO context, so an explicit `run --context` is how design intent
+or the provenance of copied bytes reaches the reviewer.
+
+### Step 2.4 - commit, and WATCH THE GATE SPEAK
 
 ```
 git commit -m "chore(gate): arm the mandatory adversarial commit gate (G39)"
 ```
 
-Expected: the commit FAILS with:
+Expected: the gate speaks during the commit. With the 2.3 clearance in place it re-checks
+the staged shas and the commit lands; without it (Tools 9597241, 2026-09-07) it prints
 
 ```
-ADVERSARY GATE: commit REFUSED - staged code lacks a fresh adversarial clearance:
-  .githooks/pre-commit    unreviewed
-  ...
+ADVERSARY GATE: requesting automatic independent review of staged changes.
 ```
 
-**That refusal is the end-to-end proof the hook fires in this clone.** If the commit
-SUCCEEDS here, something is broken - stop and audit with
-`install_gate.py <repo> --verify-only` (it prints per-component state: hooksPath, each
-shim canonical/crlf/different/absent, auditor, baseline, rewriteRef).
-
-### Step 2.4 - obtain the clearance and commit for real
-
-```
-python C:\Users\User\source\repos\Tools\adversary-gate\adversary_gate.py run --model z-ai/glm-5.2 --context "arming commit: canonical shims + vendored auditor installed by install_gate.py"
-git commit -m "chore(gate): arm the mandatory adversarial commit gate (G39)"
-```
-
-Expected from `run`: the reviewer's analysis, then `VERDICT: CLEAR`, then
-`Clearance written for N file(s)`. Expected from the commit: it now succeeds, and the
-post-commit hook prints `adversary record: CLEAR note written for <sha>`.
+and reviews the `.githooks/` files itself. Either way a CLEAR lets the commit land and the
+post-commit hook prints `adversary record: CLEAR note written for <sha>`; a BLOCK refuses
+the commit with findings. **The gate line is the end-to-end proof the hook fires in this
+clone.** A commit that lands SILENTLY - no gate line at all - means the hook did not run:
+stop and audit with `install_gate.py <repo> --verify-only` (it prints per-component state:
+hooksPath, each shim canonical/crlf/different/absent, auditor, baseline, epoch, rewriteRef).
+(Before 2026-09-07 this step was a REFUSAL - "commit REFUSED - staged code lacks a fresh
+adversarial clearance" - and the proof was that refusal; the hook now requests the review
+instead, so that message is no longer reachable from a commit.)
 
 ### Step 2.5 - verify the durable evidence exists
 
@@ -201,39 +225,64 @@ with all client-side layers. Do Chapter 4 (CI) before the first push.
 2. **Stage** everything that belongs in the commit (including the manifest `.json`
    rows describing the change - they are gated code and get reviewed WITH the change
    they describe, which is exactly right).
-3. **Run the adversary:**
+3. **Commit - the hook requests the review itself** (Tools 9597241, 2026-09-07). `git
+   commit` prints `ADVERSARY GATE: requesting automatic independent review of staged
+   changes.`, sends the frozen staged snapshot to the reviewer, and on CLEAR the commit
+   lands and is notarized in one motion. To give the reviewer context - design intent,
+   provenance of copied bytes, links to prior clearances - run the review explicitly
+   FIRST, then commit (the hook finds the clearance while the staged bytes stay identical):
    ```
-   python C:\Users\User\source\repos\Tools\adversary-gate\adversary_gate.py run --model z-ai/glm-5.2
+   python C:\Users\User\source\repos\Tools\adversary-gate\adversary_gate.py run --context "..."
+   git commit -m "..."
    ```
-   Optionally add `--context "..."` with design intent the reviewer should know
-   (deliberate trade-offs, provenance of copied bytes, links to prior clearances).
-4. **On `VERDICT: BLOCK`:** read every finding. For each one either (a) FIX it, restage,
-   and re-run, or (b) REBUT it factually via
-   `run --context "finding X is wrong because <file:line evidence>"` - the reviewer
-   re-verifies rebuttals against the bytes and will call out a false rebuttal (it has,
-   twice, against the agent that built this system). Never argue in prose outside the
-   loop, never shop for a compliant model, NEVER touch `.adversary/OVERRIDE` (the
-   owner's one-shot escape; an agent using it is a protocol violation equal to
-   disabling the gate).
-5. **On `VERDICT: CLEAR`:** commit immediately, before anything re-edits the files.
-   The post-commit hook notarizes automatically; you should see
-   `adversary record: CLEAR note written`.
-6. **Push normally.** The pre-push guard audits the outgoing commits (refusing the
-   push if any code commit lacks its note) and then pushes `refs/notes/adversary` to
-   the same remote automatically - the evidence always travels with the history; you
-   never push notes by hand.
+   Two things happen BEFORE any model is called, deterministically: secret-shaped values in
+   the staged lines are warned about and scrubbed out of the payload, and a staged `.py` that
+   REMOVES a module-level def/class still referenced by a tracked `.py` outside the staged
+   set is refused outright with the callers listed (Tools de3f953, EV-060 - stage the
+   callers' updates too, or keep the symbol).
+4. **On `VERDICT: BLOCK`** (the commit is refused): read every finding. For each one either
+   (a) FIX it, restage, and commit again (a fresh review), or (b) REBUT it factually via
+   `run --context "finding X is wrong because <file:line evidence>"` and then commit - the
+   reviewer re-verifies rebuttals against the bytes and will call out a false rebuttal (it
+   has, twice, against the agent that built this system). Never argue in prose outside the
+   loop, never shop for a compliant model, NEVER touch `.adversary/OVERRIDE` (the owner's
+   one-shot escape; an agent using it is a protocol violation equal to disabling the gate).
+5. **On `VERDICT: CLEAR`:** the commit has landed; you should see
+   `adversary record: CLEAR note written`. Re-editing a cleared file afterwards simply means
+   the next commit reviews again.
+6. **Push normally.** The pre-push guard audits the outgoing commits (refusing the push if
+   any code commit lacks its note), scans every outgoing commit's added lines - a secret
+   LITERAL refuses the push with the rewrite recipe, a heuristic hit warns - re-runs the
+   outgoing DOC lines through the local docs model (a block backed by a quoted value refuses;
+   names, placeholders and elided prefixes are withdrawn; commits already on the remote's
+   tracking refs are not re-fed, so `git fetch --prune origin` first), and then pushes
+   `refs/notes/adversary` to the same remote automatically - the evidence always travels
+   with the history; you never push notes by hand.
 
-Model guidance (field-tested): `z-ai/glm-5.2` reviews in ~2 minutes with substantive
-traces and is the recommended default flag. The built-in default `tencent/hy3` is
-cheaper but has hung for 50 minutes and returned empty (the gate correctly fails
-closed with BLOCK on an empty response - that is the designed behavior, not a crash).
+Model guidance (owner rulings 2026-09-01 / 09-03): the built-in `DEFAULT_MODEL` is a
+FALLBACK CHAIN - GLM-5.3-Flash on OpenRouter, then xAI Grok-4.6 through the `xai:` prefix
+(api.x.ai, `XAI_API_KEY`) - and needs no `--model` flag. The chain advances only on a
+transport failure or an EMPTY response, never on a rendered verdict; if the last model is
+empty too the gate fails closed with BLOCK (designed behavior, not a crash). The exact ids
+are the `DEFAULT_MODEL` line in `adversary_gate.py`; `ADVERSARY_MODEL` or `--model` override.
+(The earlier flag-recommended model and the old `tencent/hy3` default - which once hung for
+50 minutes and returned empty - are retired.)
 
 Merging: merges are NOT exempt (a merge can carry un-gated commits). Do merges
-LOCALLY, where the staged merge result goes through `run` like any change and gets
+LOCALLY, where the staged merge result is reviewed like any change and gets
 notarized like any commit. Never use the GitHub merge/squash/rebase buttons on a
 gated repo - a server-side merge commit is created where no notary exists, can never
 carry a note, and would turn the audit permanently red (Chapter 5 disables those
-buttons for exactly this reason).
+buttons for exactly this reason). **Landing on a protected `main`:** push the work as a
+side branch, open the PR, let the `audit` check go green, then fast-forward `main` to that
+exact sha with the owner tool:
+```
+python C:\Users\User\source\repos\Tools\adversary-gate\owner_ff_merge.py --only <repo> --pr <N> --head <branch> --apply
+```
+(dry run without `--apply`; it verifies OPEN + mergeable, origin/main an ancestor, and a
+successful `audit` check-run for that sha, pushes the sha to `main` through the armed
+pre-push guard, then deletes the remote side branch). A direct push of local `main` is
+rejected by GitHub - "Required status check audit is expected" - by design.
 
 ---
 
@@ -301,7 +350,10 @@ pushed to the same remote automatically.
 **Part C** sets branch protection on every adopted repo with a remote:
 `enforce_admins: true` (the required `audit` check binds the owner's own pushes too),
 `required_linear_history: true`, required check context `audit`, and PATCHes the repo
-to reduce the UI merge strategies to squash-only. Two platform constraints, both found
+to reduce the UI merge strategies to squash-only. Two more owner tools sit beside it:
+`owner_ff_merge.py` (the only way a protected branch moves - Chapter 3) and
+`owner_scrub_notes.py` (scrubs a value class the reviewer quoted out of the notes ref, which
+neither the push guard scans nor an agent may touch). Two platform constraints, both found
 live: GitHub refuses disabling all three strategies (422 `no_merge_method`), AND under
 linear-history protection it refuses merge-commit-only — the truly inert choice, since
 that button can never succeed under linear history — demanding squash or rebase (422
@@ -322,9 +374,9 @@ finish once; then re-run the script (Parts A and B become no-ops).
 | # | Command | Must show |
 |---|---|---|
 | 1 | `install_gate.py <repo> --verify-only` | `ARMED`, every component `canonical`/`present`, exit 0 |
-| 2 | `git config core.hooksPath` | `.githooks` |
+| 2 | `install_gate.py <repo> --verify-only` (hooks line) | `.githooks` on a per-clone machine; the absolute `Tools/adversary-gate/hooks` on the owner's machine (do not read the config key from a harness shell - the guard refuses it) |
 | 3 | `git ls-files -s .githooks/pre-commit .githooks/post-commit .githooks/pre-push` | mode `100755` on all three |
-| 4 | stage a junk `.py`, `git commit` | `ADVERSARY GATE: commit REFUSED` (then `git reset`) |
+| 4 | stage a junk `.py`, `git commit` | `ADVERSARY GATE: requesting automatic independent review of staged changes.` (then it CLEARs or BLOCKs; a silent landing = the hook did not run; `git reset --soft HEAD~1` if it landed) |
 | 5 | `.githooks/adversary_audit.py --repo <repo>` | `clean - every code commit carries a matching adversary note` |
 | 6 | `git push` of a branch | notes ref appears on the remote (`git ls-remote <remote> refs/notes/adversary`) |
 | 7 | GitHub Actions after push | the `audit` job green |
@@ -334,13 +386,28 @@ finish once; then re-run the script (Parts A and B become no-ops).
 
 ## Chapter 7 - Troubleshooting (every entry below actually happened)
 
-- **The reviewer hangs for tens of minutes / returns empty.** `tencent/hy3` burned 50
-  minutes of reasoning and returned no content; the gate printed
-  `(model returned no content - failing closed)` and BLOCKed. That is correct
-  behavior. Re-run with `--model z-ai/glm-5.2`.
-- **Commit succeeded when it should have been refused.** Almost always the 100644
-  exec-mode fail-open (POSIX skips non-executable hooks) or an unarmed clone
-  (`core.hooksPath` unset). Run `--verify-only`; re-run the installer; redo step 2.2.
+- **The reviewer hangs for tens of minutes / returns empty.** The old default once burned
+  50 minutes of reasoning and returned no content; the gate printed
+  `(model returned no content - failing closed)` and BLOCKed. That is correct behavior.
+  The shipped chain now advances to the fallback model on an empty response; if both
+  empty, re-run with `--model <another OpenRouter model>`.
+- **A code commit landed with no gate line at all.** Almost always the 100644 exec-mode
+  fail-open (POSIX skips non-executable hooks) or an unarmed clone (`core.hooksPath` unset
+  or dangling). Run `--verify-only`; re-run the installer; redo step 2.2. (Since 2026-09-07
+  a healthy hook never lands a code commit silently - it prints the auto-review line.)
+- **The push guard refused on a docs line that is not a secret** (a model id, a placeholder,
+  an inventory of key NAMES). The local docs model quoted it as a value. Placeholders, role
+  words, env-var names and elided prefixes are withdrawn automatically; a provider/model
+  slug is the known open class (EV-083). Reword to prose (name the model, not its slug),
+  pre-test the outgoing added lines with `docscan.scan()` on-machine, rebuild the unpushed
+  commits (`git cherry-pick --no-commit` onto the base - interactive rebase is unavailable
+  in the harness), re-gate, push. Never OVERRIDE for it; docket the class.
+- **A fresh branch's push re-fed dozens of PUBLISHED commits to the docs model.** Fixed in
+  Tools 6d24c55 (EV-061): the docs feed now excludes commits reachable from the remote's
+  tracking refs. `git fetch --prune origin` before pushing so those refs are current.
+- **`run` refused before any model call, listing "callers".** A staged `.py` removes a
+  module-level symbol that a tracked unstaged `.py` still references (EV-060). Stage the
+  callers' updates in the same commit, or keep the symbol.
 - **`/bin/sh: ... pre-commit: not found` or hook syntax errors.** CRLF-corrupted shim
   (an `autocrlf=true` checkout rewrote it). `--verify-only` reports `crlf`; a plain
   installer re-run repairs it; the `.gitattributes` pin prevents recurrence.

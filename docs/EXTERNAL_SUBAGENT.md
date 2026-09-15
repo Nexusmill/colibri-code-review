@@ -1,7 +1,10 @@
 # EXTERNAL_SUBAGENT.md - provisioning an external subagent that can arm the gate and run reviews
 
-> **Doc version: 1.1 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Prerequisite 5
-> notes machine-wide arming on the owner's machine; on any other machine it is per-clone.
+> **Doc version: 1.2 - 2026-09-14.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Prerequisite 5
+> notes machine-wide arming on the owner's machine; on any other machine it is per-clone. 1.2:
+> git falls back to PATH (prerequisite 1 corrected), the optional local docs model is listed,
+> the commit loop reflects auto-review, and the marketplace plugin is named as the
+> distribution for a machine without the Tools clone.
 >
 > The checklist for getting everything in place so a HEADLESS agent session - another
 > machine, another checkout, a scheduled job, or a launcher-spawned worker - can run
@@ -13,7 +16,7 @@
 
 | # | requirement | why (code fact) | failure mode if missing |
 |---|---|---|---|
-| 1 | **Git for Windows at `C:\Program Files\Git\cmd\git.exe`** | `adversary_gate.py` hardcodes `GIT` to that path with NO fallback | the gate tool itself dies on any command -> commits are refused (hook fail-closed) and none can clear. (`install_gate.py` and the selftests DO fall back to `git` on PATH; the gate proper does not.) |
+| 1 | **Git for Windows at `C:\Program Files\Git\cmd\git.exe`**, or `git` on PATH | `adversary_gate.py`, `install_gate.py` and the auditor try that path first and fall back to `git` on PATH (relocated / foreign machine) | with neither, the gate tool itself dies on any command -> commits are refused (hook fail-closed) and none can clear. (`install_gate.py` and the selftests DO fall back to `git` on PATH; the gate proper does not.) |
 | 2 | **Python 3.11 at `C:\Users\User\AppData\Local\Programs\Python\Python311\python.exe`** - or ANY `python` on the hook's PATH | the shim's `PYBIN` tries the 3.11 path, then falls back to bare `python` | no python visible to `sh` -> the hook errors -> every commit refused |
 | 3 | **The Tools repo at `C:\Users\User\source\repos\Tools`** | the shim's `GATE=` and every documented command hardcode the canonical path; this is the single-operator ecosystem convention (TOOLS_MANIFEST.md) | `install_gate.py` exits **3**: armed but FAIL-CLOSED - commits refused, none clearable. Clone/sync the Tools repo to that exact path BEFORE arming anything |
 | 4 | **`OPENROUTER_API_KEY` in the PROCESS environment** | `adversary_gate.py run` refuses to run without it; colibri/`run_batch.py` read the same variable | gate runs impossible (checks still refuse commits); reviews return the no-key message |
@@ -82,8 +85,16 @@ session interactively once and approve, then go headless.
 - **Review sweep:** `run_batch.py` per [BATCH.md](BATCH.md) / [../AGENTS.md](../AGENTS.md)
   (rank -> sweep -> verify-every-finding-before-changing-anything -> fix -> re-run).
 - **Commit code:** the worker lives under the same G39 loop as anyone: stage -> gate
-  `run` -> fix or factually rebut -> commit. The OVERRIDE escape is the owner's alone;
-  a worker touching it is a protocol violation.
+  `run --context` (optional; a bare commit requests the review itself, with no context)
+  -> commit -> fix or factually rebut on BLOCK -> commit. The OVERRIDE escape is the
+  owner's alone; a worker touching it is a protocol violation.
+- **A machine without the Tools clone** can run the same bytes from the marketplace plugin
+  `adversary-gate` (colibri-marketplace, 0.3.0 = Tools 6773f97, with `docscan.py` and the
+  `hooks/` dispatchers): `install_gate.py <repo>` from the plugin's `tools/` pins that
+  plugin's dispatcher dir; re-run it after every plugin update (Claude Code keeps plugins
+  in a versioned cache directory, so the absolute pin dangles otherwise - `--verify-only`
+  reports it). The optional docs lane needs `llama-cli` + the Qwen3-4B GGUF
+  (`NEXUSMILL_LLAMA_CLI` / `NEXUSMILL_DOCSCAN_MODEL`); without them it degrades loudly.
 
 ## Trust but read back
 

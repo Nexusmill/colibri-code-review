@@ -1,6 +1,6 @@
 # DOCS_VERSIONS.md - version register for the gate documentation
 
-> **Doc version: 1.1 - 2026-09-07.** New at 1.0; 1.1 registers the EV-043 doc release. This file is the authoritative register of every
+> **Doc version: 1.3 - 2026-09-14.** New at 1.0; 1.1 registers the EV-043 doc release; 1.2 the EV-045/046 release; 1.3 the 2026-09-14 re-baseline on Tools 6773f97. This file is the authoritative register of every
 > gate-related document, its current version, and what changed at each version. Each tracked
 > doc carries a `Doc version: N.N - DATE` line in its own header that must match its row here.
 
@@ -20,19 +20,19 @@
 
 | Doc | Version | Status |
 |---|---|---|
-| [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md) | 1.1 | machine-wide arming: dispatcher dir, absolute pin, census, HOOK_NAMES + rules epoch; EV-043 hardening section |
-| [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) | 1.1 | step-by-step gate implementation for Codex + the `decide()` audit; §3.5 partial commits + EV-043 |
-| [ADVERSARY_GATE.md](ADVERSARY_GATE.md) | 2.1 | the wall; machine-wide arming; 2.1 = fixture-repo skip (EV-045), secrets warn + scrub at commit, refused at push (EV-046) |
-| [HARNESS_GUARD.md](HARNESS_GUARD.md) | 2.0 | layer 2 `decide()` catalogue, with the 2026-09-06 arming-side rules |
-| [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) | 2.1 | the four layers; layer 0 is the dispatcher; 2.1 = the push-time secret barrier and the fixture skip |
-| [GATE_INSTALLER.md](GATE_INSTALLER.md) | 2.0 | installer reference; absolute pin, census, epoch, reanchor |
-| [GATE_ADOPTION_PLAYBOOK.md](GATE_ADOPTION_PLAYBOOK.md) | 2.0 | adoption runbook; hook-name code class, dispatcher layer 0 |
-| [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | 1.1 | machine prerequisites; machine-wide arming note |
-| [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.2 | the anthropics/claude-code#90887 archive; Version 2 POSTED (issuecomment-5570626121) |
+| [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md) | 1.2 | machine-wide arming: dispatcher dir, absolute pin, census, HOOK_NAMES + rules epoch; EV-043 hardening section; 1.2 = armed at birth (ROOT), the relocated-suite state, two EV-043-superseded claims corrected |
+| [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) | 1.2 | step-by-step gate implementation for Codex + the `decide()` audit; §3.5 partial commits + EV-043; 1.2 = §2.6 the reviewed-write broker + enforcement server (EV-060, 6773f97), auto-review in §3.3 |
+| [ADVERSARY_GATE.md](ADVERSARY_GATE.md) | 3.0 | the wall; 3.0 = auto-review on commit (the loop changed), the fallback model chain, the docs lane's evidence gate, the removed-symbol refusal (EV-060), armed at birth (EV-055), owner tools, current selftest inventory |
+| [HARNESS_GUARD.md](HARNESS_GUARD.md) | 2.1 | layer 2 `decide()` catalogue, with the 2026-09-06 arming-side rules; 2.1 = field over-denies recorded, plugin sync note |
+| [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) | 2.2 | the four layers; layer 0 is the dispatcher; 2.1 = the push-time secret barrier and the fixture skip; 2.2 = auto-review + removed-symbol refusal at layer 0, ROOT baseline + auditor hardening + notes scrubber at layer 3, evidence-gated docs lane, `owner_ff_merge` at layer 4 |
+| [GATE_INSTALLER.md](GATE_INSTALLER.md) | 2.1 | installer reference; absolute pin, census, epoch, reanchor; 2.1 = ROOT at birth, the proving sequence under auto-review, 73/73 |
+| [GATE_ADOPTION_PLAYBOOK.md](GATE_ADOPTION_PLAYBOOK.md) | 3.0 | adoption runbook; 3.0 = the proof is the gate line not a refusal, the auto-review loop, code class + docs lane, model chain, landing by `owner_ff_merge`, new troubleshooting entries |
+| [EXTERNAL_SUBAGENT.md](EXTERNAL_SUBAGENT.md) | 1.2 | machine prerequisites; machine-wide arming note; 1.2 = git PATH fallback, the optional docs-lane model, the marketplace plugin as the no-Tools-clone distribution |
+| [ISSUE_90887_FILING.md](ISSUE_90887_FILING.md) | 2.2 | the anthropics/claude-code#90887 archive; Version 2 POSTED (issuecomment-5570626121) - an archive of posted text, deliberately NOT re-baselined |
 | [ISSUE_SKILL_GATE_FILING.md](ISSUE_SKILL_GATE_FILING.md) | 1.1 | the G38 skill-gate post; POSTED as issue #92656 |
-| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-047 |
-| gate_evidence.json | (docket) | machine-readable evidence docket; 47 entries, through EV-047 |
-| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.2 | this register |
+| [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-084 |
+| gate_evidence.json | (docket) | machine-readable evidence docket; 84 entries, through EV-084 |
+| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.3 | this register |
 
 Docs about the colibri review tool itself (not the gate) are unversioned here and unchanged
 by the gate releases: README.md, BATCH.md, CONSOLE.md, MODES.md, SPEC_AUTHORING.md,
@@ -42,13 +42,42 @@ STATIC_SIGNALS.md, STORAGE.md, GATE_SWEEP_2026-09-02_*_PENDING.md.
 
 | Doc | Version | Status |
 |---|---|---|
-| `TOOLS_MANIFEST.md` | (rolling) | the tool register; adversary-gate row = machine-wide arming |
-| `adversary-gate/CODEX_INTEGRATION.md` | 2.0 | pointer to CODEX_GATE_IMPLEMENTATION.md + the single-source rule |
+| `TOOLS_MANIFEST.md` | (rolling) | the tool register; adversary-gate row = machine-wide arming + the 2026-09-14 addendum (model chain, docs lane, secrets policy, ROOT, removed-symbol refusal, owner tools, plugin 0.3.0, counts); new rows arm-repo + the Codex enforcement broker |
+| `adversary-gate/CODEX_INTEGRATION.md` | 2.1 | pointer to CODEX_GATE_IMPLEMENTATION.md + the single-source rule; 2.1 = the reviewed-write broker, EV-060, the restart rule |
 | `adversary-gate/GUARD_PORTABILITY.md` | (rolling) | guard portability notes |
-| `arm-repo/README.md` | 1.1 | the new-repo arming protocol; `--census` passthrough, exact-value verify |
+| `arm-repo/README.md` | 1.2 | the new-repo arming protocol; `--census` passthrough, exact-value verify; 1.2 = layer 5 repo-memory, `--skip-memory`, the UTF-8 pipe fix, 23 rows |
 | `skill-gate/README.md` | (rolling) | G38 skill gate |
+| `colibri-marketplace/plugins/adversary-gate/README.md` + `SKILL.md` | 0.3.0 (plugin) | the distributed copy's docs; re-baselined 2026-09-14 with the payload |
 
 ## Changelog
+
+### Docs release 2026-09-14 - re-baseline on Tools 6773f97 (a week of gate changes, one pass)
+
+Owner order 2026-09-14 ("make sure they are current with everything we've done and changed,
+and increment the versions of the docs you change"). Between the 09-07 evening release and
+Tools 6773f97 the gate gained: auto-review on commit (9597241 - the hook requests the review;
+"commit REFUSED - lacks a fresh clearance" is no longer reachable from a commit), the
+docscan evidence gate and its four false-positive fixes (f2fdfd4, 724d095, 14d1f09, fb0d9a6,
+d9876ff) plus the published-commit exclusion (6d24c55), `owner_ff_merge.py` (ae014e0,
+15555dd, a5ca6b7), `owner_scrub_notes.py` (b01c8fb), armed at birth (9e46976, 83b45f1) and
+the auditor's ref-deletion / shallow hardening (3c1243a, 70835b6), the restored secret
+wrapper + removed-symbol refusal (de3f953, EV-060), the reviewer-prompt manifest doctrine
+(8db2fbe), the broker's bounded BLOCK reason (6773f97), and arm-repo's layer 5 (40a848e,
+a0683c3). The same day the marketplace plugin was re-vendored to those bytes (0.3.0) and the
+docket reached EV-084. Every claim below was re-verified against the Tools bytes or a live run
+before it was written; selftest counts are from runs on 2026-09-14.
+
+- **ADVERSARY_GATE.md 2.1 -> 3.0**, **GATE_ADOPTION_PLAYBOOK.md 2.0 -> 3.0** - the model of the
+  loop changed (auto-review), so major.
+- **LAYERED_ENFORCEMENT.md 2.1 -> 2.2**, **GATE_INSTALLER.md 2.0 -> 2.1**,
+  **UNIVERSAL_ARMING.md 1.1 -> 1.2**, **HARNESS_GUARD.md 2.0 -> 2.1**,
+  **CODEX_GATE_IMPLEMENTATION.md 1.1 -> 1.2**, **EXTERNAL_SUBAGENT.md 1.1 -> 1.2** - additions
+  and corrections (details in the table above).
+- **Tools:** `adversary-gate/CODEX_INTEGRATION.md 2.0 -> 2.1`, `arm-repo/README.md 1.1 -> 1.2`,
+  `TOOLS_MANIFEST.md` addendum + two rows; `install_gate.py`'s printed NEXT steps now describe
+  the auto-review proof (a gated code change in Tools).
+- **Docket:** through EV-084.
+- **DOCS_VERSIONS.md 1.2 -> 1.3** - this entry.
 
 ### Docs release 2026-09-07 (evening) - EV-045 fixture skip, EV-046 warn / scrub / refuse-at-push
 

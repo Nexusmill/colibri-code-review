@@ -1,7 +1,9 @@
 # CODEX_GATE_IMPLEMENTATION.md - the G39 adversarial commit gate on Codex, step by step
 
-> **Doc version: 1.1 - 2026-09-07.** New at 1.0; 1.1 adds section 3.5 (partial commits and how to
-> commit a dispatcher edit) after the EV-043 self-check fix. Registered in [DOCS_VERSIONS.md](DOCS_VERSIONS.md).
+> **Doc version: 1.2 - 2026-09-14.** New at 1.0; 1.1 adds section 3.5 (partial commits and how to
+> commit a dispatcher edit) after the EV-043 self-check fix; 1.2 adds section 2.6 (the
+> reviewed-write broker and the `astra_enforcement` server, Tools a55ffa5 / de3f953 / 6773f97)
+> and reflects auto-review on commit in 3.3. Registered in [DOCS_VERSIONS.md](DOCS_VERSIONS.md).
 > Audience: a Codex session (OpenAI Codex CLI / app) that must operate under the same G39
 > adversarial commit gate as Claude Code and Cowork. Everything here is grounded in real
 > files: `Tools/adversary-gate/codex_guard.py`, `harness_guard.py`, `hooks/`,
@@ -145,6 +147,43 @@ generated example existed to copy; the owner generates it once through the Codex
 can copy it into newly armed repos. Arming does **not** depend on this file - the global
 dispatcher already arms Codex worktrees; the setup script only surfaces a broken state early.
 
+### 2.6 The reviewed-write broker and the enforcement server (2026-09-07, EV-060, 6773f97)
+
+For the OpenAIAstra repo (`codex_policy.ROOT`) Codex does not write files or commit through
+the shell at all: it talks to the **`astra_enforcement`** MCP server
+(`Tools/adversary-gate/enforcement_server.py`, one stdio client per process, Tools a55ffa5),
+whose six tools are `status`, `list_skills`, `load_skill`, `reviewed_write`, `run_checks`,
+`commit`; `codex_policy.decide()` confines the session to those plus the navigation tools.
+The pieces:
+
+- **`reviewed_write.py` - the canonical pre-write review broker.** Every proposed UTF-8
+  write is reviewed INDEPENDENTLY before it touches disk: the broker requires a reason, checks
+  the caller's `expected_sha256` against the current bytes (stale = refused), refuses
+  control-plane paths (`.git`, `.adversary`, `.githooks`, `.codex`, `.claude`, `AGENTS.md`,
+  `CLAUDE.md`, `.mcp.json`, `.repo-memory.json`), linked paths and filesystem aliases, runs the
+  gate's LOCAL secret scan over the payload (`_scan_text_secrets` - a hit refuses transmission;
+  this is the wrapper Tools 8245433 removed while the broker still called it, so every write
+  crashed for two days until the owner caught it and de3f953 restored it: EV-060, the case that
+  also gave the gate its removed-symbol refusal), sends before/after to the gate's model chain,
+  writes the evidence to `.adversary/write-reviews/<uuid>.json`, and applies the EXACT cleared
+  bytes only if the target is still unchanged. No caller-supplied clearance is accepted.
+- **A BLOCK carries the findings** (6773f97, 2026-09-10): the `WriteDenied` message used to
+  name only the evidence artifact, which the Codex client's policy forbids it to read; it now
+  carries the reviewer's findings with the verdict line dropped, every secret-shaped value
+  replaced by the gate's own scrubber, blank lines collapsed, capped at 1500 chars. The
+  complete review still lands verbatim in the artifact.
+- **Skills authority:** `reviewed_write` and `commit` require the process to have loaded its
+  authoritative skills through `load_skill` first (`SkillSession.require_ready`); `commit`
+  stages explicit paths and invokes armed git (the pre-commit dispatcher and its auto-review
+  run as usual) and requires fresh skill routing plus an actual `run_checks` pass on the
+  unchanged tree.
+- **Restart rule:** a running enforcement server imports the broker ONCE at start. After any
+  broker change (`reviewed_write.py`, `adversary_gate.py`) every running `astra_enforcement`
+  process must be restarted by the owner - never kill another session's MCP servers.
+
+Batteries: `test_reviewed_write.py` (drives the REAL secret scan), `test_codex_policy.py`,
+`test_enforcement_server.py` - 24 passed on 2026-09-14.
+
 ---
 
 ## Part 3 - Step by step: install, verify, operate
@@ -191,14 +230,20 @@ Identical to every other harness (see [ADVERSARY_GATE.md](ADVERSARY_GATE.md) and
    In a repo another session may be using, verify `git diff --cached --name-only` shows only
    your paths before committing, or use `git commit -- <paths>`. (This exact trap bundled a
    concurrent session's staged work into a re-vendor commit on 2026-09-06.)
-2. **Run the adversary:** `python C:/Users/User/source/repos/Tools/adversary-gate/adversary_gate.py run --context "<intent>"` (needs `OPENROUTER_API_KEY`). Front-load the verbatim
+2. **Run the adversary with context, then commit:** `python C:/Users/User/source/repos/Tools/adversary-gate/adversary_gate.py run --context "<intent>"` (needs `OPENROUTER_API_KEY`). Front-load the verbatim
    `git diff --cached --name-only` into `--context` so the reviewer sees exactly the staged
-   set - a mismatch between your stated scope and the staged set is itself a finding.
+   set - a mismatch between your stated scope and the staged set is itself a finding. A bare
+   `git commit` on unreviewed staged code triggers the same review automatically (Tools
+   9597241, 2026-09-07) but with NO context - so run it explicitly whenever the reviewer
+   needs to know something. Before any model call the gate refuses, deterministically, a
+   staged `.py` that removes a module-level symbol a tracked unstaged `.py` still references
+   (EV-060): stage the callers too.
 3. **On BLOCK:** fix each real finding and restage, or rebut a wrong one factually with
    `--context`. **A BLOCK is a stop** - never commit on an older/stale clearance that a
    different staged set happened to match.
-4. **On CLEAR:** commit immediately; the post-commit hook notarizes it. Push normally; the
-   pre-push guard audits and ships the notes ref.
+4. **On CLEAR:** commit immediately (the hook re-checks the shas and, on a fresh CLEAR, lands
+   it); the post-commit hook notarizes it. Push normally; the pre-push guard audits, scans
+   for secrets, re-runs docs through the local model, and ships the notes ref.
 5. Never touch `.adversary/OVERRIDE` (owner-only) or `--no-verify`.
 
 ### 3.4 Prove a worktree / the machine
@@ -348,5 +393,7 @@ auditor, CI), not more regex - which is exactly how the design already treats th
   rule.
 - **When the vendored auditor changes**, re-vendor every armed repo (see UNIVERSAL_ARMING.md);
   a superseded clearance is abandoned, not reused.
+- **When the broker changes**, restart every running `astra_enforcement` server (section
+  2.6) - the module is imported once at start; an old process keeps enforcing old bytes.
 - **Respect the skill gate too.** The PreToolUse/PostToolUse/Stop `skill_gate.py` rows are the
   G38 half; see `Tools/skill-gate/README.md` and the skill-gate filing draft.

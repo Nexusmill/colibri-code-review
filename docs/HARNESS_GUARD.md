@@ -1,9 +1,10 @@
 # HARNESS_GUARD.md - the agent-side deny guard: every rule, its reason, and the hardening arcs
 
-> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). The
+> **Doc version: 2.1 - 2026-09-14.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). The
 > machine-wide-arming rules (2026-09-06) are added below; a full walk-through and audit of the
 > `decide()` function, including its documented residuals, is in
-> [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) Part 4.
+> [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) Part 4. 2.1 records the
+> over-denies met in the field (the rules are unchanged since 2026-09-06).
 
 One-line abstract: the catalogue of what `Tools/adversary-gate/harness_guard.py` (the Claude Code
 PreToolUse guard, and, through `codex_guard.py`, the Codex guard) and its ZCode twin
@@ -124,13 +125,21 @@ check keeps the two sets identical). Consequences handled the same day:
   file map (`Nexusmill/junk/mjs_backfill_owner_notes.py`, dry-run by default); agents never write
   notes, so this step is not automated,
 - the distributed plugin copy of the gate tools in `colibri-marketplace` is synced from Tools
-  byte for byte.
+  byte for byte (last re-vendored 2026-09-14 as adversary-gate 0.3.0 = Tools 6773f97, now
+  carrying `docscan.py` and the `hooks/` dispatchers the HEAD installer requires).
 
 ## Working with the guard
 
 - A command whose TEXT quotes a guarded string is refused (deny-direction false positive): write
   the text to a file and run the file by path. This applies to commit messages, probes and docs
-  appends alike.
+  appends alike. Over-denies met in the field, all by design (the guard has no code-structure
+  awareness): a Python `errors="replace"` kwarg on a line that also says `git` trips the
+  `git replace` rule; a marketplace plugin path `plugins/adversary-gate/tools/hooks/...` trips
+  the dispatcher-dir rule although it is not the machine-wide dir; a heredoc that mentions
+  `core.hooksPath` or `.adversary/` trips the hooks-path / state-dir rules even as prose; a
+  `git config --get core.hooksPath` READ is refused like a write. In every case: put the text
+  in a script file and run it by absolute path, and read `.adversary/reviews/*.md` with the
+  file-reading tool, never the shell.
 - Inspect gate state with `adversary_gate.py status`, never `ls .adversary`.
 - Read hooks from the tracked `.githooks/` shim, never from `.git/hooks`.
 - The one-shot `.adversary/OVERRIDE` is the owner's alone; an agent creating it is a violation.

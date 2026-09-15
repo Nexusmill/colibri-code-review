@@ -1,7 +1,9 @@
 # UNIVERSAL_ARMING.md - machine-wide arming of the adversarial commit gate
 
-> **Doc version: 1.1 - 2026-09-07.** New at 1.0; 1.1 adds the EV-043 post-rollout hardening
-> section (the dispatcher self-check vs partial commits). Registered in [DOCS_VERSIONS.md](DOCS_VERSIONS.md).
+> **Doc version: 1.2 - 2026-09-14.** New at 1.0; 1.1 adds the EV-043 post-rollout hardening
+> section (the dispatcher self-check vs partial commits); 1.2 adds armed-at-birth (ROOT), the
+> relocated-suite ("plugin copy") state, and corrects two claims the EV-043 fix had superseded.
+> Registered in [DOCS_VERSIONS.md](DOCS_VERSIONS.md).
 > Source of truth: `Tools/adversary-gate/` (`hooks/` dispatchers, `install_gate.py`,
 > `adversary_gate.py`, `adversary_audit.py`, `harness_guard.py`). Companions:
 > [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) (the four layers),
@@ -67,10 +69,15 @@ Each shim, in order:
    uncommitted edit to a dispatcher would silently disarm every repo pinned to it. Each shim
    refuses to run while its own file is untracked in the suite checkout or differs from its
    committed HEAD blob (`pre-commit`/`pre-push` fail closed; `post-commit` warns and skips
-   notarization). The one exception is the suite repo itself committing the dispatcher with
-   the edit fully staged - that commit is gated, and the gate reviews the dispatcher as code
-   (HOOK_NAMES). A tamper that also removes the self-check is not stopped at run time (no
-   script defends against its own edit) - detection is the census and the audit tripwire.
+   notarization). There is NO in-band exception - not even for the suite repo committing its
+   own dispatcher (one was tried and leaked a hole in three review rounds; removed in Tools
+   `7ba0e3b`, see the EV-043 section): a dispatcher edit is committed through the suite's
+   `.githooks` shim (which execs the gate with no self-check) and then re-pinned. The
+   self-check runs only when the suite is a git checkout; a RELOCATED copy of the suite that
+   is not one (the marketplace plugin's `tools/hooks/`) skips it by design - the census reports
+   such dispatchers as `unverifiable`, never blesses them as canonical. A tamper that also
+   removes the self-check is not stopped at run time (no script defends against its own edit)
+   - detection is the census and the audit tripwire.
 2. **The gate.** `adversary_gate.py check` (pre-commit), `record` (post-commit), or
    `check-push "$remote"` (pre-push). `GATE=` is resolved from the shim's own location
    (`$0/..`), so a relocated copy of the suite execs *its own* gate rather than the
@@ -95,9 +102,32 @@ one repo. Both share a single `_assess()` so they can never disagree.
 | `armed` | the effective hooks value resolves here AND the vendored `.githooks/` bytes are canonical (or absent on a pre-vendoring branch, under the absolute dir) AND the baseline and `notes.rewriteRef` are set |
 | `stale` | the commit gate is live (the value resolves) but the vendored auditor / baseline / rewriteRef are not canonical - re-run the installer and commit `.githooks/`. **A never-installed foreign repo under the global value reads `stale`: it is commit-gated, but has no push guard, notary, or CI tripwire.** |
 | `dangling` | the value resolves to NOTHING here - git runs no hook. A relative `.githooks` in a worktree whose branch lacks it, or an absolute dispatcher dir that is missing or lacks its three shims. Fail-closed reporting: exit non-zero |
-| `tampered` | the effective value is the canonical dispatcher dir, but a dispatcher in it differs from its committed blob (or the suite is not a git checkout) - every pinned repo fails closed until it is committed through the gate |
+| `tampered` | the effective value is the canonical dispatcher dir, but a dispatcher in it differs from its committed blob or is untracked - every pinned repo fails closed until it is committed through the gate. (A suite copy that is not a git checkout is reported `unverifiable` in the dispatcher line - present, but with no reviewed reference to verify against; it is not a failure) |
 | `unset` | no local and no global value |
 | `overridden` | another hook system's value (a real, existing dir that is not ours) |
+
+## Armed at birth: the ROOT baseline (2026-09-08, EV-055)
+
+Owner ruling 2026-09-08: repos are armed at BIRTH - every touch is a mutation event and every
+one is challenged, the root commit included. Before Tools `9e46976` the installer skipped the
+baseline on an empty repo with a warning and pinned the epoch to a later HEAD, leaving the
+birth commit and its shims outside the rule. Now:
+
+- on an EMPTY repo the installer writes `.githooks/adversary_baseline` = `ROOT` and
+  `.githooks/adversary_rules_epoch` = `hook-names ROOT`; a re-run keeps ROOT;
+- the auditor (`rev-list HEAD`), its epoch walker, the gate's mirror walker and the
+  installer's assessors all understand `ROOT` (the epoch state reads `ok`, anchored below every
+  commit); `--json` on a still-unborn ROOT repo emits a JSON document (`83b45f1`);
+- an unborn HEAD is recognised precisely (a symbolic ref naming a branch that `show-ref
+  --verify` reports ABSENT); every other history failure - a broken clone, a corrupt branch
+  ref - fails CLOSED rather than reading as "nothing to audit" (four gate rounds, EV-055);
+- a ref literally named `ROOT` is a sentinel in the push guard too;
+- existing repos keep their sha baselines until re-anchored.
+
+Two later catches hardened the ROOT path (EV-063 / EV-064, Tools `3c1243a` / `70835b6`): a
+ROOT repository whose current branch ref was deleted, with commits still in the object store,
+is refused (successful object enumeration with no commits is required), and the ROOT epoch
+shortcut runs the shallow-history probe before it skips ancestry.
 
 ## HOOK_NAMES: hook files are code wherever they live (EV-042)
 

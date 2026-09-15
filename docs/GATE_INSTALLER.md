@@ -1,18 +1,21 @@
 # GATE_INSTALLER.md - arming the gate on any repo (directly or via a subagent)
 
-> **Doc version: 2.0 - 2026-09-07.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). The installer now
+> **Doc version: 2.1 - 2026-09-14.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). The installer now
 > pins the **absolute** dispatcher dir, writes and anchors the **rules epoch**, has `--census`
 > and `--reanchor-epoch`, and reports the epoch and dispatcher state in `--verify-only`. The
-> machine-wide architecture is [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md).
+> machine-wide architecture is [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md). 2.1: an empty repo
+> is armed at birth (baseline and epoch `ROOT`, Tools 9e46976); the proving sequence reflects
+> auto-review on commit (the hook requests the review, it no longer refuses first).
 >
 > Source of truth: `C:\Users\User\source\repos\Tools\adversary-gate\install_gate.py`
-> (selftest `install_selftest.py`, 72/72 as of 2026-09-07). Shipped 2026-08-30; first live arming the same
+> (selftest `install_selftest.py`, 73/73 as of 2026-09-14). Shipped 2026-08-30; first live arming the same
 > day: `E:\AI\Caliper` (commit 63ebec8), whose adversary review immediately caught the
 > 100644 exec-mode fail-open now covered below - the installer's proving sequence works.
 > **v2 (2026-08-31)** also installs the layer-3 tripwire: the `post-commit` notarization
 > shim, the vendored self-contained auditor (`.githooks/adversary_audit.py`), the
-> tripwire anchor `.githooks/adversary_baseline` (= HEAD at first install; NEVER moved by
-> a re-run), and `notes.rewriteRef refs/notes/adversary` so rebases/amends carry notes to
+> tripwire anchor `.githooks/adversary_baseline` (= HEAD at first install, or `ROOT` when
+> the repo is still empty - armed at birth, 2026-09-08, so the root commit is audited too;
+> NEVER moved by a re-run), and `notes.rewriteRef refs/notes/adversary` so rebases/amends carry notes to
 > rewritten commits. See [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md).
 
 ## What `install_gate.py` does
@@ -90,16 +93,20 @@ git add .githooks .gitignore
 git update-index --chmod=+x .githooks/pre-commit .githooks/post-commit
 #   ^ REQUIRED: os.chmod cannot set an exec bit on Windows, and POSIX git silently
 #     SKIPS a 100644 hook - the index mode is what clones inherit
-git commit -m "chore(gate): arm the mandatory adversarial commit gate (G39)"
-#   -> EXPECT: "ADVERSARY GATE: commit REFUSED" listing the staged .githooks files.
-#      That refusal is the end-to-end verification. If the commit SUCCEEDS here,
-#      something is wrong - stop and audit with --verify-only.
 python C:\Users\User\source\repos\Tools\adversary-gate\adversary_gate.py run \
   --context "arming commit: canonical shims + vendored auditor, installed by install_gate.py"
+#   -> optional but recommended: the automatic review at commit time carries NO context.
+#      EXPECT the reviewer's analysis, "VERDICT: CLEAR", "Clearance written for N file(s)".
 git commit -m "chore(gate): arm the mandatory adversarial commit gate (G39)"
-#   -> passes while the staged bytes stay identical; the post-commit hook then
-#      NOTARIZES it (verify: git notes --ref refs/notes/adversary show HEAD)
-git push origin refs/notes/adversary   # when pushing: the notes travel separately
+#   -> EXPECT the gate to speak during the commit. Without a prior `run` it prints
+#      "ADVERSARY GATE: requesting automatic independent review of staged changes." and
+#      reviews the .githooks files itself (Tools 9597241, 2026-09-07); with one it re-checks
+#      the shas. Either way: CLEAR -> the commit lands and the post-commit hook NOTARIZES it
+#      (verify: git notes --ref refs/notes/adversary show HEAD); BLOCK -> refused with
+#      findings. A commit that lands SILENTLY - no gate line at all - means the hook did
+#      not fire: stop and audit with --verify-only. (Before 2026-09-07 the proof was a
+#      refusal; it is now the gate line.)
+git push                               # the pre-push guard pushes refs/notes/adversary itself
 ```
 
 Finish all edits BEFORE running the adversary: clearances are keyed to staged blob shas,
@@ -114,11 +121,13 @@ worked:
 > `python C:\Users\User\source\repos\Tools\adversary-gate\install_gate.py <repo>` and
 > require exit 0. Then in `<repo>`: stage `.githooks/pre-commit`,
 > `.githooks/.gitattributes` and `.gitignore`; run
-> `git update-index --chmod=+x .githooks/pre-commit`; attempt the commit and CONFIRM it
-> is refused with "ADVERSARY GATE"; run the gate's `run` command (needs
-> OPENROUTER_API_KEY in your environment); commit. Report: installer exit code, the
-> refusal line, the verdict line, and the final commit hash. If any step deviates, STOP
-> and report - do not improvise around the gate.
+> `git update-index --chmod=+x .githooks/pre-commit .githooks/post-commit .githooks/pre-push`;
+> run the gate's `run` command with a one-line `--context` (needs OPENROUTER_API_KEY in
+> your environment) and CONFIRM "VERDICT: CLEAR"; commit and CONFIRM the commit prints an
+> "ADVERSARY GATE" line and lands with a note (`git notes --ref refs/notes/adversary show
+> HEAD`). Report: installer exit code, the verdict line, the gate line seen during the
+> commit, and the final commit hash. If any step deviates - especially a code commit that
+> lands with no gate line - STOP and report; do not improvise around the gate.
 
 Verify the subagent's report yourself with `--verify-only` and `git log -1` - reports
 are claims, the readback is the fact.
@@ -137,4 +146,6 @@ machine FIRST, then arm.
 
 `git config --unset core.hooksPath` in the clone. The shim's own banner calls this an
 audited decision; an agent doing it to get past the gate is a G39 violation, same as
-using `.adversary/OVERRIDE` without the owner's say-so.
+using `.adversary/OVERRIDE` without the owner's say-so. On the owner's machine this does
+not un-arm anything: the GLOBAL value still routes every commit through the dispatcher
+([UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md)).
