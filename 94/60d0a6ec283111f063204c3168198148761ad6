@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "9460d0a6ec283111f063204c3168198148761ad6",
+ "when": "20260915-175417",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "6f6c0d2ae2ad6fe00bac3536d209738b850e13396f3f5c251e9e82fbf56a732c",
+   "model": "xai:grok-4.6",
+   "when": "20260915-175337",
+   "artifact": ".adversary\\reviews\\gate_20260915-175337.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260915-175337.md": "model: xai:grok-4.6 | usage: {'input_tokens': 6631, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 10805, 'output_tokens_details': {'reasoning_tokens': 10711}, 'total_tokens': 17436, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 773240000, 'context_details': {'input_tokens': 6631, 'output_tokens': 10805}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nThe splice is a valid JSON array tail-append: EV-087\u2019s object close gains the required comma, EV-088 and EV-089 are complete objects with the same field set, and the original root `}` / array `]` still close the file. Hunk math (11 \u2192 46) matches the 35 added lines. No code, no secret-shaped literals, no caller/contract break visible in the provided bytes.\n\nVERDICT: CLEAR"
+ }
+}
