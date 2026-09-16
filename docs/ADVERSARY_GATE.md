@@ -1,7 +1,7 @@
 # ADVERSARY_GATE.md - the mandatory adversarial commit gate (G39) in this repo
 
 > **Doc version: 3.1 - 2026-09-15.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). 3.1: the removed-symbol
-> refusal shadows a bystander's OWN binding and nothing else (Tools ca686ed + 7935480 + 8b4e40c, EV-088), and the docs
+> refusal shadows a bystander's OWN binding and nothing else (Tools ca686ed + 7935480 + 8b4e40c + b0de7ab, EV-088), and the docs
 > lane's evidence gate withdraws on a one-character literal (c33a704, EV-089) as well as on the
 > describing verbs and model slugs of 51ba4b3 (EV-083/086); selftest counts updated. Machine-wide
 > arming (the dispatcher hook dir, the census, HOOK_NAMES, the rules epoch) is its own doc:
@@ -80,9 +80,10 @@ return annotations, class bases and keywords; a method or a function-local of th
 not count. A `def keep` followed by `from lib import keep` is not proof (Tools 7935480, round seven);
 a module-level `from lib import *` disqualifies every def in that module, and a walrus, a `del`, an
 `except ... as`, a `match` capture (`case N:`, `case [*N]:`, `case {**N}:`), a `global` or a second
-def of the same name each exclude it (8b4e40c, rounds eight to ten). Rounds seven and eight were
-found by the MARKETPLACE gate reviewing the byte-identical re-vendored plugin: a second repo's
-review of the same bytes is a second independent reviewer. Everything unprovable
+def of the same name each exclude it (8b4e40c, rounds eight to ten), and so does a `global` declared
+inside any nested body - a class body runs at import (b0de7ab, round eleven). Rounds seven, eight
+and eleven were found by the MARKETPLACE gate reviewing the byte-identical re-vendored plugin: a
+second repo's review of the same bytes is a second independent reviewer (EV-090). Everything unprovable
 still refuses: a bare use, an attribute use, a plain `import X`, a relative import, an import
 from the definer, a staged or deleted or untracked source, a duplicated module name, a
 re-exporter, or a module static resolution cannot find at all (a src/ layout or a sys.path
@@ -90,7 +91,7 @@ entry can hide repo code behind such a name, so "not found" is never "external")
 the fleet Atlas whole-package deletion was refused for sixteen lines that were every other
 module's own `main`; the fix took six review rounds because five drafts each kept a
 "not found -> external -> vouch" branch (selftest checks 43-54; check 54 pins twenty module-scope
-binding shapes on `_sole_module_level_defs` directly).
+binding shapes on `_sole_module_level_defs` directly - twenty-three since b0de7ab).
 
 ## The working loop (auto-review on commit since Tools 9597241, 2026-09-07)
 
@@ -148,7 +149,7 @@ used to be: reports stale/unreviewed files WITHOUT calling a reviewer - diagnost
 - **Selftests** in the tool folder, offline via `ADVERSARY_FAKE` (honored ONLY inside
   `advgate_*`-named selftest repos - it cannot stub the real gate, birth review r2), counts as
   run on 2026-09-14 against Tools 6773f97 (`gate_selftest.py` and `docscan_selftest.py` re-run
-  2026-09-15 on 8b4e40c): `gate_selftest.py` 126, `install_selftest.py` 73,
+  2026-09-15 on b0de7ab): `gate_selftest.py` 126, `install_selftest.py` 73,
   `guard_selftest.py` 231, `audit_selftest.py` 50, `hooks_selftest.py` 19 (the dispatchers),
   `docscan_selftest.py` 14 (runs the real local model), `codex_guard_selftest.py` 19,
   `owner_ff_merge_selftest.py` 11, `owner_scrub_notes_selftest.py` 17,
