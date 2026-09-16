@@ -1,6 +1,8 @@
 # LAYERED_ENFORCEMENT.md - the four layers around the adversarial commit gate
 
-> **Doc version: 2.2 - 2026-09-14.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Layer 0 is now a
+> **Doc version: 2.3 - 2026-09-15.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). 2.3: layer 0's
+> removed-symbol refusal shadows only a bystander's own binding (Tools ca686ed, EV-088) and the
+> docs lane's evidence gate withdraws on a one-character literal (c33a704, EV-089). Layer 0 is now a
 > **dispatcher**, armed **machine-wide**; layer 3 gained HOOK_NAMES and the rules epoch. Full
 > architecture: [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md). 2.1: fixture repositories under
 > the profile Temp skip the layer-0 review (EV-045); secrets warn and are scrubbed at commit

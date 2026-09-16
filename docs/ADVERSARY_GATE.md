@@ -1,6 +1,9 @@
 # ADVERSARY_GATE.md - the mandatory adversarial commit gate (G39) in this repo
 
-> **Doc version: 3.0 - 2026-09-14.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). Machine-wide
+> **Doc version: 3.1 - 2026-09-15.** See [DOCS_VERSIONS.md](DOCS_VERSIONS.md). 3.1: the removed-symbol
+> refusal shadows a bystander's OWN binding and nothing else (Tools ca686ed, EV-088), and the docs
+> lane's evidence gate withdraws on a one-character literal (c33a704, EV-089) as well as on the
+> describing verbs and model slugs of 51ba4b3 (EV-083/086); selftest counts updated. Machine-wide
 > arming (the dispatcher hook dir, the census, HOOK_NAMES, the rules epoch) is its own doc:
 > [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md). 2.1 added the owner rulings of 2026-09-07:
 > fixture repositories skip the review (EV-045); secrets warn and are scrubbed at commit and
@@ -64,7 +67,20 @@ renamed-to-non-`.py` file removes all of its names - while any tracked `.py` OUT
 set still references it (name, attribute or import binding; the listing is root-anchored so a
 run from a subdirectory cannot fall open). The case that built it: Tools 8245433 removed
 `_scan_text_secrets` while the Codex reviewed-write broker still called it, and the gate had
-CLEARed the removal because the caller was not staged.
+CLEARed the removal because the caller was not staged. **Names are matched unqualified, with
+exactly two shadows (Tools ca686ed, 2026-09-15, EV-088):** a bystander that DEFINES the name at
+module level (its own `def main`) is not a caller, and neither is a bystander whose
+`from X import name` is PROVEN to bind something else - X names a tracked, unstaged file at the
+repo root that is the only path with that suffix anywhere in the tracked, staged or untracked
+tree, no ignored file hides under the same name at the root or beside the bystander, and X's
+index blob defines the name (the `from fleet.cli import main` shape). Everything unprovable
+still refuses: a bare use, an attribute use, a plain `import X`, a relative import, an import
+from the definer, a staged or deleted or untracked source, a duplicated module name, a
+re-exporter, or a module static resolution cannot find at all (a src/ layout or a sys.path
+entry can hide repo code behind such a name, so "not found" is never "external"). The case:
+the fleet Atlas whole-package deletion was refused for sixteen lines that were every other
+module's own `main`; the fix took six review rounds because five drafts each kept a
+"not found -> external -> vouch" branch (selftest checks 43-51).
 
 ## The working loop (auto-review on commit since Tools 9597241, 2026-09-07)
 
@@ -121,7 +137,8 @@ used to be: reports stale/unreviewed files WITHOUT calling a reviewer - diagnost
   [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md)).
 - **Selftests** in the tool folder, offline via `ADVERSARY_FAKE` (honored ONLY inside
   `advgate_*`-named selftest repos - it cannot stub the real gate, birth review r2), counts as
-  run on 2026-09-14 against Tools 6773f97: `gate_selftest.py` 113, `install_selftest.py` 73,
+  run on 2026-09-14 against Tools 6773f97 (`gate_selftest.py` and `docscan_selftest.py` re-run
+  2026-09-15 on c33a704): `gate_selftest.py` 123, `install_selftest.py` 73,
   `guard_selftest.py` 231, `audit_selftest.py` 50, `hooks_selftest.py` 19 (the dispatchers),
   `docscan_selftest.py` 14 (runs the real local model), `codex_guard_selftest.py` 19,
   `owner_ff_merge_selftest.py` 11, `owner_scrub_notes_selftest.py` 17,
@@ -228,16 +245,21 @@ Owner rulings of 2026-09-07, landed in Tools 1f287bb (EV-045), 8245433 and ad484
   with a REASON line. A BLOCK stands ONLY if the REASON quotes a VALUE: `_evidence_is_name()`
   withdraws it - loudly, on stderr - when every token is descriptive vocabulary, a provider
   name, an env-var NAME, a placeholder (`yourpassword`, `changeme`, `<redacted>`), a bare
-  credential ROLE word (`pw`, `user`) or an ELIDED vendor prefix (`sk-ant-...`, `AKIA...`);
-  any digit/symbol token, an un-underscored ALL-CAPS string or an unknown word is a value, and
-  an empty REASON keeps the block (fail closed). Absent a model the lane degrades LOUDLY to the
+  credential ROLE word (`pw`, `user`), an ELIDED vendor prefix (`sk-ant-...`, `AKIA...`), a
+  prose verb or noun that DESCRIBES a credential (`needs`, `requires`, `references` - 51ba4b3,
+  EV-086), a vendor/model SLUG with a model shape on the right (`z-ai/glm-5.3-flash` - 51ba4b3,
+  EV-083) or a single ALPHANUMERIC character (`"k"` - c33a704, EV-089: a plan document's
+  embedded test code set a key variable to a one-letter fake); any digit/symbol token, an
+  un-underscored ALL-CAPS string, a two-character-or-longer unknown word or a provider/PASSWORD
+  slug is a value, and an empty REASON keeps the block (fail closed). Absent a model the lane degrades LOUDLY to the
   pattern floor, never silently. At push the docs feed excludes commits already reachable from
   the remote's tracking refs (`git fetch --prune origin` first) - a fresh branch once re-fed 124
   published commits (EV-061) - while the pattern floor and the note audit keep the full
-  outgoing set. **Known open false-positive class (EV-083, 2026-09-14):** a provider/model slug
-  such as the gate's own default reviewer id is value-shaped by the rule above and is held as
-  a secret; until the Tools fix lands, name models in prose in docs and pre-test outgoing doc
-  text with `docscan.scan()` before re-gating.
+  outgoing set. The false-positive classes found live so far - a provider/model slug (EV-083),
+  a describing verb across a chunk boundary (EV-086), a one-character literal (EV-089) - are
+  each closed by a rule above; the recipe that finds the next one is the guard's own feed
+  builder run over the exact outgoing revs and `docscan._run_one_full` on the named chunk,
+  three runs, then a rule with a measured RED/GREEN - never a rewrite of history.
 - **The receipts.** Landing the scrub took SEVEN gate rounds and the push guard THREE; every
   BLOCK was a real leak path or blindness the author's own tests had missed (docket EV-047).
 
