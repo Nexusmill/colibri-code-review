@@ -1411,6 +1411,104 @@
    "marketplace 6621ab2 feat(plugin): adversary-gate 0.3.3 - payload re-vendored byte-for-byte from Tools b0de7ab; the re-vendor scripts C:\\Users\\User\\AppData\\Local\\Temp\\claude\\C--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\revendor_033.py, revendor_033b.py, revendor_033c.py, revendor_033d.py (blob equality asserted for all 17 payload files each run)",
    "EV-088 (the six rounds that preceded these; the false-refusal class), EV-083/086 (earlier re-vendor-time catches by the docs lane)"
   ]
+ },
+ {
+  "id": "EV-091-A-RED-SUITE-LINE-WAS-COMMITTED-THE-GATE-READ-THE-TEST-THE-AUTHOR-DID-NOT",
+  "date": "2026-09-16",
+  "repo": "fleet (round-table Task 1, fleet/roundtable/seats.py) - commit ad002e5 after the fix",
+  "layer": "the gate's REVIEW lane (z-ai/glm-5.3-flash), second round on Task 1 - an AUTHOR-PROCESS row: the agent staged and attempted a commit while its own new test failed",
+  "caught": "Round 2 on Task 1 (fleet gate_20260916-001703, HIGH): the round-1 fix put the model_kwargs deepcopy in Seat.__post_init__, but TableConfig's default_factory still handed every table the SAME Seat instances from DEFAULT_SEATS, so the isolation test written for round 1 FAILED against the staged bytes. The agent ran the commit with '1 failed' in the suite line and did not read it; the reviewer read the test and the code and named the failure. Round 1 (gate_20260916-001407) had already found replace_seat's silent no-op on an unknown seat id (MEDIUM), the shallow kwargs copy (LOW) and a docstring claiming a role/seat-count check that did not exist (LOW).",
+  "severity": "HIGH (a red test committed as green would have shipped a shared-mutable-state defect the test was written to catch) plus the three round-1 findings; all real, none rebutted",
+  "author_initially": "The agent believed the round-1 fix complete and did not read the suite line before committing. No rebuttal was attempted; the failure was reproduced locally on the staged bytes.",
+  "resolution": "Fresh Seat instances per table (replace() per seat in TableConfig.__post_init__), replace_seat re-emits WARN lines; CLEAR on round 3; commit ad002e5. Process fix the same hour: rt_chain.py (install -> ruff -> WHOLE suite -> stage explicit paths -> commit ONLY on an all-pass line, index reset first) and every later commit of the build went through it. Ledger entries 3-4 in C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md.",
+  "refs": [
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-001407.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-001703.md",
+   "fleet ad002e5",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md"
+  ]
+ },
+ {
+  "id": "EV-092-PROTOCOL-AND-MEMORY-CATCHES-ACROSS-THE-ROUND-TABLE-BUILD-TASKS-0-TO-9",
+  "date": "2026-09-16",
+  "repo": "fleet (fleet/roundtable/doctor.py e820041, protocol.py 388f70c, voices.py a4bfc16, knowledge.py 058c7f9, genesis.py 16b8661)",
+  "layer": "the gate's REVIEW lane (z-ai/glm-5.3-flash) over eight BLOCK rounds on five tasks, each finding fixed test-first with RED measured against the previous bytes",
+  "caught": "Task 0 (gate_20260916-000637): the docstring claimed every probe injectable while the library probe called importlib directly; ImportError-only handling would crash the diagnostic on a present-but-broken install. Task 4 protocol (gate_20260916-003947, -004531, -005101): lottery() fell back to ALL members when every member was excused, so a dead table re-opened a topic and told an excused seat to speak; genesis topics without an order looped forever and ignored the time limit; two hands from one seat in one poll batch both queued; hand ordering keyed on arrived_at ACROSS polls (arrival is relative to its own poll) so a later press could jump an earlier one - the author's own test had canonised the queue-jump; genesis ignored excused seats (non-terminating loop); force_close not honoured for unopened topics. Task 7 voices (gate_20260916-011321): unlocked read-modify-write claims; one persona could hold two voices; an off-ladder min_grade silently disabled the filter. Task 8 knowledge (gate_20260916-011709, -013151): idempotency keyed on card 01 left an interrupted write permanently 'done'; a test read a price from the real environment; an empty synthesis returned 'skipped' after paying; the httpx error text embedded the request URL WITH the api key and was re-raised verbatim (SECRET HYGIENE); a non-list organic_results escaped as a raw TypeError; a shorter retry left the dead attempt's higher cards alive; unlocked credit counter and facet cache; a non-numeric or negative price crashed opaquely. Task 9 genesis (gate_20260916-012417): CRT grading by prefix scored '100' as '10'; a duplicate chosen name silently overwrote another seat's Hub prompt, identity and battery; a missing pick crashed the whole run at the G batch; the meeting asked seats to defend answers they never gave.",
+  "severity": "one HIGH-class secret-hygiene leak (the api key in re-raised error text), several MEDIUM correctness and liveness defects (dead-table lottery, non-terminating genesis, queue-jump, permanent partial 'done', name clobber), the rest LOW; all real, none rebutted",
+  "author_initially": "No finding was disputed. Two were the author's own tests canonising wrong behaviour (the queue-jump in Task 4; the environment-coupled price in Task 8) - the reviewer read the tests as claims, not as truth.",
+  "resolution": "Each fixed in the named commit with a RED-first test: lottery raises on no active members and a dead table closes; genesis requires an order and honours the limit; batch dedup keeps the earliest press; hand key (unspoken, turn_raised, arrived_at, seating); module locks for the roster, the counter and the facet cache; completion marker written LAST + stale-card deletion; key scrubbed from every error; first-token CRT grading; name collision refused unless the same seat rebuilds; G items deferred; defends sampled from the seat's own answers. Ledger entries 2, 5-10 in C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md.",
+  "refs": [
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-000637.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-003947.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-004531.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-005101.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-011321.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-011709.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-013151.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-012417.md",
+   "fleet e820041 388f70c a4bfc16 058c7f9 16b8661",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md"
+  ]
+ },
+ {
+  "id": "EV-093-TRUST-BOUNDARY-MONEY-AND-RENDER-CATCHES-ACROSS-THE-ROUND-TABLE-BUILD-TASKS-10-TO-13",
+  "date": "2026-09-16",
+  "repo": "fleet (fleet/roundtable/skeptic.py e8e058b, avatars.py 651b487, render.py c878861)",
+  "layer": "the gate's REVIEW lane (z-ai/glm-5.3-flash) over seven BLOCK rounds on three tasks; two SECURITY and one MONEY finding among them",
+  "caught": "Task 10 skeptic (gate_20260916-015315, -020257): empty-agreement used substring matching so 'I disagree' was penalised as agreement; a model exception in extract/verify/drift crashed the turn and the failed call was never accounted; the 'docs.' PREFIX made any docs.<attacker-domain> a tier-1 source - the trust boundary of the credibility game (SECURITY); a tier-2 entry was dead config shadowed by .edu. Task 12 avatars (gate_20260916-015710, -020604): the whole-word blocklist admitted plurals and hyphen compounds ('nudes', 'gun-toting', 'pre-teen', 'children'); a regeneration overwrote a pending candidate's file so the owner could approve bytes they never saw; ledger.record outside the try leaked a reservation; provider URLs fetched with no host allowlist, size cap or redirect handling, then follow_redirects=True let a checked URL bounce to any host (SECURITY); a local failure AFTER the provider produced the image REFUNDED the reservation and the author's own test asserted the refund (MONEY). Task 13 render (gate_20260916-022358, -023115, -023747): the 'speaking tile brighter than idle' frame test compared DIFFERENT tiles whose fixture fills differed, so a disabled pulse still passed; Pillow-version and encoder-skip assumptions; the wav-missing refusal was unreachable on an ffmpeg-less host (tool check before input check); an ffmpeg dying mid-pipe raised BrokenPipeError twice, masking the exit code and skipping wait(); a ceil'd frame count with -shortest could EPIPE a GOOD render; ffprobe was not gated like ffmpeg.",
+  "severity": "two SECURITY (tier spoof by host prefix; redirect past the allowlist), one MONEY (refund after a paid generation), one HIGH-class content-safety gap (blocklist plurals/hyphens), MEDIUMs in the frame test and the pipe handling, the rest LOW; all real, none rebutted",
+  "author_initially": "No finding was disputed. Two were again the author's own tests asserting the defect (the refund; the confounded frame comparison).",
+  "resolution": "Curated vendor hosts replace the prefix; whole-word dissent guard; failures degrade and are accounted; plural suffixes and hyphens as boundaries; a batch token per generation; record inside the try; https + provider hosts + 25 MB + redirects followed by hand with every hop checked; a paid generation that fails locally is written off, never refunded; identical fills and the SAME tile compared speaking vs idle; inputs checked before tools; broken-pipe-safe writes, communicate() reaps stderr into the error, frames floored, both tools gated; a test drives the interpreter as a dying encoder. Ledger entries 11-17 in C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md.",
+  "refs": [
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-015315.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-020257.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-015710.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-020604.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-022358.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-023115.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-023747.md",
+   "fleet e8e058b 651b487 c878861",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md"
+  ]
+ },
+ {
+  "id": "EV-094-THE-SESSION-RUNNER-TOOK-NINE-ROUNDS-FORK-RE-ENTRY-PER-MODEL-USAGE-SILENT-TURNS-AND-A-FALLBACK-REVIEWER",
+  "date": "2026-09-16",
+  "repo": "fleet (fleet/roundtable/session.py + protocol.py, Task 14) - commit eed13a4",
+  "layer": "the gate's REVIEW lane over nine rounds; GLM 5.3 Flash returned no content on rounds five, eight and nine and the gate fell back to xai:grok-4.6, which found three defects GLM's rounds had passed over; two author rebuttals with bytes were verified and accepted",
+  "caught": "Round 1 (gate_20260916-025839, HIGH): the speaker->hands/skeptic edges are unconditional, so a PASS re-entered the fork with the previous speak turn as last and the skeptic re-reviewed it (duplicate rulings, DOUBLED credibility deltas) while hands were re-polled. Round 2 (gate_20260916-030849): the contest node guessed the contested ruling by POSITION (wrong claim contested on a multi-claim turn); usage_of was a shared consume-once drain read by parallel nodes (tokens billed to the wrong seat); failed hand/keep/contest calls were never accounted. Round 3 (gate_20260916-031935): the skeptic's re-verify inside a contest was the one unwrapped, unaccounted model call. Round 4 (gate_20260916-033006): poll_withdraw guarded re-entry by queue EQUALITY, which apply_pass breaks - a pass from the queue head re-polled every seat still queued. Round 5 (gate_20260916-034826, grok-4.6, HIGH): a speak turn whose TTS was refused or failed still carried the unspoken claims and the fork REVIEWED claims nobody heard and billed hand polls, while the seat remembered 'I said ...' for audio that never played; the genesis Introduction call was outside the pass/account contract (a failing model aborted the meeting). Round 7 (gate_20260916-040105, LOW): poll_withdraw had no force_close guard - a silent queue head with another hand queued billed keep-polls for a topic that closes anyway; the round-5 test passed only because its queue was empty. Round 8 (gate_20260916-041528, grok-4.6, MEDIUM): with the floor set to the passer, the empty-queue pick excluded only the floor, so the seat that actually spoke last was re-invited at once when turns were tied. Round 6 never reached a reviewer: the build chain refused to stage a red suite line (the round-5 guards returned {} where the protocol demanded a review marker; the fixed guards return the marker).",
+  "severity": "two HIGH (doubled credibility deltas on a pass; rulings on claims nobody heard), four MEDIUM (positional contest, per-seat token misattribution, the queue-equality re-entry hole, the ping-pong regression), the rest LOW; all real; two LOW findings REBUTTED with bytes (a positional fallback the previous round had ordered removed; a 'resumed pre-change checkpoint' for a module new in the commit) and accepted by the next reviewer",
+  "author_initially": "Every finding was verified against the bytes before it was accepted or rebutted; the two rebuttals were re-verified by the following round's reviewer and held. The author's round-5 fix returned {} from the guarded fork nodes and the suite went red because the protocol demands a review marker - caught by the chain, not the gate.",
+  "resolution": "reviewed_turn/polled_turn/settled_turn markers keyed on the turn number guard every fork node; contested_ruling carried through state from apply_ruling to apply_contest; usage_of(model) drains the handler of THAT model object (the CLI attaches one handler per model); every call - success or failure - accounted, including the re-verify; a silent turn carries no claims, is neither polled nor reviewed, leaves no memory, and closes the table; a failed introduction passes; the empty-queue pick excludes the passer and the last speaker. Sixteen session tests and two protocol tests drive them. Commit eed13a4. Ledger entries 18-23 in C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md.",
+  "refs": [
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-025839.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-030849.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-031935.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-033006.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-034826.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-040105.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-041528.md",
+   "fleet eed13a4",
+   "fleet d8d8ea0 (Task 15: the CLI wires the per-model usage handler)",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md"
+  ]
+ },
+ {
+  "id": "EV-095-THE-CLI-ROUND-A-SILENT-PLACEHOLDER-AS-AN-IMAGE-PROMPT-AND-A-FALSE-HALLUCINATED-KEYWORD-CLAIM",
+  "date": "2026-09-16",
+  "repo": "fleet (fleet/cli.py + fleet/roundtable/session.py, Task 15) - commit d8d8ea0",
+  "layer": "the gate's REVIEW lane (z-ai/glm-5.3-flash), two rounds on the CLI: one real money catch, one real coverage gap wrapped in a false claim that was rebutted with the signature",
+  "caught": "Round 1 (fleet gate_20260916-044556, LOW-MEDIUM): genesis build took the seat's LAST avatar-topic turn as the image prompt - a silent placeholder ('[<seat> silent: SpeechError]', a speak-kind turn the runner records when TTS is refused or fails) would have been sent to the image model as two billed generations and queued for the owner's approval, while the command's own 'no prompt spoken' guidance never fired in the exact case it was written for. Also (LOW): the battery printed 'No speech, no search' and then demanded the ScrapingDog key and built the Kokoro pipeline through the shared deps builder. Round 2 (gate_20260916-045407, claimed HIGH): the reviewer held render_video's `store` keyword to be hallucinated because run_session's tested call does not pass it. FALSE on the bytes - fleet/roundtable/render.py lines 240-243 (committed in c878861, untouched by the diff) declare `store: Any = None` and lines 247-249 use it to refuse unapproved avatars; the CLI passes it on purpose. The coverage half of the same finding was REAL: no test drove `fleet rt render` past its precondition.",
+  "severity": "one LOW-MEDIUM money catch (image spend on a placeholder), one LOW (needless key/pipeline), one FALSE HIGH claim carrying a real coverage gap; the two real findings fixed test-first, the false claim rebutted with the signature and accepted on the next round",
+  "author_initially": "The author accepted both round-1 findings without dispute. On round 2 the author verified the signature against render.py before rebutting, rebutted with file and line numbers via --context, and added the missing test rather than arguing the coverage point.",
+  "resolution": "session.silent_text/is_silent (one definition, one recogniser) and cli._avatar_prompt skips silent turns; _rt_deps(search=, speech=) flags so the battery asks for neither; test_rt_render_re_renders_a_finished_session_through_the_render_module asserts the exact call shape (store, size, fps, standings keyed by seat id) and the m4a step. Commit d8d8ea0. Ledger entries 24-25 in C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md.",
+  "refs": [
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-044556.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-045407.md",
+   "fleet/roundtable/render.py:240-249 at c878861",
+   "fleet d8d8ea0",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md"
+  ]
  }
  ]
 }
