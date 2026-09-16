@@ -1,6 +1,6 @@
 # DOCS_VERSIONS.md - version register for the gate documentation
 
-> **Doc version: 1.9 - 2026-09-15.** 1.8 registers the gate docs 3.1/2.3 for Tools ca686ed + c33a704; 1.9 amends 3.1 in place for the seventh guard round (Tools 7935480, found by the marketplace gate on the re-vendored bytes; gate_selftest 124). New at 1.0; 1.1 registers the EV-043 doc release; 1.2 the EV-045/046 release; 1.3 the 2026-09-14 re-baseline on Tools 6773f97; 1.4 the docket extent EV-085; 1.5 EV-086 (the docs lane refused this release's own landing - fixed in Tools 51ba4b3); 1.6 EV-087 (the gate's own transport crash - fixed in Tools 26280c7); 1.7 EV-088/089 (the removed-symbol guard's false refusal, six rounds; the docs lane's one-character false positive - fixed in Tools ca686ed / c33a704). This file is the authoritative register of every
+> **Doc version: 1.10 - 2026-09-15.** 1.8 registers the gate docs 3.1/2.3 for Tools ca686ed + c33a704; 1.9 amends 3.1 in place for the seventh guard round (Tools 7935480, found by the marketplace gate on the re-vendored bytes; gate_selftest 124); 1.10 amends 3.1 again for rounds eight to ten (Tools 8b4e40c: star import, every module-scope binding shape; gate_selftest 126). New at 1.0; 1.1 registers the EV-043 doc release; 1.2 the EV-045/046 release; 1.3 the 2026-09-14 re-baseline on Tools 6773f97; 1.4 the docket extent EV-085; 1.5 EV-086 (the docs lane refused this release's own landing - fixed in Tools 51ba4b3); 1.6 EV-087 (the gate's own transport crash - fixed in Tools 26280c7); 1.7 EV-088/089 (the removed-symbol guard's false refusal, six rounds; the docs lane's one-character false positive - fixed in Tools ca686ed / c33a704). This file is the authoritative register of every
 > gate-related document, its current version, and what changed at each version. Each tracked
 > doc carries a `Doc version: N.N - DATE` line in its own header that must match its row here.
 
@@ -22,7 +22,7 @@
 |---|---|---|
 | [UNIVERSAL_ARMING.md](UNIVERSAL_ARMING.md) | 1.2 | machine-wide arming: dispatcher dir, absolute pin, census, HOOK_NAMES + rules epoch; EV-043 hardening section; 1.2 = armed at birth (ROOT), the relocated-suite state, two EV-043-superseded claims corrected |
 | [CODEX_GATE_IMPLEMENTATION.md](CODEX_GATE_IMPLEMENTATION.md) | 1.2 | step-by-step gate implementation for Codex + the `decide()` audit; §3.5 partial commits + EV-043; 1.2 = §2.6 the reviewed-write broker + enforcement server (EV-060, 6773f97), auto-review in §3.3 |
-| [ADVERSARY_GATE.md](ADVERSARY_GATE.md) | 3.1 | the wall; 3.0 = auto-review on commit (the loop changed), the fallback model chain, the docs lane's evidence gate, the removed-symbol refusal (EV-060), armed at birth (EV-055), owner tools, current selftest inventory; 3.1 = the refusal's two shadows (ca686ed + the rebound-def rule 7935480, EV-088), the evidence gate's verb/slug/one-character rules (51ba4b3, c33a704), gate_selftest 124 |
+| [ADVERSARY_GATE.md](ADVERSARY_GATE.md) | 3.1 | the wall; 3.0 = auto-review on commit (the loop changed), the fallback model chain, the docs lane's evidence gate, the removed-symbol refusal (EV-060), armed at birth (EV-055), owner tools, current selftest inventory; 3.1 = the refusal's two shadows (ca686ed + the module-scope re-binding rules 7935480/8b4e40c, EV-088), the evidence gate's verb/slug/one-character rules (51ba4b3, c33a704), gate_selftest 126 |
 | [HARNESS_GUARD.md](HARNESS_GUARD.md) | 2.1 | layer 2 `decide()` catalogue, with the 2026-09-06 arming-side rules; 2.1 = field over-denies recorded, plugin sync note |
 | [LAYERED_ENFORCEMENT.md](LAYERED_ENFORCEMENT.md) | 2.3 | the four layers; layer 0 is the dispatcher; 2.1 = the push-time secret barrier and the fixture skip; 2.2 = auto-review + removed-symbol refusal at layer 0, ROOT baseline + auditor hardening + notes scrubber at layer 3, evidence-gated docs lane, `owner_ff_merge` at layer 4; 2.3 = the refusal's own-binding shadows and the one-character evidence rule |
 | [GATE_INSTALLER.md](GATE_INSTALLER.md) | 2.1 | installer reference; absolute pin, census, epoch, reanchor; 2.1 = ROOT at birth, the proving sequence under auto-review, 73/73 |
@@ -32,7 +32,7 @@
 | [ISSUE_SKILL_GATE_FILING.md](ISSUE_SKILL_GATE_FILING.md) | 1.1 | the G38 skill-gate post; POSTED as issue #92656 |
 | [GATE_EVIDENCE_DOCKET.md](GATE_EVIDENCE_DOCKET.md) | (docket) | human view of `gate_evidence.json`; through EV-089 |
 | gate_evidence.json | (docket) | machine-readable evidence docket; 89 entries, through EV-089 |
-| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.9 | this register |
+| [DOCS_VERSIONS.md](DOCS_VERSIONS.md) | 1.10 | this register |
 
 Docs about the colibri review tool itself (not the gate) are unversioned here and unchanged
 by the gate releases: README.md, BATCH.md, CONSOLE.md, MODES.md, SPEC_AUTHORING.md,
@@ -50,6 +50,15 @@ STATIC_SIGNALS.md, STORAGE.md, GATE_SWEEP_2026-09-02_*_PENDING.md.
 | `colibri-marketplace/plugins/adversary-gate/README.md` + `SKILL.md` | 0.3.0 (plugin) | the distributed copy's docs; re-baselined 2026-09-14 with the payload |
 
 ## Changelog
+
+### Docs 2026-09-15 (latest) - ADVERSARY_GATE 3.1 amended again for Tools 8b4e40c (star import; every module-scope binding shape)
+
+The marketplace gate's second review of the re-vendored bytes found the wildcard twin of the rebound-def hole
+(`def keep` + `from lib import *` vouched, and nobody was named - a genuine fail-open); Tools then took two more
+rounds on the fix itself (`case {**rest}`, walruses in default arguments; class bases/keywords, return
+annotations, `ast.Match*` on CPython < 3.10). All in Tools 8b4e40c; gate_selftest 126 (check 54 = twenty pins).
+
+- **DOCS_VERSIONS.md 1.9 -> 1.10** - this entry.
 
 ### Docs 2026-09-15 (later) - ADVERSARY_GATE 3.1 amended in place for Tools 7935480 (the rebound-def rule)
 
