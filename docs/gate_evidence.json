@@ -1609,6 +1609,25 @@
    "Tools adversary-gate/install_selftest.py checks rewritemode_ignore, incident_reproduces_under_git_default, pin_keeps_one_valid_note_on_replay",
    "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\pr21_rebase.txt"
   ]
+ },
+ {
+  "id": "EV-101-A-REFUSED-INTRO-ACCOUNTED-OK-AND-A-RECOVERY-COMMAND-THAT-DIED-UNBILLED",
+  "date": "2026-09-17",
+  "repo": "fleet (round table: seats.py, genesis.py, session.py, cli.py and their tests) - the fix for the first live genesis build's crash, landed as fleet 76dc7e8",
+  "layer": "gate-review BLOCK, round one on the names tranche (z-ai/glm-5.3-flash via Together, 145,760 tokens, list $0.044); round two CLEAR",
+  "caught": "Two real LOWs, both introduced by the change under review, in a diff whose skip/keep logic, name checks, --yes ordering and import graph the reviewer had traced and passed. (1) session._speak_intro's new attempt loop accounted a genesis introduction whose NAME was refused (reserved or already claimed) with outcome 'ok' - the structured call had answered - although the seat then re-asks or passes and no turn is produced; log_call's contract attributes an 'ok' producing call to the NEXT turn, so every refused intro landed on whoever spoke next (in the new test's shape, all six on the mediator's topic_close) and calls_unattributed never saw them, while the sibling failed/empty paths were unattributed correctly. Money and state unaffected; the reconstruction record was wrong. (2) genesis.rename_seat billed a call only after _structured returned, and cmd_rt_genesis_rename caught ValueError alone: a provider timeout or connect error on both attempts - the transient failures _structured's retry exists for - escaped as a raw traceback (exit 1) from the recovery tool built for exactly that outage, and the failed calls never reached the ledger, against the repo's own 'billed, answered or not' rule.",
+  "severity": "LOW x2 (a record-integrity defect and an unbilled crash path in a recovery command); neither affected spend limits or table state",
+  "author_initially": "Not disputed - both traced true against the bytes. Fixed in the same hour: the intro computes the name problem before accounting and records outcome 'refused' (only 'ok' produces a turn), the rename bills in a finally and the CLI reports any exception and exits 2. Tests: the reserved-name session test now asserts six 'refused' calls in record.json's calls_unattributed with turn_n None and none pinned on a later turn; rename_seat with a model that raises on every attempt raises, bills one row and changes nothing; the CLI rename with a broken model prints 'RuntimeError: provider down' and returns 2.",
+  "resolution": "fleet 76dc7e8 (round two CLEAR; the suite 383 passing). The transparency tranche (7800bd8) and the Hub-tag tranche (b7dd582) that followed cleared on their first rounds.",
+  "refs": [
+   "fleet 76dc7e8 (fix(roundtable): a seat's name is checked, never trusted)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260917-110125.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260917-112347.md",
+   "fleet tests/fleet/test_rt_session.py test_a_genesis_intro_with_a_reserved_name_is_asked_again_then_passes_and_claims_nothing",
+   "fleet tests/fleet/test_rt_genesis.py test_rename_seat_asks_the_seats_own_model_for_a_free_name_and_stores_it_with_the_reason",
+   "fleet tests/fleet/test_rt_cli.py test_rt_genesis_rename_reports_a_provider_outage_and_exits_clean",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t38d_fix.py"
+  ]
  }
  ]
 }
