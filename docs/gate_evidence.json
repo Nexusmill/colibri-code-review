@@ -1509,6 +1509,85 @@
    "fleet d8d8ea0",
    "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rt_gate_catches.md"
   ]
+ },
+ {
+  "id": "EV-096-THE-ROUND-TABLE-FOLLOW-UPS-A-FAILED-CALL-ATTRIBUTED-TO-THE-NEXT-TURN-A-PIN-ORDER-AGAINST-THE-OWNERS-RULE-AND-A-NETWORK-PHASE-BEFORE-THE-STATE-FILE",
+  "date": "2026-09-16",
+  "repo": "fleet (fleet/roundtable/session.py + transcript.py 9ecfd39 [record.json], fleet/roundtable/seats.py 2566b83 [PROVIDER_PINS], fleet/providers.py + session.py 18093fb [generation records]) - the follow-ups to the owner's first live genesis meeting fe4eb3a2a2",
+  "layer": "the gate's REVIEW lane (z-ai/glm-5.3-flash served by Together, Relace and Relace), one BLOCK round on each of three tranches - every finding real, every one fixed test-first, every second round CLEAR",
+  "caught": "T23 record.json (fleet gate_20260916-202121, MEDIUM + LOW): Runner.log_call attributed every producing call to `after + 1`, but a pass appends no turn - a seat's failed intro or speak (the three-passes-excuse path the protocol's own tests exercise) would have been recorded as having PRODUCED the next seat's turn, with calls_unattributed empty and the corruption invisible; and contest, re_verify and keep_poll recorded a failed call as outcome 'ok' while the sibling nodes said 'failed'. T24 provider pins (gate_20260916-205653, LOW): the deepseek-v4-flash fallback order [deepinfra/fp8 99.8%, digitalocean 100%] contradicted the owner's rule the same comment recorded (fallback = reliability first) while the GLM order obeyed it - the reviewer showed no single reading of the rule under which both orders were right. T26 generation records (gate_20260916-211628, three LOWs): a 200 whose `data` was a non-dict proxy body escaped the per-record guard and, with no per-item guard in the batch, one malformed record voided the whole session's provider attribution; the network phase ran between notes.txt and state.json with no overall deadline, so a stalled lookup could hold `rt genesis build` and `rt render` hostage after a fully paid session; and the 'generation records not resolved' note was appended after notes.txt had been written, so it never reached the human-readable notes.",
+  "severity": "one MEDIUM (record.json mis-attribution on a first-class protocol path), five LOWs (outcome 'ok' on failures; the pin order; the malformed 200; the unbounded network phase before state.json; the note missing from notes.txt) - none money-unsafe, all in the reconstruction record the owner had just ordered ('every minute detail'), which is exactly where a silent error matters",
+  "author_initially": "The author accepted every finding without dispute and fixed each test-first: turn_n None for a producing call that produced nothing, outcome tracked at all three sites; the deepseek order re-derived from the probe table by the owner's rule; an isinstance guard, a per-item guard, deadline_s with an injectable clock, state.json written before the lookup and the lookup before notes.txt. Round 2 CLEARed each tranche (gate_20260916-204925, -210206, -212732).",
+  "resolution": "fleet 9ecfd39, 2566b83, 18093fb (suite 373). Fleet ledger docs/design/2026-09-16-round-table-gate-catches.md entries 33-37 carry the live-run side (the meeting's own defects) - these three rounds are the gate's side of the same night.",
+  "refs": [
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-202121.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-204925.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-205653.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-210206.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-211628.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260916-212732.md",
+   "fleet 9ecfd39",
+   "fleet 2566b83",
+   "fleet 18093fb",
+   "fleet docs/design/2026-09-16-round-table-gate-catches.md entries 33-37",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t26_context.txt"
+  ]
+ },
+ {
+  "id": "EV-097-THE-ADVISOR-CAUGHT-A-REVIEWER-BENCHMARK-THAT-COUNTED-MENTIONS-AS-CATCHES",
+  "date": "2026-09-16",
+  "repo": "fleet docs/design/2026-09-16-provider-pins.md (the reviewer-candidate probe behind the recommendation for the gate's own chain) - corrected in fleet 6cf24ee; the honest scorer landed as Tools model-pins/rescore_reviewer.py 3165db8",
+  "layer": "the ADVISOR second-reviewer layer, before the owner-facing report: the deliverable itself (a table the owner would decide the gate's reviewer chain on) was the thing under review",
+  "caught": "The probe script scored a planted defect as 'named' whenever its function name appeared anywhere in the response, and the doc claimed the column had been 'read against the text'. The advisor pointed out that the same regex had already produced false decoy hits ('assemble ... verified sound') and that a response saying 'poll_seat is fine' would count as naming poll_seat - and that the owner had explicitly asked for research not from memory, so a 4/4 column that turned out to be mentions would discredit the whole deliverable. Re-read response by response: GLM 5.3 Flash's '4/4 in 5/5' was 3 of 3 unambiguous plants in 5/5 (it had CLEARED the fourth plant, the re-entry guard, with correct reasoning - the fixture lacked the writer that makes the guard wrong, so the plant itself was weak); DeepSeek V4.1 Flash's '4/4 in 3/5' was 2 of 3 in 5/5 (it never found the unbilled failed call); HY4 preview 2 of 3 both runs. DeepSeek V4 Flash's 3 of 3 in 4/5 held. The recommendation (glm primary, deepseek-v4-flash pinned as the middle, grok last) survived on the honest numbers; two rows of the table and the method sentence did not.",
+  "severity": "a MEDIUM disclosure defect in a decision document: two of four leader rows over-counted and the method claim was false; no code, no spend - but the owner ruled on the corrected table the same night, so the catch changed what the owner decided on",
+  "author_initially": "The author had written 'read against the text' having read one DeepSeek response and the decoy contexts only. On the advisor's note the author re-read every leader response before writing anything, corrected the table, the state entry and the memory, and moved the scorer into the probe's new home so the mention column is labelled an upper bound there.",
+  "resolution": "fleet 6cf24ee (the doc's Probe 2 section rewritten: a re-read table over the three unambiguous plants, the minor rows kept as regex upper bounds and marked so; AGENT_STATE corrected). Tools model-pins 3165db8: rescore_reviewer.py counts a plant only when it heads a finding, a header wins over a partial clearance, probe_reviewer.py prints 'mentions' and says so; model_pins_selftest pins the scorer.",
+  "refs": [
+   "fleet 6cf24ee",
+   "fleet docs/design/2026-09-16-provider-pins.md (Probe 2, 'Scoring, CORRECTED the same night')",
+   "Tools model-pins/rescore_reviewer.py + model_pins_selftest.py at 3165db8",
+   "Tools model-pins/evidence/2026-09-16/reviewer_200656 + reviewer_202237 (the 31 responses)",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\rescore.py"
+  ]
+ },
+ {
+  "id": "EV-098-THE-TOOLS-GATE-CAUGHT-THE-PINNING-PROBE-READING-A-FIELD-THE-LIVE-LISTING-DOES-NOT-HAVE-THEN-CLAIMED-A-LIBRARY-SHAPE-THE-INSTALLED-SOURCE-REFUTES",
+  "date": "2026-09-16",
+  "repo": "Tools model-pins/ (the model-pinning protocol's probes, moved from a session scratchpad) - commit 3165db8",
+  "layer": "the gate's REVIEW lane (z-ai/glm-5.3-flash served by SiliconFlow, then Relace, then Parasail) over the probes' move into Tools - three rounds over ten files including the evidence JSONs: one real LOW found in the evidence, one FALSE HIGH about a library shape, rebutted with the installed source line",
+  "caught": "Round 1 (Tools gate_20260916-224708, LOW, REAL): probe_endpoints.py read `e.get('stats')` for the p50 throughput and latency columns, and the reviewer proved from the staged evidence (endpoints_200225.json, written by this very probe) that no endpoint carries a `stats` object - the live fields are `throughput_last_30m.p50` / `latency_last_30m.p50`, which the sibling probe_pins.py reads and whose real values sit in pins_200746.json. The human-facing step-1 table had printed 0.0 in both columns on every run, silently, in the two columns the protocol's ordering step uses; the saved JSON and probe_pins were unaffected. Round 2 (gate_20260916-230111, claimed HIGH, FALSE): the reviewer held that `UsageMetadataCallbackHandler.usage_metadata` is a list 'in every langchain-core release that ships the handler', so probe_pins.py's `.values()` loop would crash every run after the pinned calls were paid for - and argued that the committed evidence could not vouch for the loop because the archived reviewer rows.json carry an older field schema. The installed langchain-core 1.6.3 declares `self.usage_metadata: dict[str, UsageMetadata] = {}` (langchain_core/callbacks/usage.py line 40); the fleet CLI drains the same handler with the same `.values()`; and pins_200746.json's 29 ok rows carry token counts that only that loop could have produced. The schema drift the reviewer noticed was real but belonged to probe_reviewer.py's OUTPUT (named -> mentions), not to probe_pins.py's aggregation.",
+  "severity": "one LOW (a silently wrong human-facing table in the tool that exists to make pins evidence-based; no spend, no data corruption) and one FALSE HIGH (a library-shape claim contradicted by the installed source) that would have 'fixed' working code into a crash",
+  "author_initially": "Round 1 accepted without dispute after confirming the shape against the evidence file; fixed test-first (row_line reads the live fields; the selftest renders a row from the recorded listing shape and from a bare endpoint). Round 2: the author checked the installed library BEFORE answering (type dict, the declaring line), rebutted via --context with file and line, the fleet CLI's identical read and the evidence rows, recorded the rows.json field-name drift in the README, and pinned the assumption with a selftest check that imports the installed handler (SKIP, never a pass, where the library is absent). Round 3 CLEAR (gate_20260916-230947) - the clearance was written but the commit itself waited on a stale index.lock left by a session that had ended (owner action).",
+  "resolution": "Tools 3165db8 (model-pins home, model_pins_selftest 17/17: 14 -> 16 for the live-shape rows, 17 for the handler shape). The 2026-09-16 pin tables in the fleet doc were built from probe_pins.py's rows, which read the right fields, so no pin changes.",
+  "refs": [
+   "C:\\Users\\User\\source\\repos\\Tools\\.adversary\\reviews\\gate_20260916-224708.md",
+   "C:\\Users\\User\\source\\repos\\Tools\\.adversary\\reviews\\gate_20260916-230111.md",
+   "C:\\Users\\User\\source\\repos\\Tools\\.adversary\\reviews\\gate_20260916-230947.md",
+   "Tools 3165db8",
+   "Tools model-pins/evidence/2026-09-16/endpoints_200225.json (the listing shape)",
+   "Tools model-pins/evidence/2026-09-16/pins_200746.json (29 ok rows with token counts)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.venv\\Lib\\site-packages\\langchain_core\\callbacks\\usage.py:40 (langchain-core 1.6.3)",
+   "Tools model-pins/model_pins_selftest.py checks endpoint_row_reads_live_p50_fields, endpoint_row_tolerates_missing_stats, usage_handler_is_a_dict_keyed_by_model",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t31_context.txt"
+  ]
+ },
+ {
+  "id": "EV-099-THE-PUSH-PRE-TEST-CAUGHT-THE-DOCS-LANE-HOLDING-A-FLOAT-LITERAL-AS-A-SECRET",
+  "date": "2026-09-16",
+  "repo": "Tools adversary-gate/docscan.py (_evidence_is_name) - fixed in Tools c003d06; the feed was the Tools main push carrying model-pins 3165db8",
+  "layer": "the push guard's DOCS lane, exercised BEFORE the push by the EV-086 discipline (pre-test the full main-push docs feed three times through the guard's own audit functions) - the refusal never reached the owner",
+  "caught": "The feed (five outgoing commits plus the staged model-pins evidence: 31 reviewer responses, the pins tables, the README) drew a BLOCK 3/3 on the chunk holding a reviewer response that quotes the planted fixture's `timeout_s: float = 30.0`; the model's REASON was the literal `30.0`, and _evidence_is_name held a digits-and-dot token as a value, so the evidence gate did not withdraw the block. A decimal float is a quantity - a timeout, a price, a version - and never a credential. The same chunk CLEARed 2/2 when run alone (the model's judgement is context-dependent), which is exactly why the discipline pre-tests the FULL feed, not a sample.",
+  "severity": "a docs-lane FALSE POSITIVE that would have refused the owner's approved Tools push (the EV-086 class, fourth precision gap in _evidence_is_name in three days: EV-083 slug, EV-086 verb, EV-089 one character, now a float)",
+  "author_initially": "Found by the pre-test, not by an attempted push. Fixed test-first: six float name cases RED 13/14, the rule bounded to digits.digits with at most six digits each side and an optional sign, seven value cases (an integer PIN, a dotted triple, a float glued to letters, a hex-looking run, an over-long mantissa) pinned as still holding; 14/14; the identical feed re-run 3/3 clear (capped at 24 chunks - the tail is pattern-floor-only, the guard's documented limit).",
+  "resolution": "Tools c003d06 (docscan.py + docscan_selftest.py). The reviewer-response evidence files stayed in the commit unchanged: the fix is in the evidence gate, not in the evidence.",
+  "refs": [
+   "Tools c003d06",
+   "Tools 3165db8",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\push_pretest.py",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\push_pretest.txt",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\push_pretest_trace.py",
+   "Tools adversary-gate/docscan_selftest.py checks evidence_names_withdraw / evidence_values_hold (the 2026-09-16 float cases)"
+  ]
  }
  ]
 }
