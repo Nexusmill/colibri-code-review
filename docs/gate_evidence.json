@@ -1588,6 +1588,27 @@
    "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\push_pretest_trace.py",
    "Tools adversary-gate/docscan_selftest.py checks evidence_names_withdraw / evidence_values_hold (the 2026-09-16 float cases)"
   ]
+ },
+ {
+  "id": "EV-100-THE-AUDITOR-CAUGHT-A-REBASE-GLUING-TWO-NOTARIZATION-NOTES-INTO-ONE",
+  "date": "2026-09-17",
+  "repo": "Nexusmill gov/model-pinning-protocol (PR #21) rebased onto origin/main after the owner's fast-forward was refused; the gap is in Tools adversary-gate/install_gate.py - fixed in Tools dcbacaa",
+  "layer": "the AUDITOR (layer 3, the catch-all that reads immutable output): run locally right after the rebase, before any push, exactly as the post-rebase discipline requires",
+  "caught": "The PR branch stacked on a local main commit (815f895a) that had never been pushed, and origin/main had moved, so owner_ff_merge refused ('not a fast-forward; rebase the branch first'). The rebase replayed three commits. For the one whose clearance was still fresh, the post-commit notary wrote a fresh CLEAR note during the replay; then git's rewrite step copied the ORIGINAL commit's note onto the same replayed commit - the installer sets notes.rewriteRef so rebases carry notes, but never notes.rewriteMode, and git's default is CONCATENATE. Result: two JSON documents in one note; the auditor reported `VIOLATION bafe04bd note is not valid JSON (tampered?)`. The two replayed commits with no fresh clearance received only the copied note and audited clean, which is the outcome overwrite gives every time.",
+  "severity": "MEDIUM: a routine rebase of reviewed commits produced a note the auditor rejects, on every armed repo, whenever a clearance is still fresh at replay time - CI would have refused the push and a hurried operator might have reached for OVERRIDE; no bypass, no content change, the tripwire worked as designed",
+  "author_initially": "Not disputed. Root cause confirmed by reading the repo config (rewriteRef set, rewriteMode unset) and the note bytes (7,065 bytes: the fresh note naming the replayed commit followed by the copied one). Fixed test-first in Tools: install_selftest 73/74 RED on a new rewritemode_overwrite check (the selftest's git helper first had to read an unset key without aborting), then the installer pinned `overwrite` - and the Tools gate's round 1 on the fix (gate_20260917-031847, HIGH) showed `ignore` dominates: a fresh notarization of REWRITTEN content (a squash, an edit, a content-changing amend) must survive the copy, and ignore still copies the original where the notary was silent; its LOW made --verify-only print the mode and the STALE hint name it. Landed as `ignore`; round 2 (gate_20260917-034415, LOW) showed the first end-to-end check used an ungated amend, a shape that never collides - replaced by a gated rebase replay that reproduces the glue under git's default and proves one valid note under the pin (install 77/77; arm_repo 23/23; hooks 19/19). Round 3 (gate_20260917-035509) claimed as MEDIUM-HIGH that stock git runs no post-commit hook on a conflict-free pick, so the reproduction 'cannot hold and the battery goes red' - FALSE: the battery passes 77/77 with the glue reproduced, git's sequencer has run the post-commit hook for every pick since 2.24, and the captured PR #21 rebase output carries the notary's lines for each clean pick; rebutted via --context with those three facts; its LOW (the mode row read a value the replay block had set by hand) was real and the row moved ahead of the block. Round 4 CLEAR (gate_20260917-035838). No note was hand-edited: with the mode pinned in the repo, the branch was reset to its ORIGINAL three commits and rebased again - under the interim overwrite pin the copy step replaced the notary's fresh note with the original commit's valid one (blob-identical replay, so a correct record either way), the auditor read clean, and the branch was force-pushed with lease.",
+  "resolution": "Tools dcbacaa (install_gate.py + install_selftest.py + TOOLS_MANIFEST; four gate rounds: one real HIGH ruling for ignore over overwrite, two real LOWs, one false MEDIUM-HIGH); all 23 checkouts on this machine re-armed with the installer (the census read 23 stale under the new requirement, then 23 armed; the mode is a per-repo config, not a vendored byte). Nexusmill PR #21 re-based head 46830ee6 (the first rebase's bafe04bd with the glued note is an orphan), audit clean.",
+  "refs": [
+   "Tools dcbacaa",
+   "Nexusmill gov/model-pinning-protocol 46830ee6 (PR #21 MERGED by the owner 2026-09-17)",
+   "C:\\Users\\User\\source\\repos\\Tools\\.adversary\\reviews\\gate_20260917-031847.md",
+   "C:\\Users\\User\\source\\repos\\Tools\\.adversary\\reviews\\gate_20260917-034415.md",
+   "C:\\Users\\User\\source\\repos\\Tools\\.adversary\\reviews\\gate_20260917-035509.md",
+   "C:\\Users\\User\\source\\repos\\Tools\\.adversary\\reviews\\gate_20260917-035838.md",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t35_context.txt",
+   "Tools adversary-gate/install_selftest.py checks rewritemode_ignore, incident_reproduces_under_git_default, pin_keeps_one_valid_note_on_replay",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\pr21_rebase.txt"
+  ]
  }
  ]
 }
