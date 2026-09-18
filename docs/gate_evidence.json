@@ -1683,6 +1683,24 @@
    "fleet tests/fleet/test_rt_cli.py test_rt_avatars_review_and_approve (the regen-on-its-own-canvas rows)",
    "fleet tests/fleet/test_rt_avatars.py test_a_candidate_cut_off_at_the_frame_edge_is_paid_for_but_is_no_candidate"
   ]
+ },
+ {
+  "id": "EV-105-A-LOCAL-PAGE-THAT-ANY-OTHER-TAB-COULD-HAVE-SPENT-THROUGH",
+  "date": "2026-09-18",
+  "repo": "fleet (round table: review_server.py, the owner's avatar review page) - landed as fleet 20c7137",
+  "layer": "gate-review BLOCK, rounds one to four (z-ai/glm-5.3-flash); round five CLEAR",
+  "caught": "(1, MEDIUM, real) the page's local API (127.0.0.1) parsed any POST body as JSON with no Host or content-type check: a foreign website open in another tab could fire a cross-origin 'simple' POST (text/plain, no preflight) at /api/generate and run a PAID generation up to the genesis ceiling, or at /api/discard and /api/approve and rewrite the owner's review state - against the repo's own G19 ethos and the module's care elsewhere (provider-host pinning, hand-followed redirects, the blocklist). (2, LOW, real) a taken port (the server already running in another terminal, the owner's likeliest failure) died with a raw traceback where every sibling command reports in one line and exits 2. (3, LOW, real, round two) a port outside 1-65535 escaped the new guard as OverflowError, and --port 0 would have bound an ephemeral port and announced an address nobody can open. (4, MEDIUM, real, round three) the owner's prompt edit lived only in the page's text box and every reload rebuilt it from the recorded throne prompt, so the second pull of an iteration would have billed the OLD prompt while the owner believed they were iterating, and no card showed the prompt it was drawn from - against the feature's own spec ('modify it before each generation', 'as many pulls as I want'). (5, MEDIUM + LOW-MEDIUM, real, round four) the Host check guarded POST alone, so a DNS-rebound page could still read the state, the local file paths and the unpublished image bytes over GET, contradicting the module's own comment; and a card's Regenerate posted the throne canvas regardless of the card's own, redrawing a square bust tall and drifting the seat's canvas - the very invariant the CLI regen had just enshrined.",
+  "severity": "MEDIUM x3 (cross-origin spend, a reload that re-bills the wrong prompt, a rebound read of paths and images) + LOW-MEDIUM (a wrong-canvas redraw) + LOW x2 (traceback exits)",
+  "author_initially": "All accepted on the bytes. (1) the API answers only JSON from a local Host (the page's own requests carry application/json, which forces a preflight this server never grants a foreign origin); tests fire a text/plain POST and a foreign-Host POST at /api/discard and prove 403 with the queue untouched. (2) serve reports a busy port in one line and returns False, the CLI exits 2 - and the test for it HUNG at first: HTTPServer's allow_reuse_address let a second bind on the busy port succeed on Windows and serve_forever blocked on a port another process owned; the server now sets allow_reuse_address False, so a second serve fails to bind as the owner would expect. (3) the port range is checked before binding. (4) the page keeps a draft per seat across every reload, the box seeds from the last pull's prompt, every card shows the prompt it was drawn from. (5) one local-Host check guards every route (a rebound name reads nothing), and Regenerate sends the card's own aspect.",
+  "resolution": "fleet 20c7137 (five rounds, four real BLOCKs; suite 408 passing).",
+  "refs": [
+   "fleet 20c7137 (feat(roundtable): the owner's avatar review page)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-025639.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-032005.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-032531.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-033106.md",
+   "fleet tests/fleet/test_rt_review_server.py test_the_server_serves_the_page_the_state_and_only_store_held_images"
+  ]
  }
  ]
 }
