@@ -1647,6 +1647,23 @@
    "fleet tests/fleet/test_rt_cli.py test_rt_avatars_thrones_has_each_persona_choose_its_metals_and_draws_the_shared_throne",
    "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t48c_fix.py"
   ]
+ },
+ {
+  "id": "EV-103-THE-DOCS-LANE-READ-A-PNG-AS-DOCUMENTATION",
+  "date": "2026-09-17",
+  "repo": "Nexusmill brand/patternskin-deco-source (one 2 MB PNG, no code) - the gap is in Tools adversary-gate/adversary_gate.py `_diff_added_lines`, fixed in Tools e51909c",
+  "layer": "pre-push guard, docs lane (layer 1 at push time): a FALSE refusal, fail-safe direction",
+  "caught": "The second commit on the branch - one PNG, the wide art deco panel the owner pasted as the round table's backdrop alternative - was REFUSED: 'the local docs reviewer flagged secret material in outgoing documentation (chunk 8)'. The first commit (another PNG) had passed minutes earlier. Cause: `_diff_added_lines` pins `--text` so a `-diff` attribute cannot blind the scan (a real catch from 2026-09-07), which also forces a diff of a binary; it dropped only the lines carrying a NUL, and a PNG's deflate stream is mostly NUL-free - the pre-push pretest measured 28,881 added 'doc' lines (886 KB) from that one image, and chunk 8 of them read as a secret to the docs model. Chunk-boundary roulette decided which of two PNGs passed. The staged (commit-time) scanner has always skipped a blob with a NUL in its first 8 KB; the push-time audit never had that rule.",
+  "severity": "MEDIUM (false refusal, fail-safe direction: any push of a binary asset could be refused at random, and a hurried operator might reach for OVERRIDE)",
+  "author_initially": "Not disputed. Reproduced with the guard's own audit function before touching anything (outgoing commits 1, hard 0, soft 0, doc lines 28,881). Fixed test-first in Tools: gate_selftest check 43 commits a PNG-like blob (a NUL in its header, 400 NUL-free lines after it) beside a one-line doc in a throwaway repo and asserts the push audit's doc text is exactly that line - 129/130 RED, then a whole-blob skip in `_diff_added_lines` - 130/130 GREEN. THE GATE'S OWN ROUND ON THE FIX (gate_20260917-204659, MEDIUM, real) caught that the whole-blob skip exempted every binary from the HARD-LITERAL barrier too - the first silent channel past it: a credential planted inside an asset would have pushed with no refusal from any layer (commit-time floor and docscan skip binaries, the reviewer sees code only, audit and CI verify notes), and the author's context had compared the refusal layer to the warn-only commit layer - fail-open reasoning. Reworked: the pattern floor scans every forced-text line as before; only the DOCS FEED excludes a binary blob (memoised per (rev, path), one stderr line per skipped blob, as the guard's other skips are loud); a second selftest row plants a hard literal (built from parts at runtime) inside a binary and asserts the floor still reports it on that path with an empty docs feed - 131/131; round two CLEAR (gate_20260917-205400).",
+  "resolution": "Tools e51909c (adversary_gate.py + gate_selftest.py; two gate rounds, one real MEDIUM on the author's first cut); hooks run the Tools working tree, so every armed repo has the fix at once; the refused push then went through.",
+  "refs": [
+   "Tools e51909c",
+   "Nexusmill brand/patternskin-deco-source 1ffa2a15 (the refused commit; PR #22)",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\nm_deco_push2.txt",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\nm_pretest.py",
+   "Tools adversary-gate/gate_selftest.py check push_audit_never_feeds_a_binary_blob_to_the_docs_model"
+  ]
  }
  ]
 }
