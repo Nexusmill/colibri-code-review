@@ -1664,6 +1664,25 @@
    "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\nm_pretest.py",
    "Tools adversary-gate/gate_selftest.py check push_audit_never_feeds_a_binary_blob_to_the_docs_model"
   ]
+ },
+ {
+  "id": "EV-104-TWO-RETRY-PATHS-THAT-WOULD-HAVE-REBUILT-THE-SAME-FAILURE",
+  "date": "2026-09-18",
+  "repo": "fleet (round table: cli.py thrones/regen, avatars.py generate) - the owner's scale-and-clipping fixes, landed as fleet 6eb2b83 and ede2f7e",
+  "layer": "gate-review BLOCK, round one on each of two consecutive tranches (z-ai/glm-5.3-flash); round two CLEAR on both",
+  "caught": "(1, LOW, real - 6eb2b83) `rt avatars thrones` began reusing a seat's recorded throne choice so a redraw costs the images only, but the choice was recorded BEFORE the draw: a choice whose assembled brief the blocklist refuses would have become the cached one, and the documented retry (`thrones --seat X --yes`) would have rebuilt the same refusal forever, with no message naming `--rechoose`. (2, MEDIUM, real - ede2f7e) thrones moved to a tall 2:3 canvas because the square kept cutting thrones off, but the canvas was call-site knowledge only - a candidate recorded its prompt, not its aspect - and every discard warning told the operator to `regen`, which rebuilds from the pending prompt on the square canvas: the printed recovery would have reproduced the cut-off, paid for it, and a square survivor would have REPLACED the seat's good tall batch. The reviewer named it the same 'standard retry rebuilds the same failure' pattern the tranche's own comment had just sworn off.",
+  "severity": "LOW + MEDIUM (money-waste and self-defeating recovery paths; no state corruption, screening precedes every reserve)",
+  "author_initially": "Both accepted on the bytes. (1) the choice is recorded only after a successful draw and the failure line names --rechoose; test: a refused choice leaves no record and the next run asks again. (2) the candidate records its aspect, regen passes it back, and a discard warning names the command that drew the batch (thrones for a tall one, regen for a square one); tests: the aspect travels with the candidate, a tall batch's discard names thrones, regen redraws a 2:3 pending batch on 2:3.",
+  "resolution": "fleet 6eb2b83 and ede2f7e (round two CLEAR each; suite 403 passing). Live: the square canvas clipped 4 of 8 redraws even under a margin brief; the tall canvas drew 4 of 4 whole.",
+  "refs": [
+   "fleet 6eb2b83 (fix(roundtable): one scale for every avatar and no clipped thrones)",
+   "fleet ede2f7e (fix(roundtable): thrones are drawn on a tall 2:3 canvas)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-000535.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-001929.md",
+   "fleet tests/fleet/test_rt_cli.py test_rt_avatars_thrones_has_each_persona_choose_its_metals_and_draws_the_shared_throne",
+   "fleet tests/fleet/test_rt_cli.py test_rt_avatars_review_and_approve (the regen-on-its-own-canvas rows)",
+   "fleet tests/fleet/test_rt_avatars.py test_a_candidate_cut_off_at_the_frame_edge_is_paid_for_but_is_no_candidate"
+  ]
  }
  ]
 }
