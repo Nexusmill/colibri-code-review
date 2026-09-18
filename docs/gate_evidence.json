@@ -1628,6 +1628,25 @@
    "fleet tests/fleet/test_rt_cli.py test_rt_genesis_rename_reports_a_provider_outage_and_exits_clean",
    "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t38d_fix.py"
   ]
+ },
+ {
+  "id": "EV-102-THE-ONE-PAID-IMAGE-THE-RENDERER-OPENED-UNGUARDED",
+  "date": "2026-09-17",
+  "repo": "fleet (round table: avatars.py backdrop(), render.py TileCache, cli.py thrones) - the owner's thrones ruling, landed as fleet 62140a3",
+  "layer": "gate-review BLOCK, round one on the thrones tranche (z-ai/glm-5.3-flash via StreamLake, 101,971 tokens, list $0.021); round two CLEAR",
+  "caught": "(MEDIUM, real) the new backdrop generation wrote the provider's bytes straight to the table's backdrop path and recorded the spend without ever checking they decode, while the new TileCache opened that file unguarded on every render - a bad payload (an error page from a provider host, a truncated stream) would brick `rt render` and every session's end-of-run video until someone hand-deleted the file, and nothing in the traceback would name it. The reviewer pointed at the module's own invariant: generate treats an unreadable output as no candidate and approve refuses one; the new writer validated nothing and the new reader assumed everything. The author had ALREADY hit this failure the same hour from a different door - a CLI test's three-byte fake had written over the machine's real backdrop because the test rig's table pointed at the real directory - and had fixed only that door (backdrop_path now follows artifacts_dir; the fake no longer writes) without closing the class. (LOW, real) `rt avatars thrones` reported a seat 'drawn' when generate returned no candidate (every image opaque) although save_candidates([]) queues nothing and the seat's old pending candidates silently survived; the ceiling promised a replacement that had not happened and the JSON said so with exit 0.",
+  "severity": "MEDIUM (a render-bricking file from one bad paid response, with a misleading traceback) + LOW (a false machine-readable claim an operator could approve from)",
+  "author_initially": "Not disputed. Fixed in the hour: the backdrop payload is decoded (Image.open(BytesIO).load()) before anything is written - a payload that is no image is written off and nothing written; TileCache opens the backdrop under except (UnidentifiedImageError, OSError), warns 'unreadable', and renders on the token ground; thrones reports counts per seat, a seat with no candidate is skipped with its earlier candidates untouched and the command exits 1. Tests: the not-an-image payload (written off, no file), the corrupt-file render (warned, token ground), the empty-generate thrones run (skipped, old candidates intact, exit 1), counts in the JSON.",
+  "resolution": "fleet 62140a3 (round two CLEAR; the suite 398 passing).",
+  "refs": [
+   "fleet 62140a3 (feat(roundtable): one shared throne for every seat ...)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260917-194406.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260917-195954.md",
+   "fleet tests/fleet/test_rt_avatars.py test_backdrop_is_drawn_once_from_the_reference_mark_opaque_and_wide",
+   "fleet tests/fleet/test_rt_render.py test_the_backdrop_fills_the_frame_dimmed_behind_the_tiles_when_the_table_has_one",
+   "fleet tests/fleet/test_rt_cli.py test_rt_avatars_thrones_has_each_persona_choose_its_metals_and_draws_the_shared_throne",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t48c_fix.py"
+  ]
  }
  ]
 }
