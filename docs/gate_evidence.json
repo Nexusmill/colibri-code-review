@@ -1701,6 +1701,23 @@
    "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-033106.md",
    "fleet tests/fleet/test_rt_review_server.py test_the_server_serves_the_page_the_state_and_only_store_held_images"
   ]
+ },
+ {
+  "id": "EV-106-A-STOP-KEY-THE-POOL-WOULD-HAVE-IGNORED-FOR-TWO-HOURS",
+  "date": "2026-09-18",
+  "repo": "fleet (round table: knowledge.backfill_seats, the parallel knowledge backfill) - landed as fleet 7aa1053",
+  "layer": "gate-review BLOCK, round one (z-ai/glm-5.3-flash via Together); round two CLEAR",
+  "caught": "(MEDIUM, real) the new parallel backfill ran the seats under `with ThreadPoolExecutor` and read `pool.map`: the owner's Ctrl+C would have raised KeyboardInterrupt in the main thread, the pool's exit would have joined every worker thread (CPython never delivers SIGINT to workers), and up to five running seats would have kept buying ScrapingDog searches and syntheses for the rest of their loops - about two hours - behind a frozen terminal, a second Ctrl+C landing in the atexit join of the non-daemon workers. The sequential loop it replaced stopped within the current answer. The reviewer also named the way out that nothing on screen told the operator about (`fleet halt` from another shell). The session's advisor named the same hole in the same minute, independently.",
+  "severity": "MEDIUM (about two hours of paid searches after an explicit stop, with no feedback)",
+  "author_initially": "Accepted on the bytes. Fixed: a stop event is checked before every answer; the interrupt sets it, prints one line, waits for the in-flight answers only, cancels the queued seats and re-raises; the CLI answers the interrupt in one line and exits 130. The fix's first GREEN run then caught its own gap: the unit test raised a REAL SIGINT from a timer thread while the main thread waited on the pool, and every answer still landed - on Windows a main thread blocked in Future.result() sees no interrupt until the wait returns (lock waits are interruptible on POSIX only), so the owner's key press would have surfaced when the first seat finished. The main thread now polls the futures every half second; the real-signal test and a stop-mid-answer test pass three runs in a row.",
+  "resolution": "fleet 7aa1053 (two rounds, one real BLOCK; suite 414 passing).",
+  "refs": [
+   "fleet 7aa1053 (feat(roundtable): the backfill runs seats in parallel)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-192505.md",
+   "fleet tests/fleet/test_rt_knowledge.py test_ctrl_c_stops_a_parallel_backfill_after_the_in_flight_answers",
+   "fleet tests/fleet/test_rt_knowledge.py test_a_stop_request_ends_every_seat_after_its_in_flight_answer",
+   "fleet docs/design/2026-09-16-round-table-gate-catches.md row 50"
+  ]
  }
  ]
 }
