@@ -1718,6 +1718,25 @@
    "fleet tests/fleet/test_rt_knowledge.py test_a_stop_request_ends_every_seat_after_its_in_flight_answer",
    "fleet docs/design/2026-09-16-round-table-gate-catches.md row 50"
   ]
+ },
+ {
+  "id": "EV-107-A-VACUUM-THAT-WOULD-HAVE-PULLED-THE-FLOOR-FROM-UNDER-EVERY-OTHER-PROCESS",
+  "date": "2026-09-18",
+  "repo": "fleet (memory: lance_store.py, the Store's compaction and prune) - landed as fleet d8fb038",
+  "layer": "gate-review BLOCK, round one (z-ai/glm-5.3-flash via StreamLake); round two CLEAR",
+  "caught": "(HIGH, real) The fix for a Store that had never compacted (21,782 versions, 18,362 fragment files, 17 GB behind 14,781 rows; every read 0.75 s) added a periodic prune every 200 writes keeping ten minutes of history - and the reviewer read the change's own words against it: the connection used LanceDB's default read consistency, under which a table opened in another process stays on the version it opened for that process' lifetime; the change's own docstring and manifest row said a reader pinned to a pruned version fails; only the manual command was gated to an offline store. So the review page or the Agent Server, idle more than ten minutes while a backfill wrote, would have had its version pruned out from under it and failed on its next read. Two more from the same root: the row-count guard (designed for the offline command) would have raised inside the periodic path when another process wrote between the two counts, aborting a paid run; and the first periodic optimize on the bloated live store - two list_versions calls measured at 300 s each plus compaction of 18k fragments, inside the store lock - would have frozen a live run for more than ten minutes with no gate or warning if the backfill ran before the one-off vacuum. The reviewer named the correct mitigation: strong read consistency on the connection.",
+  "severity": "HIGH (every other fleet process failing after ten idle minutes; a paid run aborted; a ten-minute freeze inside a live run)",
+  "author_initially": "Accepted on the bytes, all three. (1) lancedb.connect(path, read_consistency_interval=timedelta(0)) - every read checks for the latest version, so a prune never strands a reader; proven by a test that opens two LanceStore connections on one path, prunes everything but the latest three times from the writer, and reads, searches, counts and writes from the reader. (2) _optimize(keep, strict): the row-count guard raises only from the offline command; the periodic path reports and never raises (test: count_rows patched to differ across the vacuum). (3) Version counts from the manifest directory listing (milliseconds) on both paths; health() reports rows, manifests, fragments, bytes and `bloated` (> 2,000 manifests); `rt backfill` refuses to start on a bloated store in one line naming `fleet store optimize --yes` (exit 2), so the first periodic optimize can never be a freeze inside a live run. This row's own first draft was BLOCKed by the docket's gate (colibri review gate_20260918-234644): its ref for the bloated-store refusal named the exit-1 test by its name alone (the refusal is asserted inside that same test, exit 2) and fused two locators into one refs element - both corrected in this row.",
+  "resolution": "fleet d8fb038 (two rounds, one real BLOCK; suite 422 passing; remediation manifest FLEET-LANCE-VERSION-BLOAT).",
+  "refs": [
+   "fleet d8fb038 (fix(memory): the LanceStore compacts and prunes itself)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-232107.md",
+   "fleet tests/fleet/test_lance_store.py test_a_reader_in_another_connection_survives_the_writer_pruning_everything",
+   "fleet tests/fleet/test_lance_store.py test_the_periodic_optimize_never_aborts_a_run_over_another_writers_rows",
+   "fleet tests/fleet/test_rt_cli.py test_rt_backfill_exits_one_and_names_the_re_run_when_answers_were_left_open - the exit-1 case is the left-open answers; the SAME test then patches cli._store_health to a bloated report and asserts `rt backfill --yes` exits 2 with the line naming `fleet store optimize --yes`",
+   "fleet docs/remediation_manifest.json FLEET-LANCE-VERSION-BLOAT",
+   "fleet docs/design/2026-09-16-round-table-gate-catches.md row 51"
+  ]
  }
  ]
 }
