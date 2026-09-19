@@ -1,0 +1,40 @@
+{
+ "type": "CLEAR",
+ "commit": "4e8bd788006bba9fa4db30e4cbbc2ed205961bc5",
+ "when": "20260919-084924",
+ "files": {
+  "reviews_archive/blink/_manifest.json": {
+   "sha": "f3088f11c2b6a090231ff54843fa8fd9591f19b28a9daf5f3023699467cfa0b7",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260919-084805",
+   "artifact": ".adversary\\reviews\\gate_20260919-084805.md"
+  },
+  "reviews_archive/caliper/_manifest.json": {
+   "sha": "db4f0e540d247cc5f608f2cea9167c90ae48695aba8463e6bca47179335b7aeb",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260919-084805",
+   "artifact": ".adversary\\reviews\\gate_20260919-084805.md"
+  },
+  "reviews_archive/fleet/_manifest.json": {
+   "sha": "75d9c54ff4cff6e2755befb142d7b60a0e1db15dc1e7f657764f5d824ce57fc9",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260919-084805",
+   "artifact": ".adversary\\reviews\\gate_20260919-084805.md"
+  },
+  "reviews_archive/nexusmill/_manifest.json": {
+   "sha": "7e1101f3c913dfd3f4ec124c75d27323fbe53d1ad0b963ad1f34aa32c6b5a1be",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260919-084805",
+   "artifact": ".adversary\\reviews\\gate_20260919-084805.md"
+  },
+  "reviews_archive/openaiastra/_manifest.json": {
+   "sha": "eb8a31264a731cf81cb02d77c0e05e00724167a33e3a2df8da3128a5e22e2518",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260919-084805",
+   "artifact": ".adversary\\reviews\\gate_20260919-084805.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260919-084805.md": "model: z-ai/glm-5.3-flash | provider: Together | usage: {'prompt_tokens': 230198, 'completion_tokens': 34493, 'total_tokens': 264691, 'cost': 0.0517762, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0517762, 'upstream_inference_prompt_cost': 0.0345297, 'upstream_inference_completions_cost': 0.0172465}, 'completion_tokens_details': {'reasoning_tokens': 33444, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['reviews_archive/blink/_manifest.json', 'reviews_archive/caliper/_manifest.json', 'reviews_archive/fleet/_manifest.json', 'reviews_archive/nexusmill/_manifest.json', 'reviews_archive/openaiastra/_manifest.json']\n\nAdversarial review of the staged manifest-archive change. I verified the change's implicit claims against the provided bytes rather than trusting the diff summary.\n\n**What the change actually does:** rewrites four archived `_manifest.json` files (blink, caliper, nexusmill, openaiastra) and adds a new one (fleet). No source code is touched, so the attack surface is: JSON validity, record loss, doctrine-shape violations (duplicate rows / wrappers / relative keys), and internal sha\u2194output\u2194date consistency.\n\n**Checks performed:**\n\n1. **JSON well-formedness** \u2014 all five files parse-shaped correctly: balanced braces, no trailing commas, no duplicate keys within any `modes` table, valid escapes on Windows paths. Trailing-newline absence is irrelevant to JSON.\n\n2. **Doctrine shape (absolute keys / rel / modes):**\n   - Blink, caliper, openaiastra, fleet: every key is an absolute machine path with `rel` + `modes`. Fleet (new) follows the canonical shape throughout (full sha256, absolute keys, machine paths in `output`).\n   - Nexusmill: the two pre-existing **relative-keyed** rows (`asset-forge/forge/output_opts.py`, `PatternSkin/(top5)`) were converted to absolute keys \u2014 a doctrine *fix*, not a regression. No new relative keys introduced.\n\n3. **\"Second entry for a file that already has one\":** I enumerated every key in old vs new for each file. Nexusmill retains four pre-existing `#`-suffixed variant keys (`PatternSkin#glm-r2-gate`, `...index.html#debug`, `ai_parts.py#ultra-run2-gate`, `__init__.py#ultra-gate`) \u2014 all four existed identically in the old file with the same mode sets; the change neither introduces nor worsens them, and they carry distinct mode sets (ultra-gate/debug variants) rather than duplicating the plain rows' modes. All ~13 new caliper rows, ~17 new openaiastra rows, ~26 new nexusmill rows, and all 42 fleet rows are for files with no prior row. No duplicates added anywhere.\n\n4. **Record loss:** I cross-checked every old row in all four rewritten files against the new state \u2014 every prior row/mode survives (blink: all 21 rows + new `debug` mode + new `yt_login_reminder.ps1` row; caliper: all 136 old rows present, 13 test rows added; nexusmill: all 90 old rows present incl. `debug@f14c435e`/`bug@93a01550` variants, 26 added; openaiastra: all 16 old rows present). Nothing is dropped or hidden.\n\n5. **Internal consistency of new/updated rows:** every new full sha is 64 hex; every new `output` filename embeds the sha8 matching its row's `sha` prefix (spot-checked all ~90 new/changed rows: `0666a8c5`, `0e4981bc`, `a0411e35`, `4220ca3c`, `d96d25b9`, `1052fa7d`, `39d665af`, `41643a53`, etc. \u2014 all consistent). The one apparent mismatch (nexusmill `prompts.py`: sha `87049562\u2026`, output `\u2026__bug__19c0084e.md`) is explicitly disclosed in the row's `note` as a delta re-review recorded against the prior artifact \u2014 the same disclosed-lineage pattern the repo already uses (caliper `queueStore` ce261672/70d77bf8, `vite.library` d378317d/b72699f3), and `output` is the authoritative field store.py reads.\n\n6. **Timestamp normalization (openaiastra):** UTC ISO stamps converted to naive local (`19:20+00:00` \u2192 `13:20`, `03:47+00:00` on 09-09 \u2192 `21:47` on 09-08) \u2014 arithmetic is consistently UTC\u22126 across every changed row, including the two date-rollbacks. Matches the repo's dominant naive-local convention; no consumer contract broken that the surrounding rows don't already tolerate (caliper itself mixes formats).\n\n7. **Cross-mode sha sanity:** where bug/feature shas changed (e.g., `client.ts` feature \u2192 old bug bytes `e5904c0d`, `types.ts` feature \u2192 old bug bytes `6cdf2c46`), the sequences are internally consistent with file evolution between review dates; no row claims a review date earlier than the bytes it hashes could have existed relative to its sibling rows.\n\nNo defect the change introduces or enables was found. The two relative-key violations it inherited were repaired; all records are preserved; the canonical row shape is maintained throughout.\n\nVERDICT: CLEAR"
+ }
+}
