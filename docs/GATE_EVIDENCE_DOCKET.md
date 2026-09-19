@@ -148,6 +148,7 @@
   round also catching the overstated docstring.
 - **The guard held against its own author twice within an hour of going live**
   (EV-012) - reworded, never weakened.
+  - EV-108: the PatternSkin test-surface tranche - the gate caught that the runner rebuilt to never exit 0 on failure still exited 0 on a signal-killed child (max() over a negative code), that the harness tester's stale-results clear sat after the add-on import it was meant to guard, that a scipy-less 'skip' still failed, and that five manifest rows cited 23 checks for a 22-check battery; all four fixed before round two (Nexusmill 7c490e8f).
 
 ## Why this docket exists
 
