@@ -5,19 +5,25 @@
       "bug": {
         "sha": "61d17b65a9cb051b63cb952cf38863bd309e3060d470e158a0d437249809944c",
         "output": ".colibri_reviews/implementations__emberline__engine.js__bug__61d17b65.md",
-        "reviewed_at": "2026-09-08T19:20:00.760455+00:00",
+        "reviewed_at": "2026-09-08 13:20",
         "cost": 0
       },
       "spec": {
         "sha": "61d17b65a9cb051b63cb952cf38863bd309e3060d470e158a0d437249809944c",
         "output": ".colibri_reviews/implementations__emberline__engine.js__spec__61d17b65.md",
-        "reviewed_at": "2026-09-08T19:20:00.760955+00:00",
+        "reviewed_at": "2026-09-08 13:20",
         "cost": 0
       },
       "quality": {
         "sha": "61d17b65a9cb051b63cb952cf38863bd309e3060d470e158a0d437249809944c",
         "output": ".colibri_reviews/implementations__emberline__engine.js__quality__61d17b65.md",
-        "reviewed_at": "2026-09-08T19:20:00.760955+00:00",
+        "reviewed_at": "2026-09-08 13:20",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "00c4c12d12b3ad531bdabc6f6dc199286f78df4f774d553636bf079ab009ee85",
+        "output": ".colibri_reviews/implementations__emberline__engine.js__feature__00c4c12d.md",
+        "reviewed_at": "2026-09-16 12:12",
         "cost": 0
       }
     }
@@ -26,21 +32,27 @@
     "rel": "implementations/emberline/engine.test.cjs",
     "modes": {
       "bug": {
-        "sha": "2980b70195f165429a9ba2dbc41af7b3e3c5c553828139723d4e6d6262fd3490",
-        "output": ".colibri_reviews/implementations__emberline__engine.test.cjs__bug__2980b701.md",
-        "reviewed_at": "2026-09-08T18:47:48.225Z",
+        "sha": "de4dd887c2182d540262c18da6e485eb52afdc1fc716e07a28ca546f78848dc8",
+        "output": ".colibri_reviews/implementations__emberline__engine.test.cjs__bug__de4dd887.md",
+        "reviewed_at": "2026-09-18 03:27",
         "cost": 0
       },
       "spec": {
         "sha": "2980b70195f165429a9ba2dbc41af7b3e3c5c553828139723d4e6d6262fd3490",
         "output": ".colibri_reviews/implementations__emberline__engine.test.cjs__spec__2980b701.md",
-        "reviewed_at": "2026-09-08T18:47:48.225Z",
+        "reviewed_at": "2026-09-08 12:47",
         "cost": 0
       },
       "quality": {
         "sha": "2980b70195f165429a9ba2dbc41af7b3e3c5c553828139723d4e6d6262fd3490",
         "output": ".colibri_reviews/implementations__emberline__engine.test.cjs__quality__2980b701.md",
-        "reviewed_at": "2026-09-08T18:47:48.225Z",
+        "reviewed_at": "2026-09-08 12:47",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "ef899e94e8d189318b4f91006fc9435e546f2eb6fcc3bac5193721c32894f0af",
+        "output": ".colibri_reviews/implementations__emberline__engine.test.cjs__feature__ef899e94.md",
+        "reviewed_at": "2026-09-16 18:31",
         "cost": 0
       }
     }
@@ -51,19 +63,25 @@
       "bug": {
         "sha": "f343606f2602f0590bffdfc49714321cd448645afd8353511da51661277bfdab",
         "output": ".colibri_reviews/implementations__emberline__spectrum.js__bug__f343606f.md",
-        "reviewed_at": "2026-09-08T13:48:10.782746+00:00",
+        "reviewed_at": "2026-09-08 07:48",
         "cost": 0
       },
       "spec": {
         "sha": "f343606f2602f0590bffdfc49714321cd448645afd8353511da51661277bfdab",
         "output": ".colibri_reviews/implementations__emberline__spectrum.js__spec__f343606f.md",
-        "reviewed_at": "2026-09-08T13:48:10.782746+00:00",
+        "reviewed_at": "2026-09-08 07:48",
         "cost": 0
       },
       "quality": {
         "sha": "f343606f2602f0590bffdfc49714321cd448645afd8353511da51661277bfdab",
         "output": ".colibri_reviews/implementations__emberline__spectrum.js__quality__f343606f.md",
-        "reviewed_at": "2026-09-08T13:48:10.782746+00:00",
+        "reviewed_at": "2026-09-08 07:48",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "6cf2bc834c6417996297ab7b8a5dfbaad423c4fb01e009bbe563c5145124bd6f",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.js__feature__6cf2bc83.md",
+        "reviewed_at": "2026-09-16 12:12",
         "cost": 0
       }
     }
@@ -72,21 +90,27 @@
     "rel": "implementations/emberline/spectrum.test.cjs",
     "modes": {
       "bug": {
-        "sha": "8883acc09eaecb57014ac257d01c450cd60c0b4a22f74c0a01a27aee50323539",
-        "output": ".colibri_reviews/implementations__emberline__spectrum.test.cjs__bug__8883acc0.md",
-        "reviewed_at": "2026-09-08T18:47:48.226Z",
+        "sha": "2dd26870cb101cd11fe72375e24139314886ec033dbc99561237a0caf68c2d9a",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.test.cjs__bug__2dd26870.md",
+        "reviewed_at": "2026-09-18 00:26",
         "cost": 0
       },
       "spec": {
         "sha": "8883acc09eaecb57014ac257d01c450cd60c0b4a22f74c0a01a27aee50323539",
         "output": ".colibri_reviews/implementations__emberline__spectrum.test.cjs__spec__8883acc0.md",
-        "reviewed_at": "2026-09-08T18:47:48.226Z",
+        "reviewed_at": "2026-09-08 12:47",
         "cost": 0
       },
       "quality": {
         "sha": "8883acc09eaecb57014ac257d01c450cd60c0b4a22f74c0a01a27aee50323539",
         "output": ".colibri_reviews/implementations__emberline__spectrum.test.cjs__quality__8883acc0.md",
-        "reviewed_at": "2026-09-08T18:47:48.227Z",
+        "reviewed_at": "2026-09-08 12:47",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "2dd26870cb101cd11fe72375e24139314886ec033dbc99561237a0caf68c2d9a",
+        "output": ".colibri_reviews/implementations__emberline__spectrum.test.cjs__feature__2dd26870.md",
+        "reviewed_at": "2026-09-16 18:31",
         "cost": 0
       }
     }
@@ -97,19 +121,25 @@
       "bug": {
         "sha": "c3cc74a1be8a35834fc2dbd34530e4cb413805f210ead5c63bebe3fc02785d4e",
         "output": ".colibri_reviews/implementations__emberline__game.js__bug__c3cc74a1.md",
-        "reviewed_at": "2026-09-09T03:47:25.059654+00:00",
+        "reviewed_at": "2026-09-08 21:47",
         "cost": 0
       },
       "spec": {
         "sha": "c3cc74a1be8a35834fc2dbd34530e4cb413805f210ead5c63bebe3fc02785d4e",
         "output": ".colibri_reviews/implementations__emberline__game.js__spec__c3cc74a1.md",
-        "reviewed_at": "2026-09-09T03:47:25.060153+00:00",
+        "reviewed_at": "2026-09-08 21:47",
         "cost": 0
       },
       "quality": {
         "sha": "c3cc74a1be8a35834fc2dbd34530e4cb413805f210ead5c63bebe3fc02785d4e",
         "output": ".colibri_reviews/implementations__emberline__game.js__quality__c3cc74a1.md",
-        "reviewed_at": "2026-09-09T03:47:25.060651+00:00",
+        "reviewed_at": "2026-09-08 21:47",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "3dae2db7b79f291b9de393fd75251f29c2862c435841ddcf1710c75bf5756597",
+        "output": ".colibri_reviews/implementations__emberline__game.js__feature__3dae2db7.md",
+        "reviewed_at": "2026-09-17 12:48",
         "cost": 0
       }
     }
@@ -120,19 +150,25 @@
       "bug": {
         "sha": "b22dead6fbbf77bb675b98af8095437d69949160dc762518728e06d160864ecf",
         "output": ".colibri_reviews/implementations__emberline__index.html__bug__b22dead6.md",
-        "reviewed_at": "2026-09-09T03:47:25.061152+00:00",
+        "reviewed_at": "2026-09-08 21:47",
         "cost": 0
       },
       "spec": {
         "sha": "b22dead6fbbf77bb675b98af8095437d69949160dc762518728e06d160864ecf",
         "output": ".colibri_reviews/implementations__emberline__index.html__spec__b22dead6.md",
-        "reviewed_at": "2026-09-09T03:47:25.061651+00:00",
+        "reviewed_at": "2026-09-08 21:47",
         "cost": 0
       },
       "quality": {
         "sha": "b22dead6fbbf77bb675b98af8095437d69949160dc762518728e06d160864ecf",
         "output": ".colibri_reviews/implementations__emberline__index.html__quality__b22dead6.md",
-        "reviewed_at": "2026-09-09T03:47:25.061651+00:00",
+        "reviewed_at": "2026-09-08 21:47",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "cdf86b346f32a929571f546150b9a3738f143d01399dad9abcd2859f38a0d147",
+        "output": ".colibri_reviews/implementations__emberline__index.html__feature__cdf86b34.md",
+        "reviewed_at": "2026-09-17 12:48",
         "cost": 0
       }
     }
@@ -143,19 +179,25 @@
       "bug": {
         "sha": "cde78eb24ee809ad00ce8cef79bdb83edf04b8299467eeeaaafe4cc232139f42",
         "output": ".colibri_reviews/implementations__emberline__style.css__bug__cde78eb2.md",
-        "reviewed_at": "2026-09-08T19:02:05.701585+00:00",
+        "reviewed_at": "2026-09-08 13:02",
         "cost": 0
       },
       "spec": {
         "sha": "cde78eb24ee809ad00ce8cef79bdb83edf04b8299467eeeaaafe4cc232139f42",
         "output": ".colibri_reviews/implementations__emberline__style.css__spec__cde78eb2.md",
-        "reviewed_at": "2026-09-08T19:02:05.702588+00:00",
+        "reviewed_at": "2026-09-08 13:02",
         "cost": 0
       },
       "quality": {
         "sha": "cde78eb24ee809ad00ce8cef79bdb83edf04b8299467eeeaaafe4cc232139f42",
         "output": ".colibri_reviews/implementations__emberline__style.css__quality__cde78eb2.md",
-        "reviewed_at": "2026-09-08T19:02:05.703091+00:00",
+        "reviewed_at": "2026-09-08 13:02",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "5662e8c5be2ad2da6c50cd1227a8eae0a4871ddcb531c9b5e6f202d43fabbe26",
+        "output": ".colibri_reviews/implementations__emberline__style.css__feature__5662e8c5.md",
+        "reviewed_at": "2026-09-17 12:48",
         "cost": 0
       }
     }
@@ -164,21 +206,27 @@
     "rel": "implementations/emberline/ui.test.cjs",
     "modes": {
       "bug": {
-        "sha": "5ae66eac6bc1c73f0350ad3c7ba72586161f27da005ae96bd6002df0d817fb00",
-        "output": ".colibri_reviews/implementations__emberline__ui.test.cjs__bug__5ae66eac.md",
-        "reviewed_at": "2026-09-09T03:47:25.062152+00:00",
+        "sha": "89459f3a316fd76af4b4ac22a76fd4651f61e15224ea3659e4c44714440762d0",
+        "output": ".colibri_reviews/implementations__emberline__ui.test.cjs__bug__89459f3a.md",
+        "reviewed_at": "2026-09-18 03:27",
         "cost": 0
       },
       "spec": {
         "sha": "5ae66eac6bc1c73f0350ad3c7ba72586161f27da005ae96bd6002df0d817fb00",
         "output": ".colibri_reviews/implementations__emberline__ui.test.cjs__spec__5ae66eac.md",
-        "reviewed_at": "2026-09-09T03:47:25.062652+00:00",
+        "reviewed_at": "2026-09-08 21:47",
         "cost": 0
       },
       "quality": {
         "sha": "5ae66eac6bc1c73f0350ad3c7ba72586161f27da005ae96bd6002df0d817fb00",
         "output": ".colibri_reviews/implementations__emberline__ui.test.cjs__quality__5ae66eac.md",
-        "reviewed_at": "2026-09-09T03:47:25.063152+00:00",
+        "reviewed_at": "2026-09-08 21:47",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "a8ecdd2e8a1c971ab1fce052bafc870d85eaf7916080aeeef7b2cf3c50a47d95",
+        "output": ".colibri_reviews/implementations__emberline__ui.test.cjs__feature__a8ecdd2e.md",
+        "reviewed_at": "2026-09-17 12:48",
         "cost": 0
       }
     }
@@ -189,19 +237,25 @@
       "bug": {
         "sha": "aaa191ad12f4739b5567b5f5efee1f6ab366d38bf541851c1cde17f06cb5a57a",
         "output": ".colibri_reviews/implementations__emberline__music.js__bug__aaa191ad.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
         "cost": 0
       },
       "spec": {
         "sha": "aaa191ad12f4739b5567b5f5efee1f6ab366d38bf541851c1cde17f06cb5a57a",
         "output": ".colibri_reviews/implementations__emberline__music.js__spec__aaa191ad.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
         "cost": 0
       },
       "quality": {
         "sha": "aaa191ad12f4739b5567b5f5efee1f6ab366d38bf541851c1cde17f06cb5a57a",
         "output": ".colibri_reviews/implementations__emberline__music.js__quality__aaa191ad.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "6ad8aa985adcfefdf60aba3ab0b5c99ae4c2f71724819d7d292e1f14f6a05877",
+        "output": ".colibri_reviews/implementations__emberline__music.js__feature__6ad8aa98.md",
+        "reviewed_at": "2026-09-16 12:12",
         "cost": 0
       }
     }
@@ -210,21 +264,27 @@
     "rel": "implementations/emberline/music.test.cjs",
     "modes": {
       "bug": {
-        "sha": "3fec6ad9e0d4f479dbc4a53545eb4021a176aedebb9c22a8513de40e6d0cf277",
-        "output": ".colibri_reviews/implementations__emberline__music.test.cjs__bug__3fec6ad9.md",
-        "reviewed_at": "2026-09-08",
+        "sha": "a6972896c35f7a4a13802b32dc55d5eedf9a1b9a7cd19841f760e3906ef0b061",
+        "output": ".colibri_reviews/implementations__emberline__music.test.cjs__bug__a6972896.md",
+        "reviewed_at": "2026-09-18 00:26",
         "cost": 0
       },
       "spec": {
         "sha": "3fec6ad9e0d4f479dbc4a53545eb4021a176aedebb9c22a8513de40e6d0cf277",
         "output": ".colibri_reviews/implementations__emberline__music.test.cjs__spec__3fec6ad9.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
         "cost": 0
       },
       "quality": {
         "sha": "3fec6ad9e0d4f479dbc4a53545eb4021a176aedebb9c22a8513de40e6d0cf277",
         "output": ".colibri_reviews/implementations__emberline__music.test.cjs__quality__3fec6ad9.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "a6972896c35f7a4a13802b32dc55d5eedf9a1b9a7cd19841f760e3906ef0b061",
+        "output": ".colibri_reviews/implementations__emberline__music.test.cjs__feature__a6972896.md",
+        "reviewed_at": "2026-09-16 18:31",
         "cost": 0
       }
     }
@@ -235,19 +295,25 @@
       "bug": {
         "sha": "d234643fabfe42ad6335c976bbe4c4afeebdd144afa8043e75e2d1d2afed012a",
         "output": ".colibri_reviews/implementations__emberline__terrain.js__bug__d234643f.md",
-        "reviewed_at": "2026-09-08T18:47:48.223Z",
+        "reviewed_at": "2026-09-08 12:47",
         "cost": 0
       },
       "spec": {
         "sha": "d234643fabfe42ad6335c976bbe4c4afeebdd144afa8043e75e2d1d2afed012a",
         "output": ".colibri_reviews/implementations__emberline__terrain.js__spec__d234643f.md",
-        "reviewed_at": "2026-09-08T18:47:48.224Z",
+        "reviewed_at": "2026-09-08 12:47",
         "cost": 0
       },
       "quality": {
         "sha": "d234643fabfe42ad6335c976bbe4c4afeebdd144afa8043e75e2d1d2afed012a",
         "output": ".colibri_reviews/implementations__emberline__terrain.js__quality__d234643f.md",
-        "reviewed_at": "2026-09-08T18:47:48.224Z",
+        "reviewed_at": "2026-09-08 12:47",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "b193b5625adfcc1f756d04fcf268d9363723c2efa841459eb636bb121a98e8ef",
+        "output": ".colibri_reviews/implementations__emberline__terrain.js__feature__b193b562.md",
+        "reviewed_at": "2026-09-16 12:12",
         "cost": 0
       }
     }
@@ -258,19 +324,25 @@
       "bug": {
         "sha": "7783e72c81cfc72277876c6c59ff0f199e59b1e03e6793c77c8f2f1cc1656699",
         "output": ".colibri_reviews/implementations__emberline__terrain.test.cjs__bug__7783e72c.md",
-        "reviewed_at": "2026-09-08T19:20:00.761957+00:00",
+        "reviewed_at": "2026-09-08 13:20",
         "cost": 0
       },
       "spec": {
         "sha": "7783e72c81cfc72277876c6c59ff0f199e59b1e03e6793c77c8f2f1cc1656699",
         "output": ".colibri_reviews/implementations__emberline__terrain.test.cjs__spec__7783e72c.md",
-        "reviewed_at": "2026-09-08T19:20:00.762456+00:00",
+        "reviewed_at": "2026-09-08 13:20",
         "cost": 0
       },
       "quality": {
         "sha": "7783e72c81cfc72277876c6c59ff0f199e59b1e03e6793c77c8f2f1cc1656699",
         "output": ".colibri_reviews/implementations__emberline__terrain.test.cjs__quality__7783e72c.md",
-        "reviewed_at": "2026-09-08T19:20:00.762456+00:00",
+        "reviewed_at": "2026-09-08 13:20",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "7783e72c81cfc72277876c6c59ff0f199e59b1e03e6793c77c8f2f1cc1656699",
+        "output": ".colibri_reviews/implementations__emberline__terrain.test.cjs__feature__7783e72c.md",
+        "reviewed_at": "2026-09-16 18:31",
         "cost": 0
       }
     }
@@ -281,19 +353,25 @@
       "bug": {
         "sha": "3121593a917c09e147e8e6121015f266838786902f64b0abd60d11fc06b653f8",
         "output": ".colibri_reviews/implementations__emberline__voice.js__bug__3121593a.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
         "cost": 0
       },
       "spec": {
         "sha": "3121593a917c09e147e8e6121015f266838786902f64b0abd60d11fc06b653f8",
         "output": ".colibri_reviews/implementations__emberline__voice.js__spec__3121593a.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
         "cost": 0
       },
       "quality": {
         "sha": "3121593a917c09e147e8e6121015f266838786902f64b0abd60d11fc06b653f8",
         "output": ".colibri_reviews/implementations__emberline__voice.js__quality__3121593a.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "9307c09fe582946a2e90b416b553f353b2b527fc2de9123b04655c8c3ddf6afd",
+        "output": ".colibri_reviews/implementations__emberline__voice.js__feature__9307c09f.md",
+        "reviewed_at": "2026-09-16 12:12",
         "cost": 0
       }
     }
@@ -302,21 +380,27 @@
     "rel": "implementations/emberline/voice.test.cjs",
     "modes": {
       "bug": {
-        "sha": "c261f7b11dc364cd61f95c6282873b824bd7643b12c020c0322ba7e6711bce66",
-        "output": ".colibri_reviews/implementations__emberline__voice.test.cjs__bug__c261f7b1.md",
-        "reviewed_at": "2026-09-08",
+        "sha": "9360b625b1a4250c67c7b30ccd7d2254b0916a19f6e4a3eca48b0fd5b10a98cb",
+        "output": ".colibri_reviews/implementations__emberline__voice.test.cjs__bug__9360b625.md",
+        "reviewed_at": "2026-09-18 03:27",
         "cost": 0
       },
       "spec": {
         "sha": "c261f7b11dc364cd61f95c6282873b824bd7643b12c020c0322ba7e6711bce66",
         "output": ".colibri_reviews/implementations__emberline__voice.test.cjs__spec__c261f7b1.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
         "cost": 0
       },
       "quality": {
         "sha": "c261f7b11dc364cd61f95c6282873b824bd7643b12c020c0322ba7e6711bce66",
         "output": ".colibri_reviews/implementations__emberline__voice.test.cjs__quality__c261f7b1.md",
-        "reviewed_at": "2026-09-08",
+        "reviewed_at": "2026-09-08 00:00",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "0a5f82edca0db71b26cf32880048d0da661ccb0f23c8cc63c101a197cc1bc235",
+        "output": ".colibri_reviews/implementations__emberline__voice.test.cjs__feature__0a5f82ed.md",
+        "reviewed_at": "2026-09-17 12:48",
         "cost": 0
       }
     }
@@ -327,19 +411,25 @@
       "bug": {
         "sha": "534f6a83a48c72ab9656213967cc362f8a14c898a5f553514a9eb1014ef3c966",
         "output": ".colibri_reviews/implementations__emberline__world3d.js__bug__534f6a83.md",
-        "reviewed_at": "2026-09-08T19:02:05.705094+00:00",
+        "reviewed_at": "2026-09-08 13:02",
         "cost": 0
       },
       "spec": {
         "sha": "534f6a83a48c72ab9656213967cc362f8a14c898a5f553514a9eb1014ef3c966",
         "output": ".colibri_reviews/implementations__emberline__world3d.js__spec__534f6a83.md",
-        "reviewed_at": "2026-09-08T19:02:05.705094+00:00",
+        "reviewed_at": "2026-09-08 13:02",
         "cost": 0
       },
       "quality": {
         "sha": "534f6a83a48c72ab9656213967cc362f8a14c898a5f553514a9eb1014ef3c966",
         "output": ".colibri_reviews/implementations__emberline__world3d.js__quality__534f6a83.md",
-        "reviewed_at": "2026-09-08T19:02:05.706097+00:00",
+        "reviewed_at": "2026-09-08 13:02",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "56721bd4398b969e8027b26ac0b3efbfbfd1c22ce41a5e75804d9d2a3057a232",
+        "output": ".colibri_reviews/implementations__emberline__world3d.js__feature__56721bd4.md",
+        "reviewed_at": "2026-09-16 12:12",
         "cost": 0
       }
     }
@@ -348,21 +438,243 @@
     "rel": "implementations/emberline/world3d.test.cjs",
     "modes": {
       "bug": {
-        "sha": "dc2a9b3707fe2fd11f0129cfbfd7d4c6451b5ba7d9af3b5eee569e0ea8d7b65c",
-        "output": ".colibri_reviews/implementations__emberline__world3d.test.cjs__bug__dc2a9b37.md",
-        "reviewed_at": "2026-09-08T19:02:05.706600+00:00",
+        "sha": "2a54b94b70f645eecedd7467ecab1d4280f632cc2074dea0c790fc6e0d8fdd17",
+        "output": ".colibri_reviews/implementations__emberline__world3d.test.cjs__bug__2a54b94b.md",
+        "reviewed_at": "2026-09-18 00:26",
         "cost": 0
       },
       "spec": {
         "sha": "dc2a9b3707fe2fd11f0129cfbfd7d4c6451b5ba7d9af3b5eee569e0ea8d7b65c",
         "output": ".colibri_reviews/implementations__emberline__world3d.test.cjs__spec__dc2a9b37.md",
-        "reviewed_at": "2026-09-08T19:02:05.707101+00:00",
+        "reviewed_at": "2026-09-08 13:02",
         "cost": 0
       },
       "quality": {
         "sha": "dc2a9b3707fe2fd11f0129cfbfd7d4c6451b5ba7d9af3b5eee569e0ea8d7b65c",
         "output": ".colibri_reviews/implementations__emberline__world3d.test.cjs__quality__dc2a9b37.md",
-        "reviewed_at": "2026-09-08T19:02:05.707600+00:00",
+        "reviewed_at": "2026-09-08 13:02",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "2a54b94b70f645eecedd7467ecab1d4280f632cc2074dea0c790fc6e0d8fdd17",
+        "output": ".colibri_reviews/implementations__emberline__world3d.test.cjs__feature__2a54b94b.md",
+        "reviewed_at": "2026-09-16 18:31",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\gardens.js": {
+    "rel": "implementations/emberline/gardens.js",
+    "modes": {
+      "feature": {
+        "sha": "3583a896261211b47ed7d97904246f4bdedc813517c48f23bd4be7089f068557",
+        "output": ".colibri_reviews/implementations__emberline__gardens.js__feature__3583a896.md",
+        "reviewed_at": "2026-09-16 12:12",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\civilizations.js": {
+    "rel": "implementations/emberline/civilizations.js",
+    "modes": {
+      "feature": {
+        "sha": "f89663533d93613693a23076e8d2845fba3e136ee11414db11ea3d760f60aa11",
+        "output": ".colibri_reviews/implementations__emberline__civilizations.js__feature__f8966353.md",
+        "reviewed_at": "2026-09-16 12:12",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\README.md": {
+    "rel": "implementations/emberline/README.md",
+    "modes": {
+      "feature": {
+        "sha": "ebb03354a80cb8164550af473da19efd1c443f03116dc89f587290d3f7a5bb89",
+        "output": ".colibri_reviews/implementations__emberline__README.md__feature__ebb03354.md",
+        "reviewed_at": "2026-09-17 12:48",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\civilizations.test.cjs": {
+    "rel": "implementations/emberline/civilizations.test.cjs",
+    "modes": {
+      "feature": {
+        "sha": "e7d7c2b4c61ad78caa0802942b498bf71dc0d9dd7a55bd8494ced6a38a291fe7",
+        "output": ".colibri_reviews/implementations__emberline__civilizations.test.cjs__feature__e7d7c2b4.md",
+        "reviewed_at": "2026-09-16 18:31",
+        "cost": 0
+      },
+      "bug": {
+        "sha": "e7d7c2b4c61ad78caa0802942b498bf71dc0d9dd7a55bd8494ced6a38a291fe7",
+        "output": ".colibri_reviews/implementations__emberline__civilizations.test.cjs__bug__e7d7c2b4.md",
+        "reviewed_at": "2026-09-18 00:26",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tools\\emberline-diagnostics.cjs": {
+    "rel": "tools/emberline-diagnostics.cjs",
+    "modes": {
+      "bug": {
+        "sha": "5cae75433e6bddd8ae133eb0d3c39dc6c8a4075b463f4242f18509838390f7c3",
+        "output": ".colibri_reviews/tools__emberline-diagnostics.cjs__bug__5cae7543.md",
+        "reviewed_at": "2026-09-18 03:27",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tools\\emberline-media-audit.js": {
+    "rel": "tools/emberline-media-audit.js",
+    "modes": {
+      "feature": {
+        "sha": "333987e5fd1b10cdb7278faaa60be3300580a7ceeac56d974f004fd2651f9f6c",
+        "output": ".colibri_reviews/tools__emberline-media-audit.js__feature__333987e5.md",
+        "reviewed_at": "2026-09-17 12:48",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tools\\emberline-world-audit.js": {
+    "rel": "tools/emberline-world-audit.js",
+    "modes": {
+      "feature": {
+        "sha": "03152a81e1472dccfab0f89d857a616c20d1bb2e101f10dabd538d2cc33f70f3",
+        "output": ".colibri_reviews/tools__emberline-world-audit.js__feature__03152a81.md",
+        "reviewed_at": "2026-09-17 12:48",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tools\\emberline-media-audit.html": {
+    "rel": "tools/emberline-media-audit.html",
+    "modes": {
+      "feature": {
+        "sha": "f3463769c0f90ecf3fb63c902d7a1011bb429ad17b9a23864a5fdb08ff6780b6",
+        "output": ".colibri_reviews/tools__emberline-media-audit.html__feature__f3463769.md",
+        "reviewed_at": "2026-09-17 12:48",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tests\\test_emberline_media.py": {
+    "rel": "tests/test_emberline_media.py",
+    "modes": {
+      "feature": {
+        "sha": "bd10119648d4ca52370a9e98640ef58ad43f395bdd4fc8a648efeedf4031fe76",
+        "output": ".colibri_reviews/tests__test_emberline_media.py__feature__bd101196.md",
+        "reviewed_at": "2026-09-17 12:48",
+        "cost": 0
+      },
+      "bug": {
+        "sha": "bd10119648d4ca52370a9e98640ef58ad43f395bdd4fc8a648efeedf4031fe76",
+        "output": ".colibri_reviews/tests__test_emberline_media.py__bug__bd101196.md",
+        "reviewed_at": "2026-09-18 00:26",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\implementations\\emberline\\diagnostics.test.cjs": {
+    "rel": "implementations/emberline/diagnostics.test.cjs",
+    "modes": {
+      "feature": {
+        "sha": "7f93b98312d64dc8c2aaaab4b32a5434f9866d0c10234fc9c7b433a8759ddb03",
+        "output": ".colibri_reviews/implementations__emberline__diagnostics.test.cjs__feature__7f93b983.md",
+        "reviewed_at": "2026-09-17 12:48",
+        "cost": 0
+      },
+      "bug": {
+        "sha": "7f93b98312d64dc8c2aaaab4b32a5434f9866d0c10234fc9c7b433a8759ddb03",
+        "output": ".colibri_reviews/implementations__emberline__diagnostics.test.cjs__bug__7f93b983.md",
+        "reviewed_at": "2026-09-18 00:26",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tools\\emberline-audio-fixture.cjs": {
+    "rel": "tools/emberline-audio-fixture.cjs",
+    "modes": {
+      "feature": {
+        "sha": "d15b33458e841ebecd99e45522dcd264db66107800944a03401d5c256706c7e6",
+        "output": ".colibri_reviews/tools__emberline-audio-fixture.cjs__feature__d15b3345.md",
+        "reviewed_at": "2026-09-17 12:48",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tests\\requirements_gate.py": {
+    "rel": "tests/requirements_gate.py",
+    "modes": {
+      "bug": {
+        "sha": "e8c26a584a500595d1491ebddf488fee6a2b92627431486b7c137c5eb99dfdc1",
+        "output": ".colibri_reviews/tests__requirements_gate.py__bug__e8c26a58.md",
+        "reviewed_at": "2026-09-18 00:26",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tests\\test_automatic_review.py": {
+    "rel": "tests/test_automatic_review.py",
+    "modes": {
+      "bug": {
+        "sha": "34cc9eb486c115dd1dd1423f8bb27c3e0bcabd937216c9ac25cdc17f3547c526",
+        "output": ".colibri_reviews/tests__test_automatic_review.py__bug__34cc9eb4.md",
+        "reviewed_at": "2026-09-18 00:26",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tests\\test_emberline.py": {
+    "rel": "tests/test_emberline.py",
+    "modes": {
+      "bug": {
+        "sha": "0ec964d06d717d44913fdbeca4d5f42a0b28302b7067e6e2369c115ad352855a",
+        "output": ".colibri_reviews/tests__test_emberline.py__bug__0ec964d0.md",
+        "reviewed_at": "2026-09-18 00:26",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tests\\test_gate.py": {
+    "rel": "tests/test_gate.py",
+    "modes": {
+      "bug": {
+        "sha": "4afd8fd9eec0fdb12ee69ac8b7ce0cbea4ed3a5e229b5da90ebbbf902b85016a",
+        "output": ".colibri_reviews/tests__test_gate.py__bug__4afd8fd9.md",
+        "reviewed_at": "2026-09-18 00:26",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tests\\test_jcodemunch.py": {
+    "rel": "tests/test_jcodemunch.py",
+    "modes": {
+      "bug": {
+        "sha": "b33486cbf31be52f82c54bd383662736628b7a4537c382652fe5db43fc7e9266",
+        "output": ".colibri_reviews/tests__test_jcodemunch.py__bug__b33486cb.md",
+        "reviewed_at": "2026-09-18 00:26",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tests\\test_memory.py": {
+    "rel": "tests/test_memory.py",
+    "modes": {
+      "bug": {
+        "sha": "10f4b1c578b5b42d094f935b76bea93abd9f4f749b854415cec172320bcf1641",
+        "output": ".colibri_reviews/tests__test_memory.py__bug__10f4b1c5.md",
+        "reviewed_at": "2026-09-18 03:27",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\OpenAIAstra\\tests\\test_observability.py": {
+    "rel": "tests/test_observability.py",
+    "modes": {
+      "bug": {
+        "sha": "cf58c6589389249f10c5c95fda60a6f8d1bfaf8d05c461c89248128cd504c620",
+        "output": ".colibri_reviews/tests__test_observability.py__bug__cf58c658.md",
+        "reviewed_at": "2026-09-18 00:26",
         "cost": 0
       }
     }

@@ -1,0 +1,506 @@
+{
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\graphs\\agency_graph.py": {
+  "rel": "atlas/graphs/agency_graph.py",
+  "modes": {
+   "bug": {
+    "sha": "41643a5398b539a30cad6ba8c268f7eaa7d3fac58fa834b5df997e3880ff0b36",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__graphs__agency_graph.py__bug__41643a53.md",
+    "reviewed_at": "2026-09-15 09:38",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\research_agent\\tools.py": {
+  "rel": "atlas/CommercialAgents/research_agent/tools.py",
+  "modes": {
+   "bug": {
+    "sha": "d05b2a3fe1b50b0f262e6bb47bcf3ab3fab966fd8e8743a0cdf6265103b94351",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__research_agent__tools.py__bug__d05b2a3f.md",
+    "reviewed_at": "2026-09-15 09:53",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\gui\\agent_runner.py": {
+  "rel": "atlas/gui/agent_runner.py",
+  "modes": {
+   "bug": {
+    "sha": "215d5a5e405d953bb560617d81bd0ad1f08af27cfada4842519dec7b5fcc7e4d",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__gui__agent_runner.py__bug__215d5a5e.md",
+    "reviewed_at": "2026-09-15 10:13",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\asset_manager.py": {
+  "rel": "atlas/asset_manager.py",
+  "modes": {
+   "bug": {
+    "sha": "a7175e5848cf0c4e4a063b9aef58f0ed9e2870961fb738dbdc4b5c2a6fdc8a0e",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__asset_manager.py__bug__a7175e58.md",
+    "reviewed_at": "2026-09-15 10:19",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\confidence_agent\\agent.py": {
+  "rel": "atlas/CommercialAgents/confidence_agent/agent.py",
+  "modes": {
+   "bug": {
+    "sha": "91b062679078d45254f64bf66ef76d0ed2e18eb0b16e364cbaade204f831db11",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__confidence_agent__agent.py__bug__91b06267.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\agent_brain.py": {
+  "rel": "atlas/agent_brain.py",
+  "modes": {
+   "bug": {
+    "sha": "f7c6f50c074228349efe07348d98ba54bf9d528b0843877d11159ac1255a8626",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__agent_brain.py__bug__f7c6f50c.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\agent_factory_legacy.py": {
+  "rel": "atlas/agent_factory_legacy.py",
+  "modes": {
+   "bug": {
+    "sha": "8b28eadb79dbb5f68512e06f07a22665426b16aa6fef9d709070b5d59085b787",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__agent_factory_legacy.py__bug__8b28eadb.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\services\\asset_validator.py": {
+  "rel": "atlas/services/asset_validator.py",
+  "modes": {
+   "bug": {
+    "sha": "e833eaa7cedea65965e323583baa08ff3704d5fc8a103ca2369de75fc0fb1e4e",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__services__asset_validator.py__bug__e833eaa7.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\services\\file_analyzer.py": {
+  "rel": "atlas/services/file_analyzer.py",
+  "modes": {
+   "bug": {
+    "sha": "3abd809d5d767fa64a36f9a4370497d759f88f6d9a65b4176c4c7be6742b5567",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__services__file_analyzer.py__bug__3abd809d.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\services\\ui_generator.py": {
+  "rel": "atlas/services/ui_generator.py",
+  "modes": {
+   "bug": {
+    "sha": "a7ff9a4c52eaa07e762ab917429dfd1cb537895d238239879ab5adaa0a658f19",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__services__ui_generator.py__bug__a7ff9a4c.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\services\\input_schema.py": {
+  "rel": "atlas/services/input_schema.py",
+  "modes": {
+   "bug": {
+    "sha": "9a927ae6cf0745211933e4a8658d551199ee3d97ec58e31d054e3cf4c0dd10a5",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__services__input_schema.py__bug__9a927ae6.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\services\\model_registry.py": {
+  "rel": "atlas/services/model_registry.py",
+  "modes": {
+   "bug": {
+    "sha": "3ea148348c03a1f004754ebd8033cd9e00a80df1871c2e970ff8fe0a9a0d3421",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__services__model_registry.py__bug__3ea14834.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\services\\schema_service.py": {
+  "rel": "atlas/services/schema_service.py",
+  "modes": {
+   "bug": {
+    "sha": "188d2e162f75dceb8e8cbe53456750498796902a2035c24e3c8497aadbfc91fd",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__services__schema_service.py__bug__188d2e16.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\model_schemas.py": {
+  "rel": "atlas/model_schemas.py",
+  "modes": {
+   "bug": {
+    "sha": "663640c433984c94bf46062db29f078e38c9c29aa10ce120826770eb1c73d636",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__model_schemas.py__bug__663640c4.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\composer_agent\\agent.py": {
+  "rel": "atlas/CommercialAgents/composer_agent/agent.py",
+  "modes": {
+   "bug": {
+    "sha": "09ffdc10a8bf8a76f4077e07eee1ca1a119fc5e0c71b199a50ec38df12029037",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__composer_agent__agent.py__bug__09ffdc10.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\composer_agent\\history_tools.py": {
+  "rel": "atlas/CommercialAgents/composer_agent/history_tools.py",
+  "modes": {
+   "bug": {
+    "sha": "5c16444fc9edb595ee7cf1df60ef9444344a4af33d74547b2bbeedeedd5ad362",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__composer_agent__history_tools.py__bug__5c16444f.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\director_agent\\prompts.py": {
+  "rel": "atlas/CommercialAgents/director_agent/prompts.py",
+  "modes": {
+   "bug": {
+    "sha": "96d52fdd691f31ebd0d689470879e7b1662882a836945761d4c64c24fa139d42",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__director_agent__prompts.py__bug__96d52fdd.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\research_agent\\agent.py": {
+  "rel": "atlas/CommercialAgents/research_agent/agent.py",
+  "modes": {
+   "bug": {
+    "sha": "d6cfc598888037a43d01a5662dce884ad378373b35aa5e65208054dd6b3e1765",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__research_agent__agent.py__bug__d6cfc598.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\research_agent\\prompts.py": {
+  "rel": "atlas/CommercialAgents/research_agent/prompts.py",
+  "modes": {
+   "bug": {
+    "sha": "bdc937ba5df2c943eda9f441e8c2aede5f8a6004cda240183f167300a5e1425b",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__research_agent__prompts.py__bug__bdc937ba.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\editor_tools.py": {
+  "rel": "atlas/editor_tools.py",
+  "modes": {
+   "bug": {
+    "sha": "98af9c307207bf61ac9e0a49ceeb26df081dc0d0108454ec01e7be06ad60eb47",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__editor_tools.py__bug__98af9c30.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\persistence.py": {
+  "rel": "atlas/persistence.py",
+  "modes": {
+   "bug": {
+    "sha": "a4138f77ebfc8ce880055ee4d9c5efc137fe1fa129afe0e4cb31bf5bd09280e0",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__persistence.py__bug__a4138f77.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\inter_agent_comms.py": {
+  "rel": "atlas/inter_agent_comms.py",
+  "modes": {
+   "bug": {
+    "sha": "829797a2717f732f36eeba5693a04c962dbf24504eccb3b2c19fc10a0962b9e3",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__inter_agent_comms.py__bug__829797a2.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\services\\__init__.py": {
+  "rel": "atlas/services/__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "b72dd553ef17c888b015832a55683a0ed083ad8df32fab45c91b02cd8d5ba74a",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__services____init__.py__bug__b72dd553.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\system_config.py": {
+  "rel": "atlas/system_config.py",
+  "modes": {
+   "bug": {
+    "sha": "26a365266450a70f5184229ec306546fa8a6ab951547beaf79f2fde0b8f803d4",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__system_config.py__bug__26a36526.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\gui\\presets\\composer_presets.py": {
+  "rel": "atlas/gui/presets/composer_presets.py",
+  "modes": {
+   "bug": {
+    "sha": "4180eca1444e6c8cd34182e0502f53892a4513662c93e8d968ae1dd5e796d2b7",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__gui__presets__composer_presets.py__bug__4180eca1.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\gui\\presets\\director_presets.py": {
+  "rel": "atlas/gui/presets/director_presets.py",
+  "modes": {
+   "bug": {
+    "sha": "7be75e4a80ecd2be75efc1c86f13db7d7438f1afa872146e445150e8cca8b3b9",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__gui__presets__director_presets.py__bug__7be75e4a.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\gui\\presets\\lyrics_presets.py": {
+  "rel": "atlas/gui/presets/lyrics_presets.py",
+  "modes": {
+   "bug": {
+    "sha": "132c474fe678e0d9f0e379b79a9d30547dbaf783cf69e7ec5f07b4e36b8beb08",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__gui__presets__lyrics_presets.py__bug__132c474f.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\gui\\presets\\video_presets.py": {
+  "rel": "atlas/gui/presets/video_presets.py",
+  "modes": {
+   "bug": {
+    "sha": "14cf748372f00f1643894df515339f0f98aafff7b0b5cb7c6556e8d6525014ae",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__gui__presets__video_presets.py__bug__14cf7483.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\gui\\presets\\__init__.py": {
+  "rel": "atlas/gui/presets/__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "c4caa63dc65d1a539a1ddaf5419b062578f794f3eee282d8caee6ccb1312c580",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__gui__presets____init__.py__bug__c4caa63d.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\cinematographer_agent\\agent.py": {
+  "rel": "atlas/CommercialAgents/cinematographer_agent/agent.py",
+  "modes": {
+   "bug": {
+    "sha": "e735ea485986384c945bd1d157c52f62068b862b48e100d6c23a8be48fa5c71c",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__cinematographer_agent__agent.py__bug__e735ea48.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\director_agent\\agent.py": {
+  "rel": "atlas/CommercialAgents/director_agent/agent.py",
+  "modes": {
+   "bug": {
+    "sha": "f76cd5120f7cd25b4848d2ce99e2fd230e64a42dc4b2e3bf1f9dbbd922af8fb1",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__director_agent__agent.py__bug__f76cd512.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\__init__.py": {
+  "rel": "atlas/CommercialAgents/__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "fa39eb527c1d2fec24989641ffc8b2b1d617d5a2a713620a73381e26f1da8b44",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\composer_agent\\__init__.py": {
+  "rel": "atlas/CommercialAgents/composer_agent/__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "0056e0f8976f2b28d280189362d90f845974b7c7b60ec19bdae895e7125f63c9",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\composer_agent\\prompts.py": {
+  "rel": "atlas/CommercialAgents/composer_agent/prompts.py",
+  "modes": {
+   "bug": {
+    "sha": "53c832821bc6a843092a43d3250ca5cb687130b9f6f7177e53dd1f5c64419b93",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\cinematographer_agent\\__init__.py": {
+  "rel": "atlas/CommercialAgents/cinematographer_agent/__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "32c577fcc3c3e10c20b1a2f335d7be7c1a34cbd022aa68b1c232ca5629328096",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\cinematographer_agent\\prompts.py": {
+  "rel": "atlas/CommercialAgents/cinematographer_agent/prompts.py",
+  "modes": {
+   "bug": {
+    "sha": "fa0128a596ca74dce134f13ff6d453e5b1e1741974621a8e2f5c335644823c40",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\confidence_agent\\__init__.py": {
+  "rel": "atlas/CommercialAgents/confidence_agent/__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "b3e058631c01a6f8922e6fc5696260126db41099277a6f98848d748da75f4d5c",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\confidence_agent\\prompts.py": {
+  "rel": "atlas/CommercialAgents/confidence_agent/prompts.py",
+  "modes": {
+   "bug": {
+    "sha": "7f6152db90765a991c408d8a8311b4912797a84714d55dd2ed0952c1af23714e",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\confidence_agent\\ontology.json": {
+  "rel": "atlas/CommercialAgents/confidence_agent/ontology.json",
+  "modes": {
+   "bug": {
+    "sha": "f9c17a1a62f24d6088cabc17c4d89484c39110fd57348c06ea95fecc33bba11f",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\director_agent\\__init__.py": {
+  "rel": "atlas/CommercialAgents/director_agent/__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "5ddbbc2e1e3fa4a46ce6391e730eec53008bc55ad513a50788b513bcf8683649",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\research_agent\\__init__.py": {
+  "rel": "atlas/CommercialAgents/research_agent/__init__.py",
+  "modes": {
+   "bug": {
+    "sha": "8260a4aba5914db7311af06b746caf625ffa47401d23196bca6df31c9da2639b",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\fleet\\atlas\\CommercialAgents\\research_agent\\ontology.json": {
+  "rel": "atlas/CommercialAgents/research_agent/ontology.json",
+  "modes": {
+   "bug": {
+    "sha": "c6be695ed28104eb808208dbb1d9a52e0a64f1bd3c01346eb84fd3b2b62be8af",
+    "output": "C:\\Users\\User\\source\\repos\\fleet\\.colibri_reviews\\atlas__CommercialAgents__trivial_group__bug__2026-09-15.md",
+    "reviewed_at": "2026-09-15 04:49",
+    "model": "claude-opus-5",
+    "cost": 0.0
+   }
+  }
+ }
+}

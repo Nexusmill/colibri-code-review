@@ -1,0 +1,30 @@
+<!-- source: src/stores/screenStore.ts | reviewer: glm-5.3-zai-in-session | sha256: 33d0507de10878309d9ed2d48937e25dd69c98677322d4044599ce8b0e79ca3b | date: 2026-09-17 | mode: bug -->
+<!-- context: owner commission 2026-09-17: BUGHUNT12 - colibri bug hunt on the next ten files by import PageRank (ranks 21-30); fresh-context lineage pass beyond the recorded review at these exact bytes (0.3.0 doctrine: prior review = context, never a skip). -->
+
+## Verdict
+
+Shippable — no crash, data-loss, or security defects in the store itself; the window/seats state machine, bounds invariants, and persistence ring all trace clean. The real risk is a cross-file lifecycle gap: deleting an asset or film never closes its screen window, and persistence then resurrects the zombie on every reload (the store owns the windows array and offers no delete-awareness).
+
+## Bugs & vulnerabilities
+
+**[MEDIUM] Deleting an asset or film leaves zombie windows that persist across reload pointing at recycled files** - `line 223` (partialize), cross-file with `src/components/ScreenStage.tsx:888-906` and `src/components/FilmRuns.tsx:66-88`
+- What: `windows` is persisted unconditionally and the only removal path is the window's own × (`close(id)`, called solely from `ScreenStage.tsx:500`). The library's two-press DELETE (`pressDelete`, ScreenStage:898-901) calls `deleteAsset` → `removeProvenance` + `assetsStore.dismiss` + selection cleanup — it never touches screenStore. The film console's delete (`confirmDelete`, FilmRuns:66-88; FilmRuns does not even import screenStore) recycles the film and every artifact and cleans its own stores — same omission.
+- Trigger: open an asset (auto-open, Library OPEN, or Outputs OPEN) → delete that asset from the library; or open a film file → delete the run from RUNS. The window stays. Hard-reload: `partialize` rehydrates it — the zombie is permanent until the user manually closes a window for a file that no longer exists.
+- Impact: the window title names a recycled file while the body shows a dead player — `MediaView.tsx:26` (`<img>`, no onError) renders a broken/blank image, `:55-65` (`<video>`, no onError) a black dead player, `:50` a dead audio control. Only the text branch speaks the truth (`:34-35`: "the document could not be read - it may have moved or been recycled"). That is a truthfulness violation of the owner's status rule and it accumulates: every delete of an open asset adds one immortal zombie. Contained (no crash, no data loss — the files are in the Recycle Bin), hence MEDIUM not HIGH.
+- Fix: give the store a prefix-close (`closeByPrefix(p: string)` filtering `w.id.startsWith(p)`); `pressDelete` calls it with `${item.promptId}::` after `deleteAsset` resolves, and FilmRuns' `confirmDelete` with `film:${id}:` (covers both the `::` and `:` key forms below). MediaView's image/video branches gaining onError truth-speech is the complementary half but lives in another file's unit.
+
+**[LOW] FilmWizard's film-file keys use one colon, breaking the one-window-per-file contract and feeding garbage into openedJobs** - `line 11` / `line 159`, cross-file with `src/components/FilmWizard.tsx:635` and `:1760`
+- What: the store documents and depends on the `::` separator — `ScreenAsset.key` comment (`:11`: "promptId::filename - one window per file, reopening focuses") and `close()` deriving the job id via `key.split("::")[0]` (`:159`). ScreenStage (`:835`) and OutputsSurface (`:51`) use the canonical `film:${id}::${filename}`; FilmWizard's upscale open uses `key: `film:${record.id}:${r.file}`` (`:635`) and its WATCH button `film:${record.id}:final.mp4` (`:1760`).
+- Trigger: run an upscale in the wizard (window opens under the single-colon key), then open the same `final-720p.mp4` from the library's film rail or the Outputs film strip (double-colon key) — the dedupe in `openAsset` (`:135`) misses and a second window opens on the same file.
+- Impact: duplicate window for one file (focus-instead-of-stack defeated for those files); additionally, closing a wizard-keyed window appends the whole key string (no `::` → `split("::")[0]` returns the full key) into `openedJobs` — junk in the promptId ring, bounded at 49 so harmless, but wrong. The same garbage-in applies to CloudPane/ModelPicker keys (`${service}:${slug}:${filename}`, CloudPane:93) though those never collide with a canonical twin.
+- Fix: FilmWizard adopts `film:${record.id}::${r.file}` / `film:${record.id}::final.mp4` — one-line each, matching the two canonical call sites.
+
+## Missing safeguards
+
+- `openAsset` accepts any key string without format validation — nothing enforces the `::` separator the store's own dedupe and seen-derivation depend on (finding 2's enabler); a `buildKey(owner, file)` helper (or at minimum keeping the format comment at `:11` as a stated contract at the signature) would make divergence impossible rather than merely discouraged.
+- No deletion-awareness in the windows lifecycle at all — nothing reconciles persisted `windows` against what still exists on disk at boot either (finding 1's root; a rehydrate-time existence check would be the belt to the delete-flow's braces).
+- `close()`'s seen-derivation trusts the caller's key format (`:159`); with finding 2 fixed this is covered, but a store that derived seen-ness from a stored `promptId` field instead of re-parsing the key would be robust to future key creativity.
+
+context-pack: jcodemunch `local/Caliper` (find_importers 9, outline, call-site text search); read in full: screenStore.ts + test, ScreenStage.tsx, MediaView.tsx, OutputsSurface.tsx (40-124), FilmRuns.tsx (60-89), FilmWizard.tsx (628-641), assetsStore pickFiles; lineage .colibri_reviews 12c274e7/dc83b754/33d0507d + spec 408e1830; docs/remediation_manifest.md (adjacent 2026-09-16 App.tsx seat-guard and uiStore surface-routing rows checked — no rows for this file); git history (SCREEN_W/H unchanged since birth → dc83b754's rehydrate-clamp note stays dormant); `caliper.screen` key consumers (no production reset exists).
+
+new-findings: 2

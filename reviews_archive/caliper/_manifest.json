@@ -57,12 +57,12 @@
     "rel": "src/api/client.ts",
     "modes": {
       "bug": {
-        "sha": "e5904c0d41c87aa6344907e8da1fe9e8f168b4f3d70378201375d10f287cef6a",
-        "output": "src__api__client.ts__bug__e5904c0d.md",
-        "reviewed_at": "2026-09-06",
-        "mode": "bug",
-        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "vram-preflight wave delta"
+        "sha": "0666a8c5835574aad0a11f6af4141df713af907ddcf6b4cfda189028e78e889c",
+        "output": ".colibri_reviews/src__api__client.ts__bug__0666a8c5.md",
+        "reviewed_at": "2026-09-16 00:00",
+        "cost": 0,
+        "model": "glm-5.3-zai-in-session",
+        "note": "delta 2026-09-16 top-10 bug hunt under the 0.3.0 doctrine (prior artifact remains on disk as history)"
       },
       "spec": {
         "sha": "9f5e8b48e71cf315960bfc0c870fa88f1340d6fd4834707be4c77ef718792258",
@@ -72,10 +72,10 @@
         "cost": 0
       },
       "feature": {
-        "sha": "9f5e8b48e71cf315960bfc0c870fa88f1340d6fd4834707be4c77ef718792258",
-        "output": "src__api__client.ts__feature__9f5e8b48.md",
-        "reviewed_at": "2026-09-05T12:40:00",
-        "model": "glm-5.3-zai-in-session",
+        "sha": "e5904c0d41c87aa6344907e8da1fe9e8f168b4f3d70378201375d10f287cef6a",
+        "output": "src__api__client.ts__feature__e5904c0d.md",
+        "reviewed_at": "2026-09-14T13:20:00",
+        "model": "zcode-glm-5.3",
         "cost": 0
       }
     }
@@ -91,18 +91,23 @@
         "cost": 0
       },
       "bug": {
-        "sha": "6cdf2c4639e1b5b96523d4c6dde15a9e2f7075b9cf840c31970dcf293ae87867",
-        "output": "src__api__types.ts__bug__6cdf2c46.md",
-        "reviewed_at": "2026-09-06",
+        "sha": "39a2410a47305981bdc00115323ec28f002251689428e919e4ac98785972cbe9",
+        "output": "src__api__types.ts__bug__39a2410a.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
         "cost": 0,
-        "note": "2026-09-05: prior bug-row sha had a one-hex-char transcription typo (ec7f vs ec7c); corrected to disk bytes, same review stands"
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 00:00",
+          "output": ".colibri_reviews/src__api__types.ts__bug__39a2410a_r2.md",
+          "new": 2
+        }
       },
       "feature": {
-        "sha": "89a28024e2f50038a81edca7df420641ec7f58c0ee0c31405e7d2e3c5d6af73b",
-        "output": "src__api__types.ts__feature__89a28024.md",
-        "reviewed_at": "2026-09-05T13:20:00",
-        "model": "glm-5.3-zai-in-session",
+        "sha": "6cdf2c4639e1b5b96523d4c6dde15a9e2f7075b9cf840c31970dcf293ae87867",
+        "output": "src__api__types.ts__feature__6cdf2c46.md",
+        "reviewed_at": "2026-09-14T13:20:00",
+        "model": "zcode-glm-5.3",
         "cost": 0
       }
     }
@@ -111,9 +116,10 @@
     "rel": "src/api/ws.ts",
     "modes": {
       "bug": {
-        "sha": "8d535ac7773dc1d129aae7079b7c1c3268554d6a7f89e58e56c6ab99856ceaf4",
-        "output": "src__api__ws.ts__bug__8d535ac7.md",
-        "reviewed_at": "2026-08-19T07:55:05"
+        "sha": "0e4981bc8831255b971191b8ad525bccea011836d1d160cab0f3ecd162152187",
+        "output": ".colibri_reviews/src__api__ws.ts__bug__0e4981bc.md",
+        "reviewed_at": "2026-09-17 17:26",
+        "note": "delta over the 2026-08-19 pass at sha 8d535ac7 - prior artifact: .colibri_reviews/src__api__ws.ts__bug__8d535ac7.md (still on disk for lineage)"
       }
     }
   },
@@ -127,7 +133,13 @@
         "reviewed_at": "2026-09-06",
         "mode": "bug",
         "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "vram-preflight wave delta"
+        "scope": "vram-preflight wave delta",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/src__stores__queueStore.ts__bug__70d77bf8_r2.md",
+          "new": 2
+        }
       },
       "feature": {
         "sha": "ec4e6b241d629ca2cf64593cb20284d6a5186425a69b77d1ba6b4ccfe31aff99",
@@ -142,9 +154,10 @@
     "rel": "src/stores/bundlesStore.ts",
     "modes": {
       "bug": {
-        "sha": "575055aee4d70777d4d34725fd034a37dc3dae6249c253d24a2d7ab7de8c1821",
-        "output": "src__stores__bundlesStore.ts__bug__575055ae.md",
-        "reviewed_at": "2026-08-26T00:10:00"
+        "sha": "a0411e3527d4c3942c155a4a78d35a274d36cbc1e60682b698c7855632ab62f62",
+        "output": ".colibri_reviews/src__stores__bundlesStore.ts__bug__a0411e35.md",
+        "reviewed_at": "2026-09-16 11:20",
+        "cost": 0
       },
       "spec": {
         "sha": "575055ae (see review file; agent-hashed)",
@@ -170,7 +183,13 @@
         "output": "src__stores__provenance.ts__bug__d34dd685.md",
         "reviewed_at": "2026-09-05",
         "model": "zcode-glm-5.3",
-        "cost": 0
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/src__stores__provenance.ts__bug__d34dd685_r2.md",
+          "new": 3
+        }
       },
       "feature": {
         "sha": "d34dd68587cef3469a9833ebc6369c33be0c6821e2e56fc3bed10455bbf6d8d4",
@@ -189,7 +208,13 @@
         "output": "src__stores__screenStore.ts__bug__33d0507d.md",
         "reviewed_at": "2026-09-05",
         "model": "zcode-glm-5.3",
-        "cost": 0
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/src__stores__screenStore.ts__bug__33d0507d_r2.md",
+          "new": 2
+        }
       },
       "spec": {
         "sha": "408e1830 (see review file; agent-hashed)",
@@ -221,11 +246,12 @@
     "rel": "src/bundles/schema.ts",
     "modes": {
       "bug": {
-        "sha": "d0cc311e2198a170c9820b60e967f1f4654f742b169827b7bb58320a04668198",
-        "output": "src__bundles__schema.ts__bug__d0cc311e.md",
-        "reviewed_at": "2026-09-05",
-        "model": "zcode-glm-5.3",
-        "cost": 0
+        "sha": "33e6a4f4828252c5be63c835652a5136123fc14620eae49ca6bb8d6fa2ab6f12",
+        "output": ".colibri_reviews/src__bundles__schema.ts__bug__33e6a4f4.md",
+        "reviewed_at": "2026-09-16 00:00",
+        "cost": 0,
+        "model": "glm-5.3-zai-in-session",
+        "note": "delta 2026-09-16 top-10 bug hunt under the 0.3.0 doctrine (prior artifact remains on disk as history)"
       },
       "spec": {
         "sha": "0c73be86e4efc2ef0933e8d7d231e9f4b72572d4d9b314996468e8bf9a56041a",
@@ -235,10 +261,10 @@
         "cost": 0
       },
       "feature": {
-        "sha": "d0cc311e2198a170c9820b60e967f1f4654f742b169827b7bb58320a04668198",
-        "output": "src__bundles__schema.ts__feature__d0cc311e.md",
-        "reviewed_at": "2026-09-05T12:40:00",
-        "model": "glm-5.3-zai-in-session",
+        "sha": "33e6a4f4828252c5be63c835652a5136123fc14620eae49ca6bb8d6fa2ab6f12",
+        "output": "src__bundles__schema.ts__feature__33e6a4f4.md",
+        "reviewed_at": "2026-09-14T13:20:00",
+        "model": "zcode-glm-5.3",
         "cost": 0
       }
     }
@@ -304,12 +330,11 @@
     "rel": "src/components/StatusFooter.tsx",
     "modes": {
       "bug": {
-        "sha": "c97dbfbab5c786ffadec5c29929567e7418bb44fb0c91d12979eadcb020fbfd8",
-        "output": "src__components__StatusFooter.tsx__bug__024ddaa6.md",
-        "reviewed_at": "2026-09-06",
+        "sha": "9c70c8801cb4d4d0c18c8da3726f7f542b447e2d56381a412cd1023453289698",
+        "output": "src__components__StatusFooter.tsx__bug__9c70c880.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
-        "cost": 0,
-        "note": "tooltip remediation post-gate, see postscript in 0199b97c review"
+        "cost": 0
       },
       "feature": {
         "sha": "47f263c696402413753695c0e599c994641f45228aa9e1771a0ce5c494a59e21",
@@ -413,12 +438,11 @@
     "rel": "vite.film.ts",
     "modes": {
       "bug": {
-        "sha": "c698195211073f4b423234b7361630cb8ef48d7c0b0a4872d18ec5002499bac4",
-        "output": "vite.film.ts__bug__c6981952.md",
-        "reviewed_at": "2026-09-06",
-        "mode": "bug",
-        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "streamed-brain-answers wave delta"
+        "sha": "7ef59c3a749141e99133ef47f7cc9843b9f81b88f0542a1c67c2d4f0357b6447",
+        "output": "vite.film.ts__bug__7ef59c3a.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
       },
       "spec": {
         "sha": "ba2db7fe3a3298fff9c996bd0997e89092947a2060fbe3b2fa04d29b00d725c7",
@@ -440,12 +464,11 @@
     "rel": "src/components/FilmWizard.tsx",
     "modes": {
       "bug": {
-        "sha": "1a6f58febea1c3e80e69627588ef1cb08bf78eef5dd51ad219a69e4e3257a1be",
-        "output": "src__components__FilmWizard.tsx__bug__1a6f58fe.md",
-        "reviewed_at": "2026-09-06",
-        "mode": "bug",
-        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "streamed-brain-answers wave delta"
+        "sha": "e648eb7a7628994bd6fff56de7555b3ac069a9c930eb04895ce02c581fd8b97a",
+        "output": "src__components__FilmWizard.tsx__bug__e648eb7a.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
       },
       "spec": {
         "sha": "cff01eec (see review file; agent-hashed)",
@@ -467,11 +490,12 @@
     "rel": "src/bundles/constraints.ts",
     "modes": {
       "bug": {
-        "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
-        "output": "src__bundles__constraints.ts__bug__01434323.md",
-        "reviewed_at": "2026-09-05",
-        "model": "zcode-glm-5.3",
-        "cost": 0
+        "sha": "e75972de463a5f14e763f615c37752962c2874004f586acfd597d79c6ae831e5",
+        "output": ".colibri_reviews/src__bundles__constraints.ts__bug__e75972de.md",
+        "reviewed_at": "2026-09-16 00:00",
+        "cost": 0,
+        "model": "glm-5.3-zai-in-session",
+        "note": "delta 2026-09-16 top-10 bug hunt under the 0.3.0 doctrine (prior artifact remains on disk as history)"
       },
       "spec": {
         "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
@@ -481,10 +505,10 @@
         "cost": 0
       },
       "feature": {
-        "sha": "01434323ac30cc230bbcddd58c6ddedacdd6462b9b3f79d4227ff93c6b266169",
-        "output": "src__bundles__constraints.ts__feature__01434323.md",
-        "reviewed_at": "2026-09-05T12:40:00",
-        "model": "glm-5.3-zai-in-session",
+        "sha": "e75972de463a5f14e763f615c37752962c2874004f586acfd597d79c6ae831e5",
+        "output": "src__bundles__constraints.ts__feature__e75972de.md",
+        "reviewed_at": "2026-09-14T13:20:00",
+        "model": "zcode-glm-5.3",
         "cost": 0
       }
     }
@@ -539,12 +563,17 @@
     "rel": "src/film/autopilot.ts",
     "modes": {
       "bug": {
-        "sha": "15ed117c432de24b22a60063485cdfd44174eaf9160ab190aa58887e554d27bb",
-        "output": "POST-FIX-2026-09-05-remediation-wave.md",
-        "reviewed_at": "2026-09-05",
+        "sha": "d5bc2d8e83f71c1a1ddaab231639466f904e29173c43d5f56a06a762f441855b",
+        "output": "src__film__autopilot.ts__bug__d5bc2d8e.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
         "cost": 0,
-        "note": "post-fix delta recorded in the shared remediation-wave bundle"
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 00:00",
+          "output": ".colibri_reviews/src__film__autopilot.ts__bug__d5bc2d8e_r2.md",
+          "new": 3
+        }
       },
       "spec": {
         "sha": "32b00e7e442885f9f61bb2e2c2ae7af3a72d9cdcdbb89e32ceaa8e4f0a2cfc9f",
@@ -554,10 +583,10 @@
         "cost": 0
       },
       "feature": {
-        "sha": "15ed117c432de24b22a60063485cdfd44174eaf9160ab190aa58887e554d27bb",
-        "output": "src__film__autopilot.ts__feature__15ed117c.md",
-        "reviewed_at": "2026-09-05T12:40:00",
-        "model": "glm-5.3-zai-in-session",
+        "sha": "ada229ebe178350465421bb4fea92c721d26d2e27912cc0d220d426dfb51e11d",
+        "output": "src__film__autopilot.ts__feature__ada229eb.md",
+        "reviewed_at": "2026-09-14T13:20:00",
+        "model": "zcode-glm-5.3",
         "cost": 0
       }
     }
@@ -566,9 +595,12 @@
     "rel": "src/film/analysis.ts",
     "modes": {
       "bug": {
-        "sha": "067464bef31c37eef75298edaa5dc5485f683a83d4b0b4aae4ae9b7a2a8c641a",
-        "output": "src__film__analysis.ts__bug__067464be.md",
-        "reviewed_at": "2026-08-26T00:10:00"
+        "sha": "94e0bd112f0670c768c2b9a9d8f43800a9bff702dbae9b977b2f5889deb9f14a",
+        "output": ".colibri_reviews/src__film__analysis.ts__bug__94e0bd11.md",
+        "reviewed_at": "2026-09-16 00:00",
+        "cost": 0,
+        "model": "glm-5.3-zai-in-session",
+        "note": "delta 2026-09-16 top-10 bug hunt under the 0.3.0 doctrine (prior artifact remains on disk as history)"
       },
       "spec": {
         "sha": "067464bef31c37eef75298edaa5dc5485f683a83d4b0b4aae4ae9b7a2a8c641a",
@@ -582,7 +614,13 @@
         "output": "src__film__analysis.ts__feature__067464be.md",
         "reviewed_at": "2026-09-05T14:05:00",
         "model": "glm-5.3-zai-in-session",
-        "cost": 0
+        "cost": 0,
+        "note": "pass 2 under the 2026-09-14 feature-run doctrine: identical bytes, prior review loaded as context, additional features only",
+        "pass2": {
+          "output": "src__film__analysis.ts__feature__067464be_r2.md",
+          "reviewed_at": "2026-09-14T13:55:00",
+          "note": "identical bytes, prior review loaded as context, additional features only (2026-09-14 doctrine)"
+        }
       }
     }
   },
@@ -590,12 +628,11 @@
     "rel": "src/film/budget.ts",
     "modes": {
       "bug": {
-        "sha": "cb3572757532e0ab3be6712bbd02d5a6c8c0b44ed2cadd42b94b3f5d3803ef84",
-        "output": "POST-FIX-2026-09-05-remediation-wave.md",
-        "reviewed_at": "2026-09-05",
+        "sha": "cdddfc71dcc4d88717447e3208ccf690978bc4b35ef082fa7f3eafc2bffffea4",
+        "output": "src__film__budget.ts__bug__cdddfc71.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
-        "cost": 0,
-        "note": "post-fix delta recorded in the shared remediation-wave bundle"
+        "cost": 0
       },
       "feature": {
         "sha": "cb3572757532e0ab3be6712bbd02d5a6c8c0b44ed2cadd42b94b3f5d3803ef84",
@@ -653,7 +690,13 @@
         "output": "src__providers__modelRoutes.ts__bug__dbe64730.md",
         "reviewed_at": "2026-09-05",
         "model": "zcode-glm-5.3",
-        "cost": 0
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 00:00",
+          "output": ".colibri_reviews/src__providers__modelRoutes.ts__bug__dbe64730_r2.md",
+          "new": 3
+        }
       },
       "spec": {
         "sha": "cc62d7711f1abdaca0d111a004d983e505f2ec3de65d14cf1f87f145bcdc4544",
@@ -667,7 +710,13 @@
         "output": "src__providers__modelRoutes.ts__feature__dbe64730.md",
         "reviewed_at": "2026-09-05T12:40:00",
         "model": "glm-5.3-zai-in-session",
-        "cost": 0
+        "cost": 0,
+        "note": "pass 2 under the 2026-09-14 feature-run doctrine: identical bytes, prior review loaded as context, additional features only",
+        "pass2": {
+          "output": "src__providers__modelRoutes.ts__feature__dbe64730_r2.md",
+          "reviewed_at": "2026-09-14T13:55:00",
+          "note": "identical bytes, prior review loaded as context, additional features only (2026-09-14 doctrine)"
+        }
       }
     }
   },
@@ -675,12 +724,11 @@
     "rel": "vite.caliper.ts",
     "modes": {
       "bug": {
-        "sha": "6e01a0ac04220a995001829254a9869ae369aaaee3d21a48ea5ccf2eae4911ac",
-        "output": "vite.caliper.ts__bug__6e01a0ac.md",
-        "reviewed_at": "2026-09-06",
-        "mode": "bug",
-        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "vram-preflight wave delta"
+        "sha": "8c1e43050a46eb82fc76f4d8ff403e350a48849361e987ea58dbdf639d0631c3",
+        "output": "vite.caliper.ts__bug__8c1e4305.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
       },
       "feature": {
         "sha": "c65d6bbaa204e01e65e3c8160f93dc8a9c77018298647367bc0b67c8f735a492",
@@ -695,12 +743,11 @@
     "rel": "vite.llm.ts",
     "modes": {
       "bug": {
-        "sha": "eff2b006f82481af97bdf8c783b1fc887393c807f717eccb7982cb806c654103",
-        "output": "vite.llm.ts__bug__eff2b006.md",
-        "reviewed_at": "2026-09-06",
-        "mode": "bug",
-        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "catalog-brain-rows wave + adversary round-2 fixes"
+        "sha": "7136dba8db6c63de76751840fcd4ba0c14e85cdcc0f090f848200780ce2d6b79",
+        "output": "vite.llm.ts__bug__7136dba8.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
       },
       "feature": {
         "sha": "921fbfd279ac61ae066aec330fb91b1261aa79a66c0468848ed85ebd28d9cff4",
@@ -743,7 +790,13 @@
       "bug": {
         "sha": "8b340ce99cf6baee8687efdfbbc96f7185f21154c1a58dc976025e5428090c90",
         "output": "zipWriter.ts__bug__8b340ce9.md",
-        "reviewed_at": "2026-09-06"
+        "reviewed_at": "2026-09-06",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/zipWriter.ts__bug__8b340ce9_r2.md",
+          "new": 1
+        }
       },
       "feature": {
         "sha": "c542eddda337a9dbde7c117459f9dad979b1c0b699c7ddbea532d2aab3be04be",
@@ -797,12 +850,17 @@
     "rel": "src/api/film.ts",
     "modes": {
       "bug": {
-        "sha": "31373dd4ded5dcbde8cb811755ce90f0866a27fe8b9199bbff5e3e5d5db1e7d2",
-        "output": "src__api__film.ts__bug__31373dd4.md",
-        "reviewed_at": "2026-09-06",
-        "mode": "bug",
-        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "streamed-brain-answers wave delta"
+        "sha": "a02c3f1f90e4b0f4ecf26d22b70fabbb6fb8b1d642bbacceb7df070e37b80466",
+        "output": "src__api__film.ts__bug__a02c3f1f.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 11:20",
+          "output": ".colibri_reviews/src__api__film.ts__bug__a02c3f1f_r2.md",
+          "new": 3
+        }
       },
       "feature": {
         "sha": "d0059d5706a7a2bb83c9da75a63184307446ad06ae95f575a2be9453a92bb2e8",
@@ -837,9 +895,17 @@
     "rel": "src/api/modelRoutes.ts",
     "modes": {
       "bug": {
-        "sha": "e305c11774e83cb939037538e98556606eff680ab130307c406771414d454250",
-        "output": "src__api__modelRoutes.ts__bug__e305c117.md",
-        "reviewed_at": "2026-08-27T12:00:00"
+        "sha": "35f2e54fd3d8b7ee8db17daa8814a3fc9dbaa9bf5056781834e75de7ee2f1add",
+        "output": "src__api__modelRoutes.ts__bug__35f2e54f.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 11:20",
+          "output": ".colibri_reviews/src__api__modelRoutes.ts__bug__35f2e54f_r2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -1027,9 +1093,9 @@
     "rel": "src/components/SettingsConsole.tsx",
     "modes": {
       "bug": {
-        "sha": "4d6928456cf55a57bd2b26550b06e6befb39598a9dc669a8959ebc9ba8fd9364",
-        "output": "src__components__SettingsConsole.tsx__bug__4d692845.md",
-        "reviewed_at": "2026-09-06",
+        "sha": "ef33ef80b183cb782f4e8b187670cfe7667b464782b6f425861a16fbf87732ae",
+        "output": "src__components__SettingsConsole.tsx__bug__ef33ef80.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
         "cost": 0
       },
@@ -1120,11 +1186,17 @@
     "rel": "src/film/store.ts",
     "modes": {
       "bug": {
-        "sha": "e31e742c28d7af17597b26fc6a5de77320a4b2060cca118b634e6c26d0aa15b0",
-        "output": "src__film__store.ts__bug__e31e742c.md",
-        "reviewed_at": "2026-09-05",
+        "sha": "840db1787d9d551e41b9ef5f2e96bba6b2ec2bc2b2a8cade6f59944b86e888dc",
+        "output": "src__film__store.ts__bug__840db178.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
-        "cost": 0
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/src__film__store.ts__bug__840db178_r2.md",
+          "new": 1
+        }
       },
       "feature": {
         "sha": "e31e742c28d7af17597b26fc6a5de77320a4b2060cca118b634e6c26d0aa15b0",
@@ -1139,17 +1211,29 @@
     "rel": "src/install/catalog.ts",
     "modes": {
       "bug": {
-        "sha": "a52e4d3575b7290a64846d69d76045f5fefc91de7d94406bb762f7b573532def",
-        "output": "src__install__catalog.ts__bug__a52e4d35.md",
-        "reviewed_at": "2026-09-06",
-        "mode": "bug",
-        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "catalog-brain-rows wave delta"
+        "sha": "a3dd0c50685410d5a8460a0121722c37289746f22ea32ab083b9e093795e12e4",
+        "output": "src__install__catalog.ts__bug__a3dd0c50.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 00:00",
+          "output": ".colibri_reviews/src__install__catalog.ts__bug__a3dd0c50_r2.md",
+          "new": 1
+        }
       },
       "spec": {
         "sha": "UNHASHED-2026-08-31 (harness hook denied read-only hashing for this path, 4 attempts; content-read identity: 142 lines)",
         "output": "src__install__catalog.ts__spec__NOHASH.md",
         "reviewed_at": "2026-08-31",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      },
+      "feature": {
+        "sha": "a52e4d3575b7290a64846d69d76045f5fefc91de7d94406bb762f7b573532def",
+        "output": "src__install__catalog.ts__feature__a52e4d35.md",
+        "reviewed_at": "2026-09-14T13:20:00",
         "model": "zcode-glm-5.3",
         "cost": 0
       }
@@ -1173,7 +1257,13 @@
       "bug": {
         "sha": "cf18f4a0e7ec2f1740904101b6a27768a6e7a1348758f55d90edb0b4d9db6c0c",
         "output": "src__install__plan.ts__bug__cf18f4a0.md",
-        "reviewed_at": "2026-08-27T12:00:00"
+        "reviewed_at": "2026-08-27T12:00:00",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/src__install__plan.ts__bug__cf18f4a0_r2.md",
+          "new": 1
+        }
       }
     }
   },
@@ -1288,7 +1378,13 @@
       "bug": {
         "sha": "3a8b7aa8d9f0815c20a66dfb1142c32b60d976ad9a631ccb65465fe8d1ca46fd",
         "output": "src__providers__eachlabs.ts__bug__3a8b7aa8.md",
-        "reviewed_at": "2026-08-27T12:00:00"
+        "reviewed_at": "2026-08-27T12:00:00",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 11:20",
+          "output": ".colibri_reviews/src__providers__eachlabs.ts__bug__3a8b7aa8_r2.md",
+          "new": 4
+        }
       }
     }
   },
@@ -1301,7 +1397,13 @@
         "reviewed_at": "2026-09-06",
         "mode": "bug",
         "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "streamed-brain-answers wave delta"
+        "scope": "streamed-brain-answers wave delta",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 11:20",
+          "output": ".colibri_reviews/src__providers__openrouter.ts__bug__2de5cc81_r2.md",
+          "new": 4
+        }
       },
       "feature": {
         "sha": "a195fd9c258896b355a90415a61f08bcf2caf195692a88fad27b87003e9b3fd5",
@@ -1316,9 +1418,10 @@
     "rel": "src/providers/openrouterVideo.ts",
     "modes": {
       "bug": {
-        "sha": "c09230c474a77ac522d870c0603cbdb7cd1a4d9c5e8df50d7e5e4703e64178fa",
-        "output": "src__providers__openrouterVideo.ts__bug__c09230c4.md",
-        "reviewed_at": "2026-08-27T12:00:00"
+        "sha": "4ab5dc7ea05ea09d41c585c45d98c54651ff98cabbaa5bab9778acced34a267",
+        "output": ".colibri_reviews/src__providers__openrouterVideo.ts__bug__4ab5dc7e.md",
+        "reviewed_at": "2026-09-16 11:20",
+        "cost": 0
       },
       "feature": {
         "sha": "c09230c474a77ac522d870c0603cbdb7cd1a4d9c5e8df50d7e5e4703e64178fa",
@@ -1352,9 +1455,10 @@
     "rel": "src/providers/replicateBrowser.ts",
     "modes": {
       "bug": {
-        "sha": "c800ee9fd51d23e671e724842a52acca3e27d29b2b809a69491eccb5770a8c3c",
-        "output": "src__providers__replicateBrowser.ts__bug__c800ee9f.md",
-        "reviewed_at": "2026-08-27T12:00:00"
+        "sha": "ef2cda9c39318aa7da247d7fd4e1c0d9c36ffb107392287e87cd3e5fc31635fb",
+        "output": ".colibri_reviews/src__providers__replicateBrowser.ts__bug__ef2cda9c.md",
+        "reviewed_at": "2026-09-16 11:20",
+        "cost": 0
       },
       "feature": {
         "sha": "c800ee9fd51d23e671e724842a52acca3e27d29b2b809a69491eccb5770a8c3c",
@@ -1371,7 +1475,13 @@
       "bug": {
         "sha": "e00a12673bda4731ee9b933ad7ebaf0edf986d9ac8e43a82f25c2688e8654002",
         "output": "src__providers__serviceKeys.ts__bug__e00a1267.md",
-        "reviewed_at": "2026-08-27T12:00:00"
+        "reviewed_at": "2026-08-27T12:00:00",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 11:20",
+          "output": ".colibri_reviews/src__providers__serviceKeys.ts__bug__e00a1267_r2.md",
+          "new": 1
+        }
       },
       "spec": {
         "sha": "e00a12673bda4731ee9b933ad7ebaf0edf986d9ac8e43a82f25c2688e8654002",
@@ -1415,11 +1525,12 @@
     "rel": "src/stores/uiStore.ts",
     "modes": {
       "bug": {
-        "sha": "4cd8e2d3c246f20cf1640bfdfe6fce5848d42a3265cc21e30d21ca390b1a3d14",
-        "output": "src__stores__uiStore.ts__bug__4cd8e2d3.md",
-        "reviewed_at": "2026-09-05",
-        "model": "zcode-glm-5.3",
-        "cost": 0
+        "sha": "7fda1f62887c4bda4a647ba734cffa29e438acda32855fd0ac6429f5aeec6212",
+        "output": ".colibri_reviews/src__stores__uiStore.ts__bug__7fda1f62.md",
+        "reviewed_at": "2026-09-16 00:00",
+        "cost": 0,
+        "model": "glm-5.3-zai-in-session",
+        "note": "delta 2026-09-16 top-10 bug hunt under the 0.3.0 doctrine (prior artifact remains on disk as history)"
       },
       "spec": {
         "sha": "7435c1927e719fd97e66082802405cd1cba941199dd55b989e86a11dfa44fb2e",
@@ -1429,10 +1540,10 @@
         "cost": 0
       },
       "feature": {
-        "sha": "4cd8e2d3c246f20cf1640bfdfe6fce5848d42a3265cc21e30d21ca390b1a3d14",
-        "output": "src__stores__uiStore.ts__feature__4cd8e2d3.md",
-        "reviewed_at": "2026-09-05T12:40:00",
-        "model": "glm-5.3-zai-in-session",
+        "sha": "7fda1f62887c4bda4a647ba734cffa29e438acda32855fd0ac6429f5aeec6212",
+        "output": "src__stores__uiStore.ts__feature__7fda1f62.md",
+        "reviewed_at": "2026-09-14T13:20:00",
+        "model": "zcode-glm-5.3",
         "cost": 0
       }
     }
@@ -1632,9 +1743,9 @@
     "rel": "vite.routes.ts",
     "modes": {
       "bug": {
-        "sha": "54c9654cb82b28c715ae69abd9f84b2654d89bab578ef3cf3bb40da02fe2be2d",
-        "output": "vite.routes.ts__bug__54c9654c.md",
-        "reviewed_at": "2026-09-05",
+        "sha": "18df6b556cee59a3aab1a476fb8c606074e7326d5de66090e65d975e83fb9900",
+        "output": "vite.routes.ts__bug__18df6b55.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
         "cost": 0
       }
@@ -1677,7 +1788,13 @@
         "output": "src__install__tiers.ts__bug__e622496b.md",
         "reviewed_at": "2026-09-03",
         "model": "zcode-subagent-fresh-context",
-        "cost": 0
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/src__install__tiers.ts__bug__e622496b_r2.md",
+          "new": 1
+        }
       },
       "feature": {
         "sha": "e622496ba2c94bac6870f123fdeee648ddc13d2a0a7c5bf47c0133eb872a1feb",
@@ -1696,7 +1813,13 @@
         "output": "vite.comfy.ts__bug__8df4e10c.md",
         "reviewed_at": "2026-09-03",
         "model": "zcode-subagent-fresh-context",
-        "cost": 0
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/vite.comfy.ts__bug__8df4e10c_r2.md",
+          "new": 3
+        }
       },
       "feature": {
         "sha": "8df4e10ced1ed6ce30b83331d34b3fc8998d47b658a6c2ecabce3f9919589d33",
@@ -1723,18 +1846,25 @@
     "rel": "src/film/worldmodel.ts",
     "modes": {
       "bug": {
-        "sha": "2e218153e4b12d3b102772cc7383ba78c563555203b6bd06b5c1f6e6e2ae6c2d",
-        "output": "src__film__worldmodel.ts__bug__2e218153.md",
-        "reviewed_at": "2026-09-05",
-        "model": "zcode-glm-5.3",
-        "cost": 0
+        "sha": "cccc3044893c92f426c464db1b9e4362cc8139e8db5a087dc3ee40895330a610",
+        "output": ".colibri_reviews/src__film__worldmodel.ts__bug__cccc3044.md",
+        "reviewed_at": "2026-09-16 00:00",
+        "cost": 0,
+        "model": "glm-5.3-zai-in-session",
+        "note": "delta 2026-09-16 top-10 bug hunt under the 0.3.0 doctrine (prior artifact remains on disk as history)"
       },
       "feature": {
         "sha": "2e218153e4b12d3b102772cc7383ba78c563555203b6bd06b5c1f6e6e2ae6c2d",
         "output": "src__film__worldmodel.ts__feature__2e218153.md",
         "reviewed_at": "2026-09-05T12:40:00",
         "model": "glm-5.3-zai-in-session",
-        "cost": 0
+        "cost": 0,
+        "note": "pass 2 under the 2026-09-14 feature-run doctrine: identical bytes, prior review loaded as context, additional features only",
+        "pass2": {
+          "output": "src__film__worldmodel.ts__feature__2e218153_r2.md",
+          "reviewed_at": "2026-09-14T13:55:00",
+          "note": "identical bytes, prior review loaded as context, additional features only (2026-09-14 doctrine)"
+        }
       }
     }
   },
@@ -1793,12 +1923,11 @@
     "rel": "comfy/caliper_vram.py",
     "modes": {
       "bug": {
-        "sha": "f2dbb57bbe372d7da9db08a5385df719fcb75b63b0a78ed836932ef462c971d3",
-        "output": "comfy__caliper_vram.py__bug__f2dbb57b.md",
-        "reviewed_at": "2026-09-06",
+        "sha": "4efa3fb3e9e0a3df65d2eded909fbba98d6c7fd9c7ff676cbdb2891810164a68",
+        "output": "comfy__caliper_vram.py__bug__4efa3fb3.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
-        "cost": 0,
-        "note": "lineage: the 2026-09-03 review (6fa39b24) hashed a pure-CRLF rendering of byte-identical content - normalized to disk bytes (5b8fc1e7) same-day; 6d0712f5 is the 2026-09-05 remediation (503-on-degraded + power origin guard), sha-synced into custom_nodes and activating at the next backend start"
+        "cost": 0
       },
       "feature": {
         "sha": "6d0712f5859fc082538f2e16e1e981d17c3ec148d549727eb1732c4bfc16a2dc",
@@ -1837,12 +1966,11 @@
     "rel": "tools/ui-harness.mjs",
     "modes": {
       "bug": {
-        "sha": "939eb7f99762bbbf9f396ea5264d63d37be11823baab333c5b392a0dee8c2402",
-        "output": "tools__ui-harness.mjs__bug__939eb7f9.md",
-        "reviewed_at": "2026-09-06",
-        "mode": "bug",
-        "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "catalog-brain-rows wave + adversary round-3 fix"
+        "sha": "2369a2cdfdf2329e0f1bec24ad3c393ac6bb9d5c62eecc0fb43e263a95ec4232",
+        "output": "tools__ui-harness.mjs__bug__2369a2cd.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
       }
     }
   },
@@ -1874,9 +2002,9 @@
     "rel": "tools/analyze-song.mjs",
     "modes": {
       "bug": {
-        "sha": "36232a610f59a6268e7a1724d5ed26c3a70680143e2fff8dcd569bcf1a8d6933",
-        "output": "tools__analyze-song.mjs__bug__36232a61.md",
-        "reviewed_at": "2026-09-05",
+        "sha": "60357c51e3a0d6517a4858408c3cb35068f150ff9e82af17703a46eaeed8cc7b",
+        "output": "tools__analyze-song.mjs__bug__60357c51.md",
+        "reviewed_at": "2026-09-15",
         "model": "zcode-glm-5.3",
         "cost": 0
       }
@@ -1946,10 +2074,10 @@
     "rel": "vitest.setup.ts",
     "modes": {
       "bug": {
-        "sha": "cea2f5be1bd6c44ad5f89cc692aa3e0b06a4dbaf4d0f72dc3684833e4789e29b",
-        "output": "vitest.setup.ts__bug__cea2f5be.md",
-        "reviewed_at": "2026-09-03",
-        "model": "zcode-subagent-fresh-context",
+        "sha": "e863334ab65d8152e28e2318f78684dd73754268e657f87c400adfa7485b439d",
+        "output": "vitest.setup.ts__bug__e863334a.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
         "cost": 0
       }
     }
@@ -1982,7 +2110,13 @@
         "reviewed_at": "2026-09-06",
         "mode": "bug",
         "reviewer": "in-session colibri v0.2.0 (GLM-5.3)",
-        "scope": "vram-preflight wave delta + contract fix"
+        "scope": "vram-preflight wave delta + contract fix",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-16 11:20",
+          "output": ".colibri_reviews/src__vram__preflight.ts__bug__71a04a5a_r2.md",
+          "new": 1
+        }
       }
     }
   },
@@ -2035,7 +2169,13 @@
       "bug": {
         "sha": "52cea5a1cd79d78c11cf310b4253c00b02a10c5efcc4c7655a53fad18028ed8d",
         "output": "src__providers__keyLiveness.ts__bug__52cea5a1.md",
-        "reviewed_at": "2026-09-06"
+        "reviewed_at": "2026-09-06",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 17:26",
+          "output": ".colibri_reviews/src__providers__keyLiveness.ts__bug__52cea5a1_r2.md",
+          "new": 1
+        }
       }
     }
   },
@@ -2053,9 +2193,17 @@
     "rel": "src/components/SettingsConsole.test.tsx",
     "modes": {
       "bug": {
-        "sha": "a15ef9e8c6b78f46f47d2011516daffbcdd6276107ea69139be8e4b3d1785d08",
-        "output": "src__components__SettingsConsole.test.tsx__bug__a15ef9e8.md",
-        "reviewed_at": "2026-09-06"
+        "sha": "04eb6bbf14b4947d0d2e28a762ed1c746d29d7e8a7f99c84e035b8250b7f54b6",
+        "output": ".colibri_reviews/src__components__SettingsConsole.test.tsx__bug__04eb6bbf.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0,
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 15:10",
+          "output": ".colibri_reviews/src__components__SettingsConsole.test.tsx__bug__04eb6bbf_r2.md",
+          "new": 4
+        }
       }
     }
   },
@@ -2073,9 +2221,10 @@
     "rel": "src/api/queueNodes.ts",
     "modes": {
       "bug": {
-        "sha": "7d97c64277e892b03ce1779d88155369b5b7996f0030042bd6b0f0a442f0b063",
-        "output": "src__api__queueNodes.ts__bug__7d97c642.md",
-        "reviewed_at": "2026-09-06"
+        "sha": "29c6863ae671cf3727a8584abb79d45bc450389d3e6cfb9a00d80948f1cb98f0",
+        "output": ".colibri_reviews/src__api__queueNodes.ts__bug__29c6863a.md",
+        "reviewed_at": "2026-09-16 11:20",
+        "cost": 0
       }
     }
   },
@@ -2134,8 +2283,162 @@
     "modes": {
       "bug": {
         "sha": "eb478db36f839a966ff6e702d0bafafafb97ae2a591a7799901390e069d050b9",
-        "output": "src__components__DocView.test.tsx__bug__eb478db3.md",
-        "reviewed_at": "2026-09-06"
+        "output": ".colibri_reviews/src__components__DocView.test.tsx__bug__eb478db3.md",
+        "reviewed_at": "2026-09-06",
+        "pass2": {
+          "model": "glm-5.3-zai-in-session",
+          "reviewed_at": "2026-09-17 15:10",
+          "output": ".colibri_reviews/src__components__DocView.test.tsx__bug__eb478db3_r2.md",
+          "new": 5
+        }
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\modelRoutes.test.ts": {
+    "rel": "src/api/modelRoutes.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "f097b7ebf69253614512d80178ecbf612f2cd24906bfc63cfadea85266baa614",
+        "output": "src__api__modelRoutes.test.ts__bug__f097b7eb.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\analysis.test.ts": {
+    "rel": "src/film/analysis.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "dc794a99b314e5e0d21c16c655ee81d7899a80ded78e5acb7f475a370b421bab",
+        "output": "src__film__analysis.test.ts__bug__dc794a99.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\film\\autopilot.test.ts": {
+    "rel": "src/film/autopilot.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "f51b3b54c61fcaf7cf94580c317bf7c22781f7fa1f7512b61510412efc79117b",
+        "output": "src__film__autopilot.test.ts__bug__f51b3b54.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\install\\catalog.test.ts": {
+    "rel": "src/install/catalog.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "da143b77ec40a280b8c674227820f243f7a150e68a648c399125f37b3ef6137b",
+        "output": "src__install__catalog.test.ts__bug__da143b77.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\StatusFooter.test.ts": {
+    "rel": "src/components/StatusFooter.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "6390449dab7567665ed2391d1d07e53c880caa9761feb522c7b6197f862467e3",
+        "output": "src__components__StatusFooter.test.ts__bug__6390449d.md",
+        "reviewed_at": "2026-09-15",
+        "model": "zcode-glm-5.3",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\OutputsSurface.test.tsx": {
+    "rel": "src/surfaces/OutputsSurface.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "3b7a074afb6bbd356930b98ff03d70c497b33a8ecb7d3fbc0bdb6ec11c089f10",
+        "output": ".colibri_reviews/src__surfaces__OutputsSurface.test.tsx__bug__3b7a074a.md",
+        "reviewed_at": "2026-09-17 15:10",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\stores.test.ts": {
+    "rel": "src/stores/stores.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "9682f8d825f13d5906eee2127af9abd4645d66254d6c6fd80a8f2ec2bc143e9e",
+        "output": ".colibri_reviews/src__stores__stores.test.ts__bug__9682f8d8.md",
+        "reviewed_at": "2026-09-17 15:10",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\FirstRun.test.tsx": {
+    "rel": "src/components/FirstRun.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "88e0ace76b5f14d9ad337b07c2d0a567fd7515ef30e946ebd26fd7386aa56193",
+        "output": ".colibri_reviews/src__components__FirstRun.test.tsx__bug__88e0ace7.md",
+        "reviewed_at": "2026-09-17 15:10",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\GenerateSurface.test.tsx": {
+    "rel": "src/surfaces/GenerateSurface.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "d0bc7921502685c734747f58907fafcbd623e3702e95df98c348e15f3b2d6552",
+        "output": ".colibri_reviews/src__surfaces__GenerateSurface.test.tsx__bug__d0bc7921.md",
+        "reviewed_at": "2026-09-17 15:10",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\CommandPalette.test.tsx": {
+    "rel": "src/components/CommandPalette.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "528624fd2f15828c93deb3e79c87f77a292d746357f9ed47fa440c441ea2f6e1",
+        "output": ".colibri_reviews/src__components__CommandPalette.test.tsx__bug__528624fd.md",
+        "reviewed_at": "2026-09-17 15:10",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\FilmWizard.test.tsx": {
+    "rel": "src/components/FilmWizard.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "0d5fc24b66dc00235f5f4f6f03dcb6d3f27601bced1345109a32239c2d879942",
+        "output": ".colibri_reviews/src__components__FilmWizard.test.tsx__bug__0d5fc24b.md",
+        "reviewed_at": "2026-09-17 15:10",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\FilmRuns.test.tsx": {
+    "rel": "src/components/FilmRuns.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "5b0df5405979d33562d5c78987aec6954d403fd26af1c9b1ddf53b28a1233673",
+        "output": ".colibri_reviews/src__components__FilmRuns.test.tsx__bug__5b0df540.md",
+        "reviewed_at": "2026-09-17 15:10",
+        "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\surfaces\\bundle-io.test.tsx": {
+    "rel": "src/surfaces/bundle-io.test.tsx",
+    "modes": {
+      "bug": {
+        "sha": "c9ee4c5757d3c4c280b907943e6a6c088d83eafe6e75d3cd4ce0e71a0defc687",
+        "output": ".colibri_reviews/src__surfaces__bundle-io.test.tsx__bug__c9ee4c57.md",
+        "reviewed_at": "2026-09-17 15:10",
+        "cost": 0
       }
     }
   }

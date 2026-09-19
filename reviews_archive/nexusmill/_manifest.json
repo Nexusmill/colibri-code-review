@@ -166,14 +166,14 @@
   "rel": "asset-forge-user\\forge\\bundle.py",
   "modes": {
    "bug": {
-    "sha": "d6ab2547ad06facd6c5586ee67885312cb2f867054f82600e26b1ce0fdf2a4f1",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__bundle.py__bug__d6ab2547__r2.md",
-    "reviewed_at": "2026-08-11",
-    "model": "claude-opus-5 (in-session)",
+    "sha": "4220ca3c53877f8e465047d57e1b226b6cd1ab63b59dccd01f2061c380a11735",
+    "output": ".colibri_reviews/asset-forge-user__forge__bundle.py__bug__4220ca3c.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0,
-    "twin_of": "asset-forge\\forge\\bundle.py"
+    "note": "FULL re-audit of the pre-fix bytes (sha8 4220ca3c); same-session remediation re-stamped the file to 8feab1ea - see the review's postscript"
    }
   }
  },
@@ -394,13 +394,14 @@
   "rel": "asset-forge\\app.py",
   "modes": {
    "bug": {
-    "sha": "2d557bd38431ce6d15fa4a0038f2e5ecf0dc2e0bee91e05c3cfae7486a1cbb75",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__app.py__bug__2d557bd3__r2.md",
-    "reviewed_at": "2026-08-11",
-    "model": "openai/gpt-5.6-luna-pro (in-session)",
+    "sha": "5f1cd3c9ad418542e0adf831a095d4af8625baf3d49d493675518a4082312c2d",
+    "output": ".colibri_reviews/asset-forge__app.py__bug__5f1cd3c9.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 5f1cd3c9); same-session remediation re-stamped the file to 7592c8ab - see the review's postscript"
    },
    "security": {
     "sha": "4df56f82a3b797335df2de568486317733455450738d3d0ee38b4fec203cce45",
@@ -423,13 +424,14 @@
   "rel": "asset-forge\\forge\\bundle.py",
   "modes": {
    "bug": {
-    "sha": "d6ab2547ad06facd6c5586ee67885312cb2f867054f82600e26b1ce0fdf2a4f1",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__bundle.py__bug__d6ab2547__r2.md",
-    "reviewed_at": "2026-08-11",
-    "model": "claude-opus-5 (in-session)",
+    "sha": "4220ca3c53877f8e465047d57e1b226b6cd1ab63b59dccd01f2061c380a11735",
+    "output": ".colibri_reviews/asset-forge__forge__bundle.py__bug__4220ca3c.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 4220ca3c); same-session remediation re-stamped the file to 8feab1ea - see the review's postscript"
    },
    "fix": {
     "sha": "f1961c7c1c656f294658f43f64b1a40978c181f3224337290caf53c060684b22",
@@ -443,14 +445,13 @@
   "rel": "asset-forge\\forge\\concurrency.py",
   "modes": {
    "bug": {
-    "sha": "2571d7f5",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__concurrency.py__bug__2571d7f5.md",
-    "reviewed_at": "2026-08-04",
-    "model": "claude-fable-5 (in-session)",
+    "sha": "b333d9229113fbaa04294d7bf91c85e9c6d32d9560ab2b1f1da609cbf064f49a",
+    "output": ".colibri_reviews/asset-forge__forge__concurrency.py__bug__b333d922.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0,
-    "sha_partial": true
+    "cost": 0.0
    },
    "fix": {
     "sha": "b333d9229113fbaa04294d7bf91c85e9c6d32d9560ab2b1f1da609cbf064f49a",
@@ -479,9 +480,9 @@
   "modes": {
    "bug": {
     "sha": "38d7fa870278fce291648b1653f0bba34707840b963291a62eba1d0467a5b84f",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__generators__patterns.py__bug__38d7fa87.md",
-    "reviewed_at": null,
-    "model": null,
+    "output": ".colibri_reviews/asset-forge__forge__generators__patterns.py__bug__38d7fa87.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -507,13 +508,14 @@
   "rel": "asset-forge\\forge\\imagegen\\prompts.py",
   "modes": {
    "bug": {
-    "sha": "19c0084e2cfb1f25e065bcb390cb1212c77837227ac7cf073f2ff16c630ae96f",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__imagegen__prompts.py__bug__19c0084e.md",
-    "reviewed_at": "2026-08-22",
-    "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
+    "sha": "870495623c3e4ad561b4c33cfbb4759dc01ea910ba219368a513692153fc658e",
+    "output": ".colibri_reviews/asset-forge__forge__imagegen__prompts.py__bug__19c0084e.md",
+    "reviewed_at": "2026-09-11",
+    "model": "claude-sonnet-5",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "DELTA re-review of current (post-fix) bytes 87049562 against the 2026-09-10 FULL re-audit: all three prior fixes (AF-PROMPT-TEXTURE-WORDS/STRIP-WORDS/CLASS-SUFFIX) verified still holding, no new defect in this file. Real finding forwarded cross-file: structure.py Tranche 1 (47 types) leaves Tranche 2 catalog types on inferred-only family classification (docs/CURATED_DEFAULT_PROMPTS.md), unmonitored - carried to the catalog.json review."
    }
   }
  },
@@ -521,13 +523,14 @@
   "rel": "asset-forge\\forge\\imagegen\\replicate_flux.py",
   "modes": {
    "bug": {
-    "sha": "3959605d59bbaf4c76a6f9f21fd28a42ec0ef0a44f7dd6cb8bed8a401adeb956",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__imagegen__replicate_flux.py__bug__3959605d.md",
-    "reviewed_at": "2026-08-11",
-    "model": "claude-opus-5 (in-session)",
+    "sha": "d072e86ca40cc8004bb046479c0f94edd10dc87466151e8893200b88b27c5a39",
+    "output": ".colibri_reviews/asset-forge__forge__imagegen__replicate_flux.py__bug__d072e86c.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 d072e86c); same-session remediation re-stamped the file to 790e880c - see the review's postscript"
    }
   }
  },
@@ -548,6 +551,16 @@
     "output": "asset-forge__forge__imagegen__schema.py__fix__4681360f.md",
     "reviewed_at": "2026-08-15",
     "cost": 0.0
+   },
+   "bug": {
+    "sha": "d779d0008911440e990bc1a6c79e75c2d5b7d149825a7d5b5f5438b37c135277",
+    "output": ".colibri_reviews/asset-forge__forge__imagegen__schema.py__bug__d779d000.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 d779d000); same-session remediation re-stamped the file to 5caeff52 - see the review's postscript"
    }
   }
  },
@@ -555,13 +568,14 @@
   "rel": "asset-forge\\forge\\library_gen.py",
   "modes": {
    "bug": {
-    "sha": "1a26286806a441808f90b9544f5a81c7e0113833e4ed510037c903bedd86810f",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__library_gen.py__bug__1a262868_r5.md",
-    "reviewed_at": "2026-08-22",
-    "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
+    "sha": "ea88d90afa638243c7229112140e29695b3c7602da66084b96b4efc51b6594cd",
+    "output": ".colibri_reviews/asset-forge__forge__library_gen.py__bug__ea88d90a.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 ea88d90a); same-session remediation re-stamped the file to b6ee29bf - see the review's postscript"
    },
    "debug": {
     "sha": "cd828195ca9587b389332175988b5116701204d99a821a3d666e6e8671b0ff81",
@@ -592,10 +606,10 @@
   "rel": "asset-forge\\forge\\pipeline.py",
   "modes": {
    "bug": {
-    "sha": null,
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__pipeline.py__bug__adjudicated.md",
-    "reviewed_at": null,
-    "model": null,
+    "sha": "f3c5a3cec49815481bd8208db92c6a50b121f268380209a189c7391438399572",
+    "output": ".colibri_reviews/asset-forge__forge__pipeline.py__bug__f3c5a3ce.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -606,13 +620,14 @@
   "rel": "asset-forge\\forge\\quality.py",
   "modes": {
    "bug": {
-    "sha": "bb07a93c14744b9759453f5cd0ad80c5e7c0412c246f71ce39780d263d28e357",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__quality.py__bug__bb07a93c.md",
-    "reviewed_at": "2026-08-22",
-    "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
+    "sha": "394164caf93b99e08aff2928dc59959b52fb3f805c538236015de9bb5d975013",
+    "output": ".colibri_reviews/asset-forge__forge__quality.py__bug__394164ca.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 394164ca); same-session remediation re-stamped the file to 865b0f68 - see the review's postscript"
    }
   }
  },
@@ -620,14 +635,13 @@
   "rel": "asset-forge\\forge\\secrets.py",
   "modes": {
    "bug": {
-    "sha": "5007dc23",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__secrets.py__bug__5007dc23.md",
-    "reviewed_at": "2026-07-23",
-    "model": null,
+    "sha": "d9075df531c223fce9ea915176045eba37fab56c03d4da333282b9711f3d5acd",
+    "output": ".colibri_reviews/asset-forge__forge__secrets.py__bug__d9075df5.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0,
-    "sha_partial": true
+    "cost": 0.0
    },
    "security": {
     "sha": "a93d9f9c14c6b9af6b0b05fb55e9e63eb9f8c36a4ec2fd8c68ff3bcc7a0b7f1a",
@@ -658,14 +672,14 @@
   "rel": "asset-forge\\forge\\tracer\\svg_stego.py",
   "modes": {
    "bug": {
-    "sha": "65f05781",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__tracer__svg_stego.py__bug__65f05781.md",
-    "reviewed_at": null,
-    "model": null,
+    "sha": "b3cb591ff5c934f11b697b3cc34594fde38f500ae15cc12d3d1006ca868fd732",
+    "output": ".colibri_reviews/asset-forge__forge__tracer__svg_stego.py__bug__b3cb591f.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0,
-    "sha_partial": true
+    "note": "FULL re-audit of the pre-fix bytes (sha8 b3cb591f); same-session remediation re-stamped the file to 0ad829d8 - see the review's postscript"
    }
   }
  },
@@ -673,10 +687,10 @@
   "rel": "asset-forge\\forge\\userlib.py",
   "modes": {
    "bug": {
-    "sha": "d51070f39d472c829d9bf23a4ce5eabfdc69dbcb7d54c0f2eeeaaa7312e86227",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__userlib.py__bug__d51070f3__r2.md",
-    "reviewed_at": "2026-08-11",
-    "model": "claude-opus-5 (in-session)",
+    "sha": "9b265edfd004a3265b3afc9b5836a8856cd067d95738fa88dd922646129acda4",
+    "output": ".colibri_reviews/asset-forge__forge__userlib.py__bug__9b265edf.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -687,14 +701,14 @@
   "rel": "asset-forge\\launcher.py",
   "modes": {
    "bug": {
-    "sha": "f0c90e7d",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__launcher.py__bug__f0c90e7d__r2.md",
-    "reviewed_at": "2026-07-24",
-    "model": null,
+    "sha": "724e4ba39e721ea8dcd7c5c0d75c5ba4e78a75bdef1486bb11ae2794f01ad760",
+    "output": ".colibri_reviews/asset-forge__launcher.py__bug__724e4ba3.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0,
-    "sha_partial": true
+    "note": "FULL re-audit of the pre-fix bytes (sha8 724e4ba3); same-session remediation re-stamped the file to 9c0ce67e - see the review's postscript"
    }
   }
  },
@@ -702,14 +716,14 @@
   "rel": "asset-forge\\make_user_edition.py",
   "modes": {
    "bug": {
-    "sha": "f85988ae",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__make_user_edition.py__bug__f85988ae.md",
-    "reviewed_at": "2026-07-20 01:08",
-    "model": "moonshotai/kimi-k3",
-    "tokens_in": 2611,
-    "tokens_out": 1830,
-    "cost": 0.0353,
-    "sha_partial": true
+    "sha": "d9ed85e471d0dbadd43eeceb9cfe6336360d0447a070e74262d3812b5442dac6",
+    "output": ".colibri_reviews/asset-forge__make_user_edition.py__bug__d9ed85e4.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 d9ed85e4); same-session remediation re-stamped the file to e9a64b6b - see the review's postscript"
    }
   }
  },
@@ -745,13 +759,14 @@
   "rel": "asset-forge\\templates\\index.html",
   "modes": {
    "bug": {
-    "sha": "bcd1664badfd8ca6a6b11eb1e0132a8fff31caea3372c48b98e6fc1a1d29f533",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__templates__index.html__bug__bcd1664b.md",
-    "reviewed_at": "2026-07-22",
-    "model": "claude-fable-5 (in-session,max)",
+    "sha": "d96d25b9cd232aa4948141d7dd395b279325e71d9c6c5325959e3dc298214881",
+    "output": ".colibri_reviews/asset-forge__templates__index.html__bug__d96d25b9.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 d96d25b9); same-session remediation re-stamped the file to e4f34080 - see the review's postscript"
    }
   }
  },
@@ -759,14 +774,14 @@
   "rel": "asset-forge\\templates\\library.html",
   "modes": {
    "bug": {
-    "sha": "384485ed",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__templates__library.html__bug__384485ed.md",
-    "reviewed_at": "2026-08-04",
-    "model": "claude-fable-5 (in-session)",
+    "sha": "99cc6d36a22461d50472e80b465cd63d4b44f23ce0316e83681cca62cbd73abe",
+    "output": ".colibri_reviews/asset-forge__templates__library.html__bug__99cc6d36.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0,
-    "sha_partial": true
+    "note": "FULL re-audit of the pre-fix bytes (sha8 99cc6d36); same-session remediation re-stamped the file to 74d03b2a - see the review's postscript"
    },
    "debug": {
     "sha": null,
@@ -842,13 +857,14 @@
   "rel": "PatternSkin\\__init__.py",
   "modes": {
    "bug": {
-    "sha": "dbb8587988b28bff1bbc00dd982fa504a74c73adb329c54d4ae798320ab72100",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin____init__.py__bug__dbb85879.md",
-    "reviewed_at": "2026-07-27",
-    "model": null,
+    "sha": "5f4f0473f347e87aed47b3ead0a8efa26c6b58515a97de69ca08b6988593b325",
+    "output": ".colibri_reviews/PatternSkin____init__.py__bug__5f4f0473.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 5f4f0473); same-session remediation re-stamped the file to 5dfcd8c2 - see the review's postscript"
    },
    "feature": {
     "sha": "44b55140",
@@ -876,13 +892,14 @@
   "rel": "PatternSkin\\accel_bootstrap.py",
   "modes": {
    "bug": {
-    "sha": "2eeb03329d8c021f734efa319346e3e17c165961abe79853308726e000995e28",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__accel_bootstrap.py__bug__2eeb0332.md",
-    "reviewed_at": "2026-08-06",
-    "model": null,
+    "sha": "21afa6a59c6644ba437a5b9fcc5a7914200df2278f4ac8c37b286beb5617f533",
+    "output": ".colibri_reviews/PatternSkin__accel_bootstrap.py__bug__21afa6a5.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 21afa6a5); same-session remediation re-stamped the file to fdbc5b14 - see the review's postscript"
    },
    "fix": {
     "sha": "b49d0864eba763536b3cce0674fcd6178fdd0ba03319c108bb818ea6318dbfb0",
@@ -896,10 +913,10 @@
   "rel": "PatternSkin\\accel_ipc.py",
   "modes": {
    "bug": {
-    "sha": "743b5f4acaa63dda55e7c8983e69170095ed8b0e20d4f35c3fbe37c74132443c",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__accel_ipc.py__bug__743b5f4a.md",
-    "reviewed_at": "2026-08-06",
-    "model": null,
+    "sha": "b1e6560871f6cb78a822656361da10b6f04259015207b248d5af180a3e355b3d",
+    "output": ".colibri_reviews/PatternSkin__accel_ipc.py__bug__b1e65608.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -916,13 +933,14 @@
   "rel": "PatternSkin\\accel_worker.py",
   "modes": {
    "bug": {
-    "sha": "5f9c334b23730c04d64670d50ec31fb0d993b85aea515e6174401c94a2139c3e",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__accel_worker.py__bug__5f9c334b.md",
-    "reviewed_at": "2026-08-06",
-    "model": null,
+    "sha": "0a1c12bb911e9948ed003c4ec76a3bdee86ee4b6546dbc79d3eef48a6285e764",
+    "output": ".colibri_reviews/PatternSkin__accel_worker.py__bug__0a1c12bb.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 0a1c12bb); same-session remediation re-stamped the file to 9768f77c - see the review's postscript"
    }
   }
  },
@@ -930,13 +948,14 @@
   "rel": "PatternSkin\\accel.py",
   "modes": {
    "bug": {
-    "sha": "7630793eb08788eab45b879551788791a8e52949cf48641f318638f1ad8db6a0",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__accel.py__bug__7630793e.md",
-    "reviewed_at": "2026-08-22",
-    "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
+    "sha": "2d53847c95f1fdbfa2a887bcb45e6e9aa11e2b3be06365f0f07fe71363ba2d23",
+    "output": ".colibri_reviews/PatternSkin__accel.py__bug__2d53847c.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 2d53847c); same-session remediation re-stamped the file to 3648d067 - see the review's postscript"
    },
    "plan": {
     "sha": "ded218ea37a3e563",
@@ -950,13 +969,14 @@
   "rel": "PatternSkin\\ai_parts.py",
   "modes": {
    "bug": {
-    "sha": "80bcabbfc7037866a2d6c612e5031c8c6fcb21d267644bb67951ed03af57cf75",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__ai_parts.py__bug__80bcabbf.md",
-    "reviewed_at": "2026-08-22",
-    "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
+    "sha": "c38245dc01d0d35c28b42ebdb6dd346ee55d012e25f144a2f1bde73ef781abcf",
+    "output": ".colibri_reviews/PatternSkin__ai_parts.py__bug__c38245dc.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 c38245dc); same-session remediation re-stamped the file to 684b6716 - see the review's postscript"
    }
   }
  },
@@ -964,14 +984,13 @@
   "rel": "PatternSkin\\ai_select.py",
   "modes": {
    "bug": {
-    "sha": "bb03bb4e",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__ai_select.py__bug__bb03bb4e.md",
-    "reviewed_at": "2026-07-23",
-    "model": null,
+    "sha": "c80d454e1272556469cb0bc8ce89e0f21b388b79bd3a854f9b9a7c0b9fd1593e",
+    "output": ".colibri_reviews/PatternSkin__ai_select.py__bug__c80d454e.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0,
-    "sha_partial": true
+    "cost": 0.0
    }
   }
  },
@@ -979,13 +998,14 @@
   "rel": "PatternSkin\\filmstrip.py",
   "modes": {
    "bug": {
-    "sha": "e01325dc889bcf0b53d74f41c7dbb1160f29107d57cf99a5a056c25865ac85ea",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__filmstrip.py__bug__e01325dc.md",
-    "reviewed_at": "2026-08-22",
-    "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
+    "sha": "ca12e5da4bb0e578058499f1109d0bafd75ed22ba7c20a511be31776e340f850",
+    "output": ".colibri_reviews/PatternSkin__filmstrip.py__bug__ca12e5da.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 ca12e5da); same-session remediation re-stamped the file to 0ec89620 - see the review's postscript"
    }
   }
  },
@@ -993,14 +1013,14 @@
   "rel": "PatternSkin\\heightmap.py",
   "modes": {
    "bug": {
-    "sha": "01dab69c",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__heightmap.py__bug__01dab69c.md",
-    "reviewed_at": "2026-07-23",
-    "model": null,
+    "sha": "9b08c502e3d1d0773755789d9346783a2e902446878641924d15e4f9d1809497",
+    "output": ".colibri_reviews/PatternSkin__heightmap.py__bug__9b08c502.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0,
-    "sha_partial": true
+    "note": "FULL re-audit of the pre-fix bytes (sha8 9b08c502); same-session remediation re-stamped the file to 6e093728 - see the review's postscript"
    },
    "fix": {
     "sha": "cca155c22a2ca59311c2a8285488fd24822dd98ec2353027cb8ebff6c5228263",
@@ -1014,14 +1034,14 @@
   "rel": "PatternSkin\\keystore.py",
   "modes": {
    "bug": {
-    "sha": "8a27009e",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__keystore.py__bug__8a27009e.md",
-    "reviewed_at": "2026-07-23",
-    "model": null,
+    "sha": "3aadadcfcc0d5521ddf5e4b41ed9dabfc55375cd8fb8a513d85bf6b433e094d3",
+    "output": ".colibri_reviews/PatternSkin__keystore.py__bug__3aadadcf.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0,
-    "sha_partial": true
+    "note": "FULL re-audit of the pre-fix bytes (sha8 3aadadcf); same-session remediation re-stamped the file to cae97d2d - see the review's postscript"
    }
   }
  },
@@ -1029,10 +1049,10 @@
   "rel": "PatternSkin\\obs.py",
   "modes": {
    "bug": {
-    "sha": "e6d2f5c8f3ff09f5f68b44775d531d9af6c52d9cf112ccf6b092bc3f50c16245",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__obs.py__bug__e6d2f5c8.md",
-    "reviewed_at": "2026-08-06",
-    "model": null,
+    "sha": "34846e7566c8ac7abf20657da23c57fe1787633e9d237f0e497986290642604c",
+    "output": ".colibri_reviews/PatternSkin__obs.py__bug__34846e75.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -1043,14 +1063,14 @@
   "rel": "PatternSkin\\part_export.py",
   "modes": {
    "bug": {
-    "sha": "30d1e2ed",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__part_export.py__bug__30d1e2ed.md",
-    "reviewed_at": "2026-07-23",
-    "model": null,
+    "sha": "53b8174d9d2d0c4ce7e07d0c42312b6a7a1c7f6af673b26964b8e84f033c7d9c",
+    "output": ".colibri_reviews/PatternSkin__part_export.py__bug__53b8174d.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0,
-    "sha_partial": true
+    "note": "FULL re-audit of the pre-fix bytes (sha8 53b8174d); same-session remediation re-stamped the file to 71208675 - see the review's postscript"
    }
   }
  },
@@ -1058,14 +1078,13 @@
   "rel": "PatternSkin\\presets_data.py",
   "modes": {
    "bug": {
-    "sha": "d1fd2e6a",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__presets_data.py__bug__d1fd2e6a.md",
-    "reviewed_at": "2026-07-23",
-    "model": null,
+    "sha": "eda3c675c446f51545a9a557719c3fed7fa981d38cc7f71284bd9bd407642f11",
+    "output": ".colibri_reviews/PatternSkin__presets_data.py__bug__eda3c675.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0,
-    "sha_partial": true
+    "cost": 0.0
    }
   }
  },
@@ -1073,10 +1092,10 @@
   "rel": "PatternSkin\\printfit.py",
   "modes": {
    "bug": {
-    "sha": "4bde03a800f5876bc86b3e76c06136e1b313abc94b504fa9c832218d066c33e2",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__printfit.py__bug__4bde03a8.md",
-    "reviewed_at": "2026-08-06",
-    "model": null,
+    "sha": "4362464f4b237792895fb1aa1ff3bf1535147c64d440e1ee359556926fce2f63",
+    "output": ".colibri_reviews/PatternSkin__printfit.py__bug__4362464f.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -1101,14 +1120,14 @@
   "rel": "PatternSkin\\replicate_client.py",
   "modes": {
    "bug": {
-    "sha": "43c9db79",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__replicate_client.py__bug__43c9db79_r2.md",
-    "reviewed_at": "2026-07-24",
-    "model": "claude-opus-4-8[1m] (in-session; cross-file lead from the replicate_flux r2 finding)",
+    "sha": "eb311bdf798d22bebeca541aad113ef32e6a2ee13269e0e7bd27d2cc3fa35f76",
+    "output": ".colibri_reviews/PatternSkin__replicate_client.py__bug__eb311bdf.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0,
-    "sha_partial": true
+    "note": "FULL re-audit of the pre-fix bytes (sha8 eb311bdf); same-session remediation re-stamped the file to 596eccc2 - see the review's postscript"
    }
   }
  },
@@ -1116,13 +1135,14 @@
   "rel": "PatternSkin\\selectcore.py",
   "modes": {
    "bug": {
-    "sha": "ab0edae14d201c5e8f19f6d34a726cbbdd066815ef92c10a9568ecd1cebd1445",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__selectcore.py__bug__ab0edae1_r2.md",
-    "reviewed_at": "2026-07-24",
-    "model": "claude-opus-4-8[1m] (in-session; lead verification of a primed sonnet scanner)",
+    "sha": "2abcd247a910eb35b66c105aadf0dc96280b29beff8df0b751fd6fe826195f34",
+    "output": ".colibri_reviews/PatternSkin__selectcore.py__bug__2abcd247.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 2abcd247); same-session remediation re-stamped the file to 405019a7 - see the review's postscript"
    }
   }
  },
@@ -1130,14 +1150,13 @@
   "rel": "PatternSkin\\spector_bridge.py",
   "modes": {
    "bug": {
-    "sha": "06c863ca",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\PatternSkin__spector_bridge.py__bug__06c863ca.md",
-    "reviewed_at": "2026-07-23",
-    "model": null,
+    "sha": "75d7e848c4baf7a4428a7bf12c42b2a4c3dd0b21c958dbdc28f8034099d7b7b9",
+    "output": ".colibri_reviews/PatternSkin__spector_bridge.py__bug__75d7e848.md",
+    "reviewed_at": "2026-09-10 12:33",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0,
-    "sha_partial": true
+    "cost": 0.0
    },
    "debug": {
     "sha": null,
@@ -1189,9 +1208,9 @@
   "modes": {
    "bug": {
     "sha": "6f5dfc457a80c14f8f428d3f39981fd1c983feba392c2fc948dadecfe43e3915",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector____init__.py__bug__6f5dfc45.md",
-    "reviewed_at": "2026-08-07",
-    "model": null,
+    "output": ".colibri_reviews/Spector____init__.py__bug__6f5dfc45.md",
+    "reviewed_at": "2026-09-10 09:04",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -1202,10 +1221,10 @@
   "rel": "Spector\\app.py",
   "modes": {
    "bug": {
-    "sha": "ad3e46659782f40d013f2bc405edfe6de97bab755b4b6ecfd602f36e26ecd9b8",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__app.py__bug__ad3e4665.md",
-    "reviewed_at": "2026-07-24",
-    "model": null,
+    "sha": "428f1b06b92bf22afe4812708860179fa837c9940388be4f9835b50c6d8094b0",
+    "output": ".colibri_reviews/Spector__app.py__bug__428f1b06.md",
+    "reviewed_at": "2026-09-10 09:04",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -1236,10 +1255,10 @@
   "rel": "Spector\\build.py",
   "modes": {
    "bug": {
-    "sha": "92378d811572c37131bc1aec5235975971f5b03ea540ed84a4658faec8e07e77",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__build.py__bug__92378d81.md",
-    "reviewed_at": "2026-08-07",
-    "model": null,
+    "sha": "1c08f5fdb4dfb308afe3b1816dbfbc2ff84cdf16f7d0739f7f9bb2ebce064989",
+    "output": ".colibri_reviews/Spector__build.py__bug__1c08f5fd.md",
+    "reviewed_at": "2026-09-10 09:04",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -1250,10 +1269,10 @@
   "rel": "Spector\\index.py",
   "modes": {
    "bug": {
-    "sha": "499b337968fb03ad2554af8e759f46c7351ed48dea90636d4f0d67f1d4a2b1d1",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__index.py__bug__499b3379.md",
-    "reviewed_at": "2026-08-07",
-    "model": null,
+    "sha": "0314301cdfdad38f2990ea24fad2186bbfe341764f4bf53fc08181a71ca3388e",
+    "output": ".colibri_reviews/Spector__index.py__bug__0314301c.md",
+    "reviewed_at": "2026-09-10 09:04",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -1264,13 +1283,13 @@
   "rel": "Spector\\launcher.py",
   "modes": {
    "bug": {
-    "sha": "bbc31181894dff31b7ec56317d41b457aeed68c97d0da9194687fc7abc0e7d0c",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__launcher.py__bug__bbc31181.md",
-    "reviewed_at": "2026-07-20 01:20",
-    "model": "moonshotai/kimi-k3",
-    "tokens_in": 1985,
-    "tokens_out": 1758,
-    "cost": 0.0275
+    "sha": "5b8305d367777379311af81ca2475dca2c5fb7030d4b6a54bd8ffa734c419359",
+    "output": ".colibri_reviews/Spector__launcher.py__bug__5b8305d3.md",
+    "reviewed_at": "2026-09-10 09:04",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
    },
    "fix": {
     "sha": "5b8305d367777379311af81ca2475dca2c5fb7030d4b6a54bd8ffa734c419359",
@@ -1285,10 +1304,10 @@
   "rel": "Spector\\spectordna.py",
   "modes": {
    "bug": {
-    "sha": "b8b3e77c2016e184e56a187a9fcd838152937715fc6148c7a54fc43a2d14c743",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__spectordna.py__bug__b8b3e77c.md",
-    "reviewed_at": "2026-08-08",
-    "model": null,
+    "sha": "42304e8a43cb5a26145704103a7e9aa97d282c694ae4b38b6f79d91e0fa527c9",
+    "output": ".colibri_reviews/Spector__spectordna.py__bug__42304e8a.md",
+    "reviewed_at": "2026-09-10 09:04",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -1306,10 +1325,10 @@
   "rel": "Spector\\templates\\index.html",
   "modes": {
    "bug": {
-    "sha": "96c6e5fa31a6bde0e1bf1bf2fa1fd20b5a574770549ac064d9519619fc5ed894",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__templates__index.html__bug__96c6e5fa.md",
-    "reviewed_at": "2026-08-07",
-    "model": null,
+    "sha": "0d3ae20351f8420d83580aff0f3ad212f33664fea81d0f4432d232c51a92eddf",
+    "output": ".colibri_reviews/Spector__templates__index.html__bug__0d3ae203.md",
+    "reviewed_at": "2026-09-10 09:04",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
     "cost": 0.0
@@ -1320,13 +1339,14 @@
   "rel": "Spector\\warehouse.py",
   "modes": {
    "bug": {
-    "sha": "f9dfde08330b384cb6e3cc0156f7b47c34cc86ae2b3fe529af46b1b79fc1ea12",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\Spector__warehouse.py__bug__f9dfde08.md",
-    "reviewed_at": "2026-08-07",
-    "model": null,
+    "sha": "7b23183c383300c0c8217f895036de99dcf87d7af2b5c0c9ca771c38b7cf01d4",
+    "output": ".colibri_reviews/Spector__warehouse.py__bug__7b23183c.md",
+    "reviewed_at": "2026-09-10 09:04",
+    "model": "claude-fable-5-1",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 7b23183c); same-session remediation re-stamped the file to 0ac65534 - see the review's postscript"
    },
    "fix": {
     "sha": "3d1daf6c7666d1cc291138a9007be5a187ee379f536941c6177a39db9a7ec584",
@@ -1341,14 +1361,12 @@
   "rel": "tests\\test_accel_tiers.py",
   "modes": {
    "bug": {
-    "sha": "6d71a590",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tests__test_accel_tiers.py__bug__6d71a590.md",
-    "reviewed_at": "2026-07-20 01:12",
-    "model": "moonshotai/kimi-k3",
-    "tokens_in": 2516,
-    "tokens_out": 2390,
-    "cost": 0.0434,
-    "sha_partial": true
+    "sha": "34a43a1b4f5a9292f96300e628d18dc0c06345539eddc6105c9d5bcf892966ea",
+    "output": ".colibri_reviews/tests__test_accel_tiers.py__bug__34a43a1b.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0,
+    "note": "delta review; prior moonshotai/kimi-k3 2026-07-20 01:12 at sha 6d71a590 kept on disk"
    }
   }
  },
@@ -1356,14 +1374,12 @@
   "rel": "tests\\test_patternskin_math.py",
   "modes": {
    "bug": {
-    "sha": "e172da66",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\tests__test_patternskin_math.py__bug__e172da66.md",
-    "reviewed_at": "2026-07-20 01:21",
-    "model": "moonshotai/kimi-k3",
-    "tokens_in": 2364,
-    "tokens_out": 1514,
-    "cost": 0.0298,
-    "sha_partial": true
+    "sha": "f06a82c18cf85cf1ce7588643a627323d8d5e2a46835be2face69a44beb38949",
+    "output": ".colibri_reviews/tests__test_patternskin_math.py__bug__f06a82c1.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0,
+    "note": "delta review; prior moonshotai/kimi-k3 2026-07-20 01:21 at sha e172da66 kept on disk"
    }
   }
  },
@@ -1443,13 +1459,14 @@
   "rel": "asset-forge\\forge\\imagegen\\colour_forms.py",
   "modes": {
    "bug": {
-    "sha": "ad2e8ae79572f15469bf5e16ea3301ca7f2021283dc7dd00ecbedbcee4f8054c",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__imagegen__colour_forms.py__bug__ad2e8ae7.md",
-    "reviewed_at": "2026-08-22",
-    "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
+    "sha": "c1a013f47340a49f59e36e6faa3c68ea037f1b3cc7f2f25de8fb1129e4ed8812",
+    "output": ".colibri_reviews/asset-forge__forge__imagegen__colour_forms.py__bug__c1a013f4.md",
+    "reviewed_at": "2026-09-11",
+    "model": "claude-sonnet-5",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit (owner ruling: 2026-08-22 grok record predates the gate; current bytes differ via a pre-gate GROK-CF5 fix). Empirically verified allocate()/capacity() against all 46 real catalog types with colour_variants/colour_axes - zero errors, all clear the n300 doctrine target. Confirmed the 107 uncovered types cannot crash (library_gen.py guards both call sites). PLAUSIBLE-only (tested clean against live data): is_achromatic's substring matching, same class as structure.py's _FAMILY_HINTS finding."
    }
   }
  },
@@ -1457,17 +1474,18 @@
   "rel": "asset-forge\\forge\\imagegen\\structure.py",
   "modes": {
    "bug": {
-    "sha": "75c4c09617a31ff6be6185259b92c4373ac4420fe04103e8403b9081d7dcc59b",
-    "output": "C:\\Users\\User\\source\\repos\\Nexusmill\\.colibri_reviews\\asset-forge__forge__imagegen__structure.py__bug__75c4c096.md",
-    "reviewed_at": "2026-08-22",
-    "model": "grok-4.6/4.3 (external) + claude-fable-5 colibri gate (in-session)",
+    "sha": "3cd8799ece48a1fc320239a53c7e2979ae7bf610032db63fa31fad981d8c8cb0",
+    "output": ".colibri_reviews/asset-forge__forge__imagegen__structure.py__bug__3cd8799e.md",
+    "reviewed_at": "2026-09-11",
+    "model": "claude-sonnet-5",
     "tokens_in": null,
     "tokens_out": null,
-    "cost": 0.0
+    "cost": 0.0,
+    "note": "FULL re-audit (owner ruling: 2026-08-22 grok record predates the gate and current bytes already differ from it via a pre-gate GROK-STRUCT6 fix). Confirmed: docstring CENSUS claim ('prefers least-used') does not match allocate()'s actual pure round-robin/CRT selection - documentation fix only, no functional bug. PLAUSIBLE (unconfirmed): _FAMILY_HINTS substring matching is the same defect class fixed in prompts.py (AF-PROMPT-TEXTURE-WORDS) but no live trigger was found. Tranche-2 catalog coverage gap cross-referenced to the prompts.py delta review, not duplicated here."
    }
   }
  },
- "asset-forge/forge/output_opts.py": {
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\output_opts.py": {
   "rel": "asset-forge/forge/output_opts.py",
   "modes": {
    "fix": {
@@ -1475,10 +1493,19 @@
     "output": "asset-forge__forge__output_opts.py__fix__3a63a0b4.md",
     "reviewed_at": "2026-08-15",
     "cost": 0.0
+   },
+   "bug": {
+    "sha": "3a63a0b4873b4ce0b8d78641901fefa1dbc48d0236e81048b47fdfc023c28433",
+    "output": ".colibri_reviews/asset-forge__forge__output_opts.py__bug__3a63a0b4.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
    }
   }
  },
- "PatternSkin/(top5)": {
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\(top5)": {
   "rel": "PatternSkin/(top5)",
   "modes": {
    "gate:hy4-spec-r1": {
@@ -1514,6 +1541,355 @@
     "model": "claude-fable-5-1 (in-session Phase D debug)",
     "cost": 0.0,
     "finding": "CENSUS-STRING-MESSAGE: Cowork system/permission_denied records carry message as a str; extract_events assumed dict and crashed the whole walk; fixed by isinstance guard, regression test first"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\generators\\base.py": {
+  "rel": "asset-forge\\forge\\generators\\base.py",
+  "modes": {
+   "bug": {
+    "sha": "05042d73f88e749fabf6d4c21e299756a25930862a9fb6a5bf2a024f94a2353c",
+    "output": ".colibri_reviews/asset-forge__forge__generators__base.py__bug__05042d73.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\personalize.py": {
+  "rel": "asset-forge\\forge\\personalize.py",
+  "modes": {
+   "bug": {
+    "sha": "ad324083bd57e214f7525a6dc13e97d547e2158e4b9ad9c85668cbd855c1042d",
+    "output": ".colibri_reviews/asset-forge__forge__personalize.py__bug__ad324083.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 ad324083); same-session remediation re-stamped the file to f07c29e3 - see the review's postscript"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\imagegen\\config.py": {
+  "rel": "asset-forge\\forge\\imagegen\\config.py",
+  "modes": {
+   "bug": {
+    "sha": "e840c0a55bca36d362e72d0800f24fbe7e60121519fd4c45f331c51314114d1a",
+    "output": ".colibri_reviews/asset-forge__forge__imagegen__config.py__bug__e840c0a5.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\library.py": {
+  "rel": "asset-forge\\forge\\library.py",
+  "modes": {
+   "bug": {
+    "sha": "640d29b08dc5779632304b3f8b47534cfcf0b4dba521d3689d4e335e8af08de3",
+    "output": ".colibri_reviews/asset-forge__forge__library.py__bug__640d29b0.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 640d29b0); same-session remediation re-stamped the file to 9cc8f6ef - see the review's postscript"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\seamless.py": {
+  "rel": "asset-forge\\forge\\seamless.py",
+  "modes": {
+   "bug": {
+    "sha": "b8fe26178d13ba15f69fde1aac74b567135900bf7a0e6fe8e1890f44dbe87b48",
+    "output": ".colibri_reviews/asset-forge__forge__seamless.py__bug__b8fe2617.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 b8fe2617); same-session remediation re-stamped the file to 9cc8e0d9 - see the review's postscript"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\tracer\\signer.py": {
+  "rel": "asset-forge\\forge\\tracer\\signer.py",
+  "modes": {
+   "bug": {
+    "sha": "10354644cb6a3f4917860d78f39edf7140c9d3b4c4daac1ccd8947fcbb6ec824",
+    "output": ".colibri_reviews/asset-forge__forge__tracer__signer.py__bug__10354644.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\tracer\\fingerprint.py": {
+  "rel": "asset-forge\\forge\\tracer\\fingerprint.py",
+  "modes": {
+   "bug": {
+    "sha": "003df9b59a8226fe1fd6fc3ae974a093b67e3d65df32ac2d75ff91c101e76544",
+    "output": ".colibri_reviews/asset-forge__forge__tracer__fingerprint.py__bug__003df9b5.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\tracer\\png_stego.py": {
+  "rel": "asset-forge\\forge\\tracer\\png_stego.py",
+  "modes": {
+   "bug": {
+    "sha": "fa0e3134a97484413c99cf27e46d65dc75bad9fa68e90ce49ea7caaf66d4a688",
+    "output": ".colibri_reviews/asset-forge__forge__tracer__png_stego.py__bug__fa0e3134.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\skin3d.py": {
+  "rel": "asset-forge\\forge\\skin3d.py",
+  "modes": {
+   "bug": {
+    "sha": "e2aeb76ef6717783257a49f5c44a992e996cda976ed1e0955187853874964b2d",
+    "output": ".colibri_reviews/asset-forge__forge__skin3d.py__bug__e2aeb76e.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\verify.py": {
+  "rel": "asset-forge\\verify.py",
+  "modes": {
+   "bug": {
+    "sha": "96857ab0aac6c7ef5ea2c9071bc70edfea17cb3522ec7a3aa47c48b2b9b1cb84",
+    "output": ".colibri_reviews/asset-forge__verify.py__bug__96857ab0.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 96857ab0); same-session remediation re-stamped the file to 428b36d1 - see the review's postscript"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\tracer\\keys.py": {
+  "rel": "asset-forge\\forge\\tracer\\keys.py",
+  "modes": {
+   "bug": {
+    "sha": "c203388aeca13096ebaf796b41258d2e1b17ed0a36a3ea8193ae41199d3fd3d1",
+    "output": ".colibri_reviews/asset-forge__forge__tracer__keys.py__bug__c203388a.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "FULL re-audit of the pre-fix bytes (sha8 c203388a); same-session remediation re-stamped the file to 425a8599 - see the review's postscript"
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\build.py": {
+  "rel": "asset-forge-user\\build.py",
+  "modes": {
+   "bug": {
+    "sha": "c162cbf8b671d0734f82604d4878f6f3df1528aa2ed507cd6b930f8db70b96ac",
+    "output": ".colibri_reviews/asset-forge-user__build.py__bug__c162cbf8.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\build.py": {
+  "rel": "asset-forge\\build.py",
+  "modes": {
+   "bug": {
+    "sha": "eff2efda4888def6ae2c50b872a591a595d74c7c13285f79fcc89acf088fd4d2",
+    "output": ".colibri_reviews/asset-forge__build.py__bug__eff2efda.md",
+    "reviewed_at": "2026-09-10 15:32",
+    "model": "claude-fable-5-1",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge\\forge\\catalog.json": {
+  "rel": "asset-forge/forge/catalog.json",
+  "modes": {
+   "content": {
+    "sha": "7b04f1f28f822159737def7005615ddb034376ef24ccb1df3b48d3bf0a7247f0",
+    "output": ".colibri_reviews/asset-forge__forge__catalog.json__content__7b04f1f2.md",
+    "reviewed_at": "2026-09-11",
+    "model": "claude-sonnet-5",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "First review ever of this file (data, no prior colibri record). Cross-referenced all 153 catalog types against structure.py's live TYPE_FORMS/TYPE_FAMILY/classify(): 79 types (51.6%) have no authored structural pool and resolve via keyword inference ('Tranche 2', documented as incomplete in structure.py's own comment, never executed). Traced the exact triggering hint word for all 60 actively-matched ones; confirmed 9 concrete misclassifications - 8 share one root cause: _FAMILY_HINTS has no active entry for 'formal', so a material word ('stone','wood','block') outranks a much better formal-family fit (aztec, greek_key, islamic, sacred_geo, penrose, gothic, mandala, barn_quilt); the 9th (shibori) is a related but distinct mechanism (its better fit, cellular, DOES have hints - they just don't appear in its own prompt text, so an earlier family wins by iteration order, not by formal's hint-void - corrected per the adversary gate's factual catch, 2026-09-11). See the full table in the review file."
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\asset-forge-user\\forge\\catalog.json": {
+  "rel": "asset-forge-user/forge/catalog.json",
+  "modes": {
+   "content": {
+    "sha": "7b04f1f28f822159737def7005615ddb034376ef24ccb1df3b48d3bf0a7247f0",
+    "output": ".colibri_reviews/asset-forge__forge__catalog.json__content__7b04f1f2.md",
+    "reviewed_at": "2026-09-11",
+    "model": "claude-sonnet-5",
+    "tokens_in": null,
+    "tokens_out": null,
+    "cost": 0.0,
+    "note": "Twin of asset-forge/forge/catalog.json (byte-identical, G23) - see that entry for the full finding."
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\_runtests.py": {
+  "rel": "tests\\_runtests.py",
+  "modes": {
+   "bug": {
+    "sha": "d0704e754d12e34f64fab90f1f574ecde6c93eec46a5feba4bcd260e6e8e85af",
+    "output": ".colibri_reviews/tests___runtests.py__bug__d0704e75.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_heightmap.py": {
+  "rel": "tests\\test_heightmap.py",
+  "modes": {
+   "bug": {
+    "sha": "49a0ccc4a7161e5d70f119222472ff09b5946d3fffb9a1ce40d9c54b325c0f06",
+    "output": ".colibri_reviews/tests__test_heightmap.py__bug__49a0ccc4.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_ai_sdf.py": {
+  "rel": "tests\\test_ai_sdf.py",
+  "modes": {
+   "bug": {
+    "sha": "2d98ce3daa717c74eab83abfe3e5ca8a5ecd1d5aef70468de5ae67f11c7cb0b2",
+    "output": ".colibri_reviews/tests__test_ai_sdf.py__bug__2d98ce3d.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_part_export.py": {
+  "rel": "tests\\test_part_export.py",
+  "modes": {
+   "bug": {
+    "sha": "7b3589c6f904061fba2e44bcd57ff22a8fe42e618eb775214e5c8e2215ce8d59",
+    "output": ".colibri_reviews/tests__test_part_export.py__bug__7b3589c6.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_ai_select.py": {
+  "rel": "tests\\test_ai_select.py",
+  "modes": {
+   "bug": {
+    "sha": "6ed0d4705c9e37a0a9e80ff89d257cff3d7cb01f8aab3ead0a4b000e38b437fe",
+    "output": ".colibri_reviews/tests__test_ai_select.py__bug__6ed0d470.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_blender_smoke.py": {
+  "rel": "tests\\test_blender_smoke.py",
+  "modes": {
+   "bug": {
+    "sha": "a43548fe793670773d20b75dcfb458e77bdc89df122fd8692d3dfeea59da99f2",
+    "output": ".colibri_reviews/tests__test_blender_smoke.py__bug__a43548fe.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_projections.py": {
+  "rel": "tests\\test_projections.py",
+  "modes": {
+   "bug": {
+    "sha": "7f3af91456783b50181bc723a4c70e04ebb400aa78e0ef271fc1802cf5b29b16",
+    "output": ".colibri_reviews/tests__test_projections.py__bug__7f3af914.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_projection_degeneracy.py": {
+  "rel": "tests\\test_projection_degeneracy.py",
+  "modes": {
+   "bug": {
+    "sha": "480c3b69c00b69673a13f24f55750cb12ba24d435b7d2223523721ad3fdf7b23",
+    "output": ".colibri_reviews/tests__test_projection_degeneracy.py__bug__480c3b69.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\e2e_blender.py": {
+  "rel": "tests\\e2e_blender.py",
+  "modes": {
+   "bug": {
+    "sha": "6c0406639ae81e39bf99b44dee29a6b003de872b59609e546d69e8c72787edb3",
+    "output": ".colibri_reviews/tests__e2e_blender.py__bug__6c040663.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\harness\\e2e\\ps_e2e.py": {
+  "rel": "tests\\harness\\e2e\\ps_e2e.py",
+  "modes": {
+   "bug": {
+    "sha": "e1c5fa83b67dc8b1523aa088482117678965ca574da6ca44e98224ffaeb12774",
+    "output": ".colibri_reviews/tests__harness__e2e__ps_e2e.py__bug__e1c5fa83.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\harness\\bpy_patternskin.py": {
+  "rel": "tests\\harness\\bpy_patternskin.py",
+  "modes": {
+   "bug": {
+    "sha": "ef98e98c0de4f7b66e26c65562df8ff1edb54fa94cf9345b8d72faf01b3d51a8",
+    "output": ".colibri_reviews/tests__harness__bpy_patternskin.py__bug__ef98e98c.md",
+    "reviewed_at": "2026-09-19 07:25",
+    "model": "claude-fable-5-1",
+    "cost": 0.0
    }
   }
  }

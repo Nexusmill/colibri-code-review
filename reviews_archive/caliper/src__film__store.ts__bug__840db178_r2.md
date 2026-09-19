@@ -1,0 +1,15 @@
+<!-- source: src/film/store.ts | reviewer: glm-5.3-zai-in-session | sha256: 840db1787d9d551e41b9ef5f2e96bba6b2ec2bc2b2a8cade6f59944b86e888dc | date: 2026-09-17 | mode: bug -->
+<!-- context: owner commission 2026-09-17: BUGHUNT12 - colibri bug hunt on the next ten files by import PageRank (ranks 21-30); fresh-context lineage pass beyond the recorded review at these exact bytes (0.3.0 doctrine: prior review = context, never a skip). -->
+
+## Verdict
+Shippable — the live surface (shotPrompt/slugify + the Film/FilmShot records) is sound; the one new defect is a false claim inside a comment on the retired legacy grid, not executable behavior.
+
+## Bugs & vulnerabilities
+- **[LOW] initShots' comment claims the analyzer beat-snaps section boundaries — it never has** - `line 75`. What: the comment ("boundaries already beat-snapped by the analyzer") attributes beat-snapping to `analyzePcm`/`detectSections`, but `src/film/analysis.ts:118-168` computes section boundaries as raw novelty peaks at whole-second resolution with no beat input; `snapToBeat`'s own doc (`src/film/analysis.ts:185-190`) states the snap was carried by "the legacy per-section grid" (this family) which is retired, and `pacedGrid` — which snaps carves itself at `analysis.ts:265-267` — is the wired grid. Trigger: any future revival of the classic per-section shot path (initShots is still exported and tested) reads this comment and assumes cuts land on beats; they land on whole-second novelty peaks — exactly the "boundary 150ms off a snare" defect the snap doctrine exists to prevent. Impact: dormant (repo-wide search: initShots has no live caller — only store.test.ts; vite.film.ts imports shotPrompt/slugify/Film only), so no current render path is affected; the harm is a false audit claim on revivable code. Fix: correct the comment to "boundaries are whole-second novelty peaks; the beat-snap this grid once carried is retired — see pacedGrid", or retire initShots alongside the comment (the e31e742c feature review already proposes the documented-dead list).
+
+## Missing safeguards
+- slugify truncates to 60 AFTER hyphen-trim, so a long name can end on a trailing hyphen (e.g. position 60 lands after a separator); output stays SAFE_ID-conformant (`[a-z0-9-]{1,60}`) — cosmetic only, noted for completeness, not a defect.
+- shotPrompt composes `film.style` verbatim; an empty style would yield `""` or a dangling " — " prefix — unreachable today (style is required and every construction path carries the styleBible), but there is no guard if a future construction path skips the bible.
+
+context-pack: prior review at these bytes (empty delta) + older 331fef50 bug review (slugify/SAFE_ID clean) + e31e742c feature review (initShots/DEFAULT_STYLE legacy) consulted; jcodemunch find_importers (4: produce.ts types, vite.film.ts shotPrompt+slugify+Film, 2 tests) + outline + repo-wide initShots/slugify/shotPrompt/snapToBeat/composeStyle call-site traces; remediation_manifest has no rows for this file (film rows cover worldmodel/autopilot/vite.film/api-film only); analysis.ts sections contract read end to end.
+new-findings: 1

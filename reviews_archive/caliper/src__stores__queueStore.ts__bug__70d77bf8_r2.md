@@ -1,0 +1,33 @@
+<!-- source: src/stores/queueStore.ts | reviewer: glm-5.3-zai-in-session | sha256: 70d77bf87de319823a6e7b4255a0e1c51a858a7aa553b885b41a782021c81cc9 | date: 2026-09-17 | mode: bug -->
+<!-- context: owner commission 2026-09-17: BUGHUNT12 - colibri bug hunt on the next ten files by import PageRank (ranks 21-30); fresh-context lineage pass beyond the recorded review at these exact bytes (0.3.0 doctrine: prior review = context, never a skip). -->
+
+## Verdict
+Shippable, with one recommended fix. The prior review at these bytes (ce261672 artifact) recorded zero findings (a two-line preflight/startedAt delta review), so this pass hunted the whole file fresh against the current bytes. Two new defects found, both in the disconnect/reconnect reconciliation and the ws-event application path — exactly the "race capital" the commission flagged. No CRITICAL/HIGH: no data loss, no silent core-flow break; both findings are truthfulness violations of the owner's "report what the server says" rule.
+
+## Bugs & vulnerabilities
+
+**[MEDIUM] Reconnect reconcile brands a completed render "failed / Lost during a disconnect" and then suppresses every recovery path for it — `line 76` (block 72-85)**
+- What: on a `connected` transition, every local `queued|running` job absent from the `/queue` snapshot is unconditionally marked `failed: "Lost during a disconnect."` — but absence from `/queue` has two meanings: still-lost, or **already finished** (the render completed while the socket was down and left the queue normally). The code never consults `getHistory(promptId)` (src/api/client.ts:45), which answers the distinction and carries the outputs.
+- Trigger: ws drops mid-render (proxy hiccup, backend restart); the render finishes server-side while disconnected; socket reconnects → `/queue` no longer lists the promptId → job flipped to failed.
+- Impact: (1) the store asserts a failure the server contradicts — the images exist on disk (truthfulness violation). (2) The stale row stays in `jobs` for the session, and `assetsStore.hydrate` skips any record whose promptId is in `jobs` (src/stores/assetsStore.ts:41) — so the getHistory fallback that recovers outputs for every other record (src/stores/assetsStore.ts:49) is suppressed for exactly this one; provenance also never gets outputs because `patchProvenanceOutputs` only runs from the `executing(null)` handler that was missed (line 156-158). (3) The terminal guard (lines 145, 150, 160, 164) then makes the store permanently deaf to any late events for it. The completed render is invisible as a success until a page reload.
+- Fix: before marking failed, `await getHistory(promptId)`; a history hit marks the job `done` and patches provenance outputs; only a history miss (404) marks "Lost during a disconnect."
+- Lineage: this shape was noted twice as a *client.ts* nice-to-have ("the 404/parse split would sharpen the queueStore reconciliation") but never recorded as a finding against this file; the false-failed outcome itself is unrecorded.
+- Status: CONFIRMED by trace (no live repro run).
+
+**[MEDIUM, PLAUSIBLE] An `execution_start` that beats the queuePrompt response is dropped, and the job stays "queued" for its entire render — `line 148` vs `line 135`**
+- What: the job enters the store only after `await queuePrompt` resolves (line 119 → 135). `execution_start` is applied by `patchJob`, which is a no-op for an absent promptId; `executing` (non-null nodeId, line 160-161) patches only `{nodeId, nodeType}` and `progress` (line 165) only `{progress}` — **nothing but `execution_start` ever sets `status: "running"` or stamps `startedAt`**.
+- Trigger: idle server, empty queue — ComfyUI's executor wakes on `queue.put` and can `send_sync("execution_start")` before the POST /prompt HTTP response is serialized/transit-processed on the browser; ordering across the two channels is not guaranteed. localhost makes the window realistic.
+- Impact: the whole render displays QUEUED (not RUNNING), the GaugeLine is hidden (QueueSurface renders it only for running/done), and `etaLine` is permanently null because it requires `status === "running" && startedAt` (src/surfaces/QueueSurface.tsx:27-29). The job still ends `done` correctly via `executing(null)` (line 156-158), so it is contained wrongness — but the UI reports "queued" while the server says executing (truthfulness violation).
+- Fix: promote non-terminal jobs to running in the `executing` and/or `progress` handlers too (one clause each), or buffer events for promptIds with an in-flight `queue()` promise.
+- Status: PLAUSIBLE-with-reason (event ordering not guaranteed by any protocol; no deterministic repro attempted this session).
+
+## Missing safeguards
+- `executed` (line 167-175) is the only patching handler without the terminal guard — late/duplicate `executed` after a cancel appends outputs to a `failed` job. Currently consumer-less (QueueSurface renders no job outputs; provenance is gated at line 157), so no observable defect today — but the guard discipline is one line and every sibling has it.
+- The reconcile judges jobs against a `/queue` snapshot that can predate a concurrent `queue()` acceptance (snapshot in flight while queuePrompt lands); combined with the one-shot failure marking and the terminal guard's irreversibility, a misjudged job can never self-heal.
+- `jobs[]` is never pruned and each `Job` retains the full workflow graph; a long session accumulates them unboundedly, and every terminal job keeps its promptId in assetsStore's `inJobs` skip set, growing the Outputs-hydration suppression with it.
+- `execution_cached` is parsed by the adapter (src/api/ws.ts:38) and typed (src/api/types.ts:17) but `applyEvent` ignores it — cached graph prefixes produce no progress signal. Likely deliberate, but the type contract advertises a consumer that does not exist.
+- The rejected-job literal (line 131) omits `cfgOverride` while the accepted one (line 134) carries it — no current consumer reads it from a rejected job (ReproduceSheet reads provenance, which rejected jobs never enter), but the two `Job` constructions have silently drifted.
+- `getLiveQueueIds` (src/api/client.ts:58-60) has no `res.ok` check; the reconcile's only protection against a proxy-500 body is the `res.json()` throw landing in its catch.
+
+context-pack: 14 importers (App, QueueSurface/GenerateSurface/OutputsSurface, DeckControls, ReproduceSheet, CommandPalette, ScreenStage, StatusFooter, assetsStore, tests); prior review at these bytes = zero findings (preflight/startedAt delta note); no remediation rows for this file — binding cross-file rows: client.ts freeVram idiom (cancel/interrupt/clear throw on !res.ok) and ws.ts null-output coercion.
+new-findings: 2
