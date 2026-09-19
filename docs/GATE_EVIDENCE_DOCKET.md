@@ -149,6 +149,8 @@
 - **The guard held against its own author twice within an hour of going live**
   (EV-012) - reworded, never weakened.
   - EV-108: the PatternSkin test-surface tranche - the gate caught that the runner rebuilt to never exit 0 on failure still exited 0 on a signal-killed child (max() over a negative code), that the harness tester's stale-results clear sat after the add-on import it was meant to guard, that a scipy-less 'skip' still failed, and that five manifest rows cited 23 checks for a 22-check battery; all four fixed before round two (Nexusmill 23f9598c, rebuilt on main from 7c490e8f).
+  - EV-109: the harness run-artifacts tranche - the gate caught that the new mtime freshness gate could be defeated by the runner's own run_download.py merge (a stale results file re-stamped fresh on the very no-Blender profile the fix targeted) and a locked-file crash in the runner; two of its four rounds were a lane-filter false positive (the reviewer never sees .gitignore/.txt/.stl hunks), rebutted with the staged name-status list both times - an OPEN Tools observation (Nexusmill 0435eaef, PR #24).
+  - EV-110: a stash pop left four conflict blocks inside the Caliper review-manifest mirror and the agent staged it blind; the gate caught an unparseable ledger, resolved to the live store's bytes (sha256-identical) with the known source-side token mismatches recorded, not edited (colibri abe8045, PR #22).
 
 ## Why this docket exists
 

@@ -1755,6 +1755,41 @@
    "Nexusmill tests/harness/probes/test_surface_red_path.py (22 checks)",
    "Nexusmill 2d76f143 (review(tests): the colibri scan of the 13 PatternSkin test units that the tranche remediates)"
   ]
+ },
+ {
+  "id": "EV-109-THE-MTIME-GATE-THAT-A-MERGE-COULD-FRESHEN-AND-THE-REVIEWER-THAT-COULD-NOT-SEE-THE-GITIGNORE",
+  "date": "2026-09-19",
+  "repo": "Nexusmill (tests/harness/critic.py, tests/harness/runner.py, tests/test_critic_freshness.py, .gitignore + 14 untracked run artifacts) - landed as Nexusmill 0435eaef on branch harness/untrack-run-artifacts (PR #24, stacked on PR #23)",
+  "layer": "gate-review, four rounds: round one BLOCK (z-ai/glm-5.3-flash via StreamLake) - a lane-filter false positive; round two BLOCK (same model) - a real catch; round three BLOCK (via Together) - the false positive again plus a fair LOW; round four CLEAR (via Together) with the rebuttal in --context",
+  "caught": "(HIGH, real, round two) The owner-ruled fix for stale harness results stamped HARNESS_RUN_START at features-tier start and had the critic grade any results file OLDER than the stamp as absent. The reviewer read the runner's own pipeline against it: run_download.py MERGES its PS-LIB-DOWNLOAD row into ps_results.json AFTER the stamp - a read-modify-write that bumps a previous run's file to a fresh mtime - so on a machine without Blender (the exact profile the fix named) the previous run's 70 rows would still have graded as this run's, with no STALE marker, while the change's own comment said 'a previous run's file can never read as green'. Fixed by deleting the four graded results files at tier start (nothing pre-stamp survives to be merged into), a RED-first test of the merge-defeat path, and the test wired into the fast tier. (LOW, real, round three) clear_graded_results caught only FileNotFoundError; a file held open by an AV/indexer scan would have raised PermissionError inside the runner process and taken every later tier down - now OSError with a loud warning. (FALSE, rounds one and three) The reviewer reported 'no .gitignore change and no deletion for the three tests/*_results.txt or tests/e2e_stl/*.stl' and rated the manifest records false. The staged index held all 23 paths; the gate's lane filter feeds the reviewer only code-class files (its header names five), so .gitignore, .txt and .stl hunks are invisible to it and a record that truthfully describes them reads as a claim without bytes. Round two accepted the `git diff --cached --name-status` listing plus the verbatim .gitignore hunk as settled; round three, an automatic hook review, carried no context and repeated the finding verbatim.",
+  "severity": "HIGH (a freshness gate defeated by the runner's own merge step on the profile it was built for) + LOW (a runner crash on a locked file); the false positive cost two rounds",
+  "author_initially": "Round two accepted on the bytes (deletion at tier start; RED 1 of 11 then GREEN 11/11; `runner --tiers fast` 4/4 with the new test). Round three's LOW accepted (except OSError + warning). The lane-filter finding was rebutted with byte evidence both times, never argued in prose: the staged name-status list and the .gitignore hunk quoted verbatim in --context; round four CLEARed on the same bytes plus the OSError fix.",
+  "resolution": "Nexusmill 0435eaef (rebuilt by clean cherry-pick onto 9e593e53 - the existing clearance matched the identical blobs, `adversary_gate.py verify` rc 0, notarized 13 files). OPEN observation for Tools: an automatic hook review cannot see non-code-lane hunks, so the gate should hand the reviewer the full `git diff --cached --name-status` of the staged set as context (the rebuttal that settled round two) - otherwise every commit that untracks or ignores non-code files draws this false BLOCK.",
+  "refs": [
+   "Nexusmill 0435eaef (fix(harness): run artifacts untracked + gitignored; the critic refuses results older than the run, and the features tier clears the graded results at start so a merge cannot freshen a stale file)",
+   "C:\\Users\\User\\source\\repos\\Nexusmill-harness\\.adversary\\reviews\\gate_20260919-143159.md (round one BLOCK, false)",
+   "C:\\Users\\User\\source\\repos\\Nexusmill-harness\\.adversary\\reviews\\gate_20260919-143548.md (round two BLOCK, real)",
+   "C:\\Users\\User\\source\\repos\\Nexusmill-harness\\.adversary\\reviews\\gate_20260919-144249.md (round three BLOCK)",
+   "C:\\Users\\User\\source\\repos\\Nexusmill-harness\\.adversary\\reviews\\gate_20260919-144951.md (round four CLEAR)",
+   "Nexusmill docs/remediation_manifest.json CRITIC-STALE-RESULTS-GRADED-AS-CURRENT",
+   "Nexusmill tests/test_critic_freshness.py (11 checks)"
+  ]
+ },
+ {
+  "id": "EV-110-A-STASH-POP-CONFLICT-STAGED-BLIND-INTO-THE-REVIEW-LEDGER",
+  "date": "2026-09-19",
+  "repo": "colibri-code-review (reviews_archive/caliper/_manifest.json, the mirror of Caliper's live review store) - landed as colibri abe8045 on gate/docket-ev108 (PR #22)",
+  "layer": "gate-review BLOCK, round one (z-ai/glm-5.3-flash via StreamLake); round two CLEAR (via Together)",
+  "caught": "(CRITICAL, real) Integrating another session's regenerated review-archive mirrors, the agent moved them from the main checkout into the docket worktree with git stash; the pop conflicted against this branch's earlier archive commit and left FOUR unresolved conflict blocks (`<<<<<<< Updated upstream` ... `>>>>>>> Stashed changes`) inside reviews_archive/caliper/_manifest.json - two inside mode values, one wrapping five whole rows at top level - and `git add` staged the file as it stood. The reviewer read the staged bytes and found a manifest no JSON parser could load, named every block with its competing sha pairs, and noted that a blind 'take stashed' would drop pass2 lineage records. It also flagged two output-token mismatches in the stashed rows (an 8-hex token off by one from its sha, a 7-hex token).",
+  "severity": "CRITICAL (an unparseable review ledger shipped to the archive branch)",
+  "author_initially": "Accepted on the bytes. Resolution by evidence, not by hand: the stashed side was checked out whole and proven sha256-identical to Caliper's live store E:/AI/Caliper/.colibri_reviews/_manifest.json (154 entries, parses) - the source this archive mirrors; every one of the 27 staged files scanned for markers, none left. The dropped pass2 records belonged to rows re-reviewed at NEW shas on 2026-09-19 (a changed sha replaces the row's pointer; the old review files stay in the archive). The token mismatches exist in the source store's rows as Caliper's tooling wrote them; the mirror reproduces the source byte-for-byte by design and does not edit source data - noted for Caliper's own store, out of this repo. Round two CLEARed with that context.",
+  "resolution": "colibri abe8045 (two rounds, one real BLOCK; the commit message names the resolution and the two known source mismatches). Lesson recorded: never `git add` after a stash pop without scanning for markers - the pop printed 'could not restore untracked files' and the agent read that as the only failure.",
+  "refs": [
+   "colibri-code-review abe8045 (chore(archive): reviews_archive mirror sync 2026-09-19, second wave)",
+   "C:\\Users\\User\\source\\repos\\colibri-docket-ev108\\.adversary\\reviews\\gate_20260919-144900.md (BLOCK)",
+   "C:\\Users\\User\\source\\repos\\colibri-docket-ev108\\.adversary\\reviews\\gate_20260919-145223.md (CLEAR)",
+   "E:\\AI\\Caliper\\.colibri_reviews\\_manifest.json (the mirrored source, sha256-identical to the committed bytes)"
+  ]
  }
  ]
 }
