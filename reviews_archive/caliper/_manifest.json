@@ -1093,11 +1093,11 @@
     "rel": "src/components/SettingsConsole.tsx",
     "modes": {
       "bug": {
-        "sha": "ef33ef80b183cb782f4e8b187670cfe7667b464782b6f425861a16fbf87732ae",
-        "output": "src__components__SettingsConsole.tsx__bug__ef33ef80.md",
-        "reviewed_at": "2026-09-15",
-        "model": "zcode-glm-5.3",
-        "cost": 0
+        "sha": "df27520769f50f8886bee617d98cc4e4cdfcc10f6a620e139805d519909d7e36",
+        "output": ".colibri_reviews/src__components__SettingsConsole.tsx__bug__df275208.md",
+        "reviewed_at": "2026-09-19 11:01",
+        "model": "tencent/hy4-preview",
+        "cost": 0.07
       },
       "feature": {
         "sha": "e85ad0d240f636c8f7e9327f15bfcea8dbea2314b4b4eed5d3f9c41064bab836",
@@ -1473,15 +1473,11 @@
     "rel": "src/providers/serviceKeys.ts",
     "modes": {
       "bug": {
-        "sha": "e00a12673bda4731ee9b933ad7ebaf0edf986d9ac8e43a82f25c2688e8654002",
-        "output": "src__providers__serviceKeys.ts__bug__e00a1267.md",
-        "reviewed_at": "2026-08-27T12:00:00",
-        "pass2": {
-          "model": "glm-5.3-zai-in-session",
-          "reviewed_at": "2026-09-16 11:20",
-          "output": ".colibri_reviews/src__providers__serviceKeys.ts__bug__e00a1267_r2.md",
-          "new": 1
-        }
+        "sha": "dc338b59e7c8eaa162635b2aaae7393f2f7e11dd91f4ea4c02b6e716e0ecf83b",
+        "output": ".colibri_reviews/src__providers__serviceKeys.ts__bug__dc338b59.md",
+        "reviewed_at": "2026-09-19 11:08",
+        "model": "tencent/hy4-preview",
+        "cost": 0.03
       },
       "spec": {
         "sha": "e00a12673bda4731ee9b933ad7ebaf0edf986d9ac8e43a82f25c2688e8654002",
@@ -1489,6 +1485,66 @@
         "reviewed_at": "2026-08-31",
         "model": "zcode-glm-5.3",
         "cost": 0
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\providers\\serviceKeys.test.ts": {
+    "rel": "src/providers/serviceKeys.test.ts",
+    "modes": {
+      "bug": {
+        "sha": "8c672a8e4095963f954f7acae0dc5d5686a15045e682ee4a9531ce8d0806e8f0",
+        "output": ".colibri_reviews/src__providers__serviceKeys.test.ts__bug__8c672a8e.md",
+        "reviewed_at": "2026-09-19 11:11",
+        "model": "tencent/hy4-preview",
+        "cost": 0.04
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\api\\comfyOrigin.ts": {
+    "rel": "src/api/comfyOrigin.ts",
+    "modes": {
+      "bug": {
+        "sha": "4905fcbdc8800f6a5173977d49ddd68874d50b61cb8ed84163142ed80aa1c333",
+        "output": ".colibri_reviews/src__api__comfyOrigin.ts__bug__4905fcbd.md",
+        "reviewed_at": "2026-09-19 11:30",
+        "model": "tencent/hy4-preview",
+        "cost": 0.05
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\components\\FilmRuns.tsx": {
+    "rel": "src/components/FilmRuns.tsx",
+    "modes": {
+      "bug": {
+        "sha": "6c58151a6748f37a01fe260f8f6f0ae1b998ee8758eaf25f983b35c6b55f34b6",
+        "output": ".colibri_reviews/src__components__FilmRuns.tsx__bug__6c58151a.md",
+        "reviewed_at": "2026-09-19 11:35",
+        "model": "tencent/hy4-preview",
+        "cost": 0.08
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\stores\\filmRunsStore.ts": {
+    "rel": "src/stores/filmRunsStore.ts",
+    "modes": {
+      "bug": {
+        "sha": "7d41a402ec8c610152d6794f9344a5b6c74bffaab96e4c9dfdc0f6de739a48b9",
+        "output": ".colibri_reviews/src__stores__filmRunsStore.ts__bug__7d41a40.md",
+        "reviewed_at": "2026-09-19 11:38",
+        "model": "tencent/hy4-preview",
+        "cost": 0.07
+      }
+    }
+  },
+  "E:\\AI\\Caliper\\src\\test\\waitFor.ts": {
+    "rel": "src/test/waitFor.ts",
+    "modes": {
+      "bug": {
+        "sha": "b16dad4f747a1d87f58474221ee232e8c348501464fb6962e9578619dfdd3a91",
+        "output": ".colibri_reviews/src__test__waitFor.ts__bug__b16dad4f.md",
+        "reviewed_at": "2026-09-19 11:40",
+        "model": "tencent/hy4-preview",
+        "cost": 0.05
       }
     }
   },
@@ -2193,17 +2249,11 @@
     "rel": "src/components/SettingsConsole.test.tsx",
     "modes": {
       "bug": {
-        "sha": "04eb6bbf14b4947d0d2e28a762ed1c746d29d7e8a7f99c84e035b8250b7f54b6",
-        "output": ".colibri_reviews/src__components__SettingsConsole.test.tsx__bug__04eb6bbf.md",
-        "reviewed_at": "2026-09-15",
-        "model": "zcode-glm-5.3",
-        "cost": 0,
-        "pass2": {
-          "model": "glm-5.3-zai-in-session",
-          "reviewed_at": "2026-09-17 15:10",
-          "output": ".colibri_reviews/src__components__SettingsConsole.test.tsx__bug__04eb6bbf_r2.md",
-          "new": 4
-        }
+        "sha": "648b6ba36ea03c11b93913dc7d3025c2ae8b8c46df4b4d2c6f9d50544d49f7da",
+        "output": ".colibri_reviews/src__components__SettingsConsole.test.tsx__bug__648b6ba3.md",
+        "reviewed_at": "2026-09-19 11:06",
+        "model": "tencent/hy4-preview",
+        "cost": 0.09
       }
     }
   },
