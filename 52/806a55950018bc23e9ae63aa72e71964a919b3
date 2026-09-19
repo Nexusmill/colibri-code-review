@@ -1,0 +1,22 @@
+{
+ "type": "CLEAR",
+ "commit": "52806a55950018bc23e9ae63aa72e71964a919b3",
+ "when": "20260919-093643",
+ "files": {
+  "scanner.py": {
+   "sha": "0714ecf8f05be50bc225e68220fdcf7415aff0cd9d0fc47b1b5d35af26c0b0a8",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260919-093641",
+   "artifact": ".adversary\\reviews\\gate_20260919-093641.md"
+  },
+  "tests/test_scanner_ext.py": {
+   "sha": "c5909b29ade56e821d743c819c97682d76d8d091be64e3d4a9ecb000edcbb441",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260919-093641",
+   "artifact": ".adversary\\reviews\\gate_20260919-093641.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260919-093641.md": "model: z-ai/glm-5.3-flash | provider: StreamLake | usage: {'prompt_tokens': 3099, 'completion_tokens': 4462, 'total_tokens': 7561, 'cost': 0.002534099, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.002534099, 'upstream_inference_prompt_cost': 0.000436959, 'upstream_inference_completions_cost': 0.00209714}, 'completion_tokens_details': {'reasoning_tokens': 3819, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['scanner.py', 'tests/test_scanner_ext.py']\n\nVerification of the change against the provided bytes:\n\n**Both touchpoints updated consistently.** The old extension tuple appeared in exactly two places \u2014 `CODE_EXT` and the `+8` code bonus in `scan()`. The staged full file shows both now include `.mjs/.cjs/.mts/.cts`; no third call site with the old tuple remains (nothing else branches on extension lists \u2014 `SKIP_FILE`, `DENY_DIRS`, `DENY_SUBSTR` are substring/path based). No extension was removed, so existing behavior is a strict superset.\n\n**Test math checks out.** All six fixture files: written to the temp root, ~120 chars each (\u2265 80, so no small-file penalty), depth 0, `sib = 6` (no density penalty), all start with `//` (+4), and all code-ish extensions get +8 \u2192 every new-ext row scores identically to `e.js` (112.0), so the equality assertions hold by construction, not by luck. `_is_vendor` can't fire on bare filenames; `SKIP_FILE` substrings (`.map`, `-lock.`, etc.) don't appear in `a.mjs`-style names; `MAX_BYTES` irrelevant. `scan()` does `abspath` (not `realpath`) on the temp root, and `rel`/`dp` are derived consistently from the same root, so the `rel`-keyed dict is sound on symlinked tmpdirs too. Exit code path matches the \"Exit 0 iff ALL PASS\" contract; any exception in `scan` escapes with non-zero.\n\n**Staleness/billing invariant preserved.** The new extensions flow through the same row builder, so `sha` is still computed over raw bytes \u2014 the store-`file_sha()` compatibility invariant in the existing comment is unaffected by the change.\n\n**Considered and rejected as findings:**\n- `.mts` collides with MPEG transport stream (AVCHD) video, so such files would now be ingested as \"code\" (garbage `chars`, inflated `tokens`, sha'd up to 2 MB). However, `.ts` \u2014 the *primary* MPEG-TS extension \u2014 was already in `CODE_EXT` before this change, so the scanner already accepts transport streams by design; the change widens an accepted, doctrine-mandated trade-off (`media`/`junk` dirs are denied, blobs >2 MB skipped) rather than introducing a new failure mode. Not a defect this change introduces.\n- Pre-existing inconsistency that `.hpp`/`.cc`/`.glsl`/`.sh`/`.rs`/`.go`/`.java`/`.rb` receive no `+8` bonus while `.h`/`.cpp` do: the touched line does not change this asymmetry, and the test only asserts parity among the JS family, which holds. Pre-existing, not worsened.\n\nNo broken call sites, no state/ordering hazards, no contract break with the visible surrounding code, test asserts exactly what the change claims.\n\nVERDICT: CLEAR"
+ }
+}
