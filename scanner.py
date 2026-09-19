@@ -3,7 +3,8 @@ Walks a project, hard-excludes secrets/legal/vendored/binary trees, then scores
 each source file so authored 'core' files rank above bundled dependencies."""
 import os, hashlib
 
-CODE_EXT = {".py", ".js", ".jsx", ".ts", ".tsx", ".c", ".h", ".hpp", ".cpp",
+CODE_EXT = {".py", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts",   # ES-module / typed JS are code (doctrine 2026-09-19)
+            ".c", ".h", ".hpp", ".cpp",
             ".cc", ".html", ".css", ".glsl", ".sh", ".ps1", ".rs", ".go", ".java", ".rb"}
 
 # Directory names never worth reviewing (secrets/legal/binaries/deps/scratch).
@@ -72,7 +73,7 @@ def scan(root):
         elif sib > 30:  score -= 15
         if os.path.basename(p).lower() in CORE_NAMES:
             score += 15
-        if ext in (".py", ".js", ".jsx", ".ts", ".tsx", ".c", ".h", ".cpp"):
+        if ext in (".py", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts", ".c", ".h", ".cpp"):
             score += 8
         elif ext in (".css", ".html"):
             score -= 6

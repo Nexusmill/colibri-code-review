@@ -48,3 +48,31 @@ exists to catch — and it nearly caught ME too (my first-pass junction-crop eye
   the metric used here) in tests/ would lock the invariant and pre-empt this exact false positive next
   time. Logged as a NICE-TO-HAVE (not a defect); not landed this unit to keep the review a pure
   no-code-change adjudication. Determinism spot-checked (same seed -> byte-identical PNG).
+
+---
+
+# FULL re-audit 2026-09-10 (appended - the record above predates the adversarial gate and is kept as history, not as baseline)
+
+# Colibri Review - bug (FULL re-audit) - asset-forge/forge/generators/patterns.py
+
+- **Source path:** `asset-forge/forge/generators/patterns.py` (twin `asset-forge-user/forge/generators/patterns.py` byte-identical)
+- **Reviewer:** claude-fable-5-1 fork (in-session), Colibri G37 protocol, campaign item 1 (AF units), rank 23
+- **sha256 reviewed:** `38d7fa870278fce291648b1653f0bba34707840b963291a62eba1d0467a5b84f` (sha8 `38d7fa87` - identical to the 2026-07-22 record, which is kept as history, not baseline)
+- **Date:** 2026-09-10 · **Mode:** bug, FULL read of the current bytes (owner ruling: pre-gate audits untrusted)
+- **Context pack:** jCodemunch outline + importers (registry.py is the only consumer via HIERARCHY[...]["fn"]; pipeline.generate_set and app.py:770 call registry.render with an int seed and a palette NAME filtered against PALETTE_NAMES); base.py DualCanvas contract read in the same pass; the 2026-07-22 adjudication record (five DeepSeek claims refuted, tileability measured) loaded as claims; no remediation or deferred rows name the file.
+
+## Verdict
+Clean. Every family is a pure function of (seed, palette, density); the canvas layer draws each primitive at nine toroidal offsets so the tiles wrap by construction (re-verified in base.py, not assumed from the July record); every palette index is bounded (all ten builtin palettes have five colours and `pick_palette` never returns anything else); densities default to 1.0 on an unknown word; `np.linspace(..., leaves)` accepts the numpy integer `rng.integers` returns.
+
+## Bugs & vulnerabilities
+None confirmed.
+
+## Missing safeguards
+- Reproducibility across numpy releases is a policy, not a guarantee: `np.random.default_rng` Generator method streams may change between numpy versions (NEP 19), so a seed reproduces a tile only on the same pinned numpy - true today because the shipped build is pinned (G17), but a numpy bump changes every historic seed's tile. Worth a note in the recipe doctrine, not a code change.
+- `pick_palette(rng, name)` draws from the rng only when the name is unknown, so the same seed yields a different layout depending on whether a palette name was given - deliberate (callers always pass a validated name or None).
+
+## Adversarial verification pass (refuted claims)
+- "A non-numeric seed crashes `_rng`" - every caller passes an int (app.py:770 parses it at the route, pipeline.generate_set validates `int(base_seed)`).
+- "The `%` / `1 + integers(0, len-1)` indexing breaks on a short palette" - `pick_palette` only returns builtin palettes and all ten have exactly five entries.
+- "Bands in `waves` leave a background strip at the top" - the first band's polygon starts at y = base + amp*sin(...) which can exceed 0, but the band at b = 0 is preceded by the wrap copy of band `bands` drawn at dy = -SIZE; the canvas wrap closes the strip (the July record measured it).
+- "`density` strings other than the three crash" - `.get(density, 1.0)`.
