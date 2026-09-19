@@ -1609,6 +1609,134 @@
    "Tools adversary-gate/install_selftest.py checks rewritemode_ignore, incident_reproduces_under_git_default, pin_keeps_one_valid_note_on_replay",
    "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\pr21_rebase.txt"
   ]
+ },
+ {
+  "id": "EV-101-A-REFUSED-INTRO-ACCOUNTED-OK-AND-A-RECOVERY-COMMAND-THAT-DIED-UNBILLED",
+  "date": "2026-09-17",
+  "repo": "fleet (round table: seats.py, genesis.py, session.py, cli.py and their tests) - the fix for the first live genesis build's crash, landed as fleet 76dc7e8",
+  "layer": "gate-review BLOCK, round one on the names tranche (z-ai/glm-5.3-flash via Together, 145,760 tokens, list $0.044); round two CLEAR",
+  "caught": "Two real LOWs, both introduced by the change under review, in a diff whose skip/keep logic, name checks, --yes ordering and import graph the reviewer had traced and passed. (1) session._speak_intro's new attempt loop accounted a genesis introduction whose NAME was refused (reserved or already claimed) with outcome 'ok' - the structured call had answered - although the seat then re-asks or passes and no turn is produced; log_call's contract attributes an 'ok' producing call to the NEXT turn, so every refused intro landed on whoever spoke next (in the new test's shape, all six on the mediator's topic_close) and calls_unattributed never saw them, while the sibling failed/empty paths were unattributed correctly. Money and state unaffected; the reconstruction record was wrong. (2) genesis.rename_seat billed a call only after _structured returned, and cmd_rt_genesis_rename caught ValueError alone: a provider timeout or connect error on both attempts - the transient failures _structured's retry exists for - escaped as a raw traceback (exit 1) from the recovery tool built for exactly that outage, and the failed calls never reached the ledger, against the repo's own 'billed, answered or not' rule.",
+  "severity": "LOW x2 (a record-integrity defect and an unbilled crash path in a recovery command); neither affected spend limits or table state",
+  "author_initially": "Not disputed - both traced true against the bytes. Fixed in the same hour: the intro computes the name problem before accounting and records outcome 'refused' (only 'ok' produces a turn), the rename bills in a finally and the CLI reports any exception and exits 2. Tests: the reserved-name session test now asserts six 'refused' calls in record.json's calls_unattributed with turn_n None and none pinned on a later turn; rename_seat with a model that raises on every attempt raises, bills one row and changes nothing; the CLI rename with a broken model prints 'RuntimeError: provider down' and returns 2.",
+  "resolution": "fleet 76dc7e8 (round two CLEAR; the suite 383 passing). The transparency tranche (7800bd8) and the Hub-tag tranche (b7dd582) that followed cleared on their first rounds.",
+  "refs": [
+   "fleet 76dc7e8 (fix(roundtable): a seat's name is checked, never trusted)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260917-110125.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260917-112347.md",
+   "fleet tests/fleet/test_rt_session.py test_a_genesis_intro_with_a_reserved_name_is_asked_again_then_passes_and_claims_nothing",
+   "fleet tests/fleet/test_rt_genesis.py test_rename_seat_asks_the_seats_own_model_for_a_free_name_and_stores_it_with_the_reason",
+   "fleet tests/fleet/test_rt_cli.py test_rt_genesis_rename_reports_a_provider_outage_and_exits_clean",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t38d_fix.py"
+  ]
+ },
+ {
+  "id": "EV-102-THE-ONE-PAID-IMAGE-THE-RENDERER-OPENED-UNGUARDED",
+  "date": "2026-09-17",
+  "repo": "fleet (round table: avatars.py backdrop(), render.py TileCache, cli.py thrones) - the owner's thrones ruling, landed as fleet 62140a3",
+  "layer": "gate-review BLOCK, round one on the thrones tranche (z-ai/glm-5.3-flash via StreamLake, 101,971 tokens, list $0.021); round two CLEAR",
+  "caught": "(MEDIUM, real) the new backdrop generation wrote the provider's bytes straight to the table's backdrop path and recorded the spend without ever checking they decode, while the new TileCache opened that file unguarded on every render - a bad payload (an error page from a provider host, a truncated stream) would brick `rt render` and every session's end-of-run video until someone hand-deleted the file, and nothing in the traceback would name it. The reviewer pointed at the module's own invariant: generate treats an unreadable output as no candidate and approve refuses one; the new writer validated nothing and the new reader assumed everything. The author had ALREADY hit this failure the same hour from a different door - a CLI test's three-byte fake had written over the machine's real backdrop because the test rig's table pointed at the real directory - and had fixed only that door (backdrop_path now follows artifacts_dir; the fake no longer writes) without closing the class. (LOW, real) `rt avatars thrones` reported a seat 'drawn' when generate returned no candidate (every image opaque) although save_candidates([]) queues nothing and the seat's old pending candidates silently survived; the ceiling promised a replacement that had not happened and the JSON said so with exit 0.",
+  "severity": "MEDIUM (a render-bricking file from one bad paid response, with a misleading traceback) + LOW (a false machine-readable claim an operator could approve from)",
+  "author_initially": "Not disputed. Fixed in the hour: the backdrop payload is decoded (Image.open(BytesIO).load()) before anything is written - a payload that is no image is written off and nothing written; TileCache opens the backdrop under except (UnidentifiedImageError, OSError), warns 'unreadable', and renders on the token ground; thrones reports counts per seat, a seat with no candidate is skipped with its earlier candidates untouched and the command exits 1. Tests: the not-an-image payload (written off, no file), the corrupt-file render (warned, token ground), the empty-generate thrones run (skipped, old candidates intact, exit 1), counts in the JSON.",
+  "resolution": "fleet 62140a3 (round two CLEAR; the suite 398 passing).",
+  "refs": [
+   "fleet 62140a3 (feat(roundtable): one shared throne for every seat ...)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260917-194406.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260917-195954.md",
+   "fleet tests/fleet/test_rt_avatars.py test_backdrop_is_drawn_once_from_the_reference_mark_opaque_and_wide",
+   "fleet tests/fleet/test_rt_render.py test_the_backdrop_fills_the_frame_dimmed_behind_the_tiles_when_the_table_has_one",
+   "fleet tests/fleet/test_rt_cli.py test_rt_avatars_thrones_has_each_persona_choose_its_metals_and_draws_the_shared_throne",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\t48c_fix.py"
+  ]
+ },
+ {
+  "id": "EV-103-THE-DOCS-LANE-READ-A-PNG-AS-DOCUMENTATION",
+  "date": "2026-09-17",
+  "repo": "Nexusmill brand/patternskin-deco-source (one 2 MB PNG, no code) - the gap is in Tools adversary-gate/adversary_gate.py `_diff_added_lines`, fixed in Tools e51909c",
+  "layer": "pre-push guard, docs lane (layer 1 at push time): a FALSE refusal, fail-safe direction",
+  "caught": "The second commit on the branch - one PNG, the wide art deco panel the owner pasted as the round table's backdrop alternative - was REFUSED: 'the local docs reviewer flagged secret material in outgoing documentation (chunk 8)'. The first commit (another PNG) had passed minutes earlier. Cause: `_diff_added_lines` pins `--text` so a `-diff` attribute cannot blind the scan (a real catch from 2026-09-07), which also forces a diff of a binary; it dropped only the lines carrying a NUL, and a PNG's deflate stream is mostly NUL-free - the pre-push pretest measured 28,881 added 'doc' lines (886 KB) from that one image, and chunk 8 of them read as a secret to the docs model. Chunk-boundary roulette decided which of two PNGs passed. The staged (commit-time) scanner has always skipped a blob with a NUL in its first 8 KB; the push-time audit never had that rule.",
+  "severity": "MEDIUM (false refusal, fail-safe direction: any push of a binary asset could be refused at random, and a hurried operator might reach for OVERRIDE)",
+  "author_initially": "Not disputed. Reproduced with the guard's own audit function before touching anything (outgoing commits 1, hard 0, soft 0, doc lines 28,881). Fixed test-first in Tools: gate_selftest check 43 commits a PNG-like blob (a NUL in its header, 400 NUL-free lines after it) beside a one-line doc in a throwaway repo and asserts the push audit's doc text is exactly that line - 129/130 RED, then a whole-blob skip in `_diff_added_lines` - 130/130 GREEN. THE GATE'S OWN ROUND ON THE FIX (gate_20260917-204659, MEDIUM, real) caught that the whole-blob skip exempted every binary from the HARD-LITERAL barrier too - the first silent channel past it: a credential planted inside an asset would have pushed with no refusal from any layer (commit-time floor and docscan skip binaries, the reviewer sees code only, audit and CI verify notes), and the author's context had compared the refusal layer to the warn-only commit layer - fail-open reasoning. Reworked: the pattern floor scans every forced-text line as before; only the DOCS FEED excludes a binary blob (memoised per (rev, path), one stderr line per skipped blob, as the guard's other skips are loud); a second selftest row plants a hard literal (built from parts at runtime) inside a binary and asserts the floor still reports it on that path with an empty docs feed - 131/131; round two CLEAR (gate_20260917-205400).",
+  "resolution": "Tools e51909c (adversary_gate.py + gate_selftest.py; two gate rounds, one real MEDIUM on the author's first cut); hooks run the Tools working tree, so every armed repo has the fix at once; the refused push then went through.",
+  "refs": [
+   "Tools e51909c",
+   "Nexusmill brand/patternskin-deco-source 1ffa2a15 (the refused commit; PR #22)",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\nm_deco_push2.txt",
+   "C:\\Users\\User\\AppData\\Local\\Temp\\claude\\c--Users-User-source-repos-Nexusmill\\f90282a3-ef0c-408e-89f3-1a7ad73d2022\\scratchpad\\nm_pretest.py",
+   "Tools adversary-gate/gate_selftest.py check push_audit_never_feeds_a_binary_blob_to_the_docs_model"
+  ]
+ },
+ {
+  "id": "EV-104-TWO-RETRY-PATHS-THAT-WOULD-HAVE-REBUILT-THE-SAME-FAILURE",
+  "date": "2026-09-18",
+  "repo": "fleet (round table: cli.py thrones/regen, avatars.py generate) - the owner's scale-and-clipping fixes, landed as fleet 6eb2b83 and ede2f7e",
+  "layer": "gate-review BLOCK, round one on each of two consecutive tranches (z-ai/glm-5.3-flash); round two CLEAR on both",
+  "caught": "(1, LOW, real - 6eb2b83) `rt avatars thrones` began reusing a seat's recorded throne choice so a redraw costs the images only, but the choice was recorded BEFORE the draw: a choice whose assembled brief the blocklist refuses would have become the cached one, and the documented retry (`thrones --seat X --yes`) would have rebuilt the same refusal forever, with no message naming `--rechoose`. (2, MEDIUM, real - ede2f7e) thrones moved to a tall 2:3 canvas because the square kept cutting thrones off, but the canvas was call-site knowledge only - a candidate recorded its prompt, not its aspect - and every discard warning told the operator to `regen`, which rebuilds from the pending prompt on the square canvas: the printed recovery would have reproduced the cut-off, paid for it, and a square survivor would have REPLACED the seat's good tall batch. The reviewer named it the same 'standard retry rebuilds the same failure' pattern the tranche's own comment had just sworn off.",
+  "severity": "LOW + MEDIUM (money-waste and self-defeating recovery paths; no state corruption, screening precedes every reserve)",
+  "author_initially": "Both accepted on the bytes. (1) the choice is recorded only after a successful draw and the failure line names --rechoose; test: a refused choice leaves no record and the next run asks again. (2) the candidate records its aspect, regen passes it back, and a discard warning names the command that drew the batch (thrones for a tall one, regen for a square one); tests: the aspect travels with the candidate, a tall batch's discard names thrones, regen redraws a 2:3 pending batch on 2:3.",
+  "resolution": "fleet 6eb2b83 and ede2f7e (round two CLEAR each; suite 403 passing). Live: the square canvas clipped 4 of 8 redraws even under a margin brief; the tall canvas drew 4 of 4 whole.",
+  "refs": [
+   "fleet 6eb2b83 (fix(roundtable): one scale for every avatar and no clipped thrones)",
+   "fleet ede2f7e (fix(roundtable): thrones are drawn on a tall 2:3 canvas)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-000535.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-001929.md",
+   "fleet tests/fleet/test_rt_cli.py test_rt_avatars_thrones_has_each_persona_choose_its_metals_and_draws_the_shared_throne",
+   "fleet tests/fleet/test_rt_cli.py test_rt_avatars_review_and_approve (the regen-on-its-own-canvas rows)",
+   "fleet tests/fleet/test_rt_avatars.py test_a_candidate_cut_off_at_the_frame_edge_is_paid_for_but_is_no_candidate"
+  ]
+ },
+ {
+  "id": "EV-105-A-LOCAL-PAGE-THAT-ANY-OTHER-TAB-COULD-HAVE-SPENT-THROUGH",
+  "date": "2026-09-18",
+  "repo": "fleet (round table: review_server.py, the owner's avatar review page) - landed as fleet 20c7137",
+  "layer": "gate-review BLOCK, rounds one to four (z-ai/glm-5.3-flash); round five CLEAR",
+  "caught": "(1, MEDIUM, real) the page's local API (127.0.0.1) parsed any POST body as JSON with no Host or content-type check: a foreign website open in another tab could fire a cross-origin 'simple' POST (text/plain, no preflight) at /api/generate and run a PAID generation up to the genesis ceiling, or at /api/discard and /api/approve and rewrite the owner's review state - against the repo's own G19 ethos and the module's care elsewhere (provider-host pinning, hand-followed redirects, the blocklist). (2, LOW, real) a taken port (the server already running in another terminal, the owner's likeliest failure) died with a raw traceback where every sibling command reports in one line and exits 2. (3, LOW, real, round two) a port outside 1-65535 escaped the new guard as OverflowError, and --port 0 would have bound an ephemeral port and announced an address nobody can open. (4, MEDIUM, real, round three) the owner's prompt edit lived only in the page's text box and every reload rebuilt it from the recorded throne prompt, so the second pull of an iteration would have billed the OLD prompt while the owner believed they were iterating, and no card showed the prompt it was drawn from - against the feature's own spec ('modify it before each generation', 'as many pulls as I want'). (5, MEDIUM + LOW-MEDIUM, real, round four) the Host check guarded POST alone, so a DNS-rebound page could still read the state, the local file paths and the unpublished image bytes over GET, contradicting the module's own comment; and a card's Regenerate posted the throne canvas regardless of the card's own, redrawing a square bust tall and drifting the seat's canvas - the very invariant the CLI regen had just enshrined.",
+  "severity": "MEDIUM x3 (cross-origin spend, a reload that re-bills the wrong prompt, a rebound read of paths and images) + LOW-MEDIUM (a wrong-canvas redraw) + LOW x2 (traceback exits)",
+  "author_initially": "All accepted on the bytes. (1) the API answers only JSON from a local Host (the page's own requests carry application/json, which forces a preflight this server never grants a foreign origin); tests fire a text/plain POST and a foreign-Host POST at /api/discard and prove 403 with the queue untouched. (2) serve reports a busy port in one line and returns False, the CLI exits 2 - and the test for it HUNG at first: HTTPServer's allow_reuse_address let a second bind on the busy port succeed on Windows and serve_forever blocked on a port another process owned; the server now sets allow_reuse_address False, so a second serve fails to bind as the owner would expect. (3) the port range is checked before binding. (4) the page keeps a draft per seat across every reload, the box seeds from the last pull's prompt, every card shows the prompt it was drawn from. (5) one local-Host check guards every route (a rebound name reads nothing), and Regenerate sends the card's own aspect.",
+  "resolution": "fleet 20c7137 (five rounds, four real BLOCKs; suite 408 passing).",
+  "refs": [
+   "fleet 20c7137 (feat(roundtable): the owner's avatar review page)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-025639.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-032005.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-032531.md",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-033106.md",
+   "fleet tests/fleet/test_rt_review_server.py test_the_server_serves_the_page_the_state_and_only_store_held_images"
+  ]
+ },
+ {
+  "id": "EV-106-A-STOP-KEY-THE-POOL-WOULD-HAVE-IGNORED-FOR-TWO-HOURS",
+  "date": "2026-09-18",
+  "repo": "fleet (round table: knowledge.backfill_seats, the parallel knowledge backfill) - landed as fleet 7aa1053",
+  "layer": "gate-review BLOCK, round one (z-ai/glm-5.3-flash via Together); round two CLEAR",
+  "caught": "(MEDIUM, real) the new parallel backfill ran the seats under `with ThreadPoolExecutor` and read `pool.map`: the owner's Ctrl+C would have raised KeyboardInterrupt in the main thread, the pool's exit would have joined every worker thread (CPython never delivers SIGINT to workers), and up to five running seats would have kept buying ScrapingDog searches and syntheses for the rest of their loops - about two hours - behind a frozen terminal, a second Ctrl+C landing in the atexit join of the non-daemon workers. The sequential loop it replaced stopped within the current answer. The reviewer also named the way out that nothing on screen told the operator about (`fleet halt` from another shell). The session's advisor named the same hole in the same minute, independently.",
+  "severity": "MEDIUM (about two hours of paid searches after an explicit stop, with no feedback)",
+  "author_initially": "Accepted on the bytes. Fixed: a stop event is checked before every answer; the interrupt sets it, prints one line, waits for the in-flight answers only, cancels the queued seats and re-raises; the CLI answers the interrupt in one line and exits 130. The fix's first GREEN run then caught its own gap: the unit test raised a REAL SIGINT from a timer thread while the main thread waited on the pool, and every answer still landed - on Windows a main thread blocked in Future.result() sees no interrupt until the wait returns (lock waits are interruptible on POSIX only), so the owner's key press would have surfaced when the first seat finished. The main thread now polls the futures every half second; the real-signal test and a stop-mid-answer test pass three runs in a row.",
+  "resolution": "fleet 7aa1053 (two rounds, one real BLOCK; suite 414 passing).",
+  "refs": [
+   "fleet 7aa1053 (feat(roundtable): the backfill runs seats in parallel)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-192505.md",
+   "fleet tests/fleet/test_rt_knowledge.py test_ctrl_c_stops_a_parallel_backfill_after_the_in_flight_answers",
+   "fleet tests/fleet/test_rt_knowledge.py test_a_stop_request_ends_every_seat_after_its_in_flight_answer",
+   "fleet docs/design/2026-09-16-round-table-gate-catches.md row 50"
+  ]
+ },
+ {
+  "id": "EV-107-A-VACUUM-THAT-WOULD-HAVE-PULLED-THE-FLOOR-FROM-UNDER-EVERY-OTHER-PROCESS",
+  "date": "2026-09-18",
+  "repo": "fleet (memory: lance_store.py, the Store's compaction and prune) - landed as fleet d8fb038",
+  "layer": "gate-review BLOCK, round one (z-ai/glm-5.3-flash via StreamLake); round two CLEAR",
+  "caught": "(HIGH, real) The fix for a Store that had never compacted (21,782 versions, 18,362 fragment files, 17 GB behind 14,781 rows; every read 0.75 s) added a periodic prune every 200 writes keeping ten minutes of history - and the reviewer read the change's own words against it: the connection used LanceDB's default read consistency, under which a table opened in another process stays on the version it opened for that process' lifetime; the change's own docstring and manifest row said a reader pinned to a pruned version fails; only the manual command was gated to an offline store. So the review page or the Agent Server, idle more than ten minutes while a backfill wrote, would have had its version pruned out from under it and failed on its next read. Two more from the same root: the row-count guard (designed for the offline command) would have raised inside the periodic path when another process wrote between the two counts, aborting a paid run; and the first periodic optimize on the bloated live store - two list_versions calls measured at 300 s each plus compaction of 18k fragments, inside the store lock - would have frozen a live run for more than ten minutes with no gate or warning if the backfill ran before the one-off vacuum. The reviewer named the correct mitigation: strong read consistency on the connection.",
+  "severity": "HIGH (every other fleet process failing after ten idle minutes; a paid run aborted; a ten-minute freeze inside a live run)",
+  "author_initially": "Accepted on the bytes, all three. (1) lancedb.connect(path, read_consistency_interval=timedelta(0)) - every read checks for the latest version, so a prune never strands a reader; proven by a test that opens two LanceStore connections on one path, prunes everything but the latest three times from the writer, and reads, searches, counts and writes from the reader. (2) _optimize(keep, strict): the row-count guard raises only from the offline command; the periodic path reports and never raises (test: count_rows patched to differ across the vacuum). (3) Version counts from the manifest directory listing (milliseconds) on both paths; health() reports rows, manifests, fragments, bytes and `bloated` (> 2,000 manifests); `rt backfill` refuses to start on a bloated store in one line naming `fleet store optimize --yes` (exit 2), so the first periodic optimize can never be a freeze inside a live run. This row's own first draft was BLOCKed by the docket's gate (colibri review gate_20260918-234644): its ref for the bloated-store refusal named the exit-1 test by its name alone (the refusal is asserted inside that same test, exit 2) and fused two locators into one refs element - both corrected in this row.",
+  "resolution": "fleet d8fb038 (two rounds, one real BLOCK; suite 422 passing; remediation manifest FLEET-LANCE-VERSION-BLOAT).",
+  "refs": [
+   "fleet d8fb038 (fix(memory): the LanceStore compacts and prunes itself)",
+   "C:\\Users\\User\\source\\repos\\fleet\\.adversary\\reviews\\gate_20260918-232107.md",
+   "fleet tests/fleet/test_lance_store.py test_a_reader_in_another_connection_survives_the_writer_pruning_everything",
+   "fleet tests/fleet/test_lance_store.py test_the_periodic_optimize_never_aborts_a_run_over_another_writers_rows",
+   "fleet tests/fleet/test_rt_cli.py test_rt_backfill_exits_one_and_names_the_re_run_when_answers_were_left_open - the exit-1 case is the left-open answers; the SAME test then patches cli._store_health to a bloated report and asserts `rt backfill --yes` exits 2 with the line naming `fleet store optimize --yes`",
+   "fleet docs/remediation_manifest.json FLEET-LANCE-VERSION-BLOAT",
+   "fleet docs/design/2026-09-16-round-table-gate-catches.md row 51"
+  ]
  }
  ]
 }
