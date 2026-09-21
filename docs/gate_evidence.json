@@ -1790,6 +1790,17 @@
    "C:\\Users\\User\\source\\repos\\colibri-docket-ev108\\.adversary\\reviews\\gate_20260919-145223.md (CLEAR)",
    "E:\\AI\\Caliper\\.colibri_reviews\\_manifest.json (the mirrored source, sha256-identical to the committed bytes)"
   ]
+ },
+ {
+  "id": "EV-112-BLINK-ONLINE-SONGS",
+  "date": "2026-09-21",
+  "repo": "Blink",
+  "layer": "gate-review BLOCK",
+  "caught": "The new online-songs publish path caught (EnrichError, OSError, ValueError) per attempt, but resp.read() on the music-site manifest can raise http.client.IncompleteRead - an HTTPException outside that tuple. It bypassed the retry loop, escaped publish_songs into the compile hook, and marked the whole enrichment failed AFTER the paid songs were generated (plain post, no cards/assembly), while leaving already-uploaded songs unlisted in a stale manifest. Inconsistent with the module's own _http_json, which catches HTTPException for exactly this class.",
+  "severity": "MEDIUM (paid-enrichment loss + orphaned uploads on a flaky connection)",
+  "author_initially": "Accepted immediately.",
+  "resolution": "http.client.HTTPException added to the per-attempt except tuple; test_publish_incomplete_read_degrades_not_aborts proves an IncompleteRead now retries and degrades to a plain no-link enrichment. Suite 125/125 OK; re-reviewed to CLEAR; shipped as Blink acf8d3d.",
+  "refs": ["Blink .adversary/reviews/gate_20260921-123442.md (BLOCK)", "Blink .adversary/reviews/gate_20260921-123803.md (CLEAR)", "Blink acf8d3d (feat(enrich): publish songs online)"]
  }
  ]
 }
