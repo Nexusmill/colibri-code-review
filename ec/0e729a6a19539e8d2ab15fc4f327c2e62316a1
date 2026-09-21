@@ -1,0 +1,22 @@
+{
+ "type": "CLEAR",
+ "commit": "ec0e729a6a19539e8d2ab15fc4f327c2e62316a1",
+ "when": "20260921-052612",
+ "files": {
+  "agent_error_rates.py": {
+   "sha": "1b2983537142366fe23dbc98437e1ad9d3478a7ed3c9ec3423857ed01c750e35",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260921-052607",
+   "artifact": ".adversary\\reviews\\gate_20260921-052607.md"
+  },
+  "docs/agent_error_rates.json": {
+   "sha": "938abffbb08abc61034a4a51f716d042cc68518d32229298406362bdef38b6c3",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260921-052607",
+   "artifact": ".adversary\\reviews\\gate_20260921-052607.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260921-052607.md": "model: z-ai/glm-5.3-flash | provider: CoreWeave | usage: {'prompt_tokens': 12920, 'completion_tokens': 24611, 'total_tokens': 37531, 'cost': 0.0142435, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0142435, 'upstream_inference_prompt_cost': 0.001938, 'upstream_inference_completions_cost': 0.0123055}, 'completion_tokens_details': {'reasoning_tokens': 23860, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['agent_error_rates.py', 'docs/agent_error_rates.json']\n\n## Adversarial review \u2014 agent_error_rates.py + docs/agent_error_rates.json\n\nWhat I verified against the provided bytes:\n\n**1. Generated JSON is authentic to THIS script version.** The `_doc`/`method` strings match the script's literals exactly, and the `missing` list order matches the code's append order precisely (blink unindexed \u2192 caliper unindexed + 5 note anomalies \u2192 nexusmill unindexed + 3 note anomalies \u2192 openaiastra unindexed; fleet silent = no anomalies, consistent with `git_gate_reviews` returning empty/empty when no notes ref exists). Arithmetic all reconciles: 207+89=296 episodes; 8+244+97+113=462 recovered; 12 anomalies = len(missing); rates 5/207\u21920.024 and 4/89\u21920.045; `missing_or_unreadable`=0 correctly counts only \"file\"-keyed entries.\n\n**2. Episode dedup logic.** Traced all four branch combinations of `by_episode`: cross-source is order-independent (gate replaces archive; archive never replaces gate); same-source earliest-date wins with empty dates losing (`or \"9999\"`), consistent with `git_gate_reviews`'s `a[\"when\"] or \"9999\"` sort (r8 F4). Full-sha normalization via `rev-parse` makes abbreviated archive anchors and 40-char note shas collide as intended (r7 F1). Same-source archive ties resolve by filename order because `outputs` is iterated `sorted(set(...))` \u2014 matching the MD's disclosed \"deterministic residual\" claim.\n\n**3. Metric-integrity invariants.** No-count archive reviews \u2192 `no_count_line`, excluded from denominator, never treated as zero-findings evidence (r3 F1) \u2014 code matches the docstring. Unresolvable anchors \u2192 `unresolved`, itemized, never silently dropped. Malformed manifest rows quarantined per-row; only wholly unparseable/non-object manifests fall back to the disk glob, and the disk-union reconciliation is recorded (r5 F1\u2013F3). Synthesis/non-.md exclusions are deliberate and commented.\n\n**4. Failure containment.** `git_author`, note show/JSON, artifact reads, and manifest loads are all exception-guarded; failures route to `unresolved`/`missing`, not crashes or silent drops. `next(r[\"email\"] ...)` cannot StopIteration (every agent name originates from `rows`).\n\n**Residual risks I considered and do not block on:** (a) gate-notes-wins over archive rows assumes the surviving note carries all rounds so its earliest artifact is the initial denial \u2014 this is the r8 F2 reconciliation, cited as settled, and I have no bytes contradicting the note-accumulation model; (b) same-day archive rounds order by filename \u2014 disclosed in the shipped MD itself; (c) `parse_gate_artifact` counting robustness against non-canonical formatting \u2014 mitigated by the numbered-finding regex plus the `^VERDICT:\\s*BLOCK` prose fallback, and gate artifacts are the house's own output format; (d) the r4 F4 comment claims a no-sha-line vs sha-without-anchor distinction the counters don't separately report \u2014 both are correctly excluded from rates either way, so only the `on_demand_excluded` label lumps them; cosmetic. None of these is a demonstrable defect introduced or enabled by this change; blocking on the documented, gate-settled data-model assumptions would be re-litigation without new evidence.\n\nVERDICT: CLEAR"
+ }
+}
