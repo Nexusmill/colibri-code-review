@@ -1790,6 +1790,17 @@
    "C:\\Users\\User\\source\\repos\\colibri-docket-ev108\\.adversary\\reviews\\gate_20260919-145223.md (CLEAR)",
    "E:\\AI\\Caliper\\.colibri_reviews\\_manifest.json (the mirrored source, sha256-identical to the committed bytes)"
   ]
+ },
+ {
+  "id": "EV-111-BLINK-SONG-ARCHIVE",
+  "date": "2026-09-21",
+  "repo": "Blink",
+  "layer": "gate-review BLOCK",
+  "caught": "The new song-archive change guarded only the mp3 copy step: the plan.json/index.html writes sat bare on the enrichment critical path (IsADirectoryError, read-only file or AV lock would abort enrichment AFTER the paid songs were generated - the exact failure class the author's own new test declared must degrade gracefully), corrupt hand-edited plan.json rows (non-string file, non-list songs, null title) crashed the page build, and shutil.copy2 silently overwrote a previously archived paid mp3 on a same-name re-run collision.",
+  "severity": "MEDIUM (paid-enrichment loss on archive-write failure) + LOW (silent paid-artifact overwrite)",
+  "author_initially": "Accepted immediately; both fixed with tests in the same session.",
+  "resolution": "Archive writes wrapped in the same best-effort try/except as the copy step (warning printed, enrichment never aborts); plan.json merge and page build skip corrupt rows defensively; _archive_song suffixes .2/.3... instead of overwriting so both paid copies survive. 3 new tests, suite 120/120 OK; re-reviewed to CLEAR; shipped as Blink 67240b6.",
+  "refs": ["Blink .adversary/reviews/gate_20260921-112506.md (BLOCK)", "Blink .adversary/reviews/gate_20260921-112848.md (CLEAR)", "Blink 67240b6 (feat(enrich): archive source songs to music/ with playable page)"]
  }
  ]
 }
