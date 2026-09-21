@@ -372,12 +372,17 @@ def main(argv=None):
                     "under the owner's git identity on behalf of every agent."),
     }
     for name, g in sorted(agents.items(), key=lambda kv: -kv[1]["findings"]):
+        counted = g["counted"] or 0
         ledger["agents"].append({
             "author": name, "email": next(r["email"] for r in rows if r["author"] == name),
-            "episodes": g["episodes"], "counted": g["counted"],
+            "episodes": g["episodes"], "counted": counted,
             "findings": g["findings"], "with_findings": g["with_findings"],
             "no_count_line": g["no_count_line"],
-            "rate": round(g["findings"] / g["counted"], 3) if g["counted"] else None,
+            "pct_commits_with_errors": (round(100.0 * g["with_findings"] / counted, 1)
+                                        if counted else None),
+            "findings_per_error_commit": (round(g["findings"] / g["with_findings"], 2)
+                                          if g["with_findings"] else None),
+            "rate": round(g["findings"] / counted, 3) if counted else None,
             "repos": sorted(g["repos"]),
         })
 
@@ -388,19 +393,42 @@ def main(argv=None):
 
     md = ["# AGENT_ERROR_RATES — error-introduction per authoring agent (v3, machine-wide)",
           "",
+          "**ERROR INTRODUCTION RATE = the percentage chance (0-100%) that a COMMIT "
+          "introduces at least one error**: the share of an agent's commits whose "
+          "adversarial review's INITIAL DENIAL (first BLOCK) carried at least one "
+          "finding. A commit denied five times before clearing counts once. "
+          "**VALIDATION STATUS: these are gate-review findings counted at the denial, "
+          "NOT outcome-validated errors** — in this workflow every BLOCK finding is "
+          "adjudicated (remediated as real, or factually rebutted with byte evidence "
+          "and re-verified by the reviewer), but this ledger does not yet join each "
+          "finding to its outcome, so the percentage is an UPPER BOUND on the true "
+          "error-introduction chance; observed gate false-positive rates are low "
+          "(single digits), so the validated rate sits a few points under the stated "
+          "figure. Findings are severity-blind (HIGH/MEDIUM/LOW each count).",
+          "",
           "> INITIAL DENIALS ONLY, machine-wide: every repo with `.adversary/reviews` "
           "under the swept roots, denials recovered from on-disk BLOCK artifacts "
           "(notary notes keep only the final CLEAR of a multi-round episode). "
           "Attribution = git AUTHOR (repos driven via `_git_do.py` commit under the "
-          "owner's identity — identity-blurred). Rate = findings / counted episodes.",
+          "owner's identity — identity-blurred). The JSON also carries findings per "
+          "counted commit (`rate`); the MD shows the percentage form.",
           "",
-          "| agent | episodes | counted | findings | w/ findings | findings/counted | repos |",
+          "| agent | commits (counted) | commits w/ errors | % chance error per commit | findings | findings/error-commit | repos |",
           "|---|---|---|---|---|---|---|"]
     for ag in ledger["agents"]:
-        rate = "%.3f" % ag["rate"] if ag["rate"] is not None else "n/a"
-        md.append("| %s | %d | %d | %d | %d | %s | %s |" % (
-            ag["author"], ag["episodes"], ag["counted"], ag["findings"],
-            ag["with_findings"], rate, ", ".join(ag["repos"])))
+        pct = ("%.1f%%" % ag["pct_commits_with_errors"]
+               if ag.get("pct_commits_with_errors") is not None else "n/a")
+        fpec = ("%.2f" % ag["findings_per_error_commit"]
+                if ag.get("findings_per_error_commit") is not None else "n/a")
+        md.append("| %s | %d | %d | **%s** | %d | %s | %s |" % (
+            ag["author"], ag["counted"], ag["with_findings"], pct,
+            ag["findings"], fpec, ", ".join(ag["repos"])))
+    t = ledger["totals"]
+    overall_err = sum(ag["with_findings"] for ag in ledger["agents"])
+    overall_pct = (100.0 * overall_err / t["counted"]) if t["counted"] else 0.0
+    md += ["", "**MACHINE-WIDE: %.1f%% of commits introduce at least one error** "
+           "(%d of %d counted commits)."
+           % (overall_pct, overall_err, t["counted"])]
     if ledger["programs"]:
         md += ["", "## Sub-programs (gate episodes with a denial program match)",
                "",

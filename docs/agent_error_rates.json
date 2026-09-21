@@ -1,16 +1,18 @@
 {
  "_doc": "error-introduction rate per authoring agent, machine-wide, INITIAL DENIALS ONLY (owner orders 2026-09-21). v3: dynamic repo discovery; denials recovered from on-disk BLOCK artifacts (notary notes are overwrite semantics and lose remediation rounds); sub-program attribution from artifact file lists.",
- "generated_at": "2026-09-21T14:13:54",
+ "generated_at": "2026-09-21T14:54:36",
  "method": "Episodes = every notarized commit in every repo carrying .adversary/reviews directly under a swept root (depth-1 discovery), plus archive reviews anchored '= commit <sha>'. Each on-disk BLOCK artifact attaches to the first notarized commit landing after its timestamp; only the FIRST BLOCK per commit counts (initial denial); CLEAR-only commits are zero-finding episodes. rate = findings / counted episodes (archive rows without a parseable 'new: N' are flagged no_count_line and excluded from the denominator). Attribution = git AUTHOR (caveat: repos driven via _git_do.py commit under the owner's identity, so their rows mix every agent).",
  "agents": [
   {
    "author": "phantom-man",
    "email": "damienfosborn@gmail.com",
-   "episodes": 602,
-   "counted": 602,
-   "findings": 519,
-   "with_findings": 252,
+   "episodes": 603,
+   "counted": 603,
+   "findings": 520,
+   "with_findings": 253,
    "no_count_line": 0,
+   "pct_commits_with_errors": 42.0,
+   "findings_per_error_commit": 2.06,
    "rate": 0.862,
    "repos": [
     "3DPrinting",
@@ -39,6 +41,8 @@
    "findings": 48,
    "with_findings": 18,
    "no_count_line": 0,
+   "pct_commits_with_errors": 19.6,
+   "findings_per_error_commit": 2.67,
    "rate": 0.522,
    "repos": [
     "Nexusmill"
@@ -66,13 +70,13 @@
   }
  ],
  "totals": {
-  "episodes": 694,
-  "counted": 694,
-  "findings": 567,
+  "episodes": 695,
+  "counted": 695,
+  "findings": 568,
   "gate_repos": 17,
   "archive_on_demand_excluded": 978,
   "unresolved_commits": 0,
-  "unlanded_denials": 10,
+  "unlanded_denials": 6,
   "anomalies": 0
  },
  "unresolved": [],
@@ -109,33 +113,9 @@
   },
   {
    "repo": "colibri-code-review",
-   "artifact": "gate_20260921-132450.md",
-   "when": "20260921-132450",
-   "findings": 1
-  },
-  {
-   "repo": "colibri-code-review",
-   "artifact": "gate_20260921-133333.md",
-   "when": "20260921-133333",
-   "findings": 6
-  },
-  {
-   "repo": "colibri-code-review",
-   "artifact": "gate_20260921-134041.md",
-   "when": "20260921-134041",
-   "findings": 1
-  },
-  {
-   "repo": "colibri-code-review",
-   "artifact": "gate_20260921-135633.md",
-   "when": "20260921-135633",
+   "artifact": "gate_20260921-145142.md",
+   "when": "20260921-145142",
    "findings": 2
-  },
-  {
-   "repo": "colibri-code-review",
-   "artifact": "gate_20260921-141056.md",
-   "when": "20260921-141056",
-   "findings": 3
   }
  ],
  "anomalies": [],
