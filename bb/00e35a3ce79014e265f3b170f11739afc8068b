@@ -1,0 +1,22 @@
+{
+ "type": "CLEAR",
+ "commit": "bb00e35a3ce79014e265f3b170f11739afc8068b",
+ "when": "20260921-153816",
+ "files": {
+  "agent_error_rates.py": {
+   "sha": "b359a73ec332c1a88ceadbe9655509e96708acb8ed9dd07030a89a9da90dba80",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260921-153811",
+   "artifact": ".adversary\\reviews\\gate_20260921-153811.md"
+  },
+  "docs/agent_error_rates.json": {
+   "sha": "22a96f05d6246b914a0bff866458f278181187660e37cad91464dab3fbc874de",
+   "model": "z-ai/glm-5.3-flash",
+   "when": "20260921-153811",
+   "artifact": ".adversary\\reviews\\gate_20260921-153811.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260921-153811.md": "model: z-ai/glm-5.3-flash | provider: Venice | usage: {'prompt_tokens': 9811, 'completion_tokens': 2830, 'total_tokens': 12641, 'cost': 0.00288665, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00288665, 'upstream_inference_prompt_cost': 0.00147165, 'upstream_inference_completions_cost': 0.001415}, 'completion_tokens_details': {'reasoning_tokens': 2123, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['agent_error_rates.py', 'docs/agent_error_rates.json']\n\nReviewing the change: it adds two derived metrics (`pct_commits_with_errors`, `findings_per_error_commit`) plus a machine-wide headline to the MD, and refreshes the JSON data.\n\nChecks performed against the staged bytes:\n\n1. **Division safety**: `pct` is guarded by `if counted else None`; `findings_per_error_commit` is guarded by `if g[\"with_findings\"] else None`. `counted = g[\"counted\"] or 0` is a no-op on an int but harmless. No new ZeroDivisionError path.\n\n2. **Internal arithmetic consistency of the regenerated JSON**:\n   - totals: 603 + 92 = 695 counted/episodes \u2713; 520 + 48 = 568 findings \u2713.\n   - pct: 253/603 = 41.96 \u2192 42.0 \u2713; 18/92 = 19.57 \u2192 19.6 \u2713.\n   - fpec: 520/253 = 2.055 \u2192 2.06 \u2713; 48/18 = 2.667 \u2192 2.67 \u2713.\n   - MD headline: (253+18)/695 = 38.99% \u2192 a valid computed value; `overall_err` sums each agent once, no double counting since episodes dedupe to one row per (repo, commit) before aggregation.\n\n3. **Unlanded-delta coherence**: old unlanded = 5 cheyenne + 5 colibri = 10; new = 5 cheyenne + 1 colibri (gate_20260921-145142, findings 2) = 6, matching `unlanded_denials: 6`. The episode delta (+1, +1 finding, +1 with_findings on phantom-man) is consistent with the four retired colibri artifacts (132450\u2013141056) collapsing onto one newly landed commit whose *earliest* block (132450, 1 finding) counts as the initial denial per the `assigned` earliest-wins logic; the newest block (145142, 2 findings) correctly stays unlanded and contributes nothing to the denominator or numerator. Programs table unchanged is consistent \u2014 colibri-code-review is not in `SUBPROGRAMS`, so `program_for` returns \"\".\n\n4. **Semantics vs. prose**: the MD claims \"a commit denied five times before clearing counts once\" \u2014 this matches the code (only the earliest BLOCK per host commit is counted; later rounds' findings are dropped), and the new UPPER-BOUND validation caveat is accurate about what is counted (denial-time findings, not adjudicated outcomes). `findings_per_error_commit` inherits the same initial-denial-only numerator, which the doc's \"INITIAL DENIALS ONLY\" banner covers.\n\n5. **Callers/format**: the MD table now emits 7 columns matching its 7-column header; `.get()` usage on `ag` keys that are always present is safe. No other module consumes `agent_error_rates.json` fields that were renamed \u2014 no field was removed (`rate`, `counted`, `episodes`, `with_findings` all retained), so downstream readers of the old shape are unbroken.\n\nNo logic errors, no broken consumers, no money/security surface, and the data refresh is internally consistent with the staged code.\n\nVERDICT: CLEAR"
+ }
+}
