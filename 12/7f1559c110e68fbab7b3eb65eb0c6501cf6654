@@ -1,0 +1,23 @@
+{
+ "type": "CLEAR",
+ "commit": "127f1559c110e68fbab7b3eb65eb0c6501cf6654",
+ "when": "20260922-162013",
+ "files": {
+  "reviews_archive/blink/_manifest.json": {
+   "sha": "e48a8fe510a2f9cf981148f62ba09c42a1f4edbcc3f5cd8fa0e214455e678c8d",
+   "model": "z-ai/glm-5.3-flash@parasail/fp8+coreweave/nvfp4+modal/fp8",
+   "when": "20260922-162007",
+   "artifact": ".adversary\\reviews\\gate_20260922-162007.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260922-162007.md": "model: z-ai/glm-5.3-flash@parasail/fp8+coreweave/nvfp4+modal/fp8 | provider: Parasail | usage: {'prompt_tokens': 9363, 'completion_tokens': 5211, 'total_tokens': 14574, 'cost': 0.00400995, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00400995, 'upstream_inference_prompt_cost': 0.00140445, 'upstream_inference_completions_cost': 0.0026055}, 'completion_tokens_details': {'reasoning_tokens': 4679, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['reviews_archive/blink/_manifest.json']\n\nReviewed the staged manifest change as a pure data/cache-integrity change. Checks performed against the provided bytes:\n\n**Structure & JSON validity**\n- Full staged file parses as valid JSON; braces/quotes balanced; trailing newline now present (old file lacked one \u2014 improvement, not a defect).\n- No duplicate keys: all 24 absolute-path keys are unique; no file gained a second entry.\n- No `files` wrapper introduced; no relative-keyed wrapperless rows \u2014 top level remains `_doc` + absolute-path keys, matching the canonical colibri store shape per repo doctrine.\n\n**Entry-by-entry diff audit (old \u2192 new)**\n- All 22 pre-existing entries preserved; none dropped, none renamed.\n- 6 entries refreshed with new shas + matching outputs (`blink_client.py`, `cli.py`, `config.py`, `pipeline.py`, `state.py`, `tests/test_state_and_pipeline.py`): each new 64-hex sha's first 8 chars match the embedded token in its `output` filename (2b54ac5e, 95ff22ad, 6f05cdb4, eda35139, 01fd844c, 2a48b6a0). Consistent.\n- 2 new entries (`birdcam/enricher.py`, `tests/test_enricher.py`): `rel` fields match their absolute keys; sha prefixes match output filenames (21fd6e41, d5152f30). Consistent.\n- Untouched entries verified byte-identical in sha/output (compiler, youtube_client bug+debug, all .bat/.ps1 scripts, `__init__`/`__main__`, adversary_audit). No accidental mutation.\n- Mixed sha lengths (8-hex legacy vs full sha256) persist only on pre-existing untouched rows; doctrine states full sha256 is canonical shape, and the change doesn't worsen the legacy rows.\n\n**Metadata sanity**\n- `pass2` block on `pipeline.py` is an additive sub-record; its `output` matches the mode's output and its `reviewed_at` (16:35) precedes the mode's `reviewed_at` (16:40), which is coherent with pass2 running before finalization. No contract in the visible bytes is broken by the extra key.\n- Timestamps, `cost: 0` fields, and forward-slash output paths are all consistent with existing entries.\n\nNo duplicate records, no hidden/wrappered rows, no broken references, no internally inconsistent claims introduced by this change.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260922-151605.md",
+  "outcomes": {
+   "cleared-unedited": 3
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
