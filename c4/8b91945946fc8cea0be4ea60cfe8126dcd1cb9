@@ -1,0 +1,28 @@
+{
+ "type": "CLEAR",
+ "commit": "c48b91945946fc8cea0be4ea60cfe8126dcd1cb9",
+ "when": "20260922-163431",
+ "files": {
+  "agent_error_rates.py": {
+   "sha": "a7b9f8c40d3a3d6f8b4a6bb2d85ef750bae6c91a09816c7ef6cbc85b38093dce",
+   "model": "z-ai/glm-5.3-flash@parasail/fp8+coreweave/nvfp4+modal/fp8",
+   "when": "20260922-163400",
+   "artifact": ".adversary\\reviews\\gate_20260922-163400.md"
+  },
+  "docs/agent_error_rates.json": {
+   "sha": "f7bc2cc21a7886c2d482958f2f42c689498e79b23dbfa356e5f4ed7f0931edc9",
+   "model": "z-ai/glm-5.3-flash@parasail/fp8+coreweave/nvfp4+modal/fp8",
+   "when": "20260922-163400",
+   "artifact": ".adversary\\reviews\\gate_20260922-163400.md"
+  },
+  "docs/gate_evidence.json": {
+   "sha": "8fd3b5ee781cb05e7ab26b1c707fcc3ba12fe827f1c6e20da6e8bd8ab95149fc",
+   "model": "z-ai/glm-5.3-flash@parasail/fp8+coreweave/nvfp4+modal/fp8",
+   "when": "20260922-163400",
+   "artifact": ".adversary\\reviews\\gate_20260922-163400.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260922-163400.md": "model: z-ai/glm-5.3-flash@parasail/fp8+coreweave/nvfp4+modal/fp8 | provider: Parasail | usage: {'prompt_tokens': 221177, 'completion_tokens': 40047, 'total_tokens': 261224, 'cost': 0.05320005, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.05320005, 'upstream_inference_prompt_cost': 0.03317655, 'upstream_inference_completions_cost': 0.0200235}, 'completion_tokens_details': {'reasoning_tokens': 39275, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['agent_error_rates.py', 'docs/agent_error_rates.json', 'docs/gate_evidence.json']\n\nI traced the rewrite end to end against its own claims (EV-117's three-round arc) and the staged outputs.\n\n**What I verified:**\n\n- **Worktree fold (`_git_identity`)**: git-dir vs git-common-dir comparison correctly keys a linked worktree to its parent; `discover_gate_repos` folds both dirs into one slot and `gate_episodes` scans the shared notary ref once with artifacts gathered from parent + worktree dirs. The r1 F1 double-count is closed for the normal case.\n- **Timestamp join**: artifact `gate_YYYYMMDD-HHMMSS` \u2192 naive ISO, compared against `[:19]` of `%cI` under `--date=iso-local` \u2014 both naive local strings, lexicographic == chronological. First-BLOCK-per-commit collapse is correct (blocks pre-sorted ascending; the `dt < cur[\"dt\"]` guard is redundant but harmless).\n- **Dedupe**: archive rows always precede gate rows, so `gate_wins` (requires `denial_artifact`) and the CLEAR-only-gate-never-displaces-archive rule behave exactly as the comment claims; archive-archive ties keep the earliest date.\n- **Dangling-manifest surfacing restored** (r3 F3): `indexed - disk` itemized per row; the staged JSON's 3 nexusmill dangling rows are consistent with EV-117 (blink mirror completed 25/25 \u2192 no blink danglers; nexusmill's archive mirror still has 3).\n- **Archive-map resolution**: no silent fallback to the raw archive name \u2014 divergence re-resolves through `_git_identity` and otherwise skips with an anomaly, exactly as EV-117 claims.\n- **Staged JSON arithmetic**: 615+100=715 episodes; 538+52=590 findings; 260/615=42.3%, 22/100=22.0%, 282/715=39.4% machine-wide; 17 gate repos = 16+1 distinct repos; programs 47+4+1=52 = Damien's findings; the 11 unlanded findings are correctly excluded from the 590 and itemized.\n\n**Near-misses examined and why they don't block:**\n\n1. *Folded worktree whose parent lacks `.adversary/reviews`*: `gate_episodes` early-returns on the primary listdir and the worktree's artifacts are dropped \u2014 but an anomaly row is written to the persistent JSON, satisfying the r3 F1 \"nothing drops silently\" contract. Narrow trigger (parent checkout that never accumulated artifacts).\n2. *`_git_identity` probe failure on a worktree* degrades to standalone identity, which would re-scan the shared notes under the worktree's name (the r1 F1 shape) \u2014 but only when the probe times out at 15 s while the 60 s notes call succeeds, it warns on stderr, and the design comment explicitly accepts this degradation over crashing the sweep. Empirically did not fire (no duplicate repo names in the live run).\n3. *MD headline phrasing* (\"initial denial (first BLOCK)\") doesn't literally describe archive-sourced episodes, but an archive row with `new: N` is that commit's review finding record, and the JSON `method` text states the arithmetic accurately.\n4. `gate_evidence.json` now lacks a trailing newline \u2014 cosmetic; valid JSON either way.\n\nNo caller breakage (standalone script; the CLI flag change is the documented v3 redesign), no money-safety or security surface (read-only git subprocesses with list argv), and every code comment's cited finding is implemented in the staged bytes.\n\nVERDICT: CLEAR"
+ }
+}
