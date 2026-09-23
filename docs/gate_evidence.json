@@ -1976,6 +1976,25 @@
     "KokoroBookReader tests/test_style_scan.py (three displaced-ids tests)",
     "docs/remediation_manifest.json row KBR-STYLE-DISPLACED-IDS"
    ]
+  },
+  {
+   "id": "EV-120-T12-WIRING-ROUNDS",
+   "date": "2026-09-23",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK, eleven rounds of the autoland T1.2 front-registry hook wiring (mimo-v2.6-pro, deepseek-v4-pro-0813 via the reshuffled ladder; one malformed mimo response, one transport fallthrough)",
+   "caught": "R1 (mimo-pro, 35k reasoning tokens): the --branch argv splice was off by one - every real-checkout claim re-emitted --repo's value as a stray positional, silently dead wiring the entire collision registry on the production path, hidden because the tests only used non-git temp dirs; the un-sandboxed pre-existing tests would claim/heartbeat the OWNER's live front under phantom sessions; the stop gate's off-switch sat above the heartbeat; the guard's new -like patterns were wildcard-unescaped. R3: two inline-env stop tests bypassed the sandbox default entirely; ambient empty-string OFF values leaked through setdefault. R5 (HIGH): the occupied verdict ordered a compacted session to ABANDON its own checkout - the resume exception was unappliable with a constant task and a never-recurring session id, and the session's own Stops heartbeat the ghost forever. R6: unbounded foreign-claim fields interpolated against the 10k payload budget, with the front tests having quietly dropped the length assertion. R7: the fixture CLI used a different interpreter resolution than the hooks. R9: the clamp could split a surrogate pair at the boundary (the repo's own snapshot-slice class).",
+   "severity": "HIGH (dead wiring on the production path; self-lockout arbitration; live-owner-registry writes) + MEDIUM/LOW (sandbox leaks, payload budget, surrogate split, interpreter drift)",
+   "author_initially": "All accepted and fixed same-session; R2's four deepseek findings were refuted with live evidence (unbound _run call - zero self attributes; PS stderr redirection shape - executed in verification; spawnSync timeout - ETIMEDOUT demo) and the reviewer accepted the rebuttals, then found the adjacent real leak itself. One rebuttal round reviewed a STALE INDEX - the fixes were unstaged working-tree bytes; the gate was right, the staging was wrong.",
+   "resolution": "Nexusmill 115e5ac1 (suite 67/67, eleven rounds to CLEAR): argv built incrementally with --branch only when non-empty + a real-git-branch test (init -b + empty commit, EV-045 Temp fixture); forced sandbox defaults in _ps/_run plus explicit ZFRONT_OFF in both inline-env tests; heartbeat hoisted above the ledger off-switch (ZFRONT_OFF stays the front's own opt-out); WildcardPattern::Escape on the guard's repo-root patterns; the occupied verdict TEACHES the arbitration (own-front retake via release+reclaim, foreign front worktree-add) with clamped foreign fields (60/80/60/30) and a trailing-surrogate guard, asserted by a full-contract test helper plus an astral-clamp test; _front_cli uses PATH python like the hooks. Landing artifacts preserved in the canonical Nexusmill .adversary/reviews.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260923-015122.md (BLOCK, round 1, mimo-v2.6-pro)",
+    "Nexusmill .adversary/reviews/gate_20260923-022753.md (BLOCK, round 2, deepseek - four findings, all rebutted)",
+    "Nexusmill .adversary/reviews/gate_20260923-024700.md (BLOCK, round 3 - rebuttals accepted, adjacent leak found)",
+    "Nexusmill .adversary/reviews/gate_20260923-032218.md (BLOCK, round 5, the resume HIGH)",
+    "Nexusmill .adversary/reviews/gate_20260923-041547.md (BLOCK, round 9, surrogate clamp)",
+    "Nexusmill .adversary/reviews/gate_20260923-043500.md (CLEAR)",
+    "Nexusmill 115e5ac1 (feat(zcode): front registry wired into the hooks)"
+   ]
   }
  ]
 }
