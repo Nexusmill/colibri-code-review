@@ -1942,6 +1942,21 @@
     "colibri .adversary/reviews/gate_20260922-160856.md (BLOCK, round 3)",
     "colibri 127f155 (chore(archive): complete the blink review mirror)"
    ]
+  },
+  {
+   "id": "EV-118-KBR-TESTFIX-DELETED-ITS-REUSE-PROOF",
+   "date": "2026-09-22",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK",
+   "caught": "gate_20260922-152833 (glm-5.3-flash L1, VERDICT: BLOCK): while strengthening test_changed_candidate_context_invalidates_cache (itself remediation of a batch-scan false-coverage finding), the edit DELETED the second identical-content run that was the only proof of cache reuse - leaving assert len(calls)==1 after a single cold-cache run (a trivial cold-call count annotated 'identical content is served from cache') - and the new remediation-manifest row's fix field claimed the changed-content re-ask was asserted 'after asserting identical-content reuse', false against the staged bytes. The fix-of-the-class reintroduced the class, inside the very commit remediating it.",
+   "severity": "MEDIUM (false coverage claim inside the remediation; ledger recorded coverage that did not exist)",
+   "author_initially": "Fixed immediately, no rebuttal - the reviewer was right on the bytes and the fix was one line.",
+   "resolution": "Nexusmill 4533b887: the identical-content second run re-added before the changed-content run, making the comment, the test, and the manifest row's claim all true (reuse proven: calls stays 1 across the identical rerun; invalidation proven: calls==2 on changed text). Full suite 156/156; gate round 2 CLEAR.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260922-152833.md (BLOCK, round 1)",
+    "Nexusmill 4533b887 (one-line restore of the identical-content rerun)",
+    "KokoroBookReader reader/test_cast_refine.py - test_changed_candidate_context_invalidates_cache, suite 156/156 (refs completed at transplant from the rows own citations; the orphaned commit 75157c9 carried none)"
+   ]
   }
  ]
 }
