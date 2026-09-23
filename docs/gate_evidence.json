@@ -1957,6 +1957,25 @@
     "Nexusmill 4533b887 (one-line restore of the identical-content rerun)",
     "KokoroBookReader reader/test_cast_refine.py - test_changed_candidate_context_invalidates_cache, suite 156/156 (refs completed at transplant from the rows own citations; the orphaned commit 75157c9 carried none)"
    ]
+  },
+  {
+   "id": "EV-119-KBR-DISPLACED-REASK-UNGUARDED-RECURSION",
+   "date": "2026-09-22",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK",
+   "severity": "MEDIUM (a recovery path that aborted harder than the bug it fixed: the displaced re-ask sat outside the ValueError fallback and burned the shared split-depth budget)",
+   "author_initially": "Fixed immediately, no rebuttal - both findings verified against the staged bytes; a RED test reproduced the abort class before the fix. Round 2 then BLOCKed on a record inconsistency (the amended manifest row appended the post-fix 169/169 without rewriting the pre-gate 168/168 sentence); the verification field was rewritten as one coherent sequence and round 3 went CLEAR.",
+   "caught": "gate_20260922-232504 (mimo-v2.6-pro L1, VERDICT: BLOCK): the round-56 displaced-rows fix (for the owner's stuck-at-168 style scan) placed out.update(ask_styles(displaced,...)) OUTSIDE the try/except ValueError that guards checked_hints - a displaced re-ask that itself failed (truncation / malformed item / terminal) propagated and aborted the WHOLE section, discarding every usable answer already collected, where the pre-change code fell back to half-splits; and the displaced chain shared the _depth<3 split budget, so three displacement rounds made any later structural/truncation failure terminal. The reviewer constructed the exact pre-succeeds/post-fails class (40 rows displacing 20, scattered sub-asks degenerating, truncation at round 4).",
+   "resolution": "Nexusmill 614ce62d: the re-ask wrapped in except ValueError -> retry_split() (the split machinery stays the last resort, so the new path can never abort where the old one recovered), and the displaced recursion now passes _depth UNCHANGED - termination is structural (the ask strictly shrinks; a one-row ask cannot displace anything), so it consumes no split budget; test_failing_displaced_reask_falls_back_to_split_not_abort RED->GREEN pins the fallback call shape ([6],[2],[3],[3]); suite 169/169; live replay of the owner's real section 168 re-run after the fix: calls [40,9], 40/40 hints.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260922-232504.md (BLOCK, round 1)",
+    "Nexusmill .adversary/reviews/gate_20260922-234844.md (BLOCK, round 2 - record-consistency catch)",
+    "Nexusmill .adversary/reviews/gate_20260922-235936.md (CLEAR, round 3)",
+    "Nexusmill 614ce62d",
+    "KokoroBookReader reader/style_scan.py (ask_styles displaced-rows re-ask)",
+    "KokoroBookReader tests/test_style_scan.py (three displaced-ids tests)",
+    "docs/remediation_manifest.json row KBR-STYLE-DISPLACED-IDS"
+   ]
   }
  ]
 }
