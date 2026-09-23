@@ -2011,6 +2011,21 @@
     "Blink docs/remediation_manifest.json (3 rows)",
     "gate artifacts .adversary/reviews/gate_20260923-07*.md .. 09*.md"
    ]
+  },
+  {
+   "id": "EV-122-KBR-COMPILE-EXPORT",
+   "date": "2026-09-23",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK, round 1 of the KBR compile-book export feature (deepseek-v4-pro-0813)",
+   "caught": "Three real defect classes in brand-new export code: (1) unguarded book.author.strip() and a uuid5 seed of (book.id or book.title) - a None author/title crashed both writers (findings 1/11/19/20); (2) _chapter_paragraphs silently dropped any sentence whose chapter index fell outside book.chapters - a silent incomplete book, the exact honesty class rounds 54-55 fought (findings 2/4); (3) the synchronous compile had no busy guard, so a double-click could double-fire (finding 12); plus the missing XHTML doctype the EPUB spec recommends (finding 10).",
+   "severity": "MEDIUM (crash class + silent-data-loss class, both caught pre-commit on new code; no live store book triggers them)",
+   "author_initially": "All actionable findings accepted and fixed same-session rather than rebutted - each was cheap, behavior-preserving hardening; the misconceived ones (NCX must never be a spine itemref; optional guide/landmarks/viewport) ignored as non-defects per the reviewer's own hedges.",
+   "resolution": "TDD: four tests RED first (None-fields compile, out-of-range ValueError before any byte, doctype presence, button disabled-during-export restored-in-finally) -> GREEN; suite 182/182; live smoke on the owner's real P2V2 source unchanged (55/55 sections, paragraph text identical). One test-side fix during the round: the guard test's QApplication.topLevelWidgets() scan hung under pytest-qt (faulthandler stack pinned the frame) - rewritten as a direct closure over the window. Manifest rows KBR-EXPORT-NONE-FIELDS + KBR-EXPORT-CHAPTER-RANGE-SILENT-DROP.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260923-155520.md (BLOCK, round 1, deepseek-v4-pro-0813)",
+    "Nexusmill docs/remediation_manifest.json (2 rows)",
+    "KokoroBookReader/tests/test_export_book.py"
+   ]
   }
  ]
 }
