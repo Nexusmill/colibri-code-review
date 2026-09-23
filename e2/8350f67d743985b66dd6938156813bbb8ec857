@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "e28350f67d743985b66dd6938156813bbb8ec857",
+ "when": "20260923-165825",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "68443635c1250e92f8fc5a89d5c6fcbe294bb2d2cf6a19bc9be76efffd591bf0",
+   "model": "xiaomi/mimo-v2.6-pro@xiaomi/fp8",
+   "when": "20260923-165824",
+   "artifact": ".adversary\\reviews\\gate_20260923-165824.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260923-165824.md": "model: xiaomi/mimo-v2.6-pro@xiaomi/fp8 | provider: Xiaomi | usage: {'prompt_tokens': 2547, 'completion_tokens': 718, 'total_tokens': 3265, 'cost': 0.001732605, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.001732605, 'upstream_inference_prompt_cost': 0.001107945, 'upstream_inference_completions_cost': 0.00062466}, 'completion_tokens_details': {'reasoning_tokens': 346, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\nReviewed the two hunks against the file's existing shape:\n\n1. **Hunk 1 (EV-077)**: changes only the JSON *escape form* of U+2026 in one string \u2014 `\\u2026` \u2192 `\u2026`. JSON strings accept both; every conforming parser yields the identical codepoint sequence. No semantic, contract, or encoding change to consumers of `docs/gate_evidence.json`. (If a consumer were byte-hashing individual values that would be a pre-existing hazard, not one introduced \u2014 and hash/manifest machinery here keys off source files, not evidence prose.)\n\n2. **Hunk 2 (new EV-123-CODEX-FRONT-ADAPTER entry)**: validated against the entry schema the file already uses \u2014 `id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs` are all present with the same types as siblings (refs is an array of strings). The trailing comma placement is correct: the previous entry gains a closing `},`, the new object closes before `]`, and the object/array brace balance at the tail matches the unchanged `}` / `]` / `}` lines. The \"no newline at end of file\" property is preserved. The new `id` follows the `EV-<n>-<SLUG>` convention and doesn't collide with the ids visible in context (EV-077 \u2026 EV-12x range).\n\n3. No callers, tests, or tooling in the staged set parse or constrain this file's content in a way this additive entry or the escape-form normalization could break \u2014 this is a documentation/evidence record only.\n\nNothing introduced or enabled here is defective.\n\nVERDICT: CLEAR"
+ }
+}
