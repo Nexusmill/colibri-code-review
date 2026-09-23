@@ -1223,7 +1223,7 @@
    "caught": "A FALSE refusal, twice, recorded because it is evidence about the layer: the tranche moved `_bounded_gunzip` from runtime/http_routes.py to security.bounded_gunzip so import-scip could share the gzip-bomb guard. Round 1 kept the old name bound with `from ..security import bounded_gunzip as _bounded_gunzip`; round 2 with a module-level `_bounded_gunzip = bounded_gunzip` assignment. The pre-check compares DEFINITIONS (def/class) between the old and new bytes, saw the def gone with six unstaged references in tests/test_v1_108_95.py, and refused before any review - both times, while that test file passed on both trees. Only staging the caller re-pointed (the test now imports the helper from its new home) let the review run.",
    "severity": "NONE (false positive of the layer) - the code was correct on all three trees",
    "author_initially": "Believed an import alias was a binding the check would honour; then believed an assignment would be. Neither is: the check is definition-based by design - Tools de3f953 added it after Tools 8245433 shipped exactly the hole where a reviewer never sees unstaged callers (EV-060) - and an alias is exactly what a reviewer cannot verify without the callers staged.",
-   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import … as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
+   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import \u2026 as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
    "refs": [
     "jcodemunch-mcp .adversary/reviews/ (rounds 1-2 wrote NO artifact - a REFUSED pre-check exits before the review; the captures are the session scratchpad gate_scipcap_r1.txt / gate_scipcap_r2.txt)",
     "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK, first round the pre-check let through)",
@@ -1994,6 +1994,22 @@
     "Nexusmill .adversary/reviews/gate_20260923-041547.md (BLOCK, round 9, surrogate clamp)",
     "Nexusmill .adversary/reviews/gate_20260923-043500.md (CLEAR)",
     "Nexusmill 115e5ac1 (feat(zcode): front registry wired into the hooks)"
+   ]
+  },
+  {
+   "id": "EV-121-BLINK-PERSON-DETECTOR",
+   "date": "2026-09-23",
+   "repo": "Blink",
+   "layer": "gate-review BLOCK x5 then CLEAR (six rounds) + M2 hy4 ladder on commit 45d9ca0/9bc407d",
+   "caught": "R1: review report promised with no code path producing it; scan_video fails OPEN on partial/zero decode (EOF == clean); non-PDE exceptions escape the fail-closed wrappers. R2: unpublish takedown unrecorded on 'deleted' batches and resurrectable via retry --vanished; uploaded-batch takedown re-polled forever; raw batch id passed to videos.delete; hardcoded output-tensor names KeyError; NaN frame-count ValueError; enabled:null silently fail-opens the privacy gate. R3: stale poll error suppresses the unpublish note (reopening the resurrection hole); mixed-case sha256 misdiagnosed as model corruption. R4: two regression tests silently skipped (nested under a model-presence skipUnless). R5: malformed session output IndexErrors out of the decision loop; unpublish of an already-deleted (404) video dies before recording (confirmed batch Blink-cleanable = footage loss); status conflates person vs unreadable exclusions. M2: fps=inf OverflowError escape; constructor trusted with out-of-range threshold; single-clip missing-file doom loop.",
+   "severity": "HIGH (a fails-open path in the very gate built to keep people out of published videos; plus a live-token refresh breakage caught in-session)",
+   "author_initially": "R1 finding 1 was half-wrong (the report existed on disk - one-time artifact) but the audit-trail gap was real; R2 finding 5 and R4 finding 2 claimed requirements.txt and the spec doc were absent from the change - factually false against the staged bytes, settled with git diff --cached output (gate payload carries code-class files only). M2 findings 1,2,3,5,7 on pre-existing paths were refuted by bytes (group_staged filters assigned clips; mark_batch_confirmed branches on verdicts; record_recheck confirms; audit save fully guarded; local-day grouping is consistent).",
+   "resolution": "Every confirmed finding fixed with regression tests in the same session (166/166); two commits through the gate (45d9ca0, 9bc407d). In-session live damage from a non-hermetic test (real state record mutated) was repaired and API-verified before commit; the OAuth scope bug (force-ssl pushed into legacy-token refresh -> invalid_scope breaking all uploads) was root-caused and fixed with token-file scope resolution. Incident root cause itself: Blink AI labels WORK on the account - the leak was a Blink recall miss, so exclusion is now two-gated (labels + local SSD-MobileNet detector, fail-closed).",
+   "refs": [
+    "Blink 45d9ca0, 9bc407d",
+    "Blink docs/superpowers/specs/2026-09-23-local-person-detector.md",
+    "Blink docs/remediation_manifest.json (3 rows)",
+    "gate artifacts .adversary/reviews/gate_20260923-07*.md .. 09*.md"
    ]
   }
  ]
