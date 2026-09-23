@@ -1,0 +1,16 @@
+{
+ "type": "CLEAR",
+ "commit": "d1bfb8d09befa4fba0ef71590e5355b313e4da70",
+ "when": "20260923-163814",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "df5bb5be1b605846cfc4dd80c4ef8aa11c7e8518c9232e9af9ac46501b52290a",
+   "model": "xiaomi/mimo-v2.6-pro@xiaomi/fp8",
+   "when": "20260923-163813",
+   "artifact": ".adversary\\reviews\\gate_20260923-163813.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260923-163813.md": "model: xiaomi/mimo-v2.6-pro@xiaomi/fp8 | provider: Xiaomi | usage: {'prompt_tokens': 1446, 'completion_tokens': 2094, 'total_tokens': 3540, 'cost': 0.00245079, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00245079, 'upstream_inference_prompt_cost': 0.00062901, 'upstream_inference_completions_cost': 0.00182178}, 'completion_tokens_details': {'reasoning_tokens': 1536, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json']\n\n## Review\n\nThe change appends one record (`EV-122-KBR-COMPILE-EXPORT`) to `docs/gate_evidence.json` and touches nothing else. Checking the only defect classes that can exist here:\n\n1. **JSON validity / splice correctness.** The insertion point is between the previous entry's closing `]` (context) and the array/object closers (context). Added lines are `},` + a full new object ending in `]`, then the untouched `}` / `]` / `}` close the last entry, the array, and the root. Net shape: `[ {...}, {...} ]` \u2014 well-formed. No trailing-comma or orphaned-brace hazard.\n\n2. **String escaping.** Scanned every added string literal for unescaped `\"`, `\\`, or control characters. The embedded symbols (`book.author.strip()`, `(book.id or book.title)`, `_chapter_paragraphs`, `QApplication.topLevelWidgets()`, `pytest-qt`, `KBR-EXPORT-NONE-FIELDS + KBR-EXPORT-CHAPTER-RANGE-SILENT-DROP`) contain no quote or backslash characters. All literals are safe.\n\n3. **Schema/field contract.** The new object carries the same key set and ordering as the adjacent record (`id, date, repo, layer, caught, severity, author_initially, resolution, refs`), same 2/3/4-space indent convention, `refs` is a flat string array. Consistent with the surrounding rows.\n\n4. **Doctrine check.** This is `docs/gate_evidence.json`, not `.colibri_reviews/_manifest.json`; the manifest-shape doctrine (absolute keys, `rel`, `modes`, full `sha256`) does not apply to this file, and nothing here introduces a `files` wrapper, relative keys, or a fragmenting second row for an already-recorded file.\n\n5. **Content claims.** The narrative points at another repo's artifacts (`Nexusmill .adversary/reviews/gate_20260923-155520.md`, `docs/remediation_manifest.json`, `KokoroBookReader/tests/test_export_book.py`) \u2014 none are in the staged bytes, so they are unverifiable here but introduce no broken call site, contract, or executable path. No code is changed; nothing can break at runtime.\n\n6. **Missing trailing newline** (`\\ No newline at end of file`) is pre-existing on both sides of the diff and is not worsened.\n\nNo logic, ordering, state, security, or contract defect is introduced or enabled by this change.\n\nVERDICT: CLEAR"
+ }
+}
