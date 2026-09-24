@@ -1,0 +1,17 @@
+{
+ "type": "CLEAR",
+ "commit": "8de20460e848e83d106aced8b539508a7b32182d",
+ "caller": "zcode",
+ "when": "20260924-021135",
+ "files": {
+  "reviews_archive/nexusmill/_manifest.json": {
+   "sha": "10434d539d5c37e0115de7640b0b148d0997e88d2ea029fd35d12e3659ef3bb7",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260924-021118",
+   "artifact": ".adversary\\reviews\\gate_20260924-021118.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260924-021118.md": "model: deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream | provider: DeepInfra | usage: {'prompt_tokens': 95739, 'completion_tokens': 451, 'total_tokens': 96190, 'cost': 0.1256333, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.1256333, 'upstream_inference_prompt_cost': 0.1244607, 'upstream_inference_completions_cost': 0.0011726}, 'completion_tokens_details': {'reasoning_tokens': 0, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['reviews_archive/nexusmill/_manifest.json'] | caller: zcode\n\nThis is a manifest data file. The change appends 8 new entries for KokoroBookReader files. Let me verify the structural integrity and check for violations of the repo doctrine.\n\nKey observations:\n\n1. **All 8 new entries use absolute Windows paths as keys** \u2014 consistent with the canonical shape.\n2. **Each has a `rel` field** \u2014 present.\n3. **Each has a `modes` table** \u2014 present.\n4. **No duplicate keys** \u2014 the 8 new entries are all distinct paths not previously in the manifest.\n5. **No `files` wrapper** \u2014 the top-level structure remains a flat object keyed by absolute paths.\n6. **No relative-keyed wrapperless rows** \u2014 all keys are absolute.\n\nOne entry worth scrutiny:\n\n- `\"C:\\\\Users\\\\User\\\\source\\\\repos\\\\Nexusmill\\\\reader\\\\cast_refine.py\"` \u2014 this is a *different* file from `KokoroBookReader\\\\reader\\\\cast_refine.py`. The `rel` is `\"reader/cast_refine.py\"` (forward slashes, no KokoroBookReader prefix). This is a distinct absolute path, so it's a legitimate separate entry, not a duplicate. The `output` field uses a different naming convention (`Nexusmill__reader__cast_refine_py__...` vs `.colibri_reviews/KokoroBookReader__...`), but that's a data consistency question, not a structural violation of the manifest doctrine.\n\n- The `KokoroBookReader\\\\tests\\\\conftest.py` entry has both a `failed` mode and a `bug` mode with the same sha. This is legitimate \u2014 a failed attempt followed by a successful review of the same bytes.\n\n- The `KokoroBookReader\\\\reader\\\\cast_refine.py` entry similarly has `failed` and `bug` modes with different shas \u2014 the failed attempt was on one version, the bug review on another.\n\nNo structural violations. No duplicate entries. No fragmentation of existing records. The JSON is well-formed (the diff shows a clean append before the closing brace).\n\nVERDICT: CLEAR"
+ }
+}
