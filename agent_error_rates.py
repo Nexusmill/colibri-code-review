@@ -47,7 +47,7 @@ COMMIT_RE = re.compile(r"=\s*commit\s+([0-9a-f]{7,40})")
 NEW_RE = re.compile(r"(?<![\w])new:\s*(\d+)")
 REVIEWER_RE = re.compile(r"reviewer:\s*(.+)")
 DATE_RE = re.compile(r"date:\s*([0-9]{4}-[0-9]{2}-[0-9]{2})")
-GATE_TS_RE = re.compile(r"gate_(\d{8}-\d{6})\.md$", re.IGNORECASE)
+GATE_TS_RE = re.compile(r"gate_(\d{8}-\d{6})(?:-\d+)?\.md$", re.IGNORECASE)
 GATE_FINDING_RE = re.compile(r"(?im)^(?:\s|\*)*(?:FINDING|Finding)\s*\d+"
                              r"|^(?:\s|\*)*\d+\.\s+(?:HIGH|MEDIUM|LOW)")
 FILES_RE = re.compile(r"files:\s*\[(.*?)\]", re.DOTALL)
@@ -149,8 +149,15 @@ def parse_gate_artifact(repo_name, path):
     m = re.search(r"(?m)^model:\s*(\S+)", text)
     if m:
         model = m.group(1)
+    # calling-agent attribution (owner order 2026-09-23): the gate stamps
+    # '| caller: <id>' at the END of the header line; old artifacts lack it
+    caller = ""
+    head = text.splitlines()[0] if text else ""
+    cm = re.search(r"\| caller: (\S+)", head)
+    if cm:
+        caller = cm.group(1)
     return {"new_findings": n, "reviewer": model,
-            "program": program_for(repo_name, text)}
+            "program": program_for(repo_name, text), "caller": caller}
 
 
 def git_author(repo_root, sha):
@@ -275,6 +282,7 @@ def gate_episodes(repo_name, repo_root, review_dirs=None):
             "new_findings": blk["parsed"]["new_findings"] if blk else 0,
             "reviewer": blk["parsed"]["reviewer"] if blk else "",
             "program": blk["parsed"]["program"] if blk else "",
+            "caller": (blk["parsed"].get("caller") or "") if blk else "",
             "source": "gate-denial", "denial_artifact": blk["artifact"] if blk else "",
         })
     return episodes, unlanded, anoms
@@ -380,6 +388,75 @@ def archive_rows(anomalies, root_names=None):
     return rows, skipped, unresolved
 
 
+def join_adjudications(episodes, repo_root):
+    """Attach each episode's adjudication outcomes from the repo's
+    .adversary/adjudications.json (gate recording, Tools c2a89df+). Episodes
+    with no recorded adjudication are flagged adjudicated=False - pre-recording
+    history is NEVER mixed into the measured columns."""
+    path = os.path.join(repo_root, ".adversary", "adjudications.json")
+    by_commit = {}
+    try:
+        data = json.loads(open(path, encoding="utf-8").read())
+        for ep in (data.get("episodes") or []):
+            if isinstance(ep, dict) and ep.get("commit"):
+                by_commit[ep["commit"]] = ep.get("findings") or []
+    except (OSError, ValueError):
+        pass
+    for e in episodes:
+        outs = by_commit.get(e["commit"])
+        e["adjudicated"] = outs is not None
+        e["outcomes"] = outs or []
+    return episodes
+
+
+def validated_stats(episodes):
+    """The VALIDATED half of the ledger (true-rate STEP 2, owner orders
+    2026-09-21 + 2026-09-23). POPULATION = GATE EPISODES ONLY (the caller
+    filters archive-sourced rows: they predate the recording entirely and are
+    neither 'unadjudicated history' nor caller-attributable - mixing them in
+    inflated the unknown bucket, gate r3). A VALIDATED error-episode carries
+    >=1 finding outcome 'fixed' OR 'rebuttal_rejected' (the reviewer rejected
+    the rebuttal - corroboration the finding is real; the FP numerator is
+    DISJOINT from it). Unadjudicated gate episodes NEVER enter the measured
+    numbers; empty data yields None, never a fabricated 0. The by_caller
+    breakdown is the owner's per-AGENT error rate (the gate's caller field;
+    'unknown' covers pre-attribution gate history)."""
+    def _valid(e):
+        return any(f.get("outcome") == "fixed" or f.get("rebuttal_rejected")
+                   for f in (e.get("outcomes") or []))
+    adjud = [e for e in episodes if e.get("adjudicated")]
+    validated = sum(1 for e in adjud if _valid(e))
+    fp = findings = 0
+    for e in adjud:
+        for f in (e.get("outcomes") or []):
+            findings += 1
+            # DISJOINT numerators (gate r1 catch): a finding whose rebuttal was
+            # REJECTED is corroborated real - counting it as FP too double-counts
+            # one finding in both metrics and corrupts both rates. Only findings
+            # the rebuttal/clear actually UPHELD are false positives.
+            if (f.get("outcome") in ("rebutted-upheld", "cleared-unedited")
+                    and not f.get("rebuttal_rejected")):
+                fp += 1
+    callers = {}
+    for e in episodes:
+        c = callers.setdefault(e.get("caller") or "unknown",
+                               {"episodes": 0, "adjudicated": 0, "validated": 0})
+        c["episodes"] += 1
+        if e.get("adjudicated"):
+            c["adjudicated"] += 1
+            if _valid(e):
+                c["validated"] += 1
+    return {"adjudicated_episodes": len(adjud),
+            "validated_episodes": validated,
+            "validated_pct": (round(100.0 * validated / len(adjud), 1)
+                              if adjud else None),
+            "adjudicated_findings": findings,
+            "fp_findings": fp,
+            "fp_share": (round(100.0 * fp / findings, 1) if findings else None),
+            "unadjudicated_episodes": len(episodes) - len(adjud),
+            "by_caller": [{"caller": k, **v} for k, v in sorted(callers.items())]}
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description="error-introduction-rate ledger v3")
     ap.add_argument("--roots", nargs="*", default=DEFAULT_ROOTS,
@@ -392,6 +469,7 @@ def main(argv=None):
                   for name, root, _dirs in repos}
     for name, root, dirs in repos:
         eps, unl, ano = gate_episodes(name, root, dirs)
+        eps = join_adjudications(eps, root)   # true-rate STEP 2: outcome join
         gate_rows.extend(eps)
         unlanded_all.extend(unl)
         anomalies.extend(ano)
@@ -453,6 +531,12 @@ def main(argv=None):
                    "git AUTHOR (caveat: repos driven via _git_do.py commit under the "
                    "owner's identity, so their rows mix every agent)."),
         "agents": [],
+        # POPULATION = GATE EPISODES ONLY (gate r3): archive-sourced rows
+        # predate the recording, carry no caller, and are neither unadjudicated
+        # history nor attributable - they stay in the ledger's main totals and
+        # out of the validated measurement entirely.
+        "validated": validated_stats(
+            [r for r in rows if r.get("source") == "gate-denial"]),
         "programs": [{"author": k[0], "program": k[1], **v}
                      for k, v in sorted(programs.items())],
         "totals": {"episodes": len(rows),
@@ -525,6 +609,36 @@ def main(argv=None):
     md += ["", "**MACHINE-WIDE: %.1f%% of commits introduce at least one error** "
            "(%d of %d counted commits)."
            % (overall_pct, overall_err, t["counted"])]
+    v = ledger["validated"]
+    _n_arc = len(rows) - sum(1 for r in rows if r.get("source") == "gate-denial")
+    md += ["", "## VALIDATED true rate (adjudicated gate episodes only)", "",
+           "The percentage chance that a COMMIT introduces at least one VALIDATED "
+           "error, 0-100%% - measured over ADJUDICATED gate episodes only "
+           "(gate-recorded outcomes: fixed / rebutted-upheld / cleared-unedited / "
+           "rebuttal_rejected). Pre-recording gate history (%d episodes) is flagged "
+           "unadjudicated and never mixed in; %d archive-sourced episodes predate "
+           "the recording entirely and sit outside this measurement."
+           % (v["unadjudicated_episodes"], _n_arc), ""]
+    if v["validated_pct"] is None:
+        md += ["**No adjudicated episodes recorded yet - the measured columns stay "
+               "EMPTY until real data exists.**"]
+    else:
+        md += ["**MACHINE-WIDE VALIDATED: %.1f%% of adjudicated commits introduced "
+               "at least one VALIDATED error** (%d of %d adjudicated; FP share of "
+               "adjudicated findings: %s)."
+               % (v["validated_pct"], v["validated_episodes"],
+                  v["adjudicated_episodes"],
+                  ("%.1f%%" % v["fp_share"]) if v["fp_share"] is not None else "n/a"),
+               "",
+               "Per CALLING AGENT (the gate's caller field - the per-agent error "
+               "rate; 'unknown' covers pre-attribution history):", "",
+               "| calling agent | episodes | adjudicated | validated | validated % |",
+               "|---|---|---|---|---|"]
+        for c in v["by_caller"]:
+            pct = ("%.1f%%" % (100.0 * c["validated"] / c["adjudicated"])
+                   if c["adjudicated"] else "EMPTY")
+            md.append("| %s | %d | %d | %d | %s |" % (
+                c["caller"], c["episodes"], c["adjudicated"], c["validated"], pct))
     if ledger["programs"]:
         md += ["", "## Sub-programs (gate episodes with a denial program match)",
                "",

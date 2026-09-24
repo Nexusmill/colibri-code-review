@@ -1,19 +1,19 @@
 {
  "_doc": "error-introduction rate per authoring agent, machine-wide, INITIAL DENIALS ONLY (owner orders 2026-09-21). v3: dynamic repo discovery; denials recovered from on-disk BLOCK artifacts (notary notes are overwrite semantics and lose remediation rounds); sub-program attribution from artifact file lists.",
- "generated_at": "2026-09-22T16:21:01",
+ "generated_at": "2026-09-23T19:13:16",
  "method": "Episodes = every notarized commit in every repo carrying .adversary/reviews directly under a swept root (depth-1 discovery), plus archive reviews anchored '= commit <sha>'. Each on-disk BLOCK artifact attaches to the first notarized commit landing after its timestamp; only the FIRST BLOCK per commit counts (initial denial); CLEAR-only commits are zero-finding episodes. rate = findings / counted episodes (archive rows without a parseable 'new: N' are flagged no_count_line and excluded from the denominator). Attribution = git AUTHOR (caveat: repos driven via _git_do.py commit under the owner's identity, so their rows mix every agent).",
  "agents": [
   {
    "author": "phantom-man",
    "email": "damienfosborn@gmail.com",
-   "episodes": 615,
-   "counted": 615,
-   "findings": 538,
-   "with_findings": 260,
+   "episodes": 636,
+   "counted": 636,
+   "findings": 548,
+   "with_findings": 264,
    "no_count_line": 0,
-   "pct_commits_with_errors": 42.3,
-   "findings_per_error_commit": 2.07,
-   "rate": 0.875,
+   "pct_commits_with_errors": 41.5,
+   "findings_per_error_commit": 2.08,
+   "rate": 0.862,
    "repos": [
     "3DPrinting",
     "Blink",
@@ -36,25 +36,48 @@
   {
    "author": "Damien Fitzgerald Osborn",
    "email": "damienfosborn@gmail.com",
-   "episodes": 100,
-   "counted": 100,
-   "findings": 52,
-   "with_findings": 22,
+   "episodes": 107,
+   "counted": 107,
+   "findings": 74,
+   "with_findings": 25,
    "no_count_line": 0,
-   "pct_commits_with_errors": 22.0,
-   "findings_per_error_commit": 2.36,
-   "rate": 0.52,
+   "pct_commits_with_errors": 23.4,
+   "findings_per_error_commit": 2.96,
+   "rate": 0.692,
    "repos": [
     "Nexusmill"
    ]
   }
  ],
+ "validated": {
+  "adjudicated_episodes": 14,
+  "validated_episodes": 14,
+  "validated_pct": 100.0,
+  "adjudicated_findings": 42,
+  "fp_findings": 1,
+  "fp_share": 2.4,
+  "unadjudicated_episodes": 729,
+  "by_caller": [
+   {
+    "caller": "unknown",
+    "episodes": 742,
+    "adjudicated": 13,
+    "validated": 13
+   },
+   {
+    "caller": "zcode",
+    "episodes": 1,
+    "adjudicated": 1,
+    "validated": 1
+   }
+  ]
+ },
  "programs": [
   {
    "author": "Damien Fitzgerald Osborn",
    "program": "(root/tooling)",
-   "episodes": 18,
-   "findings": 47
+   "episodes": 21,
+   "findings": 69
   },
   {
    "author": "Damien Fitzgerald Osborn",
@@ -70,13 +93,13 @@
   }
  ],
  "totals": {
-  "episodes": 715,
-  "counted": 715,
-  "findings": 590,
+  "episodes": 743,
+  "counted": 743,
+  "findings": 622,
   "gate_repos": 17,
-  "archive_on_demand_excluded": 978,
+  "archive_on_demand_excluded": 991,
   "unresolved_commits": 0,
-  "unlanded_denials": 5,
+  "unlanded_denials": 8,
   "anomalies": 3
  },
  "unresolved": [],
@@ -110,6 +133,24 @@
    "artifact": "gate_20260914-091534.md",
    "when": "20260914-091534",
    "findings": 1
+  },
+  {
+   "repo": "colibri-code-review",
+   "artifact": "gate_20260923-190934.md",
+   "when": "20260923-190934",
+   "findings": 1
+  },
+  {
+   "repo": "colibri-code-review",
+   "artifact": "gate_20260923-191130.md",
+   "when": "20260923-191130",
+   "findings": 1
+  },
+  {
+   "repo": "colibri-code-review",
+   "artifact": "gate_20260923-191220.md",
+   "when": "20260923-191220",
+   "findings": 6
   }
  ],
  "anomalies": [

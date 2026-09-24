@@ -6,17 +6,30 @@
 
 | agent | commits (counted) | commits w/ errors | % chance error per commit | findings | findings/error-commit | repos |
 |---|---|---|---|---|---|---|
-| phantom-man | 615 | 260 | **42.3%** | 538 | 2.07 | 3DPrinting, Blink, Caliper, OpenAIAstra, Tools, attic, cheyenne-layers, colibri-code-review, colibri-marketplace, deepagents-quickstarts, fleet, gods-eye-view, jcodemunch-mcp, psk-glm-review, repo-memory, spector-glm-review |
-| Damien Fitzgerald Osborn | 100 | 22 | **22.0%** | 52 | 2.36 | Nexusmill |
+| phantom-man | 636 | 264 | **41.5%** | 548 | 2.08 | 3DPrinting, Blink, Caliper, OpenAIAstra, Tools, attic, cheyenne-layers, colibri-code-review, colibri-marketplace, deepagents-quickstarts, fleet, gods-eye-view, jcodemunch-mcp, psk-glm-review, repo-memory, spector-glm-review |
+| Damien Fitzgerald Osborn | 107 | 25 | **23.4%** | 74 | 2.96 | Nexusmill |
 
-**MACHINE-WIDE: 39.4% of commits introduce at least one error** (282 of 715 counted commits).
+**MACHINE-WIDE: 38.9% of commits introduce at least one error** (289 of 743 counted commits).
+
+## VALIDATED true rate (adjudicated gate episodes only)
+
+The percentage chance that a COMMIT introduces at least one VALIDATED error, 0-100% - measured over ADJUDICATED gate episodes only (gate-recorded outcomes: fixed / rebutted-upheld / cleared-unedited / rebuttal_rejected). Pre-recording gate history (729 episodes) is flagged unadjudicated and never mixed in; 0 archive-sourced episodes predate the recording entirely and sit outside this measurement.
+
+**MACHINE-WIDE VALIDATED: 100.0% of adjudicated commits introduced at least one VALIDATED error** (14 of 14 adjudicated; FP share of adjudicated findings: 2.4%).
+
+Per CALLING AGENT (the gate's caller field - the per-agent error rate; 'unknown' covers pre-attribution history):
+
+| calling agent | episodes | adjudicated | validated | validated % |
+|---|---|---|---|---|
+| unknown | 742 | 13 | 13 | 100.0% |
+| zcode | 1 | 1 | 1 | 100.0% |
 
 ## Sub-programs (gate episodes with a denial program match)
 
 | agent | program | episodes | findings |
 |---|---|---|---|
-| Damien Fitzgerald Osborn | (root/tooling) | 18 | 47 |
+| Damien Fitzgerald Osborn | (root/tooling) | 21 | 69 |
 | Damien Fitzgerald Osborn | PatternSkin | 3 | 4 |
 | Damien Fitzgerald Osborn | asset-forge-user | 1 | 1 |
 
-Totals: 715 episodes (715 counted, 590 findings) across 17 gate repos; 978 archive on-demand scans excluded; 0 commits unresolved; 5 UNLANDED denials (BLOCK with no subsequent commit - itemized in the JSON); 3 enumeration anomalies.
+Totals: 743 episodes (743 counted, 622 findings) across 17 gate repos; 991 archive on-demand scans excluded; 0 commits unresolved; 8 UNLANDED denials (BLOCK with no subsequent commit - itemized in the JSON); 3 enumeration anomalies.
