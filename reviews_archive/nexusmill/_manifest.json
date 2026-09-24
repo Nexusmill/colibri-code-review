@@ -1892,5 +1892,132 @@
     "cost": 0.0
    }
   }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\KokoroBookReader\\reader\\cast_refine.py": {
+  "rel": "KokoroBookReader/reader/cast_refine.py",
+  "source": "scan-queue-failed",
+  "when": "2026-09-22T08:33:37",
+  "modes": {
+   "failed": {
+    "sha": "3a7b8fe41d51ffbaaa7d13863d7de9c178a17329fa3e43df1ebce000cb9d910d",
+    "output": "",
+    "code": "empty-batch-output",
+    "reviewed_at": "2026-09-22 08:33",
+    "cost": 0.0
+   },
+   "bug": {
+    "sha": "52599e93ff34d10b551f7dbfb00ab261e3f718427e5c3df9accf1bea137ee472",
+    "output": ".colibri_reviews/KokoroBookReader__reader__cast_refine.py__bug__52599e93ff34.md",
+    "reviewed_at": "2026-09-22 09:40",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\KokoroBookReader\\reader\\cast_ui.py": {
+  "rel": "KokoroBookReader/reader/cast_ui.py",
+  "modes": {
+   "bug": {
+    "sha": "7a5e06732779e290786dba17f32b246ba6e79b4d54c4e0e0c180d24c9186b35b",
+    "output": ".colibri_reviews/KokoroBookReader__reader__cast_ui.py__bug__7a5e06732779.md",
+    "reviewed_at": "2026-09-22 09:40",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\KokoroBookReader\\reader\\narration.py": {
+  "rel": "KokoroBookReader/reader/narration.py",
+  "modes": {
+   "debug": {
+    "sha": "170453f91dd598cab19bb553938023252512c5c57534069187899820da0de9a3",
+    "output": ".colibri_reviews/KokoroBookReader__reader__narration.py__debug__170453f9.md",
+    "reviewed_at": "2026-09-22 12:20",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\reader\\cast_refine.py": {
+  "rel": "reader/cast_refine.py",
+  "source": "scan-queue",
+  "when": "2026-09-22T08:58:24",
+  "modes": {
+   "bug": {
+    "sha": "4acc2f19326da9424d9f062848a41e2919b8e074266fcd81dc26b066d180ee16",
+    "output": "Nexusmill__reader__cast_refine_py__bug__6be4473b683a.md",
+    "reviewed_at": "2026-09-22 12:22",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\KokoroBookReader\\reader\\domain.py": {
+  "rel": "KokoroBookReader/reader/domain.py",
+  "source": "scan-queue",
+  "when": "2026-09-22T12:22:39",
+  "modes": {
+   "bug": {
+    "sha": "add7e7a31b7d6715569654e8ece788bb4c4055748c9b9bd38f122e29f0e6ee5a",
+    "output": "Nexusmill__KokoroBookReader__reader__domain_py__bug__bce9b49d897a.md",
+    "reviewed_at": "2026-09-22 12:41",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\KokoroBookReader\\reader\\cast_scan.py": {
+  "rel": "KokoroBookReader/reader/cast_scan.py",
+  "source": "scan-queue",
+  "when": "2026-09-22T12:22:39",
+  "modes": {
+   "bug": {
+    "sha": "a475d22d2425d8d3a63cb94958228e76b7a1ced783fe510edd48e72fea694540",
+    "output": "Nexusmill__KokoroBookReader__reader__cast_scan_py__bug__19c575df21a6.md",
+    "reviewed_at": "2026-09-22 12:57",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\KokoroBookReader\\reader\\__main__.py": {
+  "rel": "KokoroBookReader/reader/__main__.py",
+  "source": "scan-queue",
+  "when": "2026-09-22T14:16:07",
+  "modes": {
+   "bug": {
+    "sha": "2164516c07ed8dcd3a61c2276de6877f229ebce19ac60fe001c5e813fc8b0e2a",
+    "output": "Nexusmill__KokoroBookReader__reader____main___py__bug__0d36608e69e2.md",
+    "reviewed_at": "2026-09-22 14:32",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\KokoroBookReader\\tests\\conftest.py": {
+  "rel": "KokoroBookReader/tests/conftest.py",
+  "source": "scan-queue",
+  "when": "2026-09-22T14:58:21",
+  "modes": {
+   "failed": {
+    "sha": "2b1677a52733d21f1758fc6775cd635ea33502e050f131c6e2e4e709cd5fafd9",
+    "output": "Nexusmill__KokoroBookReader__tests__conftest_py__bug__ba3094489fb0__FAILED.md",
+    "code": "empty-batch-output",
+    "reviewed_at": "2026-09-22 14:53",
+    "cost": 0.0
+   },
+   "bug": {
+    "sha": "2b1677a52733d21f1758fc6775cd635ea33502e050f131c6e2e4e709cd5fafd9",
+    "output": "Nexusmill__KokoroBookReader__tests__conftest_py__bug__b5f5c73ee8f3.md",
+    "reviewed_at": "2026-09-22 15:07",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\KokoroBookReader\\tests\\test_index_narration.py": {
+  "rel": "KokoroBookReader/tests/test_index_narration.py",
+  "source": "scan-queue",
+  "when": "2026-09-22T14:58:21",
+  "modes": {
+   "bug": {
+    "sha": "ab523554497f239d3f9c18fadddcaf71762c64d2ba5516df10264911825be593",
+    "output": "Nexusmill__KokoroBookReader__tests__test_index_narration_py__bug__c1558765ca55.md",
+    "reviewed_at": "2026-09-22 15:17",
+    "cost": 0.0
+   }
+  }
  }
 }
