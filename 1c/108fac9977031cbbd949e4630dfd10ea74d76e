@@ -1,0 +1,24 @@
+{
+ "type": "CLEAR",
+ "commit": "1c108fac9977031cbbd949e4630dfd10ea74d76e",
+ "caller": "zcode",
+ "when": "20260925-195822",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "0642fa574a4de3eb82172edf0ab2421d1528ccb6e43c85d759edb8dc3b9ea825",
+   "model": "xiaomi/mimo-v2.6-pro@xiaomi/fp8",
+   "when": "20260925-195818",
+   "artifact": ".adversary\\reviews\\gate_20260925-195818.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260925-195818.md": "model: xiaomi/mimo-v2.6-pro@xiaomi/fp8 | provider: Xiaomi | usage: {'prompt_tokens': 1185, 'completion_tokens': 3518, 'total_tokens': 4703, 'cost': 0.003576135, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.003576135, 'upstream_inference_prompt_cost': 0.000515475, 'upstream_inference_completions_cost': 0.00306066}, 'completion_tokens_details': {'reasoning_tokens': 2840, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\n## Analysis\n\nThe change is purely additive: one new evidence record appended to the `evidence`/entries array in `docs/gate_evidence.json`, at the tail of the file (hunk ends at the closing `]` / `}`). No code, callers, tests, or manifests are touched.\n\nChecks I can actually make against the provided bytes:\n\n1. **JSON well-formedness at the splice.** The old tail was `...refs: [...] }\\n  ]\\n}`. The new tail is `...refs: [...] }\\n,\\n    { ... }\\n  ]\\n}`. The detached `+,` line is stylistically odd but is exactly the separator required between the previous element and the new object, and the new object closes with `+    }` directly before the context `]` \u2014 no trailing comma, no missing comma, no orphaned brace.\n\n2. **String escaping in the added payload.** Every added value is scanned: no raw `\"`, no backslashes, no control characters inside the string literals (`caught`, `author_initially`, `resolution`, `layer` contain `'`, `(`, `;`, `>`, `:`, `->` which are all legal unescaped in JSON). Parses cleanly.\n\n3. **Field-shape consistency with the neighboring record.** The visible tail of the preceding record is `author_initially` \u2192 `resolution` \u2192 `refs: [strings]`; the new record uses the same terminal field triple in the same order and the same `refs` element shape (`path::symbol` / `path::test_name` / doc path). No schema/contract divergence visible.\n\n4. **Manifest doctrine.** This is `docs/gate_evidence.json`, not `.colibri_reviews/_manifest.json`; the absolute-key / `rel` / `modes` / `sha256` doctrine does not apply, and nothing here fragments or duplicates a manifest row.\n\n5. **Claims that cannot be refuted from supplied bytes.** The `refs` targets (`PatternSkin/ai_parts.py::*`, `tests/test_perfection_ai_parts.py::test_R2G_gate_verdict_refused_primary_still_probes_mirror`, `junk/perfection/ai_parts/contracts_r2.md`) live in a different repo and were not provided; the `resolution` narrative (\"every candidate judged independently\u2026 all resumability/count refusals are now continue\", \"31/31\") is unverifiable here and is documentation of an already-accepted fix, not an executable assertion. The one internal-consistency reading worth doing \u2014 \"Full battery 31/31 (plus the characterized pre-existing r5 pip-bpy flake\u2026)\" \u2014 is not self-contradictory: it explicitly scopes the flake as pre-existing and characterized, not as part of the 31. A duplicate-`id` hypothesis (`EV-127-\u2026`) cannot be substantiated: ids here are full strings with topic suffixes, and the 404 KB remainder was not supplied \u2014 raising it would be speculation, not a finding.\n\nNothing in the staged bytes breaks parsing, diverges from the record shape used by its neighbor, or introduces a logic/security/contract defect.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260925-195356.md",
+  "outcomes": {
+   "fixed": 1
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
