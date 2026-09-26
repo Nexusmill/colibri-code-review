@@ -1,0 +1,29 @@
+{
+ "type": "CLEAR",
+ "commit": "1a10f7f12946cee173f5e3c6746f222565fef9ea",
+ "caller": "zcode",
+ "when": "20260926-091453",
+ "files": {
+  "analyzer.py": {
+   "sha": "9515dcf93b8a123d08dcf7bc7c84650618d483d8cb95c1288c3c948308e46cda",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-091449",
+   "artifact": ".adversary\\reviews\\gate_20260926-091449.md"
+  },
+  "docs/remediation_manifest.json": {
+   "sha": "c55befb9405dedb351f91582a225c49ca228c27ee0a2b44f9996880d06add09c",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-091449",
+   "artifact": ".adversary\\reviews\\gate_20260926-091449.md"
+  },
+  "tests/test_analyzer.py": {
+   "sha": "9f1f7dd0093985fbe160c265789693dbe693a5ee51bdbdd80632e2c85c7fab6a",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-091449",
+   "artifact": ".adversary\\reviews\\gate_20260926-091449.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260926-091449.md": "model: deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream | provider: DeepInfra | usage: {'prompt_tokens': 14159, 'completion_tokens': 586, 'total_tokens': 14745, 'cost': 0.0199303, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0199303, 'upstream_inference_prompt_cost': 0.0184067, 'upstream_inference_completions_cost': 0.0015236}, 'completion_tokens_details': {'reasoning_tokens': 0, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['analyzer.py', 'docs/remediation_manifest.json', 'tests/test_analyzer.py'] | caller: zcode\n\nLooking at this change, the core modification is replacing silent mode coercion with an explicit ValueError in `review_code`. Let me verify the claims and hunt for defects.\n\nThe change itself is straightforward: `mode = \"bug\"` becomes `raise ValueError(...)`. The test suite was updated to match. The remediation manifest entry documents this as a fix for CLR-W3-MODECOERCE.\n\nLet me check the test for a subtle issue:\n\nIn `test_mode_validation`, the test iterates over invalid modes including `None`. The check is:\n```python\nok = (repr(bad) in msg) and all(m in msg for m in an.MODES)\n```\n\nFor `bad = None`, `repr(None)` is `'None'`. The error message is `\"unknown mode None; expected one of ['bug', 'quality', 'feature', 'spec', 'plan']\"`. So `'None' in msg` is True, and all mode names are present. This passes.\n\nFor `bad = \"\"`, `repr(\"\")` is `\"''\"`. The message contains `\"unknown mode ''; ...\"`. So `\"''\" in msg` is True. This passes.\n\nFor `bad = \"BUG\"`, `repr(\"BUG\")` is `\"'BUG'\"`. The message contains `\"unknown mode 'BUG'; ...\"`. So `\"'BUG'\" in msg` is True. This passes.\n\nFor `bad = \"quaity\"`, `repr(\"quaity\")` is `\"'quaity'\"`. The message contains `\"unknown mode 'quaity'; ...\"`. So `\"'quaity'\" in msg` is True. This passes.\n\nThe test looks correct.\n\nOne potential issue: the `_run` helper in the test file defaults `mode` to `\"bug\"` if not specified. In `test_review_gates_and_prompt`, the old test passed `mode=\"quaity\"` to test coercion. The new test removes that and just uses the default. This is correct since coercion is no longer the behavior being tested.\n\nThe `test_mode_validation` function properly tests that invalid modes raise before client construction. The `_FakeClient` is constructed with a script of 4 responses, but since all 4 invalid modes should raise before any API call, the script should never be exhausted. The `check(\"mode_reject_no_client\", len(ctor) == 0)` verifies this.\n\nI don't see any defects introduced by this change. The ValueError is raised before the API key check, which is correct - you want to fail fast on invalid mode regardless of key presence. The error message includes the bad value and all valid modes, which is helpful for debugging.\n\nThe remediation manifest entry is properly formatted and documents the fix accurately.\n\nVERDICT: CLEAR"
+ }
+}
