@@ -2088,5 +2088,25 @@
         "tests/test_enricher.py"
       ]
     }
+,
+    {
+      "id": "EV-127-PERFECTION-R2-MIRROR-INVARIANT",
+      "date": "2026-09-25",
+      "repo": "Nexusmill",
+      "layer": "gate-review BLOCK (.adversary/reviews/gate_20260925-193002.md, Nexusmill repo; re-gate CLEAR gate_20260925-194717.md)",
+      "caught": "The perfection-R2 Fix-Contract for the paid-cache mirror fallback in PatternSkin/ai_parts.py claimed the signature mirror is byte-identical to the lineage primary, so a valid-but-refused primary could return None without probing the mirror. The reviewer refuted the invariant: the mirror refresh is BEST-EFFORT (the 2026-09-10 ALWAYS REFRESHED fix exists precisely because mirrors go stale), so a refused primary can coexist with a resumable mirror.",
+      "severity": "medium",
+      "author_initially": "no dispute - the contract itself asserted the unenforced invariant and the BLOCK was accepted as a real catch the same minute",
+      "resolution": "FIXED in the R2 amendment: every candidate judged independently - all resumability/count refusals are now continue (not return None) across the five readers (partial_scan_info, load_scan_partial, load_scan, load_parts, load_text_select). Verdict-named test added RED->GREEN (overrun done=99 primary -> mirror done=1 quoted; wrong-count primary -> mirror hit). Full battery 31/31 (plus the characterized pre-existing r5 pip-bpy flake, green under blender -b -P).",
+      "refs": [
+        "PatternSkin/ai_parts.py::partial_scan_info",
+        "PatternSkin/ai_parts.py::load_scan_partial",
+        "PatternSkin/ai_parts.py::load_scan",
+        "PatternSkin/ai_parts.py::load_parts",
+        "PatternSkin/ai_parts.py::load_text_select",
+        "tests/test_perfection_ai_parts.py::test_R2G_gate_verdict_refused_primary_still_probes_mirror",
+        "junk/perfection/ai_parts/contracts_r2.md"
+      ]
+    }
   ]
 }
