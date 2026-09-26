@@ -1,0 +1,36 @@
+{
+ "type": "CLEAR",
+ "commit": "071bfc92c34a75babeccc24b6b7f0b16634c112e",
+ "caller": "zcode",
+ "when": "20260926-102355",
+ "files": {
+  "analyzer.py": {
+   "sha": "d834c23ca68e49f5d065f6611b332534af248a15b5a01e243313e6d48939c5b4",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-102341",
+   "artifact": ".adversary\\reviews\\gate_20260926-102341.md"
+  },
+  "docs/remediation_manifest.json": {
+   "sha": "2605e68e9c07a2405f8c9f7ffc8189fc04123832eba456fcd38ef9c78c47d506",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-102341",
+   "artifact": ".adversary\\reviews\\gate_20260926-102341.md"
+  },
+  "tests/test_analyzer.py": {
+   "sha": "a729018bef2a8932182bf6b5665c097d2286d652169b8bcf2f47f54418d88f2c",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-102341",
+   "artifact": ".adversary\\reviews\\gate_20260926-102341.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260926-102341.md": "model: deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream | provider: DeepInfra | usage: {'prompt_tokens': 21627, 'completion_tokens': 890, 'total_tokens': 22517, 'cost': 0.0304291, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0304291, 'upstream_inference_prompt_cost': 0.0281151, 'upstream_inference_completions_cost': 0.002314}, 'completion_tokens_details': {'reasoning_tokens': 0, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['analyzer.py', 'docs/remediation_manifest.json', 'tests/test_analyzer.py'] | caller: zcode\n\nLooking at this change, I need to verify the three fixes claimed in the remediation manifest entry CLR-W8-COLD-BLIND:\n\n1. **load_spec clause render**: Changed `if v:` to `if v is not None and v != \"\"` and `elif r.get(\"expected\"):` to `elif r.get(\"expected\") not in (None, \"\"):`\n\n2. **_build_prompt prior block**: Added mode-aware branching for plan mode\n\n3. **_validated_json finish**: Added `first_finish` tracking and updated `finish` on retry\n\nLet me check each:\n\n**Fix 1**: The change correctly handles False/0 values while still skipping empty strings. The test `test_falsy_clauses_render` verifies this. However, I notice the test only checks for `\"ALLOW_EMPTY: False\"` and `\"MAX_RETRIES: 0\"` in the output, but doesn't verify that the empty string `\"error\": \"\"` is actually skipped. The check `\"ERROR:\" not in out` does verify this. This looks correct.\n\n**Fix 2**: The plan mode now gets its own wording. The test `test_plan_prior_wording` checks both that \"still-open findings\" is present and \"NEW or CHANGED\" is absent. This looks correct.\n\n**Fix 3**: The `_validated_json` now sets `usage[\"first_finish\"] = usage[\"finish\"]` before updating `usage[\"finish\"] = r2.choices[0].finish_reason`. The test `test_retry_finish_updated` verifies both values. This looks correct.\n\nNow let me look for potential issues:\n\n**Potential issue with Fix 1**: The change from `if v:` to `if v is not None and v != \"\"` means that other falsy values like `[]` (empty list) or `{}` (empty dict) will now be rendered. Is this intentional? The manifest says \"False/0 are real clauses\" but doesn't mention empty lists/dicts. An empty list or dict might be a legitimate clause value that should be rendered, or it might be noise. The test doesn't cover this case. However, this is a minor edge case and the change is arguably more correct.\n\n**Potential issue with Fix 3**: The `first_finish` is only set when the retry succeeds. If the retry also fails (both attempts invalid JSON), the `json_error` path is taken and `first_finish` is never set. The manifest says \"json_error path keeps the first response's finish, consistent with kept raw content\" - this is correct behavior since no retry content shipped.\n\n**Potential issue with the test for Fix 3**: The test uses `_Resp(\"not json\", fin=\"length\", ...)` for the first response and `_Resp(_J(_OBJ), fin=\"stop\", ...)` for the retry. The test checks `u[\"finish\"] == \"stop\"` and `u.get(\"first_finish\") == \"length\"`. This correctly verifies the behavior.\n\n**One thing I notice**: In the `_validated_json` function, the line `usage[\"first_finish\"] = usage[\"finish\"]` is placed AFTER `usage[\"parsed\"] = _parse_json_review(c2)` but BEFORE `usage[\"finish\"] = r2.choices[0].finish_reason`. This is correct - it captures the original finish before overwriting it.\n\n**Another observation**: The `usage` dict is mutated in place. The `first_finish` key is only added when a retry succeeds. If a caller expects `first_finish` to always be present (even when no retry occurs), they'd get a KeyError. However, the test uses `u.get(\"first_finish\")` which handles the missing key gracefully. The manifest says \"first_finish\" is only set \"when a retry ships\" - this is consistent.\n\nI don't see any real defects introduced by this change. The fixes appear correct and the tests verify the intended behavior.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260926-102147.md",
+  "outcomes": {
+   "fixed": 4
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
