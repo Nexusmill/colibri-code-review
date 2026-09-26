@@ -297,22 +297,37 @@ def _parse_json_review(text):
     if not isinstance(d, dict) or "findings" not in d:
         raise ValueError("missing 'findings'")
     return d
-def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", spec_text=None):
-    """Returns (markdown_review, usage). Config-driven: model, max_tokens, temperature,
-    reasoning effort (or 'off' for unbounded), base URL and prices all come from cfg.
-    Always returns a string review and a usage dict with the real billed cost."""
-    c = _merge(cfg)
-    if mode not in MODES:
-        raise ValueError("unknown mode %r; expected one of %s" % (mode, sorted(MODES)))
-    key = api_key()
-    if not key:
-        return "**No API key.** Set `OPENROUTER_API_KEY` and restart the app.", {"cost": 0}
+def _usage_of(r, c):
+    u = getattr(r, "usage", None)
+    pin = getattr(u, "prompt_tokens", 0) or 0
+    pout = getattr(u, "completion_tokens", 0) or 0
+    cost = getattr(u, "cost", None)
+    if cost is None:
+        cost = pin * c["price_in"] / 1_000_000 + pout * c["price_out"] / 1_000_000
+    return pin, pout, (cost or 0.0)
 
+
+def _normalize_content(ch):
+    """Empty-content / truncation normalization. Returns (content, finish_reason)."""
+    fin = ch.finish_reason
+    content = ch.message.content
+    if not content:
+        reasoning = getattr(ch.message, "reasoning", None)
+        if fin == "length":
+            content = ("_The model hit the output token limit before finishing. Raise **Max output "
+                       "tokens** in Run Config (or split the file), then retry._")
+        elif reasoning:
+            content = "_(Model returned only reasoning, no final answer. Raw reasoning below.)_\n\n" + reasoning
+        else:
+            content = f"_Model returned no content (finish_reason={fin}). Try again._"
+    elif fin == "length":
+        content += "\n\n_[Note: output hit the token limit and may be truncated. Raise Max output tokens.]_"
+    return content, fin
+
+
+def _build_prompt(code, rel_path, mode, c, prior_md=None, fmt="md", spec_text=None):
+    """Mode template + numbered gutter + fail-soft static enrichment + delta prior + JSON instr."""
     if mode == "spec":
-        if not spec_text:
-            return ("**Spec Conformance requires the feature expectations.** Load them first "
-                    "(spec-harness registry JSON or hand-written contracts) - no API call was "
-                    "made."), {"cost": 0}
         body = _TEMPLATES["spec"].format(rel=rel_path, expectations=spec_text)
     else:
         body = _TEMPLATES[mode].format(rel=rel_path)
@@ -332,7 +347,49 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
                    + prior_md[:20000] + "\n---\n")
     if fmt == "json":
         prompt += "\n" + _JSON_INSTR + "\n"
+    return prompt
 
+
+def _validated_json(retrying, messages, content, usage, c):
+    """fmt=json: parse; on failure ONE corrective retry whose usage accumulates; the raw
+    paid text is never lost (json_error flag keeps it in `content`)."""
+    try:
+        usage["parsed"] = _parse_json_review(content)
+        return json.dumps(usage["parsed"], indent=1), usage
+    except Exception:
+        try:                                  # ONE corrective retry (the 10/194 parse-error class)
+            r2 = retrying(messages + [{"role": "assistant", "content": content[:8000]},
+                                      {"role": "user", "content":
+                                       "That was not valid JSON. Reply again with ONLY the JSON "
+                                       "object, exactly the shape specified."}])
+            c2 = r2.choices[0].message.content or ""
+            p2, o2, cost2 = _usage_of(r2, c)
+            usage["prompt_tokens"] += p2
+            usage["completion_tokens"] += o2
+            usage["cost"] += cost2
+            usage["parsed"] = _parse_json_review(c2)
+            return json.dumps(usage["parsed"], indent=1), usage
+        except Exception:
+            usage["json_error"] = True        # keep the raw text - never lose a paid review
+            return content, usage
+
+
+def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", spec_text=None):
+    """Returns (markdown_review, usage). Config-driven: model, max_tokens, temperature,
+    reasoning effort (or 'off' for unbounded), base URL and prices all come from cfg.
+    Always returns a string review and a usage dict with the real billed cost."""
+    c = _merge(cfg)
+    if mode not in MODES:
+        raise ValueError("unknown mode %r; expected one of %s" % (mode, sorted(MODES)))
+    key = api_key()
+    if not key:
+        return "**No API key.** Set `OPENROUTER_API_KEY` and restart the app.", {"cost": 0}
+    if mode == "spec" and not spec_text:
+        return ("**Spec Conformance requires the feature expectations.** Load them first "
+                "(spec-harness registry JSON or hand-written contracts) - no API call was "
+                "made."), {"cost": 0}
+
+    prompt = _build_prompt(code, rel_path, mode, c, prior_md=prior_md, fmt=fmt, spec_text=spec_text)
     client = OpenAI(
         api_key=key, base_url=c["api_base"],
         default_headers={"HTTP-Referer": "http://localhost", "X-Title": "Colibri Code Review"},
@@ -353,56 +410,15 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
             model=c["model"], messages=msgs, temperature=float(c["temperature"]),
             max_tokens=max_tokens, extra_body=extra)
 
-    resp = _call_retry(_call, messages, int(c.get("retry_max_attempts", 3)),
-                        float(c.get("retry_backoff_base", 1.0)))
-    ch = resp.choices[0]
-    fin = ch.finish_reason
-    content = ch.message.content
+    def _retrying(msgs):
+        return _call_retry(_call, msgs, int(c.get("retry_max_attempts", 3)),
+                           float(c.get("retry_backoff_base", 1.0)))
 
-    if not content:
-        reasoning = getattr(ch.message, "reasoning", None)
-        if fin == "length":
-            content = ("_The model hit the output token limit before finishing. Raise **Max output "
-                       "tokens** in Run Config (or split the file), then retry._")
-        elif reasoning:
-            content = "_(Model returned only reasoning, no final answer. Raw reasoning below.)_\n\n" + reasoning
-        else:
-            content = f"_Model returned no content (finish_reason={fin}). Try again._"
-    elif fin == "length":
-        content += "\n\n_[Note: output hit the token limit and may be truncated. Raise Max output tokens.]_"
-
-    def _usage_of(r):
-        u = getattr(r, "usage", None)
-        pin = getattr(u, "prompt_tokens", 0) or 0
-        pout = getattr(u, "completion_tokens", 0) or 0
-        cost = getattr(u, "cost", None)
-        if cost is None:
-            cost = pin * c["price_in"] / 1_000_000 + pout * c["price_out"] / 1_000_000
-        return pin, pout, (cost or 0.0)
-
-    pin, pout, cost = _usage_of(resp)
+    resp = _retrying(messages)
+    content, fin = _normalize_content(resp.choices[0])
+    pin, pout, cost = _usage_of(resp, c)
     usage = {"prompt_tokens": pin, "completion_tokens": pout, "cost": cost,
              "finish": fin, "model": c["model"]}
-
     if fmt == "json" and content:
-        try:
-            usage["parsed"] = _parse_json_review(content)
-            content = json.dumps(usage["parsed"], indent=1)
-        except Exception:
-            try:                                  # ONE corrective retry (the 10/194 parse-error class)
-                r2 = _call_retry(_call, messages + [{"role": "assistant", "content": content[:8000]},
-                                       {"role": "user", "content":
-                                        "That was not valid JSON. Reply again with ONLY the JSON "
-                                        "object, exactly the shape specified."}],
-                                 int(c.get("retry_max_attempts", 3)),
-                                 float(c.get("retry_backoff_base", 1.0)))
-                c2 = r2.choices[0].message.content or ""
-                p2, o2, cost2 = _usage_of(r2)
-                usage["prompt_tokens"] += p2
-                usage["completion_tokens"] += o2
-                usage["cost"] += cost2
-                usage["parsed"] = _parse_json_review(c2)
-                content = json.dumps(usage["parsed"], indent=1)
-            except Exception:
-                usage["json_error"] = True        # keep the raw text - never lose a paid review
+        content, usage = _validated_json(_retrying, messages, content, usage, c)
     return content, usage
