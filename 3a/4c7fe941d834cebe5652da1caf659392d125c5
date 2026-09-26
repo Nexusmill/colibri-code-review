@@ -1,0 +1,29 @@
+{
+ "type": "CLEAR",
+ "commit": "3a4c7fe941d834cebe5652da1caf659392d125c5",
+ "caller": "zcode",
+ "when": "20260926-085832",
+ "files": {
+  "analyzer.py": {
+   "sha": "b3971bf72c98ff9bfe0610a87c9e315a060527eef80c4a75d7b40dcdf35a17b4",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-085828",
+   "artifact": ".adversary\\reviews\\gate_20260926-085828.md"
+  },
+  "docs/remediation_manifest.json": {
+   "sha": "d0c09220e7c139fec4ec8d83d56017519e9e1b995570bd37bfd4bbcfcca3f9cd",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-085828",
+   "artifact": ".adversary\\reviews\\gate_20260926-085828.md"
+  },
+  "tests/test_analyzer.py": {
+   "sha": "5f20de81fa1cc3dd193cfad2db246d506f5e4affe3d9f4930e3b944ab2999d99",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-085828",
+   "artifact": ".adversary\\reviews\\gate_20260926-085828.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260926-085828.md": "model: deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream | provider: DeepInfra | usage: {'prompt_tokens': 16053, 'completion_tokens': 717, 'total_tokens': 16770, 'cost': 0.0227331, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0227331, 'upstream_inference_prompt_cost': 0.0208689, 'upstream_inference_completions_cost': 0.0018642}, 'completion_tokens_details': {'reasoning_tokens': 0, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['analyzer.py', 'docs/remediation_manifest.json', 'tests/test_analyzer.py'] | caller: zcode\n\nLooking at this change set, I need to verify the fixes are correct and hunt for any new defects introduced.\n\n**Fix 1: load_spec file handle leak** - The `with open(...)` correctly closes the handle. The test properly verifies closure on success and failure paths.\n\n**Fix 2: model_max_tokens socket leak** - The `with _u.urlopen(...)` correctly closes the response. The test verifies closure and fallback behavior.\n\n**Fix 3: max_tokens negative value handling** - The predicate `(_mt or 0) > 0` correctly maps None/0/negative to the ceiling. The test verifies this.\n\n**Potential issues I'm hunting for:**\n\n1. **Test isolation problem in test_handle_teardown**: The test monkeypatches `builtins.open` and `urllib.request.urlopen` but doesn't restore them in a nested try/finally if an assertion fails between the patch and restore. Looking more carefully - the restore IS in a finally block, so it's safe.\n\n2. **The `_CloseProbe` class**: When `fail_read=True`, the `read()` method raises before returning. The `with` block in `load_spec` will still call `__exit__` which calls `close()`. This is correct.\n\n3. **Cache pollution in test_auto_negative**: The test primes `_MODEL_MAX_CACHE` with \"fake/auto-model\" but `_run()`'s teardown calls `_restore_module()` which clears and restores the cache. The comment says \"_run's teardown clears it after the call\" - this is correct.\n\n4. **The `test_single_json_import` check**: It looks for `\"_json.\"` in the source but the comment says \"_parse_json_review contains _json legitimately\". Wait - looking at the actual code, `_parse_json_review` no longer contains `_json` since the import was moved to module level. The check `\"_json.\" not in src` should pass because there's no `_json` alias anymore. But the comment is misleading - it says \"_parse_json_review contains _json legitimately\" when it actually doesn't anymore. This is a test comment issue, not a functional bug.\n\n5. **The `json` import at module level**: This is now imported once at the top. All the local `import json as _json` statements were removed. The code correctly uses `json.loads` and `json.dumps` throughout. No issues here.\n\n6. **The remediation manifest**: The JSON structure looks valid. The entries correctly document the fixes.\n\n7. **One subtle issue**: In `test_handle_teardown`, the test patches `builtins.open` globally. If `an.load_spec(p)` internally calls `open()` for any reason other than the file read (it doesn't in this case), it would get the probe. But looking at the code, `load_spec` only calls `open()` once for the file read, so this is fine.\n\n8. **The `_CloseProbe.__exit__` returns False**: This means exceptions propagate, which is correct for the test's purpose of verifying propagation.\n\nI don't find any real defects introduced by this change. The fixes are correct, the tests properly verify the fixes, and the remediation manifest is properly structured.\n\nVERDICT: CLEAR"
+ }
+}
