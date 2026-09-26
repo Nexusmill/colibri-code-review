@@ -67,3 +67,13 @@ python run_batch.py path/to/repo --model z-ai/glm-5.2 --mode bug --effort high -
 
 That verify-first step is the whole point — the tool surfaces candidates fast and cheaply,
 but a human-or-agent check is what turns a candidate into a fix.
+
+# Global memory (thin stub - single source of truth lives outside this repo)
+<!-- STUBIFIED: managed by Tools/arm-repo/arm_repo.py - edit the imported file, not this stub -->
+
+@C:\Users\User\source\repos\Nexusmill\docs\GLOBAL_MEMORY.md
+
+<!-- The inherited global memory above is the owner's cross-repo context
+     (machine, business hard rules, protocols). If your harness did not
+     inline it, READ that file now - the ZCode skill gate (G-MEM) will deny
+     the first mutating work in this repo until the Read is on record. -->
