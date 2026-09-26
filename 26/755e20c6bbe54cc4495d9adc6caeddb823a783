@@ -1,0 +1,36 @@
+{
+ "type": "CLEAR",
+ "commit": "26755e20c6bbe54cc4495d9adc6caeddb823a783",
+ "caller": "zcode",
+ "when": "20260926-093458",
+ "files": {
+  "analyzer.py": {
+   "sha": "26d009f659e7ea5b84f04d1e9de72b77c4956317ffd301bf6652d40d4e8e465a",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-093353",
+   "artifact": ".adversary\\reviews\\gate_20260926-093353.md"
+  },
+  "docs/remediation_manifest.json": {
+   "sha": "25b2d5dc42f38825721898832c305ab5aceab48583bd09a4182fac7cadf47d4a",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-093353",
+   "artifact": ".adversary\\reviews\\gate_20260926-093353.md"
+  },
+  "tests/test_analyzer.py": {
+   "sha": "a71394839151968de6d76621538f9a2cda5c280677e9670cb956d1f514b0d77f",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-093353",
+   "artifact": ".adversary\\reviews\\gate_20260926-093353.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260926-093353.md": "model: deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream | provider: DeepInfra | usage: {'prompt_tokens': 20919, 'completion_tokens': 636, 'total_tokens': 21555, 'cost': 0.0288483, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0288483, 'upstream_inference_prompt_cost': 0.0271947, 'upstream_inference_completions_cost': 0.0016536}, 'completion_tokens_details': {'reasoning_tokens': 0, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['analyzer.py', 'docs/remediation_manifest.json', 'tests/test_analyzer.py'] | caller: zcode\n\nLooking at this change, I need to examine the retry logic being added to `analyzer.py`.\n\nThe core addition is `_transient()` and `_call_retry()`. Let me trace through the logic:\n\n```python\ndef _transient(err):\n    if isinstance(err, (APIConnectionError, APITimeoutError)):\n        return True\n    if not isinstance(err, APIStatusError):\n        return False\n    code = getattr(err, \"status_code\", None)\n    return code == 429 or (code is not None and code >= 500)\n```\n\nThis looks correct - it handles the attribute-less case with `getattr` and the None guard.\n\n```python\ndef _call_retry(create, msgs, max_attempts, base_delay):\n    max_attempts = max(1, int(max_attempts))\n    base_delay = max(0.0, float(base_delay))\n    for attempt in range(1, max_attempts + 1):\n        try:\n            return create(msgs)\n        except Exception as e:\n            if attempt >= max_attempts or not _transient(e):\n                raise\n            time.sleep(min(60.0, base_delay * (2 ** (attempt - 1))))\n```\n\nThe retry loop is bounded, the guards are in place, and the sleep is capped.\n\nNow let me check the wiring in `review_code`:\n\n```python\nresp = _call_retry(_call, messages, int(c.get(\"retry_max_attempts\", 3)),\n                    float(c.get(\"retry_backoff_base\", 1.0)))\n```\n\nAnd for the JSON corrective retry:\n\n```python\nr2 = _call_retry(_call, messages + [{\"role\": \"assistant\", \"content\": content[:8000]},\n                       {\"role\": \"user\", \"content\":\n                        \"That was not valid JSON. Reply again with ONLY the JSON \"\n                        \"object, exactly the shape specified.\"}],\n                 int(c.get(\"retry_max_attempts\", 3)),\n                 float(c.get(\"retry_backoff_base\", 1.0)))\n```\n\nBoth call sites are wrapped. The usage accumulation for the corrective retry is preserved.\n\nOne thing I want to verify: the `_call` closure captures `client`, `c`, `max_tokens`, and `extra` from the enclosing scope. When `_call_retry` calls `create(msgs)` multiple times, it's calling the same `_call` function with the same captured state. That's correct - the retry should use the same client and parameters.\n\nThe test file looks comprehensive - it tests the retry recovery, exhaustion, backoff shape, non-transient immediate raise, knob-off, JSON retry composition, and the guard cases.\n\nI don't see any real defects introduced by this change. The retry logic is sound, the guards are in place, and the tests cover the critical paths.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260926-092200.md",
+  "outcomes": {
+   "fixed": 26
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
