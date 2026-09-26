@@ -1,6 +1,7 @@
 import json
 import os
-from openai import OpenAI
+import time
+from openai import APIConnectionError, APIStatusError, APITimeoutError, OpenAI
 
 try:
     from static_context import build_static_context
@@ -35,6 +36,8 @@ DEFAULTS = {
     "static_mypy": True,       # mypy type errors
     "static_dis": True,        # dis bytecode for hot loop-bearing functions
     "static_max_chars": 8000,  # overall cap on the appended static-signals block
+    "retry_max_attempts": 3,   # transient (429/5xx/connection) retry budget: initial + 2
+    "retry_backoff_base": 1.0, # seconds; sleep after failed attempt a = base * 2**(a-1)
 }
 
 MODES = {"bug": "Bug Hunt", "quality": "Code Quality", "feature": "Feature Ideas",
@@ -259,6 +262,31 @@ Return ONLY a JSON object (no prose, no code fences) with this shape:
 Findings worst-first. Use the same rigor as the Markdown contract."""
 
 
+def _transient(err):
+    """Rate-limit / 5xx / connection classes are worth a bounded retry; other 4xx are not."""
+    if isinstance(err, (APIConnectionError, APITimeoutError)):
+        return True
+    if not isinstance(err, APIStatusError):
+        return False
+    code = getattr(err, "status_code", None)   # foreign subclass w/o the attr is NOT transient
+    return code == 429 or (code is not None and code >= 500)
+
+
+def _call_retry(create, msgs, max_attempts, base_delay):
+    """Bounded retry on transient API errors: after a failed attempt a (< max_attempts)
+    sleep base_delay * 2**(a-1) and try again; the last transient exception propagates
+    when the budget is exhausted, non-transient errors re-raise at once."""
+    max_attempts = max(1, int(max_attempts))          # a zero/negative budget still gets ONE try
+    base_delay = max(0.0, float(base_delay))          # negative bases would ValueError in sleep
+    for attempt in range(1, max_attempts + 1):
+        try:
+            return create(msgs)
+        except Exception as e:
+            if attempt >= max_attempts or not _transient(e):
+                raise
+            time.sleep(min(60.0, base_delay * (2 ** (attempt - 1))))
+
+
 def _parse_json_review(text):
     """Tolerant parse: strip code fences / leading prose, take the outermost object."""
     t = (text or "").strip()
@@ -325,7 +353,8 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
             model=c["model"], messages=msgs, temperature=float(c["temperature"]),
             max_tokens=max_tokens, extra_body=extra)
 
-    resp = _call(messages)
+    resp = _call_retry(_call, messages, int(c.get("retry_max_attempts", 3)),
+                        float(c.get("retry_backoff_base", 1.0)))
     ch = resp.choices[0]
     fin = ch.finish_reason
     content = ch.message.content
@@ -361,10 +390,12 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
             content = json.dumps(usage["parsed"], indent=1)
         except Exception:
             try:                                  # ONE corrective retry (the 10/194 parse-error class)
-                r2 = _call(messages + [{"role": "assistant", "content": content[:8000]},
+                r2 = _call_retry(_call, messages + [{"role": "assistant", "content": content[:8000]},
                                        {"role": "user", "content":
                                         "That was not valid JSON. Reply again with ONLY the JSON "
-                                        "object, exactly the shape specified."}])
+                                        "object, exactly the shape specified."}],
+                                 int(c.get("retry_max_attempts", 3)),
+                                 float(c.get("retry_backoff_base", 1.0)))
                 c2 = r2.choices[0].message.content or ""
                 p2, o2, cost2 = _usage_of(r2)
                 usage["prompt_tokens"] += p2

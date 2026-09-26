@@ -35,6 +35,7 @@ _DUMMY = "k" + "ey-" + "1" * 20          # runtime-built, obviously fake (never 
 _ORIG_OPENAI = an.OpenAI
 _ORIG_STATIC = an.build_static_context
 _ORIG_CACHE = dict(an._MODEL_MAX_CACHE)
+_ORIG_TIME = getattr(an, "time", None)
 _J = json.dumps
 _OBJ = {"verdict": "fine", "findings": [{"severity": "LOW", "line": 1, "title": "t",
                                          "detail": "d", "fix": "f"}], "notes": []}
@@ -92,6 +93,8 @@ def _restore_module():
     an.OpenAI = _ORIG_OPENAI
     an.build_static_context = _ORIG_STATIC
     an._MODEL_MAX_CACHE.clear(); an._MODEL_MAX_CACHE.update(_ORIG_CACHE)
+    if _ORIG_TIME is not None:
+        an.time = _ORIG_TIME
 
 
 def _run(script, cfg=None, static="", **kw):
@@ -437,12 +440,177 @@ def test_mode_validation():
     check("spec_expectations_embedded", "EXPEC: something" in fake.calls[0]["messages"][1]["content"])
 
 
+def test_transient_retry():
+    import openai as _oai
+
+    class _RateLimited(_oai.RateLimitError):
+        def __init__(self, n):
+            Exception.__init__(self, "429 try %d" % n)
+            self.status_code = 429
+
+    class _ServerErr(_oai.APIStatusError):
+        def __init__(self):
+            Exception.__init__(self, "boom 503")
+            self.status_code = 503
+
+    class _Conn(_oai.APIConnectionError):
+        def __init__(self):
+            Exception.__init__(self, "conn reset")
+
+    class _Bad(_oai.BadRequestError):
+        def __init__(self):
+            Exception.__init__(self, "bad 400")
+            self.status_code = 400
+
+    def _outcome(script, cfg=None, **kw):
+        an.time = types.SimpleNamespace(sleep=lambda s: sleeps.append(s))
+        try:
+            c, u, fake, _ = _run(script, cfg=cfg, **kw)
+            return ("ok", c, u, fake)
+        except Exception as e:
+            return ("raise", e, None, None)
+
+    sleeps = []
+    orig_time = getattr(an, "time", None)
+    if orig_time is not None:                        # absent pre-fix; guard keeps RED clean
+        an.time = types.SimpleNamespace(sleep=lambda s: sleeps.append(s))
+    fast = {"retry_backoff_base": 0.001}
+    try:
+        st, c, u, fake = _outcome([_RateLimited(1), _Resp("ok", usage=_usage(10, 2, None))], cfg=fast)
+        check("retry_ratelimit_recovers", st == "ok" and c == "ok" and len(fake.calls) == 2)
+        check("retry_usage_from_success_only",
+              st == "ok" and u["prompt_tokens"] == 10
+              and abs(u["cost"] - (10 * 3.0 / 1e6 + 2 * 15.0 / 1e6)) < 1e-12)
+        st, c, _, fake = _outcome([_ServerErr(), _Resp("ok")], cfg=fast)
+        check("retry_5xx_recovers", st == "ok" and len(fake.calls) == 2)
+        st, c, _, fake = _outcome([_Conn(), _Resp("ok")], cfg=fast)
+        check("retry_conn_recovers", st == "ok" and len(fake.calls) == 2)
+
+        sleeps[:] = []                               # isolate: the recover cases above slept too
+        st, c, u, fake = _outcome([_RateLimited(1), _RateLimited(2), _RateLimited(3)], cfg=fast)
+        check("retry_exhausted_raises_last", st == "raise" and str(c) == "429 try 3")
+        check("retry_backoff_shape", sleeps == [0.001, 0.002])
+
+        st, c, u, fake = _outcome([_Bad(), _Resp("ok")], cfg=fast)
+        check("retry_nontransient_immediate", st == "raise" and isinstance(c, _Bad))
+        st, c, u, fake = _outcome([RuntimeError("plain")], cfg=fast)
+        check("retry_plain_exc_immediate", st == "raise" and str(c) == "plain")
+        st, c, u, fake = _outcome(
+            [_RateLimited(1)],
+            cfg={"retry_max_attempts": 1, "retry_backoff_base": 0.001})
+        check("retry_knob_off_single_attempt", st == "raise" and isinstance(c, _RateLimited))
+
+        st, c, u, fake = _outcome([_Resp("not json"), _RateLimited(1), _Resp(_J(_OBJ))],
+                                  cfg=fast, fmt="json")
+        check("retry_composes_json_retry",
+              st == "ok" and u.get("parsed") == _OBJ and len(fake.calls) == 3)
+    finally:
+        if orig_time is not None:
+            an.time = orig_time
+
+
+def test_transient_guards():
+    import openai as _oai
+
+    class _NoCode(_oai.APIStatusError):            # EV-136 #1: no status_code at all
+        def __init__(self):
+            Exception.__init__(self, "attribute-less")
+
+    class _RateLimited(_oai.RateLimitError):
+        def __init__(self):
+            Exception.__init__(self, "429")
+            self.status_code = 429
+
+    class _Status(_oai.APIStatusError):
+        def __init__(self, code):
+            Exception.__init__(self, "s%d" % code)
+            self.status_code = code
+
+    class _Conn(_oai.APIConnectionError):
+        def __init__(self):
+            Exception.__init__(self, "conn")
+
+    class _Timeout(_oai.APITimeoutError):
+        def __init__(self):
+            Exception.__init__(self, "timeout")
+
+    T = an._transient
+    check("tr_429_true", T(_RateLimited()) is True)
+    check("tr_500_true", T(_Status(500)) is True)
+    check("tr_503_true", T(_Status(503)) is True)
+    check("tr_529_true", T(_Status(529)) is True)
+    check("tr_400_false", T(_Status(400)) is False)
+    check("tr_401_false", T(_Status(401)) is False)
+    check("tr_0_false", T(_Status(0)) is False)
+    check("tr_conn_true", T(_Conn()) is True)
+    check("tr_timeout_true", T(_Timeout()) is True)
+    check("tr_plain_false", T(RuntimeError("x")) is False)
+    try:
+        v = T(_NoCode())
+        attrless = ("no-crash", v)
+    except AttributeError:
+        attrless = ("crash", None)
+    check("tr_attrless_false", attrless == ("no-crash", False))
+
+
+def test_retry_config_guards():
+    import openai as _oai
+
+    class _RateLimited(_oai.RateLimitError):
+        def __init__(self):
+            Exception.__init__(self, "429")
+            self.status_code = 429
+
+    sleeps = []
+
+    def _trun(script, cfg=None, **kw):
+        # re-apply per call: _run's teardown restores an.time (module hygiene, EV-136 #5)
+        an.time = types.SimpleNamespace(sleep=lambda s: sleeps.append(s))
+        return _run(script, cfg=cfg, **kw)
+
+    try:
+        try:
+            c, u, fake, _ = _trun([_Resp("ok")], cfg={"retry_max_attempts": 0,
+                                                      "retry_backoff_base": 0.001})
+            z = (c, len(fake.calls))
+        except Exception:
+            z = ("exc", None)
+        check("guard_zero_attempts_single_try", z == ("ok", 1))
+
+        try:
+            _trun([_RateLimited()], cfg={"retry_max_attempts": -2,
+                                         "retry_backoff_base": 0.001})
+            res = "no-raise"
+        except _RateLimited:
+            res = "raise"
+        except Exception:
+            res = "crash"
+        check("guard_negative_attempts_single_try", res == "raise")
+
+        sleeps[:] = []
+        try:
+            c, _, fake, _ = _trun([_RateLimited(), _Resp("ok")],
+                                  cfg={"retry_backoff_base": -5.0})
+            nb = (c, list(sleeps))
+        except Exception:
+            nb = ("exc", None)
+        check("guard_negative_base_recovers_zero_sleep", nb == ("ok", [0.0]))
+
+        sleeps[:] = []
+        c, _, fake, _ = _trun([_RateLimited(), _RateLimited(), _Resp("ok")],
+                              cfg={"retry_backoff_base": 3600.0})
+        check("guard_huge_base_capped_60s", c == "ok" and sleeps == [60.0, 60.0])
+    finally:
+        _restore_module()
+
+
 def main():
     for t in (test_merge, test_api_key, test_refusals, test_parse_json, test_load_spec,
               test_review_gates_and_prompt, test_reasoning_and_auto, test_usage_math,
               test_json_fmt, test_content_normalization, test_prior_and_static,
               test_handle_teardown, test_auto_negative, test_single_json_import,
-              test_mode_validation):
+              test_mode_validation, test_transient_retry, test_transient_guards,
+              test_retry_config_guards):
         try:
             t()
         except Exception as exc:                     # a crashing test must not kill the run

@@ -49,6 +49,17 @@
       "fix": "Loud ValueError before any spend: `raise ValueError(\"unknown mode %r; expected one of %s\" % (mode, sorted(MODES)))` replacing the coercion - message names the bad value and the full valid set; raised above the key check so no client is ever constructed.",
       "verification": "RED-first tests mode_rejected_'quaity'/''/'BUG'/None + mode_reject_no_client (5 checks failed on pre-fix bytes; message asserted to contain every MODES name per the local-gate amendment); all five valid modes still dispatch their own _SYS prompt (spec with expectations embedded); mutation M-W3 reverts to coercion and turns all 5 RED; battery 4/4.",
       "source": "quality review 2026-09-26 (tranche 3) -> perfection(analyzer.py) wave 3; local gate hy4 BLOCK on vacuous T1 amended (assert all five mode names), grok-4.3 CLEAR"
+    },
+    {
+      "date": "2026-09-26",
+      "commit": "pending (same commit as this row)",
+      "product": "colibri",
+      "file": "analyzer.py (_call_retry/_transient + review_code wiring)",
+      "severity": "MEDIUM",
+      "finding": "CLR-W4-NORETRY (quality review 2026-09-26 @ 8afa3ca9): a single transient API error (429/5xx/connection blip) mid-batch marked the file errored - run_batch records status:error, spend on prior files stands, and a re-run re-pays input tokens for the whole file set unless shas changed. Direct cost consequence for a tool whose premise is cheap triage.",
+      "fix": "Bounded transient retry: _transient() recognizes RateLimitError(429)/APIStatusError>=500/APIConnectionError/APITimeoutError (verified against installed openai 3.19.2); _call_retry() wraps BOTH the primary call and the corrective JSON-retry call - after a failed attempt a it sleeps retry_backoff_base * 2**(a-1) (defaults 3 attempts / 1.0s base = 3.0s worst added wall time), re-raises non-transient errors at once, propagates the last transient exception when the budget is exhausted. Knobs are cfg-driven per the file's constitution (retry_max_attempts=1 disables).",
+      "verification": "RED-first: 7 checks failed on pre-fix bytes (ratelimit/5xx/conn recovery, usage-from-success-only, exhaustion-raises-last, backoff shape, JSON-retry composition). Post-fix 94/94 incl. non-transient-never-retried pins (BadRequestError/plain RuntimeError) and knob-off single-attempt; backoff shape asserted via sleep accumulator [0.001, 0.002]; mutations M-W4a (drop 429 clause) and M-W4b (ignore budget) each RED; battery 4/4. AMENDED same session (EV-136 commit-gate BLOCK remediated): _transient made total (getattr+None guard; attribute-less APIStatusError subclass is non-transient), max_attempts clamped >=1, base clamped >=0 with a 60s per-sleep cap; 15 new checks incl. 5 RED-first guard tests and direct _transient unit tests; M-W4R-1/2 RED-OK; net 109/109; speculative findings (string status_code, jitter, 501/505 exclusion) rebutted with reasons via run --context.",
+      "source": "quality review 2026-09-26 (tranche 4) -> perfection(analyzer.py) wave 4; local gate grok-4.3 rounds 1-2 BLOCK (vacuous I4, formula-notation conflict) amended, round 3 CLEAR"
     }
   ]
 }
