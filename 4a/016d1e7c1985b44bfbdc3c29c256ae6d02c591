@@ -1,0 +1,23 @@
+{
+ "type": "CLEAR",
+ "commit": "4a016d1e7c1985b44bfbdc3c29c256ae6d02c591",
+ "caller": "zcode",
+ "when": "20260926-094313",
+ "files": {
+  "analyzer.py": {
+   "sha": "8818baf21890348efabe4d703179fb5214e35a5262827ca7b71f9e0f28effb25",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-094311",
+   "artifact": ".adversary\\reviews\\gate_20260926-094311.md"
+  },
+  "tests/test_analyzer.py": {
+   "sha": "c3174fce4c4d4f9e8f866c1657047d3cb2e7b73e423409742f7b5fbe4a0d3202",
+   "model": "deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream",
+   "when": "20260926-094311",
+   "artifact": ".adversary\\reviews\\gate_20260926-094311.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260926-094311.md": "model: deepseek/deepseek-v4-pro-0813@deepinfra/fp8+wafer+ionstream | provider: DeepInfra | usage: {'prompt_tokens': 17424, 'completion_tokens': 377, 'total_tokens': 17801, 'cost': 0.0236314, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0236314, 'upstream_inference_prompt_cost': 0.0226512, 'upstream_inference_completions_cost': 0.0009802}, 'completion_tokens_details': {'reasoning_tokens': 0, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['analyzer.py', 'tests/test_analyzer.py'] | caller: zcode\n\nLooking at this change, I need to verify the refactoring from separate `_SYS` and `_TEMPLATES` dictionaries to a combined `_PROMPTS` dictionary with (system, template) tuples.\n\nLet me check the key claims:\n\n1. **All modes have both system and template strings**: The diff shows all 5 modes (bug, quality, feature, spec, plan) getting both components. The test `test_prompt_grouping` verifies this with `prompt_grouping_pairs_shape`.\n\n2. **Consumers updated correctly**: \n   - `_build_prompt` uses `_PROMPTS[mode][1]` for templates\n   - `review_code` uses `_PROMPTS[mode][0]` for system prompts\n   - Tests updated to use `_PROMPTS[mode][0]` instead of `_SYS[mode]`\n\n3. **No legacy references remain**: The test checks `not hasattr(an, \"_SYS\") and not hasattr(an, \"_TEMPLATES\")`.\n\n4. **Mode validation happens before prompt access**: In `review_code`, the mode check `if mode not in MODES: raise ValueError` occurs before `_PROMPTS[mode]` is accessed, so invalid modes won't cause KeyError.\n\n5. **Spec mode special handling preserved**: The spec template still has `{expectations}` placeholder and `_build_prompt` still formats it with `spec_text`.\n\n6. **String content preserved**: The diff appears to be a pure restructuring - the actual prompt text content is unchanged, just reorganized into tuples.\n\nThe change is a clean refactoring with no functional changes. The tests are comprehensive and verify the new structure thoroughly. No defects found.\n\nVERDICT: CLEAR"
+ }
+}
