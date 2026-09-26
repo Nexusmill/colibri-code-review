@@ -104,26 +104,13 @@ def model_max_tokens(model, base_url="https://openrouter.ai/api/v1", fallback=13
     _MODEL_MAX_CACHE[model] = val
     return val
 
-_SYS = {
+# The product's prompt IP: per-mode (system, template) pairs - ONE home for the mode
+# vocabulary's text. Keys mirror MODES exactly; consumers use [mode][0] / [mode][1].
+_PROMPTS = {
     "bug": ("You are a rigorous senior staff engineer and application-security reviewer. "
             "You hunt for REAL defects and vulnerabilities, cite exact line numbers, and never "
-            "pad the report with style opinions or trivia."),
-    "quality": ("You are a principal engineer who cares about long-term code health: readability, "
-                "structure, and maintainability. You give concrete, actionable refactors and never "
-                "invent bugs that aren't there."),
-    "feature": ("You are a pragmatic, product-minded staff engineer. You propose high-value feature "
-                "add-ons grounded in what the code actually does, with a realistic sense of effort."),
-    "spec": ("You are a rigorous senior staff engineer doing a CONFORMANCE review against the "
-             "maintainer's authoritative feature expectations. You report ONLY divergences between "
-             "the code and the stated expectations, quote the violated clause for every finding, "
-             "and never critique the expectations themselves or report unrelated bugs."),
-    "plan": ("You are a senior staff engineer writing a REMEDIATION PLAN. You plan only and never "
-             "claim to execute, apply, or verify a change - the plan is executed later by someone "
-             "else under strict TDD. Concrete symbols, failing-test-first, smallest viable fixes."),
-}
-
-_TEMPLATES = {
-    "bug": """Hunt for BUGS and vulnerabilities in `{rel}`.
+            "pad the report with style opinions or trivia.",
+            """Hunt for BUGS and vulnerabilities in `{rel}`.
 
 Look hard for: logic/correctness errors, off-by-one, null/None/undefined, unhandled
 exceptions and error paths, edge/boundary cases, race conditions and concurrency,
@@ -145,9 +132,12 @@ Worst first:
 - Fix: the concrete change
 
 ## Missing safeguards
-Bullets: validation, error handling, or tests that should exist but don't.""",
+Bullets: validation, error handling, or tests that should exist but don't."""),
 
-    "quality": """Review `{rel}` for CODE QUALITY and maintainability (not bugs).
+    "quality": ("You are a principal engineer who cares about long-term code health: readability, "
+                "structure, and maintainability. You give concrete, actionable refactors and never "
+                "invent bugs that aren't there.",
+                """Review `{rel}` for CODE QUALITY and maintainability (not bugs).
 
 Assess: naming, readability, function length and complexity, duplication (DRY),
 cohesion and coupling, abstractions, SOLID, error-handling style, comments and
@@ -168,9 +158,11 @@ Highest-impact first:
 A checklist of small, safe cleanups.
 
 ## What's done well
-1-3 bullets.""",
+1-3 bullets."""),
 
-    "feature": """Propose high-value FEATURE ADD-ONS and enhancements for `{rel}`.
+    "feature": ("You are a pragmatic, product-minded staff engineer. You propose high-value feature "
+                "add-ons grounded in what the code actually does, with a realistic sense of effort.",
+                """Propose high-value FEATURE ADD-ONS and enhancements for `{rel}`.
 
 Think about: capabilities a user would expect but are missing, robustness and
 observability (logging, metrics, retries), configurability, extensibility / plugin
@@ -190,9 +182,13 @@ Ranked by value:
 - How: where it hooks in (files/functions) and a sketch of the approach
 
 ## Nice-to-haves
-Short bullets of smaller ideas.""",
+Short bullets of smaller ideas."""),
 
-    "spec": """Check `{rel}` for CONFORMANCE against the maintainer's feature expectations below.
+    "spec": ("You are a rigorous senior staff engineer doing a CONFORMANCE review against the "
+             "maintainer's authoritative feature expectations. You report ONLY divergences between "
+             "the code and the stated expectations, quote the violated clause for every finding, "
+             "and never critique the expectations themselves or report unrelated bugs.",
+             """Check `{rel}` for CONFORMANCE against the maintainer's feature expectations below.
 
 FEATURE EXPECTATIONS (authoritative - the contract this code must satisfy):
 
@@ -218,9 +214,12 @@ Worst first:
 - Fix: the concrete change
 
 ## UNJUDGEABLE HERE
-One line per clause whose behavior lives outside this file (name where it likely lives).""",
+One line per clause whose behavior lives outside this file (name where it likely lives)."""),
 
-    "plan": """Write a REMEDIATION PLAN for `{rel}` - PLAN ONLY, never execute.
+    "plan": ("You are a senior staff engineer writing a REMEDIATION PLAN. You plan only and never "
+             "claim to execute, apply, or verify a change - the plan is executed later by someone "
+             "else under strict TDD. Concrete symbols, failing-test-first, smallest viable fixes.",
+             """Write a REMEDIATION PLAN for `{rel}` - PLAN ONLY, never execute.
 
 First identify the few most load-bearing REAL defects in this file (or, if a PREVIOUS
 review is supplied below, plan for exactly its still-open findings - do not re-litigate,
@@ -238,7 +237,7 @@ expand, or drop them). Then, for each item:
 Order items worst-first. End with:
 
 ## Execution order & batching
-Commit-sized tranches, dependencies noted.""",
+Commit-sized tranches, dependencies noted."""),
 }
 
 
@@ -297,6 +296,8 @@ def _parse_json_review(text):
     if not isinstance(d, dict) or "findings" not in d:
         raise ValueError("missing 'findings'")
     return d
+
+
 def _usage_of(r, c):
     u = getattr(r, "usage", None)
     pin = getattr(u, "prompt_tokens", 0) or 0
@@ -328,9 +329,9 @@ def _normalize_content(ch):
 def _build_prompt(code, rel_path, mode, c, prior_md=None, fmt="md", spec_text=None):
     """Mode template + numbered gutter + fail-soft static enrichment + delta prior + JSON instr."""
     if mode == "spec":
-        body = _TEMPLATES["spec"].format(rel=rel_path, expectations=spec_text)
+        body = _PROMPTS["spec"][1].format(rel=rel_path, expectations=spec_text)
     else:
-        body = _TEMPLATES[mode].format(rel=rel_path)
+        body = _PROMPTS[mode][1].format(rel=rel_path)
     prompt = f"{body}\n\nSource (shown as `N| code`):\n\n```\n{_numbered(code)}\n```\n"
     try:
         static = build_static_context(code, rel_path, mode, c)
@@ -402,7 +403,7 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
 
     _mt = c.get("max_tokens")                          # AUTO (None/<=0) -> the model's own ceiling
     max_tokens = int(_mt) if (_mt or 0) > 0 else model_max_tokens(c["model"], c["api_base"])
-    messages = [{"role": "system", "content": _SYS[mode]},
+    messages = [{"role": "system", "content": _PROMPTS[mode][0]},
                 {"role": "user", "content": prompt}]
 
     def _call(msgs):

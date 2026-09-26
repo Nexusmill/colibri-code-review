@@ -216,7 +216,7 @@ def test_load_spec():
 
 def test_review_gates_and_prompt():
     content, usage, fake, ctor = _run([_Resp("ok")])
-    check("mode_bug_dispatches", fake.calls[0]["messages"][0]["content"] == an._SYS["bug"])
+    check("mode_bug_dispatches", fake.calls[0]["messages"][0]["content"] == an._PROMPTS["bug"][0])
     msgs = fake.calls[0]["messages"]
     check("prompt_roles", len(msgs) == 2 and msgs[0]["role"] == "system" and msgs[1]["role"] == "user")
     check("prompt_renders_rel", "pkg/mod.py" in msgs[1]["content"])
@@ -434,9 +434,9 @@ def test_mode_validation():
     # all five valid modes still dispatch with their own system prompt
     for m in ("bug", "quality", "feature", "plan"):
         _, _, fake, _ = _run([_Resp("ok")], mode=m)
-        check("mode_%s_dispatches" % m, fake.calls[0]["messages"][0]["content"] == an._SYS[m])
+        check("mode_%s_dispatches" % m, fake.calls[0]["messages"][0]["content"] == an._PROMPTS[m][0])
     _, _, fake, _ = _run([_Resp("ok")], mode="spec", spec_text="EXPEC: something")
-    check("mode_spec_dispatches", fake.calls[0]["messages"][0]["content"] == an._SYS["spec"])
+    check("mode_spec_dispatches", fake.calls[0]["messages"][0]["content"] == an._PROMPTS["spec"][0])
     check("spec_expectations_embedded", "EXPEC: something" in fake.calls[0]["messages"][1]["content"])
 
 
@@ -604,13 +604,34 @@ def test_retry_config_guards():
         _restore_module()
 
 
+def test_prompt_grouping():
+    P = getattr(an, "_PROMPTS", None)
+    check("prompt_grouping_exists_keys_match_modes",
+          P is not None and set(P) == set(an.MODES))
+    check("prompt_grouping_pairs_shape",
+          P is not None and all(isinstance(v, tuple) and len(v) == 2
+                                and isinstance(v[0], str) and isinstance(v[1], str)
+                                and v[0] and v[1] for v in P.values()))
+    # literal anchors: independent of _PROMPTS so a miswired pair cannot hide
+    _, _, fake, _ = _run([_Resp("ok")])
+    msgs = fake.calls[0]["messages"]
+    check("anchor_bug_system_prefix", msgs[0]["content"].startswith(
+        "You are a rigorous senior staff engineer"))
+    check("anchor_bug_template_phrase", "Hunt for BUGS" in msgs[1]["content"])
+    _, _, fake, _ = _run([_Resp("ok")], mode="spec", spec_text="EXPEC: x")
+    check("anchor_spec_template_phrase",
+          "FEATURE EXPECTATIONS" in fake.calls[0]["messages"][1]["content"])
+    check("anchor_no_legacy_names",
+          not hasattr(an, "_SYS") and not hasattr(an, "_TEMPLATES"))
+
+
 def main():
     for t in (test_merge, test_api_key, test_refusals, test_parse_json, test_load_spec,
               test_review_gates_and_prompt, test_reasoning_and_auto, test_usage_math,
               test_json_fmt, test_content_normalization, test_prior_and_static,
               test_handle_teardown, test_auto_negative, test_single_json_import,
               test_mode_validation, test_transient_retry, test_transient_guards,
-              test_retry_config_guards):
+              test_retry_config_guards, test_prompt_grouping):
         try:
             t()
         except Exception as exc:                     # a crashing test must not kill the run
