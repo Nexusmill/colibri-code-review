@@ -212,8 +212,8 @@ def test_load_spec():
 
 
 def test_review_gates_and_prompt():
-    content, usage, fake, ctor = _run([_Resp("ok")], mode="quaity")
-    check("mode_coercion_pins_bug", fake.calls[0]["messages"][0]["content"] == an._SYS["bug"])
+    content, usage, fake, ctor = _run([_Resp("ok")])
+    check("mode_bug_dispatches", fake.calls[0]["messages"][0]["content"] == an._SYS["bug"])
     msgs = fake.calls[0]["messages"]
     check("prompt_roles", len(msgs) == 2 and msgs[0]["role"] == "system" and msgs[1]["role"] == "user")
     check("prompt_renders_rel", "pkg/mod.py" in msgs[1]["content"])
@@ -401,11 +401,48 @@ def test_single_json_import():
     check("no_json_alias_left", "_json." not in src)   # _parse_json_review contains _json legitimately
 
 
+def test_mode_validation():
+    # invalid modes raise loudly, before any client construction or spend
+    # (script of 4: on PRE-fix bytes the coerced reviews complete - the missing raise is
+    #  then the asserted failure, not a harness crash)
+    fake = _FakeClient([_Resp("ok")] * 4)
+    ctor = []
+
+    def _ctor(**ck):
+        ctor.append(ck)
+        return fake
+
+    an.OpenAI = _ctor
+    an.build_static_context = lambda *a, **k: ""
+    try:
+        with _KeyEnv():
+            for bad in ("quaity", "", "BUG", None):
+                try:
+                    an.review_code("x = 1\n", "pkg/mod.py", mode=bad,
+                                   cfg={"model": "m", "max_tokens": 500})
+                    ok = False
+                except ValueError as e:
+                    msg = str(e)
+                    ok = (repr(bad) in msg) and all(m in msg for m in an.MODES)
+                check("mode_rejected_%r" % (bad,), ok)
+            check("mode_reject_no_client", len(ctor) == 0)
+    finally:
+        _restore_module()
+    # all five valid modes still dispatch with their own system prompt
+    for m in ("bug", "quality", "feature", "plan"):
+        _, _, fake, _ = _run([_Resp("ok")], mode=m)
+        check("mode_%s_dispatches" % m, fake.calls[0]["messages"][0]["content"] == an._SYS[m])
+    _, _, fake, _ = _run([_Resp("ok")], mode="spec", spec_text="EXPEC: something")
+    check("mode_spec_dispatches", fake.calls[0]["messages"][0]["content"] == an._SYS["spec"])
+    check("spec_expectations_embedded", "EXPEC: something" in fake.calls[0]["messages"][1]["content"])
+
+
 def main():
     for t in (test_merge, test_api_key, test_refusals, test_parse_json, test_load_spec,
               test_review_gates_and_prompt, test_reasoning_and_auto, test_usage_math,
               test_json_fmt, test_content_normalization, test_prior_and_static,
-              test_handle_teardown, test_auto_negative, test_single_json_import):
+              test_handle_teardown, test_auto_negative, test_single_json_import,
+              test_mode_validation):
         try:
             t()
         except Exception as exc:                     # a crashing test must not kill the run

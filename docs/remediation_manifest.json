@@ -38,6 +38,17 @@
       "fix": "`max_tokens = int(_mt) if (_mt or 0) > 0 else model_max_tokens(...)` - the comment's None/<=0 contract is now literally the predicate; input partition {None, 0, -5} -> ceiling, {5000} -> 5000.",
       "verification": "RED-first test auto_negative_uses_ceiling (failed on pre-fix bytes: create was called with max_tokens=-5); mutations M-I4 (revert predicate) RED-OK; auto_none/auto_zero/explicit pins from wave 1 unchanged green; battery 4/4.",
       "source": "perfection(analyzer.py) L2 pass A 2026-09-26 (fresh delta over prior reviews) -> wave 2"
+    },
+    {
+      "date": "2026-09-26",
+      "commit": "pending (same commit as this row)",
+      "product": "colibri",
+      "file": "analyzer.py (review_code mode gate)",
+      "severity": "MEDIUM",
+      "finding": "CLR-W3-MODECOERCE (quality review 2026-09-26 @ 8afa3ca9): an unknown `mode` was silently coerced to \"bug\" - a caller typo (e.g. \"quaity\") produced a billed bug review with no signal. MODES is the product's whole mode vocabulary; the gate is this file's to enforce. Caller audit: app.py builds modes from constants, run_batch restricts via argparse choices, legacy drivers pass literals - no live caller can send an invalid mode, so raising is safe today and typo-proof tomorrow.",
+      "fix": "Loud ValueError before any spend: `raise ValueError(\"unknown mode %r; expected one of %s\" % (mode, sorted(MODES)))` replacing the coercion - message names the bad value and the full valid set; raised above the key check so no client is ever constructed.",
+      "verification": "RED-first tests mode_rejected_'quaity'/''/'BUG'/None + mode_reject_no_client (5 checks failed on pre-fix bytes; message asserted to contain every MODES name per the local-gate amendment); all five valid modes still dispatch their own _SYS prompt (spec with expectations embedded); mutation M-W3 reverts to coercion and turns all 5 RED; battery 4/4.",
+      "source": "quality review 2026-09-26 (tranche 3) -> perfection(analyzer.py) wave 3; local gate hy4 BLOCK on vacuous T1 amended (assert all five mode names), grok-4.3 CLEAR"
     }
   ]
 }

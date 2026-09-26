@@ -10,6 +10,7 @@
 | 2026-09-26 | (this row's commit) | analyzer.py `load_spec` | MED | FD leak — bare `open(...).read()`, handle never closed (batch spec loads exhaust descriptors). Fixed with a `with` block; close guaranteed on the read-failure path too. | bug review 2026-09-25 @ 8afa3ca9 → perfection wave 2 |
 | 2026-09-26 | (this row's commit) | analyzer.py `model_max_tokens` | LOW | HTTP response socket leak — bare `urlopen` result never closed (one per uncached model). Fixed with `with` per the app.py:21 precedent. | bug review 2026-09-25 @ 8afa3ca9 → perfection wave 2 |
 | 2026-09-26 | (this row's commit) | analyzer.py `review_code` | MED | `max_tokens` AUTO comment/code divergence — comment said `None/<=0`, code only mapped `None`/`0`; negatives (reachable via `run_batch --max-tokens`) hit a 400 instead of the ceiling. Predicate now `(_mt or 0) > 0`. | perfection L2 pass A 2026-09-26 (new) → wave 2 |
+| 2026-09-26 | (this row's commit) | analyzer.py mode gate | MED | Unknown `mode` silently coerced to "bug" — a caller typo got a billed bug review with no signal. Now a loud ValueError naming the bad value and the full valid set, raised before any client construction. | quality review 2026-09-26 (tranche 3) → perfection wave 3 |
 
 Verification pattern for all rows: RED-first tests in `tests/test_analyzer.py` (failed on
 pre-fix bytes), mutation checks reverting each fix re-turn them RED, full battery green.

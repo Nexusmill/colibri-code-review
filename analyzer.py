@@ -275,7 +275,7 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
     Always returns a string review and a usage dict with the real billed cost."""
     c = _merge(cfg)
     if mode not in MODES:
-        mode = "bug"
+        raise ValueError("unknown mode %r; expected one of %s" % (mode, sorted(MODES)))
     key = api_key()
     if not key:
         return "**No API key.** Set `OPENROUTER_API_KEY` and restart the app.", {"cost": 0}
