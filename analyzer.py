@@ -71,15 +71,17 @@ def load_spec(source, ids=None):
         rid = str(r.get("id", "?"))
         if want and rid not in want:
             continue
-        out.append("### %s - %s" % (rid, r.get("label") or r.get("feature", "")))
+        label = r.get("label")
+        label = label if label not in (None, "") else r.get("feature", "")
+        out.append("### %s - %s" % (rid, label))
         c = r.get("contract")
-        if isinstance(c, dict):
+        if isinstance(c, dict) and c:
             for k, v in c.items():
                 if v is not None and v != "":   # False/0 are real clauses; only absent is skipped
                     out.append("  %s: %s" % (k.upper(), v))
         elif r.get("expected") not in (None, ""):
             out.append("  EXPECTED: %s" % r["expected"])
-        if r.get("status"):
+        if r.get("status") not in (None, ""):
             out.append("  STATUS: %s" % r["status"])
     if not out:
         raise ValueError("no matching spec rows (ids=%s)" % ids)

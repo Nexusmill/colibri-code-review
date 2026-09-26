@@ -751,6 +751,17 @@ def test_malformed_registry_guard():
           out is not None and "### ok - L" in out and "EXPECTED: e" in out)
 
 
+def test_row_field_truthiness():
+    reg = {"controls": [
+        {"id": "z1", "label": 0, "status": False, "expected": "ez"},   # falsy-but-real fields
+        {"id": "z2", "contract": {}, "expected": "ec"},                # empty contract + expected
+    ]}
+    out = an.load_spec(_J(reg))
+    check("spec_falsy_label_renders", "### z1 - 0" in out)
+    check("spec_falsy_status_renders", "STATUS: False" in out)
+    check("spec_empty_contract_renders_expected", "### z2" in out and "EXPECTED: ec" in out)
+
+
 def main():
     for t in (test_merge, test_api_key, test_refusals, test_parse_json, test_load_spec,
               test_review_gates_and_prompt, test_reasoning_and_auto, test_usage_math,
@@ -760,7 +771,7 @@ def main():
               test_retry_config_guards, test_prompt_grouping, test_client_teardown,
               test_ceiling_cache_keyed_by_base, test_falsy_clauses_render,
               test_plan_prior_wording, test_retry_finish_updated, test_sdk_retry_disabled,
-              test_malformed_registry_guard):
+              test_malformed_registry_guard, test_row_field_truthiness):
         try:
             t()
         except Exception as exc:                     # a crashing test must not kill the run

@@ -93,6 +93,17 @@
       "fix": "(C4) the client is constructed with max_retries=0 - _call_retry is the single retry owner and retry_max_attempts is now the TOTAL HTTP budget (DEFAULTS comment updated); (C6) non-list controls/features passes through as raw stripped text and non-dict rows are skipped, both never crashing.",
       "verification": "RED-first: sdk_max_retries_zero, spec_nonlist_controls_passthrough, spec_nondict_rows_skipped failed on pre-fix bytes. Post-fix 132/132; mutation M-W9a RED-OK; M-W9b caught at function granularity (rc=1 under mutation via the ValueError escape, 132/132 on restore - check-level attribution documented); battery 4/4; pyflakes 0.",
       "source": "perfection(analyzer.py) Stage E COLD pass 2 (grok-4.6 high, $0.11, 469s) -> Phase-3 (2 CONFIRMED, 1 dispute upheld) -> wave 9"
+    },
+    {
+      "date": "2026-09-26",
+      "commit": "pending (same commit as this row)",
+      "product": "colibri",
+      "file": "analyzer.py (load_spec row-header fields)",
+      "severity": "LOW",
+      "finding": "CLR-W10-COLD3-COMPLETION (qwen/qwen3.8-flash Stage-E cold pass 3, owner-picked 3rd family, $0.027: claimed 4 HIGH/CRIT + 6 MED; Phase-3 adjudicated ALL MED+ refuted/adjudicated for the single-user-local-tool trust model - full table in junk/perfection_waves/cold3_adjudication.md, gate-cleared): the ONE accepted slice - load_spec's row-header fields still had the truthiness disease wave 8 cured for clause values (label 0/False fell through to feature, status 0/False silently dropped, an empty contract dict swallowed the row's expected) because the wave-8 sibling sweep wrongly declared itself complete without these fields.",
+      "fix": "Presence-checks matching wave 8's predicate style: label renders verbatim unless None/empty (then the feature fallback); status renders unless None/empty; `isinstance(c, dict) and c` so an empty contract falls through to the expected branch.",
+      "verification": "RED-first: spec_falsy_label_renders ('### z1 - 0'), spec_falsy_status_renders ('STATUS: False'), spec_empty_contract_renders_expected all failed on pre-fix bytes. Post-fix 135/135; mutations M-W10a/b RED-OK; battery 4/4; pyflakes 0.",
+      "source": "perfection(analyzer.py) Stage E cold pass 3 (qwen3.8-flash medium, 546s) -> Phase-3 split verdict -> wave 10 (micro)"
     }
   ]
 }
