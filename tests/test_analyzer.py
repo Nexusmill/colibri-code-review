@@ -730,6 +730,27 @@ def test_retry_finish_updated():
           and u.get("first_finish") == "length")
 
 
+def test_sdk_retry_disabled():
+    c, u, fake, ctor = _run([_Resp("ok")])
+    check("sdk_max_retries_zero", bool(ctor) and ctor[0].get("max_retries") == 0)
+
+
+def test_malformed_registry_guard():
+    bad = '{"controls": {"id": "1"}}'
+    try:
+        got = an.load_spec(bad)
+    except AttributeError:
+        got = None
+    check("spec_nonlist_controls_passthrough", got == bad)
+    mixed = {"controls": [None, 1, {"id": "ok", "label": "L", "expected": "e"}]}
+    try:
+        out = an.load_spec(_J(mixed))
+    except AttributeError:
+        out = None
+    check("spec_nondict_rows_skipped",
+          out is not None and "### ok - L" in out and "EXPECTED: e" in out)
+
+
 def main():
     for t in (test_merge, test_api_key, test_refusals, test_parse_json, test_load_spec,
               test_review_gates_and_prompt, test_reasoning_and_auto, test_usage_math,
@@ -738,7 +759,8 @@ def main():
               test_mode_validation, test_transient_retry, test_transient_guards,
               test_retry_config_guards, test_prompt_grouping, test_client_teardown,
               test_ceiling_cache_keyed_by_base, test_falsy_clauses_render,
-              test_plan_prior_wording, test_retry_finish_updated):
+              test_plan_prior_wording, test_retry_finish_updated, test_sdk_retry_disabled,
+              test_malformed_registry_guard):
         try:
             t()
         except Exception as exc:                     # a crashing test must not kill the run

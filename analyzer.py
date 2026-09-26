@@ -36,7 +36,8 @@ DEFAULTS = {
     "static_mypy": True,       # mypy type errors
     "static_dis": True,        # dis bytecode for hot loop-bearing functions
     "static_max_chars": 8000,  # overall cap on the appended static-signals block
-    "retry_max_attempts": 3,   # transient (429/5xx/connection) retry budget: initial + 2
+    "retry_max_attempts": 3,   # TOTAL HTTP budget for transient (429/5xx/conn) errors: initial + 2
+                               # (the client is built with max_retries=0 - this is the only retry layer)
     "retry_backoff_base": 1.0, # seconds; sleep after failed attempt a = base * 2**(a-1)
 }
 
@@ -58,11 +59,15 @@ def load_spec(source, ids=None):
     except ValueError:
         return raw.strip()
     rows = (d.get("controls") or d.get("features") or []) if isinstance(d, dict) else []
+    if not isinstance(rows, list):
+        return raw.strip()                     # malformed registry: pass through, never crash
     if not rows:
         return raw.strip()
     want = {s.strip() for s in ids.split(",") if s.strip()} if ids else None
     out = []
     for r in rows:
+        if not isinstance(r, dict):
+            continue                           # malformed row: skip, never crash
         rid = str(r.get("id", "?"))
         if want and rid not in want:
             continue
@@ -403,6 +408,7 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
     with OpenAI(
         api_key=key, base_url=c["api_base"],
         default_headers={"HTTP-Referer": "http://localhost", "X-Title": "Colibri Code Review"},
+        max_retries=0,                         # the SDK retry would stack with _call_retry
     ) as client:
         # bounded reasoning -> effort hint; unbounded ('off') -> omit so the model reasons freely
         extra = {}

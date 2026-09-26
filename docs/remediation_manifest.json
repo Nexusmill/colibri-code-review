@@ -82,6 +82,17 @@
       "fix": "(1) clause render predicate `if v is not None and v != \"\"` (False/0 render; the pinned empty-string skip kept - NOT grok's blanket `is not None` which would emit empty clauses) and `elif r.get('expected') not in (None, '')`; (2) mode-aware prior block in _build_prompt - plan mode gets plan-contract attach wording, every other mode keeps the delta block byte-identical; (3) usage['finish'] = r2.choices[0].finish_reason on corrective success (json_error path keeps the first response's finish, consistent with kept raw content).",
       "verification": "RED-first: spec_false/zero/falsy-expected render, plan_prior_no_delta_wording, retry_finish_updated all failed on pre-fix bytes (plan_prior_keeps_still_open was green pre-fix via the plan template's own wording - its partner check carries the contradiction). Post-fix 129/129; mutations M-W8a/b/c RED-OK; battery 4/4; pyflakes 0. AMENDED same session (EV-137 commit-gate BLOCK): finish now tracks the response whose content shipped AND the first attempt's finish is preserved as usage['first_finish'] when a retry ships (test asserts both; the additive resolution of the gate/cold-pass semantic dispute - F1/F3 accepted, F2 judged cosmetic by the gate itself).",
       "source": "perfection(analyzer.py) Stage E COLD pass (grok-4.6 high, $0.09, 343s) -> Phase-3 CONFIRMED -> wave 8 (E.5 re-entry)"
+    },
+    {
+      "date": "2026-09-26",
+      "commit": "pending (same commit as this row)",
+      "product": "colibri",
+      "file": "analyzer.py (review_code client ctor, load_spec registry guards)",
+      "severity": "MEDIUM",
+      "finding": "CLR-W9-COLD2 (grok-4.6 effort-high Stage-E COLD pass 2, BLIND, COLD VERDICT: FINDINGS): (C4 CONFIRMED) the openai SDK client defaults to max_retries=2 - its own retry of the same transient classes - stacking with _call_retry's budget of 3: up to 9 HTTP requests for an advertised budget of 3, with doubled backoff aggravating the 429s being retried; the cfg knobs did not mean what they said. (C6 CONFIRMED) load_spec crashed with AttributeError on malformed registries (controls/features as a non-list object iterating dict keys; non-dict rows hitting r.get on str/None/None) instead of the documented pass-through/skip. (C5 DISPUTE UPHELD, no change) failure-caching of the high-safe 131072 fallback re-raised from the long-running-UI side - upheld per the wave-7 adjudication (a stale 131072 truncates nothing in practical use; not-caching re-attempts dead network at 20s/file across batches; Authorization-on-/models sub-point to owner backlog, OpenRouter endpoint is public).",
+      "fix": "(C4) the client is constructed with max_retries=0 - _call_retry is the single retry owner and retry_max_attempts is now the TOTAL HTTP budget (DEFAULTS comment updated); (C6) non-list controls/features passes through as raw stripped text and non-dict rows are skipped, both never crashing.",
+      "verification": "RED-first: sdk_max_retries_zero, spec_nonlist_controls_passthrough, spec_nondict_rows_skipped failed on pre-fix bytes. Post-fix 132/132; mutation M-W9a RED-OK; M-W9b caught at function granularity (rc=1 under mutation via the ValueError escape, 132/132 on restore - check-level attribution documented); battery 4/4; pyflakes 0.",
+      "source": "perfection(analyzer.py) Stage E COLD pass 2 (grok-4.6 high, $0.11, 469s) -> Phase-3 (2 CONFIRMED, 1 dispute upheld) -> wave 9"
     }
   ]
 }
