@@ -70,9 +70,9 @@ def load_spec(source, ids=None):
         c = r.get("contract")
         if isinstance(c, dict):
             for k, v in c.items():
-                if v:
+                if v is not None and v != "":   # False/0 are real clauses; only absent is skipped
                     out.append("  %s: %s" % (k.upper(), v))
-        elif r.get("expected"):
+        elif r.get("expected") not in (None, ""):
             out.append("  EXPECTED: %s" % r["expected"])
         if r.get("status"):
             out.append("  STATUS: %s" % r["status"])
@@ -341,12 +341,18 @@ def _build_prompt(code, rel_path, mode, c, prior_md=None, fmt="md", spec_text=No
     if static:
         prompt += "\n" + static + "\n"
     if prior_md:
-        # DELTA mode: the iterate-until-clean loop stops re-paying to re-hear known findings.
-        prompt += ("\n---\nA PREVIOUS review of an EARLIER version of this file is below. "
-                   "Report ONLY findings that are NEW or CHANGED since that review. Add a "
-                   "'## Fixed since last review' section confirming previously-reported findings "
-                   "that no longer apply. Do not restate unchanged findings.\n\n"
-                   + prior_md[:20000] + "\n---\n")
+        if mode == "plan":
+            # PLAN mode carries the prior review as its workload, not as a delta filter.
+            prompt += ("\n---\nA PREVIOUS review of this file is below. Plan for exactly its "
+                       "still-open findings - do not re-litigate, expand, or drop them.\n\n"
+                       + prior_md[:20000] + "\n---\n")
+        else:
+            # DELTA mode: the iterate-until-clean loop stops re-paying to re-hear known findings.
+            prompt += ("\n---\nA PREVIOUS review of an EARLIER version of this file is below. "
+                       "Report ONLY findings that are NEW or CHANGED since that review. Add a "
+                       "'## Fixed since last review' section confirming previously-reported findings "
+                       "that no longer apply. Do not restate unchanged findings.\n\n"
+                       + prior_md[:20000] + "\n---\n")
     if fmt == "json":
         prompt += "\n" + _JSON_INSTR + "\n"
     return prompt
@@ -370,6 +376,8 @@ def _validated_json(retrying, messages, content, usage, c):
             usage["completion_tokens"] += o2
             usage["cost"] += cost2
             usage["parsed"] = _parse_json_review(c2)
+            usage["first_finish"] = usage["finish"]        # EV-137: keep the primary attempt's signal
+            usage["finish"] = r2.choices[0].finish_reason   # the retry's outcome is what shipped
             return json.dumps(usage["parsed"], indent=1), usage
         except Exception:
             usage["json_error"] = True        # keep the raw text - never lose a paid review

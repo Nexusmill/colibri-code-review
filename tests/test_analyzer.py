@@ -705,6 +705,31 @@ def test_ceiling_cache_keyed_by_base():
         _restore_module()
 
 
+def test_falsy_clauses_render():
+    reg = {"controls": [{"id": "c1", "label": "L1",
+                         "contract": {"allow_empty": False, "max_retries": 0, "error": ""}}]}
+    out = an.load_spec(_J(reg))
+    check("spec_false_clause_renders", "ALLOW_EMPTY: False" in out)
+    check("spec_zero_clause_renders", "MAX_RETRIES: 0" in out)
+    check("spec_empty_string_still_skipped", "ERROR:" not in out)
+    reg2 = {"controls": [{"id": "n1", "label": "N", "expected": 0}]}
+    check("spec_falsy_expected_renders", "EXPECTED: 0" in an.load_spec(_J(reg2)))
+
+
+def test_plan_prior_wording():
+    _, _, fake, _ = _run([_Resp("ok")], mode="plan", prior_md="PRIOR-SENTINEL")
+    user = fake.calls[0]["messages"][1]["content"]
+    check("plan_prior_keeps_still_open", "still-open findings" in user and "PRIOR-SENTINEL" in user)
+    check("plan_prior_no_delta_wording", "NEW or CHANGED" not in user)
+
+
+def test_retry_finish_updated():
+    c, u, fake, _ = _run([_Resp("not json", fin="length", usage=_usage(10, 1, None)),
+                          _Resp(_J(_OBJ), fin="stop", usage=_usage(5, 2, None))], fmt="json")
+    check("retry_finish_updated", u.get("parsed") == _OBJ and u["finish"] == "stop"
+          and u.get("first_finish") == "length")
+
+
 def main():
     for t in (test_merge, test_api_key, test_refusals, test_parse_json, test_load_spec,
               test_review_gates_and_prompt, test_reasoning_and_auto, test_usage_math,
@@ -712,7 +737,8 @@ def main():
               test_handle_teardown, test_auto_negative, test_single_json_import,
               test_mode_validation, test_transient_retry, test_transient_guards,
               test_retry_config_guards, test_prompt_grouping, test_client_teardown,
-              test_ceiling_cache_keyed_by_base):
+              test_ceiling_cache_keyed_by_base, test_falsy_clauses_render,
+              test_plan_prior_wording, test_retry_finish_updated):
         try:
             t()
         except Exception as exc:                     # a crashing test must not kill the run
