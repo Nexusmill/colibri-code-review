@@ -10,9 +10,10 @@ delta-prompt embedding, and fail-soft static enrichment.
 
 Standalone script (repo convention); run with `python tests/test_analyzer.py`.
 No network, no real key: the OpenAI client is faked, API keys are runtime-built
-dummies, and the model-ceiling cache is primed so no lookup is attempted.
+dummies; AUTO cases prime the model-ceiling cache per call and every other case passes
+explicit max_tokens, so no lookup is attempted.
 """
-import importlib.util, json, os, shutil, sys, tempfile, types
+import importlib.util, inspect, json, os, shutil, sys, tempfile, types
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
@@ -252,7 +253,7 @@ def test_usage_math():
     check("usage_finish_model", u["finish"] == "stop" and u["model"] == "fake/auto-model")
     c, u, _, _ = _run([_Resp("hello", usage=_usage(1, 2, 0.5))])
     check("usage_cost_verbatim", u["cost"] == 0.5)
-    c, u, _, _ = _run([_Resp("hello")])            # no usage attr at all
+    c, u, _, _ = _run([_Resp("hello")])            # usage=None -> zero-fill guard
     check("usage_missing_zero", u["cost"] == 0 and u["prompt_tokens"] == 0)
 
 
@@ -308,10 +309,103 @@ def test_prior_and_static():
     check("static_failure_failsoft", c == "ok")
 
 
+class _CloseProbe:
+    """Context-manager proxy standing in for open()/urlopen() results; records closing."""
+
+    def __init__(self, payload=None, fail_read=False):
+        self.closed = False
+        self._payload, self._fail = payload, fail_read
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
+        return False                                # never swallow
+
+    def read(self):
+        if self._fail:
+            raise RuntimeError("read blew up")
+        return self._payload
+
+    def close(self):
+        self.closed = True
+
+
+def test_handle_teardown():
+    import builtins, urllib.error, urllib.request
+    d = tempfile.mkdtemp()
+    try:
+        p = os.path.join(d, "reg.json")
+        with open(p, "w", encoding="utf-8") as f:
+            f.write(_J(_REG))
+        probe = _CloseProbe(payload=_J(_REG))
+        orig_open = builtins.open
+        builtins.open = lambda *a, **k: probe
+        try:
+            out = an.load_spec(p)
+        finally:
+            builtins.open = orig_open
+        check("loadspec_handle_closed", probe.closed is True)
+        check("loadspec_content_intact", "### c1 - L1" in out)
+
+        probe = _CloseProbe(payload=_J(_REG), fail_read=True)
+        builtins.open = lambda *a, **k: probe
+        try:
+            try:
+                an.load_spec(p)
+                propagated = False
+            except RuntimeError:
+                propagated = True
+        finally:
+            builtins.open = orig_open
+        check("loadspec_readfail_propagates", propagated is True)
+        check("loadspec_readfail_still_closes", probe.closed is True)
+
+        models = _J({"data": [{"id": "fake/ceiling-model",
+                               "top_provider": {"max_completion_tokens": 7777}}]})
+        probe = _CloseProbe(payload=models.encode("utf-8"))
+        orig_urlopen = urllib.request.urlopen
+        urllib.request.urlopen = lambda *a, **k: probe
+        try:
+            val = an.model_max_tokens("fake/ceiling-model")
+        finally:
+            urllib.request.urlopen = orig_urlopen
+        check("mmt_value_parsed", val == 7777)
+        check("mmt_response_closed", probe.closed is True)
+
+        def _down(*a, **k):
+            raise urllib.error.URLError("down")
+        urllib.request.urlopen = _down
+        try:
+            an._MODEL_MAX_CACHE.pop("fake/ceiling-model", None)
+            check("mmt_fetchfail_fallback", an.model_max_tokens("fake/ceiling-model") == 131072)
+        finally:
+            urllib.request.urlopen = orig_urlopen
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+
+
+def test_auto_negative():
+    an._MODEL_MAX_CACHE["fake/auto-model"] = 4321    # _run's teardown clears it after the call
+    try:
+        _, _, fake, _ = _run([_Resp("ok")], cfg={"max_tokens": -5})
+        check("auto_negative_uses_ceiling", fake.calls[0]["max_tokens"] == 4321)
+    finally:
+        _restore_module()
+
+
+def test_single_json_import():
+    src = inspect.getsource(an)
+    check("no_local_json_imports", "import json as _json" not in src)
+    check("no_json_alias_left", "_json." not in src)   # _parse_json_review contains _json legitimately
+
+
 def main():
     for t in (test_merge, test_api_key, test_refusals, test_parse_json, test_load_spec,
               test_review_gates_and_prompt, test_reasoning_and_auto, test_usage_math,
-              test_json_fmt, test_content_normalization, test_prior_and_static):
+              test_json_fmt, test_content_normalization, test_prior_and_static,
+              test_handle_teardown, test_auto_negative, test_single_json_import):
         try:
             t()
         except Exception as exc:                     # a crashing test must not kill the run

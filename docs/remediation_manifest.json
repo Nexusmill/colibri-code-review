@@ -1,0 +1,43 @@
+{
+  "_doc": "Remediation manifest (machine-readable, jCodemunch-indexed). Human-readable view: docs/REMEDIATION_MANIFEST.md.",
+  "_convention": "Every fix of a real defect (security/correctness/crash/leak/race/injection/data-loss) gets an entry IN THE SAME COMMIT that fixes it. A review flagging already-fixed code is recorded as status='verified-stale', never re-fixed (G1/G11). Hygiene/refactor items are NOT remediations. Re-run index_file on this JSON after edits.",
+  "sources": [
+    "in-session colibri review (GLM-5.3)",
+    "perfection protocol run (PERFECTION_PROTOCOL v3)"
+  ],
+  "entries": [
+    {
+      "date": "2026-09-26",
+      "commit": "pending (same commit as this row)",
+      "product": "colibri",
+      "file": "analyzer.py (load_spec)",
+      "severity": "MEDIUM",
+      "finding": "CLR-W2-FDLEAK (bug review 2026-09-25 @ sha 8afa3ca9, CONFIRMED, still open on 2026-09-26 bytes): load_spec opened the spec source with a bare `open(source, encoding=\"utf-8-sig\", errors=\"ignore\").read()` and never closed the handle - repeated spec loads in batch use exhaust file descriptors.",
+      "fix": "`with open(...) as f: raw = f.read()` - deterministic close on every path including read failure (exception still propagates; the with-block only guarantees close, never swallows).",
+      "verification": "RED-first tests loadspec_handle_closed / loadspec_readfail_still_closes / loadspec_readfail_propagates in tests/test_analyzer.py (failed on pre-fix bytes, green post-fix); mutation check M-I1 (revert to bare open) turns them RED again; full battery 4/4.",
+      "source": "colibri bug review 2026-09-25 (carried finding) -> perfection(analyzer.py) wave 2"
+    },
+    {
+      "date": "2026-09-26",
+      "commit": "pending (same commit as this row)",
+      "product": "colibri",
+      "file": "analyzer.py (model_max_tokens)",
+      "severity": "LOW",
+      "finding": "CLR-W2-SOCKLEAK (bug review 2026-09-25 @ sha 8afa3ca9, CONFIRMED): `json.load(urllib.request.urlopen(req, timeout=20))` never closed the HTTP response; mitigated in practice by _MODEL_MAX_CACHE (one call per model per process) but still one leaked socket per uncached model, and the except-path leaves nothing to collect. Sibling precedent done right: app.py:21 `with urllib.request.urlopen(...) as r:`.",
+      "fix": "`with _u.urlopen(req, timeout=20) as resp:` wrapping the model scan loop - response closed on success, on no-match, and on any parse/transport exception before the except guard.",
+      "verification": "RED-first tests mmt_response_closed / mmt_value_parsed / mmt_fetchfail_fallback (the fetch-failure fallback 131072 path pinned unchanged); mutation M-I2 turns the close check RED; battery 4/4.",
+      "source": "colibri bug review 2026-09-25 (carried finding) -> perfection(analyzer.py) wave 2"
+    },
+    {
+      "date": "2026-09-26",
+      "commit": "pending (same commit as this row)",
+      "product": "colibri",
+      "file": "analyzer.py (review_code)",
+      "severity": "MEDIUM",
+      "finding": "CLR-W2-AUTO-DIVERGENCE (NEW, perfection L2 pass A 2026-09-26 @ sha 8afa3ca9): the :317 comment documented max_tokens AUTO as `None/<=0` but the code `int(_mt) if _mt` only mapped None/0 to the model ceiling; a negative value - reachable via `run_batch --max-tokens -5` (argparse type=int, no floor) - was sent to the API and failed 400 per file instead of using the ceiling, violating the file's own documented contract.",
+      "fix": "`max_tokens = int(_mt) if (_mt or 0) > 0 else model_max_tokens(...)` - the comment's None/<=0 contract is now literally the predicate; input partition {None, 0, -5} -> ceiling, {5000} -> 5000.",
+      "verification": "RED-first test auto_negative_uses_ceiling (failed on pre-fix bytes: create was called with max_tokens=-5); mutations M-I4 (revert predicate) RED-OK; auto_none/auto_zero/explicit pins from wave 1 unchanged green; battery 4/4.",
+      "source": "perfection(analyzer.py) L2 pass A 2026-09-26 (fresh delta over prior reviews) -> wave 2"
+    }
+  ]
+}

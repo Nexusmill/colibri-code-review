@@ -1,3 +1,4 @@
+import json
 import os
 from openai import OpenAI
 
@@ -45,12 +46,12 @@ def load_spec(source, ids=None):
     registry (`controls` rows) or a features registry (`features` rows) renders to readable
     per-control contract text, optionally filtered by comma-separated row ids; a path to any
     other file (or raw text) passes through as-is."""
-    import json as _json
     raw = source
     if os.path.isfile(source):
-        raw = open(source, encoding="utf-8-sig", errors="ignore").read()
+        with open(source, encoding="utf-8-sig", errors="ignore") as f:
+            raw = f.read()
     try:
-        d = _json.loads(raw)
+        d = json.loads(raw)
     except ValueError:
         return raw.strip()
     rows = (d.get("controls") or d.get("features") or []) if isinstance(d, dict) else []
@@ -88,12 +89,13 @@ def model_max_tokens(model, base_url="https://openrouter.ai/api/v1", fallback=13
         return _MODEL_MAX_CACHE[model]
     val = fallback
     try:
-        import json as _json, urllib.request as _u
+        import urllib.request as _u
         req = _u.Request(base_url.rstrip("/") + "/models", headers={"User-Agent": "colibri"})
-        for m in _json.load(_u.urlopen(req, timeout=20))["data"]:
-            if m.get("id") == model:
-                val = int((m.get("top_provider") or {}).get("max_completion_tokens") or fallback)
-                break
+        with _u.urlopen(req, timeout=20) as resp:
+            for m in json.load(resp)["data"]:
+                if m.get("id") == model:
+                    val = int((m.get("top_provider") or {}).get("max_completion_tokens") or fallback)
+                    break
     except Exception:
         pass
     _MODEL_MAX_CACHE[model] = val
@@ -259,12 +261,11 @@ Findings worst-first. Use the same rigor as the Markdown contract."""
 
 def _parse_json_review(text):
     """Tolerant parse: strip code fences / leading prose, take the outermost object."""
-    import json as _json
     t = (text or "").strip()
     a, b = t.find("{"), t.rfind("}")
     if a < 0 or b <= a:
         raise ValueError("no JSON object in response")
-    d = _json.loads(t[a:b + 1])
+    d = json.loads(t[a:b + 1])
     if not isinstance(d, dict) or "findings" not in d:
         raise ValueError("missing 'findings'")
     return d
@@ -315,7 +316,7 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
         extra = {"reasoning": {"effort": eff}}
 
     _mt = c.get("max_tokens")                          # AUTO (None/<=0) -> the model's own ceiling
-    max_tokens = int(_mt) if _mt else model_max_tokens(c["model"], c["api_base"])
+    max_tokens = int(_mt) if (_mt or 0) > 0 else model_max_tokens(c["model"], c["api_base"])
     messages = [{"role": "system", "content": _SYS[mode]},
                 {"role": "user", "content": prompt}]
 
@@ -355,10 +356,9 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
              "finish": fin, "model": c["model"]}
 
     if fmt == "json" and content:
-        import json as _json
         try:
             usage["parsed"] = _parse_json_review(content)
-            content = _json.dumps(usage["parsed"], indent=1)
+            content = json.dumps(usage["parsed"], indent=1)
         except Exception:
             try:                                  # ONE corrective retry (the 10/194 parse-error class)
                 r2 = _call(messages + [{"role": "assistant", "content": content[:8000]},
@@ -371,7 +371,7 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
                 usage["completion_tokens"] += o2
                 usage["cost"] += cost2
                 usage["parsed"] = _parse_json_review(c2)
-                content = _json.dumps(usage["parsed"], indent=1)
+                content = json.dumps(usage["parsed"], indent=1)
             except Exception:
                 usage["json_error"] = True        # keep the raw text - never lose a paid review
     return content, usage
