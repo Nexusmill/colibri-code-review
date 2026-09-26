@@ -1,0 +1,24 @@
+{
+ "type": "CLEAR",
+ "commit": "f06201cb6947e0a863a16eda0646b88ddeb21919",
+ "caller": "zcode",
+ "when": "20260926-024803",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "d7b897524c312b31a44ca9141327ab90226ab0902dcb926ec89c3c342421a985",
+   "model": "xiaomi/mimo-v2.6-pro@xiaomi/fp8",
+   "when": "20260926-024759",
+   "artifact": ".adversary\\reviews\\gate_20260926-024759.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260926-024759.md": "model: xiaomi/mimo-v2.6-pro@xiaomi/fp8 | provider: Xiaomi | usage: {'prompt_tokens': 3355, 'completion_tokens': 19212, 'total_tokens': 22567, 'cost': 0.018173865, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.018173865, 'upstream_inference_prompt_cost': 0.001459425, 'upstream_inference_completions_cost': 0.01671444}, 'completion_tokens_details': {'reasoning_tokens': 18617, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nThe change is data-only: it normalizes eight `}`/`,` two-token separators in `docs/gate_evidence.json` into single `},` lines and appends one new evidence record (EV-134) at the tail of the top-level array. Checks performed against the shown bytes:\n\n1. **JSON validity / structure.** The hunk arithmetic is internally consistent (`@@ -2082,18 +2082,17 @@` = 2 removed / 1 added; `@@ -2102,104 +2101,111 @@` = 14 removed / 21 added, net +7). The tail alignment reuses the old EV-133 closing `    }` as EV-134's closing brace (the differ matched the identical `    }` token), with `+    },` added as EV-133's close and the EV-134 body inserted between; the reconstructed new tail is `]` / `},` / `{` \u2026 `]` / `}` / `]` / `}` \u2014 valid JSON with no dangling or double comma. The old `}`-newline-`,` shapes were already valid JSON, so the rewrite is token-equivalent, not semantic.\n\n2. **Schema conformance.** EV-134 carries the same key set and order as its siblings (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`), with `refs` as a string array. Field indentation (6 sp) and refs-item indentation (8 sp) match the surrounding entries, so no consumer reformatting drift.\n\n3. **String escaping.** All new string values were checked for unescaped quotes/control chars: `json.loads(payload)`, `Book(title=None)`, `RED->GREEN`, `$0.21`, `(title, author)` contain no `\"` or backslashes. Parses clean.\n\n4. **Identity/uniqueness.** The append sits at the tail where EV-133 was previously the last element; the visible id run EV-127\u2026EV-133 is contiguous and monotonic, and the new id EV-134 continues it, so no evidence of an id collision or a second entry for an already-recorded event.\n\n5. **No code/caller impact.** The change touches no source, test, or config consumed by this repo; the claims inside the record concern other repositories' bytes and cannot break anything here. The record itself is honest about its own state (\"re-gate follows in the same session's Nexusmill commit\"), matching the pattern of other entries that were written at BLOCK/fix time.\n\nNothing in the change introduces or enables a defect.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260926-023803.md",
+  "outcomes": {
+   "fixed": 4
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
