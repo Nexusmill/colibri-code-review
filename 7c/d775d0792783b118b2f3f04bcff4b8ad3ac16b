@@ -1,0 +1,23 @@
+{
+ "type": "CLEAR",
+ "commit": "7cd775d0792783b118b2f3f04bcff4b8ad3ac16b",
+ "caller": "zcode",
+ "when": "20260926-150642",
+ "files": {
+  ".mcp.json": {
+   "sha": "f03fc31c4a2e8fcc2d94aa7ebdf69d98e3ddd2868be018807f0f21222e83bb35",
+   "model": "xiaomi/mimo-v2.6-pro@xiaomi/fp8",
+   "when": "20260926-150638",
+   "artifact": ".adversary\\reviews\\gate_20260926-150638.md"
+  },
+  ".repo-memory.json": {
+   "sha": "12ca3a0e737f42ff2da9a5890a1e7cff01b62ba0e097dcb86d679ec3bf555b95",
+   "model": "xiaomi/mimo-v2.6-pro@xiaomi/fp8",
+   "when": "20260926-150638",
+   "artifact": ".adversary\\reviews\\gate_20260926-150638.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260926-150638.md": "model: xiaomi/mimo-v2.6-pro@xiaomi/fp8 | provider: Xiaomi | usage: {'prompt_tokens': 1390, 'completion_tokens': 151, 'total_tokens': 1541, 'cost': 0.00073602, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00073602, 'upstream_inference_prompt_cost': 0.00060465, 'upstream_inference_completions_cost': 0.00013137}, 'completion_tokens_details': {'reasoning_tokens': 144, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['.mcp.json', '.repo-memory.json'] | caller: zcode\n\nVERDICT: CLEAR"
+ }
+}
