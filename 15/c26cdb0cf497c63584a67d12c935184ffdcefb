@@ -1,0 +1,17 @@
+{
+ "type": "CLEAR",
+ "commit": "15c26cdb0cf497c63584a67d12c935184ffdcefb",
+ "caller": "zcode",
+ "when": "20260926-093741",
+ "files": {
+  "analyzer.py": {
+   "sha": "113d74c30470eae09d1d3e3cc91c216d2bc526dd7d6d20ac8558096914931de6",
+   "model": "xiaomi/mimo-v2.6-pro@xiaomi/fp8",
+   "when": "20260926-093740",
+   "artifact": ".adversary\\reviews\\gate_20260926-093740.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260926-093740.md": "model: xiaomi/mimo-v2.6-pro@xiaomi/fp8 | provider: Xiaomi | usage: {'prompt_tokens': 7704, 'completion_tokens': 4749, 'total_tokens': 12453, 'cost': 0.00748287, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00748287, 'upstream_inference_prompt_cost': 0.00335124, 'upstream_inference_completions_cost': 0.00413163}, 'completion_tokens_details': {'reasoning_tokens': 4228, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['analyzer.py'] | caller: zcode\n\nI've examined the staged diff as a pure extract-method refactor of `review_code` into four helpers (`_usage_of`, `_normalize_content`, `_build_prompt`, `_validated_json`), checking each call site and behavior path against the original.\n\nVerification of the claims:\n\n1. **Spec-text guard relocation** \u2014 The `if mode == \"spec\" and not spec_text` early-return moved from inside prompt building to `review_code`. Relative order to the key check is unchanged, and `_build_prompt` is only reachable from `review_code` (which validates mode and guards spec_text). Equivalent.\n\n2. **`_usage_of(r, c)`** \u2014 previously closed over `c`; now takes it explicitly. Both call sites (`resp` and `r2`) pass `c`. Behavior identical, including the `cost or 0.0` and the price-based fallback.\n\n3. **`_normalize_content(ch)`** \u2014 the empty/`length`/reasoning branching is byte-for-byte the old inline logic. Always returns a non-empty string, so the downstream `if fmt == \"json\" and content:` gate behaves the same as before.\n\n4. **`_validated_json`** \u2014 I traced the failure paths specifically:\n   - First parse succeeds \u2192 returns re-serialized JSON (raw never lost).\n   - First parse fails, corrective retry parses \u2192 accumulates `p2/o2/cost2` into `usage`, returns serialized `c2` parse.\n   - Both fail (or corrective call raises) \u2192 `json_error=True`, returns the original raw `content`.\n   \n   This matches the original control flow exactly; the `return`-vs-`content=` difference is immaterial. The corrective retry uses `retrying(...)` = `_retrying` = `_call_retry(_call, ..., retry_max_attempts, retry_backoff_base)` \u2014 same budget and backoff as the original inline `_call_retry` call.\n\n5. **No dangling references** \u2014 old locals (`ch`, inline `_usage_of`, `fin`) are fully replaced; `messages`, `max_tokens`, `extra`, `temperature` closures in `_call` are intact and used by `_retrying`.\n\nThe single zero-blank-line placement between `return d` and `def _usage_of` is a PEP8 style nit, not a syntax or logic error, and is out of scope.\n\nNo logic, caller-contract, ordering, money-safety, or unhandled-path defect is introduced; behavior is preserved.\n\nVERDICT: CLEAR"
+ }
+}
