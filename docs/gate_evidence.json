@@ -2087,8 +2087,7 @@
         "birdcam/enricher.py::enforce_genre_slots",
         "tests/test_enricher.py"
       ]
-    }
-,
+    },
     {
       "id": "EV-127-PERFECTION-R2-MIRROR-INVARIANT",
       "date": "2026-09-25",
@@ -2107,9 +2106,7 @@
         "tests/test_perfection_ai_parts.py::test_R2G_gate_verdict_refused_primary_still_probes_mirror",
         "junk/perfection/ai_parts/contracts_r2.md"
       ]
-    }
-
-,
+    },
     {
       "id": "EV-128-ENDPOINT-PING-R1-CRASH-CLASSES",
       "date": "2026-09-25",
@@ -2124,8 +2121,7 @@
         "Tools/endpoint-ping/endpoint_ping.py::_is_private_ip",
         "Tools commit 49e8743"
       ]
-    }
-,
+    },
     {
       "id": "EV-129-ENDPOINT-PING-R2-CREDENTIAL-LEAK",
       "date": "2026-09-25",
@@ -2140,8 +2136,7 @@
         "Tools/endpoint-ping/endpoint_ping.py::_KEY_ENV_BY_HOST",
         "Tools commit 49e8743"
       ]
-    }
-,
+    },
     {
       "id": "EV-130-ENDPOINT-PING-R3-HERMETICITY",
       "date": "2026-09-25",
@@ -2155,8 +2150,7 @@
         "Tools/endpoint-ping/test_endpoint_ping.py",
         "Tools/endpoint-ping/endpoint_ping.py::_check_host"
       ]
-    }
-,
+    },
     {
       "id": "EV-131-ENDPOINT-PING-R5-DEGENERATE-ROUND",
       "date": "2026-09-25",
@@ -2170,8 +2164,7 @@
         "Tools/endpoint-ping/endpoint_ping.py::ping_endpoint",
         "Tools/endpoint-ping/endpoint_ping.py::_split_model_pins"
       ]
-    }
-,
+    },
     {
       "id": "EV-132-ENDPOINT-PING-R6-OK-SEMANTICS-READ-CAPS",
       "date": "2026-09-25",
@@ -2185,8 +2178,7 @@
         "Tools/endpoint-ping/endpoint_ping.py::ping_endpoint",
         "Tools/endpoint-ping/endpoint_ping.py::_evaluate_body"
       ]
-    }
-,
+    },
     {
       "id": "EV-133-ENDPOINT-PING-R7-STALE-INDEX-ROUND",
       "date": "2026-09-25",
@@ -2199,6 +2191,20 @@
       "refs": [
         "Tools/endpoint-ping/endpoint_ping.py::_check_host",
         "Tools commit 49e8743"
+      ]
+    },
+    {
+      "id": "EV-134-KBR-DUP-GUARD-INPUT-SPACE",
+      "date": "2026-09-26",
+      "repo": "Nexusmill",
+      "layer": "gate-review BLOCK (.adversary/reviews/gate_20260926-023019.md, mimo-v2.6-pro after a deepseek 402; $0.21)",
+      "caught": "The (title, author) identity guard for KBR Kindle duplicate imports had an unguarded input space: read_epub defaults a missing OPF title to path.stem and a missing creator to '' (and Book(title=None) shapes exist behind the round-57 export guards), so two metadata-less or same-stem books would identity-merge and the second import would silently return a foreign id before the source copy - the exact silent-drop class the repo keeps closing. Second finding: the new per-row json.loads(payload) was unguarded, so one corrupt payload row would block ALL imports (contra the KBR-STALE-VOICE-PATHS per-entry-guard precedent).",
+      "severity": "medium",
+      "author_initially": "addressed in full, not rebutted",
+      "resolution": "Identity match now requires BOTH title and author non-empty strings AND identical sentence-text sequences (a revised edition imports separately; the re-conversion fixture was reworked to the true shape: two EPUBs, same extracted text, different zip timestamps, asserted-different ids); per-row try/except (AttributeError/TypeError/ValueError) skips corrupt rows. RED->GREEN on both boundary tests; suite 195/195; re-gate follows in the same session's Nexusmill commit.",
+      "refs": [
+        "Nexusmill/KokoroBookReader/reader/library.py",
+        "Nexusmill/.adversary/reviews/gate_20260926-023019.md"
       ]
     }
   ]
