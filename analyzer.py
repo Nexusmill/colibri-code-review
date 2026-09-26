@@ -63,7 +63,7 @@ def load_spec(source, ids=None):
     want = {s.strip() for s in ids.split(",") if s.strip()} if ids else None
     out = []
     for r in rows:
-        rid = r.get("id", "?")
+        rid = str(r.get("id", "?"))
         if want and rid not in want:
             continue
         out.append("### %s - %s" % (rid, r.get("label") or r.get("feature", "")))
@@ -88,8 +88,9 @@ def model_max_tokens(model, base_url="https://openrouter.ai/api/v1", fallback=13
     max_tokens is left on AUTO so no review is ever truncated below what the model needs -
     e.g. GLM-5.2 reasons past 20k tokens at low effort and returns finish=length with 0 findings
     under a small cap; its real ceiling is 131072. Falls back high if the lookup fails."""
-    if model in _MODEL_MAX_CACHE:
-        return _MODEL_MAX_CACHE[model]
+    key = (model, base_url, fallback)
+    if key in _MODEL_MAX_CACHE:
+        return _MODEL_MAX_CACHE[key]
     val = fallback
     try:
         import urllib.request as _u
@@ -101,7 +102,7 @@ def model_max_tokens(model, base_url="https://openrouter.ai/api/v1", fallback=13
                     break
     except Exception:
         pass
-    _MODEL_MAX_CACHE[model] = val
+    _MODEL_MAX_CACHE[key] = val
     return val
 
 # The product's prompt IP: per-mode (system, template) pairs - ONE home for the mode
@@ -391,35 +392,35 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
                 "made."), {"cost": 0}
 
     prompt = _build_prompt(code, rel_path, mode, c, prior_md=prior_md, fmt=fmt, spec_text=spec_text)
-    client = OpenAI(
+    with OpenAI(
         api_key=key, base_url=c["api_base"],
         default_headers={"HTTP-Referer": "http://localhost", "X-Title": "Colibri Code Review"},
-    )
-    # bounded reasoning -> effort hint; unbounded ('off') -> omit so the model reasons freely
-    extra = {}
-    eff = str(c.get("reasoning", "off")).lower()
-    if eff in ("low", "medium", "high", "xhigh"):
-        extra = {"reasoning": {"effort": eff}}
+    ) as client:
+        # bounded reasoning -> effort hint; unbounded ('off') -> omit so the model reasons freely
+        extra = {}
+        eff = str(c.get("reasoning", "off")).lower()
+        if eff in ("low", "medium", "high", "xhigh"):
+            extra = {"reasoning": {"effort": eff}}
 
-    _mt = c.get("max_tokens")                          # AUTO (None/<=0) -> the model's own ceiling
-    max_tokens = int(_mt) if (_mt or 0) > 0 else model_max_tokens(c["model"], c["api_base"])
-    messages = [{"role": "system", "content": _PROMPTS[mode][0]},
-                {"role": "user", "content": prompt}]
+        _mt = c.get("max_tokens")                          # AUTO (None/<=0) -> the model's own ceiling
+        max_tokens = int(_mt) if (_mt or 0) > 0 else model_max_tokens(c["model"], c["api_base"])
+        messages = [{"role": "system", "content": _PROMPTS[mode][0]},
+                    {"role": "user", "content": prompt}]
 
-    def _call(msgs):
-        return client.chat.completions.create(
-            model=c["model"], messages=msgs, temperature=float(c["temperature"]),
-            max_tokens=max_tokens, extra_body=extra)
+        def _call(msgs):
+            return client.chat.completions.create(
+                model=c["model"], messages=msgs, temperature=float(c["temperature"]),
+                max_tokens=max_tokens, extra_body=extra)
 
-    def _retrying(msgs):
-        return _call_retry(_call, msgs, int(c.get("retry_max_attempts", 3)),
-                           float(c.get("retry_backoff_base", 1.0)))
+        def _retrying(msgs):
+            return _call_retry(_call, msgs, int(c.get("retry_max_attempts", 3)),
+                               float(c.get("retry_backoff_base", 1.0)))
 
-    resp = _retrying(messages)
-    content, fin = _normalize_content(resp.choices[0])
-    pin, pout, cost = _usage_of(resp, c)
-    usage = {"prompt_tokens": pin, "completion_tokens": pout, "cost": cost,
-             "finish": fin, "model": c["model"]}
-    if fmt == "json" and content:
-        content, usage = _validated_json(_retrying, messages, content, usage, c)
-    return content, usage
+        resp = _retrying(messages)
+        content, fin = _normalize_content(resp.choices[0])
+        pin, pout, cost = _usage_of(resp, c)
+        usage = {"prompt_tokens": pin, "completion_tokens": pout, "cost": cost,
+                 "finish": fin, "model": c["model"]}
+        if fmt == "json" and content:
+            content, usage = _validated_json(_retrying, messages, content, usage, c)
+        return content, usage

@@ -55,8 +55,19 @@ def _usage(pin, pout, cost=None):
 class _FakeClient:
     def __init__(self, script):
         self.calls, self._script = [], list(script)
+        self.closed = False
         self.chat = types.SimpleNamespace(
             completions=types.SimpleNamespace(create=self._create))
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
+        return False                                # never swallow
+
+    def close(self):
+        self.closed = True
 
     def _create(self, **kw):
         self.calls.append(kw)
@@ -234,7 +245,7 @@ def test_reasoning_and_auto():
     check("effort_off_empty", fake.calls[0]["extra_body"] == {})
 
     def _prime():
-        an._MODEL_MAX_CACHE["fake/auto-model"] = 4321
+        an._MODEL_MAX_CACHE[("fake/auto-model", an.DEFAULTS["api_base"], 131072)] = 4321
     try:
         _prime()
         _, _, fake, _ = _run([_Resp("ok")], cfg={"max_tokens": None})
@@ -381,7 +392,7 @@ def test_handle_teardown():
             raise urllib.error.URLError("down")
         urllib.request.urlopen = _down
         try:
-            an._MODEL_MAX_CACHE.pop("fake/ceiling-model", None)
+            an._MODEL_MAX_CACHE.clear()               # tuple-keyed since wave 7; drop any prior hit
             check("mmt_fetchfail_fallback", an.model_max_tokens("fake/ceiling-model") == 131072)
         finally:
             urllib.request.urlopen = orig_urlopen
@@ -390,7 +401,7 @@ def test_handle_teardown():
 
 
 def test_auto_negative():
-    an._MODEL_MAX_CACHE["fake/auto-model"] = 4321    # _run's teardown clears it after the call
+    an._MODEL_MAX_CACHE[("fake/auto-model", an.DEFAULTS["api_base"], 131072)] = 4321  # _run teardown clears it after the call
     try:
         _, _, fake, _ = _run([_Resp("ok")], cfg={"max_tokens": -5})
         check("auto_negative_uses_ceiling", fake.calls[0]["max_tokens"] == 4321)
@@ -625,13 +636,83 @@ def test_prompt_grouping():
           not hasattr(an, "_SYS") and not hasattr(an, "_TEMPLATES"))
 
 
+    numreg = {"controls": [{"id": 1, "label": "N1", "expected": "e1"},
+                           {"id": 2, "label": "N2", "expected": "e2"}]}
+    try:
+        got = an.load_spec(_J(numreg), ids="1")
+    except ValueError:
+        got = None
+    check("spec_numeric_id_filter",
+          got is not None and "### 1 - N1" in got and "### 2 - N2" not in got)
+    check("spec_numeric_id_render", got is not None and "EXPECTED: e1" in got)
+
+
+def test_client_teardown():
+    import openai as _oai
+
+    class _RateLimited(_oai.RateLimitError):
+        def __init__(self):
+            Exception.__init__(self, "429")
+            self.status_code = 429
+
+    c, u, fake, _ = _run([_Resp("ok")])
+    check("client_closed_on_return", fake.closed is True)
+
+    fake = _FakeClient([_RateLimited(), _RateLimited(), _RateLimited()])
+
+    def _ctor(**ck):
+        return fake
+
+    an.OpenAI = _ctor
+    an.build_static_context = lambda *a, **k: ""
+    try:
+        with _KeyEnv():
+            try:
+                an.review_code("x = 1\n", "pkg/mod.py",
+                               cfg={"model": "fake/auto-model", "max_tokens": 500,
+                                    "retry_backoff_base": 0.001})
+                raised = False
+            except _RateLimited:
+                raised = True
+        check("client_closed_on_exception_path", raised is True and fake.closed is True)
+    finally:
+        _restore_module()
+
+
+def test_ceiling_cache_keyed_by_base():
+    import urllib.request
+    calls = []
+
+    def _fake_urlopen(req, timeout=20):
+        calls.append(req.full_url)
+        return _CloseProbe(payload=_J({"data": []}).encode("utf-8"))
+
+    orig = urllib.request.urlopen
+    urllib.request.urlopen = _fake_urlopen
+    try:
+        an._MODEL_MAX_CACHE.clear()
+        v1 = an.model_max_tokens("m/x", base_url="https://a.example/v1")
+        n1 = len(calls)
+        v2 = an.model_max_tokens("m/x", base_url="https://a.example/v1")
+        n2 = len(calls)
+        v3 = an.model_max_tokens("m/x", base_url="https://b.example/v1")
+        n3 = len(calls)
+        check("cache_same_base_one_lookup", n1 == 1 and n2 == 1)
+        check("cache_distinct_base_new_lookup", n3 == 2)
+        check("cache_fallback_values", (v1, v2, v3) == (131072, 131072, 131072))
+    finally:
+        urllib.request.urlopen = orig
+        _restore_module()
+
+
 def main():
     for t in (test_merge, test_api_key, test_refusals, test_parse_json, test_load_spec,
               test_review_gates_and_prompt, test_reasoning_and_auto, test_usage_math,
               test_json_fmt, test_content_normalization, test_prior_and_static,
               test_handle_teardown, test_auto_negative, test_single_json_import,
               test_mode_validation, test_transient_retry, test_transient_guards,
-              test_retry_config_guards, test_prompt_grouping):
+              test_retry_config_guards, test_prompt_grouping, test_client_teardown,
+              test_ceiling_cache_keyed_by_base):
         try:
             t()
         except Exception as exc:                     # a crashing test must not kill the run
