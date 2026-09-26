@@ -2108,5 +2108,98 @@
         "junk/perfection/ai_parts/contracts_r2.md"
       ]
     }
+
+,
+    {
+      "id": "EV-128-ENDPOINT-PING-R1-CRASH-CLASSES",
+      "date": "2026-09-25",
+      "repo": "Tools",
+      "layer": "gate-review BLOCK (.adversary/reviews/gate_20260925-194248.md, Tools repo; CLEAR gate_20260925-210516.md after 9 rounds)",
+      "caught": "Round 1 of the endpoint-ping utility (owner-ordered pre-scan trust probe): CLI dangling/garbage flags IndexError, http.client.HTTPException escaping the never-raise contract (IncompleteRead is not OSError), non-dict usage stored schema-unstably, scoped IPv6 (fe80::1%eth0) ValueError-skipping the private-host guard, dead code.",
+      "severity": "medium",
+      "author_initially": "no dispute - all 10 verified against the bytes",
+      "resolution": "FIXED: bounded CLI parser (exit 2), HTTPException caught to transport_error, usage coerced dict, _is_private_ip strips scope-ID and fails closed on unparseable, dead code removed.",
+      "refs": [
+        "Tools/endpoint-ping/endpoint_ping.py::_cli_value",
+        "Tools/endpoint-ping/endpoint_ping.py::_is_private_ip",
+        "Tools commit 49e8743"
+      ]
+    }
+,
+    {
+      "id": "EV-129-ENDPOINT-PING-R2-CREDENTIAL-LEAK",
+      "date": "2026-09-25",
+      "repo": "Tools",
+      "layer": "gate-review BLOCK (.adversary/reviews/gate_20260925-194634.md; the catch of the run)",
+      "caught": "_resolve_key fell back to OPENROUTER_API_KEY for UNKNOWN hosts - the trust probe itself would ship the ambient bearer key to any https URL it was asked to ping, defeating its entire purpose on first contact.",
+      "severity": "high",
+      "author_initially": "accepted immediately - my own docstring even said \"try the generic OpenRouter-style variable\"",
+      "resolution": "FIXED: unknown host + no explicit api_key/key_env -> host_not_keyed, nothing dispatched; the ambient key NEVER leaves mapped hosts; selftest row asserts it with the key fully set in env.",
+      "refs": [
+        "Tools/endpoint-ping/endpoint_ping.py::_resolve_key",
+        "Tools/endpoint-ping/endpoint_ping.py::_KEY_ENV_BY_HOST",
+        "Tools commit 49e8743"
+      ]
+    }
+,
+    {
+      "id": "EV-130-ENDPOINT-PING-R3-HERMETICITY",
+      "date": "2026-09-25",
+      "repo": "Tools",
+      "layer": "gate-review BLOCK (.adversary/reviews/gate_20260925-200022.md)",
+      "caught": "The bad_model selftest row was order-dependent (key check ran first - the 34/34 claim held only with a real key in env, corroborated by the reviewer from my own row counts); two guard rows hit live DNS (offline claim untrue); url_error doubled; garbage timeout crashed.",
+      "severity": "medium",
+      "author_initially": "no dispute",
+      "resolution": "FIXED: model-before-key ordering (keyless proof row), hermetic getaddrinfo stub (literals real, names fixed public IP, fake name raises), single url_error, timeout coercion. Plus the honest TOCTOU scope statement the round demanded (rebinding not claimed).",
+      "refs": [
+        "Tools/endpoint-ping/test_endpoint_ping.py",
+        "Tools/endpoint-ping/endpoint_ping.py::_check_host"
+      ]
+    }
+,
+    {
+      "id": "EV-131-ENDPOINT-PING-R5-DEGENERATE-ROUND",
+      "date": "2026-09-25",
+      "repo": "Tools",
+      "layer": "gate-review BLOCK (.adversary/reviews/gate_20260925-200604.md - a DEGENERATE round: duplicated blocks, findings 20-30 repeat one backwards observation eleven times; the attempt log marked the first response malformed)",
+      "caught": "Its own summary still carried four real asks: extra_headers could override Authorization/Host (an unneeded escape hatch on a trust probe), OverflowError/inf escapes in the coercions, key_env informed-choice undocumented.",
+      "severity": "low",
+      "author_initially": "degeneracy flagged in the next round context WITH the four real asks fixed anyway",
+      "resolution": "FIXED: extra_headers REMOVED entirely; both coercions catch OverflowError and clamp (max_tokens 1..4096, timeout 0.1..3600); _resolve_key docstring states the informed choice. The eleven duplicated falsy-error rows rebutted (falsy values do not satisfy if d.get(error)).",
+      "refs": [
+        "Tools/endpoint-ping/endpoint_ping.py::ping_endpoint",
+        "Tools/endpoint-ping/endpoint_ping.py::_split_model_pins"
+      ]
+    }
+,
+    {
+      "id": "EV-132-ENDPOINT-PING-R6-OK-SEMANTICS-READ-CAPS",
+      "date": "2026-09-25",
+      "repo": "Tools",
+      "layer": "gate-review BLOCK (.adversary/reviews/gate_20260925-204018.md - the round that verified the whole security core: no verdict-inverting hole found)",
+      "caught": "ok was conflated with safe_to_send (the documented reachable-but-untrustworthy state was unrepresentable); url_error undocumented + IDNA UnicodeError mislabeled; unbounded r.read()/e.read() could OOM the probe on a hostile endpoint.",
+      "severity": "low",
+      "author_initially": "no dispute",
+      "resolution": "FIXED: ok = a full HTTP round trip completed (ANY status; true on 500/401/redirect paths), safe_to_send = ok AND no reasons; (OSError, UnicodeError) -> host_unresolvable; success read capped at 1 MiB (oversized -> body_not_json), error preview read capped at 64 KiB.",
+      "refs": [
+        "Tools/endpoint-ping/endpoint_ping.py::ping_endpoint",
+        "Tools/endpoint-ping/endpoint_ping.py::_evaluate_body"
+      ]
+    }
+,
+    {
+      "id": "EV-133-ENDPOINT-PING-R7-STALE-INDEX-ROUND",
+      "date": "2026-09-25",
+      "repo": "Tools",
+      "layer": "gate-review BLOCK (.adversary/reviews/gate_20260925-204617.md - reviewed STALE INDEX bytes: the round-6 fixes were on disk but unstaged after round 6 was killed at the caller-side 900s cap mid-review)",
+      "caught": "Process lesson, not a code defect: the reviewer was RIGHT about the bytes it was shown (ok unset in the HTTPError branch) while the on-disk code was already fixed - the gate reviews the INDEX, and a re-stage after every interrupted/failed dispatch is mandatory. Round 8 then added two real one-liners (empty-host -> url_error; unfinished reason text bounded to 32 chars) before round 9 CLEAR.",
+      "severity": "low",
+      "author_initially": "owned immediately in the round-8 context (meta-correction)",
+      "resolution": "FIXED: staged==disk verified inside the dispatch command from round 8 onward; the two round-8 one-liners landed; gate CLEAR gate_20260925-210516.md; landed as Tools 49e8743.",
+      "refs": [
+        "Tools/endpoint-ping/endpoint_ping.py::_check_host",
+        "Tools commit 49e8743"
+      ]
+    }
   ]
 }
