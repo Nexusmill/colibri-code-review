@@ -1,0 +1,108 @@
+{
+ "type": "CLEAR",
+ "commit": "73313cfada2cdda021e1d4ca9115f3a2e21558e9",
+ "caller": "unknown",
+ "when": "20260927-013539",
+ "files": {
+  "agent_error_rates.py": {
+   "sha": "60fcf2813f5be7cafae59ee0b9e15f5e7f079c646270d950bda3c97ec791ae74",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "analyzer.py": {
+   "sha": "77518f2d9eafe39d24f3856ffa1e52cd90ce83e37420bf8cc1322c92030675ac",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "app.py": {
+   "sha": "087f1c4143dca34c809673091da4d7a334757d7158d18bc502f79611008681fd",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "docs/remediation_manifest.json": {
+   "sha": "67aa3f110f02033463c400a25771771642263f4b46dae64f765d998ba4cd50d9",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "run_batch.py": {
+   "sha": "b98015220f5884feca4383c9c6212db4db89f0cd39f6104660c7b23cbfbfba16",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "scanner.py": {
+   "sha": "a73e74cbe8a77ff24c3f393744b820a47769ad3c0709ded4448bf7a7abac58a1",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "static_context.py": {
+   "sha": "5f4c225b772aab7b3ea714a47cca70a09e46cd8225f9d47f963768f029893f58",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "store.py": {
+   "sha": "3a32fe344b7d6620e71f4b58d05cd5d1980a87bd417cf0743974e6f3a2eb5153",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "tests/test_analyzer.py": {
+   "sha": "273314e3ff1ff279473a5ebb3b5f9abe513cb1608ae41d88b23c5f126aaa0bc6",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "tests/test_console_remediation.py": {
+   "sha": "290c76262b03e3302c23fc1b1581036a6a14ba49ed0bf9228a3d0c35caec2c2b",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "tests/test_repository_checks.py": {
+   "sha": "57b3188560ac21043a2a08189c7b5c3f8f04e22798cba103ea248349b5b14c43",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "tests/test_review_remediation.py": {
+   "sha": "af472751bb9a5b4f44f35686581514ed4fff5f3320908c10aa955e332b1fd533",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "tests/test_scanner_ext.py": {
+   "sha": "3a65da5a826f4de6a52a482c234f23d7003d8206fef2ab32ffbc632698c09207",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "tests/test_sweep_fixes.py": {
+   "sha": "4bf36af899ede45db7a3d64560a8444b3025b95a813677c9fbfa5d0bbbdc921a",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  },
+  "ui.py": {
+   "sha": "06886f2c08725919a0a05c3bb61bcd88b8e1c734f50f347c4069c7722788a41d",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-013524",
+   "artifact": ".adversary\\reviews\\gate_20260927-013524.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260927-013524.md": "model: openai/gpt-6-luna-pro | provider: OpenAI | usage: {'prompt_tokens': 298026, 'completion_tokens': 13992, 'total_tokens': 312018, 'cost': 0.057926, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 93640, 'cache_write_tokens': 93640, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.057926, 'upstream_inference_prompt_cost': 0.047432, 'upstream_inference_completions_cost': 0.010494}, 'completion_tokens_details': {'reasoning_tokens': 13955, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['agent_error_rates.py', 'analyzer.py', 'app.py', 'docs/remediation_manifest.json', 'run_batch.py', 'scanner.py', 'static_context.py', 'store.py', 'tests/test_analyzer.py', 'tests/test_console_remediation.py', 'tests/test_repository_checks.py', 'tests/test_review_remediation.py', 'tests/test_scanner_ext.py', 'tests/test_sweep_fixes.py', 'ui.py'] | caller: unknown\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260927-012159.md",
+  "outcomes": {
+   "rebutted-upheld": 1
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
