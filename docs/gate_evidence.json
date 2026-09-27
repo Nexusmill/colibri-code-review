@@ -2432,6 +2432,38 @@
     "Tools .colibri_reviews/sync_gate_selftest.py.json",
     "Tools adversary-gate/gate_selftest.py latest_artifact_uses_numeric_suffix"
    ]
+  },
+  {
+   "id": "EV-150-AGE-ONLY-LOCK-STEAL",
+   "date": "2026-09-27",
+   "repo": "Tools; colibri-marketplace",
+   "layer": "Luna Pro commit review BLOCK",
+   "caught": "Age-only stale lock deletion can admit a second writer while a live holder remains in its critical section on platforms permitting open-file unlink.",
+   "severity": "medium",
+   "author_initially": "Accepted after inspection. Native Windows open-handle unlink was denied; an aged ownership record with closed handle reproduced the POSIX-permitted deletion and duplicate acquisition.",
+   "resolution": "Removed automatic age-based lock deletion. Busy locks refuse at deadline; abandoned locks require operator verification and cleanup. Independently reviewed source and two regression cases; full gate suite203/203 passed. Canonical Tools commit aee29590cf6f8191b3151393615657824169c8a8.",
+   "refs": [
+    "colibri-marketplace .adversary/reviews/gate_20260927-064345.md",
+    "Tools .adversary/reviews/gate_20260927-064909.md",
+    "Tools adversary-gate/gate_selftest.py aged_lock_not_stolen",
+    "Tools adversary-gate/gate_selftest.py lock_available_after_cleanup"
+   ]
+  },
+  {
+   "id": "EV-151-CALLER-HEADER-NORMALIZATION",
+   "date": "2026-09-27",
+   "repo": "Tools; colibri-marketplace",
+   "layer": "Luna Pro commit review BLOCK",
+   "caught": "Explicit caller names with whitespace failed the single-token header parser and contaminated file attribution.",
+   "severity": "low",
+   "author_initially": "Accepted after actual integrated header and adjudication regression reproduced missing cited files with a multiword caller.",
+   "resolution": "Encode explicit caller values reversibly with percent encoding and surrogatepass. Lossy slug normalization was rejected by the commit reviewer for identity collisions; strict UTF-8 encoding was rejected in prewrite for inherited POSIX surrogate bytes. Both corrected before commit. Integrated production header/adjudication RED/GREEN passed; eight distinct caller values including slash, percent, Unicode, surrogate and newline round-trip without collisions. Full203 suite passed before this narrow change; changed behavior verified afterward.",
+   "refs": [
+    "colibri-marketplace .adversary/reviews/gate_20260927-065356.md",
+    "Tools adversary-gate/adversary_gate.py _caller",
+    "Tools adversary-gate/gate_selftest.py caller-header-bracket-name-survives",
+    "Tools .adversary/reviews/gate_20260927-065622.md"
+   ]
   }
  ]
 }
