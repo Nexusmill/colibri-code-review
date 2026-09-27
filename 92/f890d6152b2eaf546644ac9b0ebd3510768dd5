@@ -1,0 +1,36 @@
+{
+ "type": "CLEAR",
+ "commit": "92f890d6152b2eaf546644ac9b0ebd3510768dd5",
+ "caller": "unknown",
+ "when": "20260927-061334",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "a26e0296433835319b92841e51ff52abef3eba15eff88a468d295aaa59043f34",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-061233",
+   "artifact": ".adversary\\reviews\\gate_20260927-061233.md"
+  },
+  "docs/gate_evidence_20260927.json": {
+   "sha": "f962feb9751c44930e4d2767aa18e0918ca2185d4b80f1e619e116024a6d19b6",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-061233",
+   "artifact": ".adversary\\reviews\\gate_20260927-061233.md"
+  },
+  "reviews_archive/nexusmill/_manifest.json": {
+   "sha": "f6b007382c3d0c3d1d7c79103c0e117574e741cd0d7a6827191fb35cbaf61182",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260927-061233",
+   "artifact": ".adversary\\reviews\\gate_20260927-061233.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260927-061233.md": "model: openai/gpt-6-luna-pro | provider: OpenAI | usage: {'prompt_tokens': 875945, 'completion_tokens': 7424, 'total_tokens': 883369, 'cost': 0.19509845, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 286829, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.19509845, 'upstream_inference_prompt_cost': 0.18953045, 'upstream_inference_completions_cost': 0.005568}, 'completion_tokens_details': {'reasoning_tokens': 7387, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json', 'docs/gate_evidence_20260927.json', 'reviews_archive/nexusmill/_manifest.json'] | caller: unknown\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260927-055004.md",
+  "outcomes": {
+   "fixed": 1
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
