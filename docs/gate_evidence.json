@@ -2400,6 +2400,38 @@
     "Tools .colibri_reviews/sync_gate_selftest.py.json (final pre-write adjudication)"
    ],
    "author_initially": "Confirmed findings accepted after source/reproducer verification; factual objections were carried back to the same reviewer."
+  },
+  {
+   "id": "EV-148-CORRUPT-EVIDENCE-PRESERVATION",
+   "date": "2026-09-27",
+   "repo": "Tools; colibri-marketplace",
+   "layer": "Luna Pro commit review BLOCK",
+   "caught": "Invalid adjudications.json was reset to an empty ledger and overwritten; both staged-shas metadata writers had the same history-loss pattern.",
+   "severity": "medium",
+   "author_initially": "Accepted after verifying the three exact read-modify-write paths; three real malformed-file regressions reproduced overwrites before the repair.",
+   "resolution": "All three metadata writers raise on malformed JSON and preserve original bytes. Existing partial-artifact exception path retains the separately written review artifact. Three targeted tests passed after independent exact-byte CLEAR; full suite verification follows before commit.",
+   "refs": [
+    "colibri-marketplace .adversary/reviews/gate_20260927-062908.md",
+    "Tools .colibri_reviews/sync_adversary_gate.py.json",
+    "Tools adversary-gate/gate_selftest.py corrupt_evidence_preserved_adjudication",
+    "Tools adversary-gate/gate_selftest.py corrupt_evidence_preserved_stamp",
+    "Tools adversary-gate/gate_selftest.py corrupt_evidence_preserved_round"
+   ]
+  },
+  {
+   "id": "EV-149-TEST-ARTIFACT-SUFFIX-ORDER",
+   "date": "2026-09-27",
+   "repo": "Tools; colibri-marketplace",
+   "layer": "Luna Pro commit review BLOCK",
+   "caught": "The selftest latest-artifact helper sorted names lexically, selecting the unsuffixed first review ahead of same-second suffixes2 and10.",
+   "severity": "low",
+   "author_initially": "Accepted and reproduced using the actual test helper with three real temporary artifact files.",
+   "resolution": "Helper parses the production filename pattern and orders by timestamp plus integer suffix. Regression selects suffix10 and passed after independent exact-byte CLEAR. This is a test-helper correction; source artifact allocation is unchanged.",
+   "refs": [
+    "colibri-marketplace .adversary/reviews/gate_20260927-062908.md",
+    "Tools .colibri_reviews/sync_gate_selftest.py.json",
+    "Tools adversary-gate/gate_selftest.py latest_artifact_uses_numeric_suffix"
+   ]
   }
  ]
 }

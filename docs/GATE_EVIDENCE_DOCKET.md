@@ -216,4 +216,6 @@ it was disproven; `resolution` links the fix and its regression coverage.
 
 The alignment supplement also records fail-closed evidence persistence, bounded large-document review, array-shaped references, routing-fixture isolation, and factual rebuttals.
 
-All entries through EV-147 are now included in [the canonical machine-readable docket](gate_evidence.json). The bounded broker repair permits the full central document to be reviewed again. EV-146 records forced text diffs for oversized source marked binary; EV-147 records production parser regression coverage. The earlier supplement is retained as a historical snapshot.
+All entries through EV-149 are now included in [the canonical machine-readable docket](gate_evidence.json). The bounded broker repair permits the full central document to be reviewed again. EV-146 records forced text diffs for oversized source marked binary; EV-147 records production parser regression coverage. The earlier supplement is retained as a historical snapshot.
+
+EV-148 records preservation of corrupt append-only evidence across all three metadata writers. EV-149 records numeric same-second artifact selection in the test helper. Both were reproduced before repair and their targeted regressions passed afterward; details and individual artifact references are in the canonical JSON docket.
