@@ -1,0 +1,64 @@
+# BUG review: PatternSkin\__init__.py
+
+- source: `C:\Users\User\source\repos\Nexusmill\PatternSkin\__init__.py`
+- model: xiaomi/mimo-v2.6-flash
+- reviewed: 2026-09-24 19:02
+- tokens: in 188823 / out 78785
+- est cost: $0.0485
+
+---
+
+## Verdict
+Not safe to ship unchanged. The single biggest risk is that the documented public entry point `apply_pattern()` / `api_apply()` never forces Object Mode, so called while the target is in Edit Mode it reads a stale vertex selection and silently applies the relief to the **whole mesh** instead of the user's selection (and with `target_edge=0` the entire write is discarded when Edit Mode exits) — with no undo step, since these are plain Python mutations.
+
+## Bugs & vulnerabilities
+Worst first:
+
+**[HIGH] `apply_pattern`/`api_apply` run against stale mesh data in Edit Mode → silent whole-mesh (or silently lost) apply** - `line 236`
+- What: `apply_pattern()` sets `active`/`select_set` (l. 234-235) then immediately calls `_apply_prepare()` (l. 236), which reads `me.vertices.foreach_get("select", ...)` (l. 103-104) and `foreach_get("co", ...)` (l. 117). In Edit Mode these RNA arrays are the pre-edit snapshot, not the live BMesh. The only `mode_set(mode="OBJECT")` in this path is at `line 161`, inside `_subdivide_stepwise`, and that is (a) *after* `_apply_prepare` has already made its decisions, and (b) skipped entirely by the early `return` at `line 159-160` when `target_edge` is falsy.
+- Trigger: `PatternSkin.api_apply(obj, path)` (or any direct `apply_pattern(...)` call — documented for console/background/tests/harness) while `obj` is in Edit Mode. Two concrete outcomes: the stale selection reads as empty → `fallback_whole=True`, `selected_only=False` (l. 105-107) → relief applied to the entire mesh; and with `target_edge=0`, `_apply_pattern_rest` writes via `foreach_set("co", ...)` at `line 448` while still in Edit Mode, so the edit-mode BMesh overwrites it on mode exit.
+- Impact: destructive wrong-region displacement on a mesh the user only wanted partially textured, or a complete silent no-op. No undo step is pushed by a plain Python call, so Ctrl+Z does not recover it. Also the auto-fit extent (l. 124-128) is computed from stale coordinates.
+- Fix: force `bpy.ops.object.mode_set(mode="OBJECT")` (guarded by `context.mode != "OBJECT"` and the active object) at the top of `apply_pattern()` *before* `_apply_prepare()`, and again before `_apply_pattern_rest()`; or move the mode switch into `_apply_prepare()` itself so every path — including `target_edge=0` — is covered. The panel operators already do this (`line 2522`, `2856`, `4199`, `4986`, `5145`, `8856`); the API path does not.
+
+**[MEDIUM] Post-displacement failures are reported as `ERROR`/`CANCELLED` after the mesh was already mutated — and roll back nothing** - `line 2726`
+- What: `_apply_pattern_rest` writes geometry at `line 448`. `_ps_item_done` then runs several *unguarded* steps — `print_check(...)` (l. 2670) and especially `_apply_finish(...)` (l. 2726, which does `bpy.data.images.load(pattern_path, ...)` at l. 2332 and node surgery at l. 2327-2341). Any raise there escapes to `_ps_item_done_safe` (l. 714-724), which reports `ERROR` and returns `{"CANCELLED"}`.
+- Trigger: the pattern file becomes unreadable between the `os.isfile` check (l. 2520) and `images.load`, a Blender node-socket index change, or any exception inside `print_check`.
+- Impact: (a) the operator claims failure for an operation that fully succeeded, so a user who retries displaces the relief a second time; (b) on `keep_original`, the source object is left **hidden** and the `.PS` duplicate left in the scene — neither `_a_fail` (l. 2589) nor `_ps_on_cancel` runs, so no rollback happens; (c) `_APPLY_LOG`, `_save_session_settings` and the recipe stamp are all skipped.
+- Fix: wrap `_apply_finish` (and `print_check`) in their own `try/except` that reports a *warning* ("relief applied, finish failed") and continues, and give `_ps_item_done_safe` a path that returns `{"FINISHED"}` (plus the `keep_original` rollback) when the failure occurs after `_apply_pattern_rest` returned.
+
+**[MEDIUM] 3MF export truncates the destination file in place — a mid-write failure destroys the previous export** - `line 3772`
+- What: `zipfile.ZipFile(filepath, "w", ...)` opens (and truncates) the user's target path immediately, then `z.writestr(...)` three times. All XML string building happens *before* this (l. 3743-3762), so the only failures inside are environmental — disk full, quota, permission revoked mid-write.
+- Trigger: export over an existing `model.3mf` on a nearly-full disk, or any exception from `writestr`.
+- Impact: the user's previously-good export at that path is replaced by a truncated/empty archive. This is exactly the failure mode `_stamp_stl_header` was rewritten to prevent ("PSK-11: truncating fp in place meant a crash mid-write destroyed the export the user just waited for", l. 1541-1544) — `_write_3mf` was never given the same treatment.
+- Fix: build into `tempfile.mkstemp(dir=os.path.dirname(fp))` and `os.replace()` onto `fp` on success, deleting the temp on any `BaseException` (reuse `_atomic_write_text`'s discipline).
+
+**[MEDIUM] Auto-fit scales `tile_mm` and `depth_mm` but not `tile_mm_y`, and has no `ratio < 1` guard** - `line 126`
+- What: `_ratio` is applied to `tile_mm` and `depth_mm` (l. 127-128) only. `tile_mm_y` is documented as an *independent absolute* vertical repeat (`line 1971-1973`) and is passed through unchanged to `_lattice_transform` (l. 325-327). The same omission exists in `_live_build` at `line 2871-2873`. Separately, nothing clamps `_ratio < 1.0`: with `autofit_tiles_hint == 1` and `_ext/tile_mm ∈ (1.0, 1.5)` the gate at l. 125 passes, `_ratio > 1`, and the tile is *enlarged* to exactly one tile across — the single-giant-blob failure autofit exists to prevent.
+- Trigger: set a non-zero **Tile Y** and Apply on an object under 1.5 tiles across; or set `autofit_tiles_hint = 1` and Apply on an object 1.0–1.5 tiles across.
+- Impact: pattern is stretched anisotropically by the auto-fit ratio (up to ~4× with the default hint of 4, more with a lower hint) with no warning about the Y axis — the reported autofit message (l. 2702-2705) only mentions tile/depth. The `ratio >= 1` case degrades to a shapeless blob while reporting "Auto-fitted ~N tiles".
+- Fix: scale `tile_mm_y` by the same `_ratio` when it is non-zero (both in `_apply_prepare` and `_live_build`), and skip auto-fit entirely when `_ratio >= 1.0` (`if _ext > 0 and (_ext / tile_mm) < 1.5:` → also require `_ratio < 1.0` before mutating).
+
+**[MEDIUM] `generate_default_library.execute` omits the `_GEN_LIB["active"]` guard that `invoke` performs** - `line 5945`
+- What: `invoke` refuses when `_GEN_LIB["active"]` (l. 5913-5915). `execute()` — the `EXEC_DEFAULT` path reachable by `bpy.ops.patternskin.generate_default_library()` from a script, console or headless job — re-validates the manifest (l. 5947) and the token (l. 5952) but never checks `_GEN_LIB["active"]` before `_GEN_LIB.update({... "active": True ...})` (l. 5968) and `threading.Thread(...).start()` (l. 5970-5973).
+- Trigger: a second direct `bpy.ops.patternskin.generate_default_library()` call while a run is in progress (double-click on a scripted button, a retry loop, or GUI-run + script-run).
+- Impact: two `_gen_lib_worker` threads write the *same* output paths concurrently (l. 5866-5872) → interleaved/corrupt PNGs, double `done`/`matched` counters, and a duplicated paid Replicate spend across the whole manifest (hundreds of calls on the user's key).
+- Fix: move the `if _GEN_LIB["active"]: report + return {"CANCELLED"}` check into `execute()` (keep it in `invoke` for the dialog), mirroring how `PATTERNSKIN_OT_ai_parts` guards in both (l. 7782 and l. 8009).
+
+**[MEDIUM] `live_commit` bakes modifiers one at a time and returns `CANCELLED` mid-way, leaving a half-baked mesh with `ps_live` still set** - `line 3054`
+- What: the loop applies `PS_Live_Subd` then `PS_Live_Displace` independently; on the second `modifier_apply` raising it `return {"CANCELLED"}` at `line 3059` without touching `obj["ps_live"]` (only reached at l. 3060 on full success).
+- Trigger: `bpy.ops.object.modifier_apply(modifier="PS_Live_Displace")` failing after the subdivision was already committed (poll failure, locked/read-only mesh, dependency error).
+- Impact: the mesh is permanently subdivided but not displaced, `ps_live` remains set so the panel still shows "Commit live / Revert", and the advertised "Revert live relief … untouched" (`line 3086`) then removes the Displace modifier, UV layer and vertex group while leaving the applied subdivision baked in — a silent, irreversible geometry change reported as a failed/cancelled operation.
+- Fix: apply both modifiers in a single guarded block and roll back on failure (restore the pre-commit modifier list by re-adding nothing — i.e. detect failure before mutating, or snapshot `obj.data` and restore it), and clear/set `ps_live` transactionally rather than after the loop.
+
+## Missing safeguards
+- **HTTPS not required for the pip index override** — `line 3195-3198` allowlists only the *hostname*; `index_url="http://pypi.org"` passes and installs over plaintext, defeating the `--only-binary=:all:` supply-chain hardening. Add `_up(self.index_url).scheme == "https"` to the condition.
+- **Confirm the operator shadow logger cannot persist secrets** — `line 9798` (`_obs.shadow_operators`) wraps `invoke`/`execute` on every class, including `PATTERNSKIN_OT_ai_settings.api_key` (`line 3900`, `PASSWORD` but not `SKIP_LOG`) and `PATTERNSKIN_OT_vault.passphrase`/`confirm` (`line 3968-3975`). Add an explicit property deny-list so `~/.patternskin/logs/patternskin.log` can never contain a key or passphrase (the file is only scrubbed when *sent*, l. 7619-7623).
+- **`context.window.cursor_set("WAIT")` at `line 3945` is not in a `try/finally`** — if `_validate_provider_key` raises, the cursor is stuck at WAIT forever and the exception escapes as a raw traceback. `_gen_texture_to_library` (l. 4094-4100) shows the correct pattern.
+- **`_gen_texture_to_library` runs the paid Replicate call synchronously on the UI thread** (`line 4096`) with `_retry_transient` sleeping up to 6 s on the main thread (l. 4065) and no cancel/Esc — a multi-second freeze on a paid operation the user cannot abandon. Move it to a worker thread + `bpy.app.timers` like `_gen_lib_worker` already does.
+- **Synchronous 5-second network calls in operator handlers** — `PATTERNSKIN_OT_check_update.execute` (`line 6764`) and `PATTERNSKIN_OT_self_update.invoke` (`line 6783`) call `_check_update()` inline (timeout 5, `line 1585`), freezing the UI. Route through `_check_update_async()` plus a polling redraw.
+- **`_stamp_stl_header` reads the entire STL into a `bytearray`** (`line 1531`) with no size cap — a 4 M-triangle export is a ~200 MB transient allocation on top of the already-built mesh. Cap or use a seek-in-place header rewrite (the 80-byte header needs no full read).
+- **`_library_empty` can walk an entire directory tree on the UI thread** — `line 861` calls `_scan_library(folder, limit=1)`; with no matching image the `os.walk` (l. 871) never hits the limit and runs to completion every 4 s TTL, from `draw()` (l. 6079). Prune `previews`/hidden dirs via `dirs[:] = ...` and short-circuit on a cheap `os.scandir` probe.
+- **`_aa_pool` crops rather than wrap-pads** (`line 340-342`) — `t[:h0, :w0]` discards up to `k-1` rows/columns, so the tiled sample period becomes `h0` instead of `shape[0]`, slightly rescaling the tile and shifting the wrap point off the cross-fade produced by `make_seamless`. Pad with `np.take(..., mode="wrap")` (or pool on `np.roll`) so the seam guarantee survives anti-aliasing.
+- **`_ap_start_current`'s guard does not cover the whole per-item body** — `line 8881-8886` (`items[self._ap_i]`, `a.pattern`, `bpy.path.abspath`) sit *outside* the `try` at `line 8887`, contradicting its own comment ("the WHOLE per-item body"). A stale RNA ref aborts the remaining part queue instead of skip-and-continue, unlike `_bq_start_current` (l. 5021-5030) and `_br_start_current` (l. 5165).
+- **`install_default_library` falls through from a bad local path to a 100 MB download** — `line 5721-5740`: `from_file=True` with a non-existent `self.filepath` takes the download branch instead of erroring. Branch on `self.from_file` explicitly.
+- **No test asserts `apply_pattern`/`api_apply` behaviour when the target is in Edit Mode**, and none covers `_ps_item_done` raising after `_apply_pattern_rest` succeeded (the `keep_original` hidden-source case in particular).

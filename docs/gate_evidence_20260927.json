@@ -1,0 +1,129 @@
+{
+  "_doc": "Historical 2026-09-27 review snapshot EV138-145. All these rows are also in canonical gate_evidence.json, which is the complete machine-readable docket.",
+  "entries": [
+    {
+      "id": "EV-138-SEMANTIC-REFUSAL-REBUTTAL",
+      "date": "2026-09-27",
+      "repo": "colibri-code-review",
+      "layer": "commit gate BLOCK gate_20260927-012159.md; openai/gpt-6-luna-pro",
+      "caught": "Reviewer alleged a provider-declared successful plain-text refusal without refusal metadata could earn cache credit.",
+      "severity": "medium alleged; rebutted as outside explicit response metadata contract",
+      "author_initially": "Original R02 fixes known missing-key/spec and explicit incomplete/metadata refusal paths, not semantic classification of arbitrary provider-declared success text.",
+      "resolution": "Official run --context carried call-site and original-finding evidence. Clearing gate_20260927-013524.md accepted full patch; commit notary adjudicated first finding rebutted-upheld. No keyword refusal classifier added. Known refusals/incomplete responses are denied new completion credit; historical unmarked cache compatibility limitation documented.",
+      "refs": [
+        "73313cfada2cdda021e1d4ca9115f3a2e21558e9",
+        "docs/remediation_manifest.json R02",
+        ".colibri_reviews/_commit_context_review_20260927.txt",
+        ".adversary/reviews/gate_20260927-012159.md",
+        ".adversary/reviews/gate_20260927-013524.md"
+      ]
+    },
+    {
+      "id": "EV-139-QUEUE-ESTIMATE-REPEATED-ENRICHMENT",
+      "date": "2026-09-27",
+      "repo": "colibri-code-review",
+      "layer": "commit gate BLOCK gate_20260927-012440.md; openai/gpt-6-luna-pro",
+      "caught": "app.queue_tokens rebuilt full prompts and expensive static enrichment whenever Streamlit displayed an unchanged pending queue.",
+      "severity": "medium",
+      "author_initially": "Full prompt overhead was correctly estimated, but repeated display work was uncached.",
+      "resolution": "Remediated in73313cf: retain current-queue session estimates, invalidate source/path/mode/settings/prior/spec/template/builder-version changes. Actual regression RED on two builds instead of one, then GREEN; final focused pytest75 passed. First estimate may still run selected tools and is documented. Independent prewrite CLEAR and final commit CLEAR required and obtained.",
+      "refs": [
+        "73313cfada2cdda021e1d4ca9115f3a2e21558e9",
+        "tests/test_console_remediation.py:test_queue_estimates_cache_enrichment_and_refresh_inputs",
+        "docs/remediation_manifest.json R10",
+        ".adversary/write-reviews/14e24dafca544323b2cf1c9cb7eafe5a.json",
+        ".adversary/reviews/gate_20260927-013524.md"
+      ]
+    },
+    {
+      "id": "EV-140-REMEDIATION-PREWRITE-ADJUDICATION",
+      "date": "2026-09-27",
+      "repo": "colibri-code-review",
+      "layer": "exact-byte pre-write reviews; Qwen3.8Flash and user-selected openai/gpt-6-luna-pro",
+      "caught": "Iterative proposal reviews exposed real edge cases: incomplete retry overwriting completion/history, ambiguous source relocation, missing new-save completion evidence, nonstring response persistence, Windows filename length, batch summary disk failure, linked-root spelling, output-copy/cache ordering, scanner import ordering, deeply nested JSON, and nested legacy report-directory relocation.",
+      "severity": "mixed; high/medium/low findings independently adjudicated",
+      "author_initially": "Initial R01-R17 proposals did not cover every interaction.",
+      "resolution": "Confirmed findings repaired with regression coverage before exact bytes applied. False/stale claims were refuted using proposed bytes, runtime probes and call-site contracts (including UI old variable names, NUL-abspath claim, and intentional TDD RED phases). No BLOCK was converted into author-supplied clearance. Long owned Qwen scanner request cancelled without verdict, unchanged proposal independently cleared by GPT Luna.",
+      "refs": [
+        ".colibri_reviews/_pending_remediation_20260927.md",
+        ".colibri_reviews/_codex_coverage_20260927.json",
+        "73313cfada2cdda021e1d4ca9115f3a2e21558e9"
+      ]
+    },
+    {
+      "id": "EV-141-SYNC-STAGED-BLOB-MEMORY",
+      "date": "2026-09-27",
+      "repo": "Tools; colibri-marketplace",
+      "layer": "Luna Pro independent pre-write review",
+      "caught": "Snapshot list comprehension retains all staged blobs before bounded payload composition, permitting excessive memory use.",
+      "severity": "medium",
+      "resolution": "Replace eager list with ordered generator in canonical Tools, sync marketplace exact bytes. Regression snapshot_defers_staged_blob_reads observed failing before fix. Regression avoids optimization-removable assertions after reviewer followup.",
+      "refs": [
+        "Tools adversary-gate/adversary_gate.py _cmd_run_snapshot",
+        "Tools adversary-gate/gate_selftest.py",
+        "Tools .colibri_reviews/sync_adversary_gate.py.json (final pre-write adjudication)"
+      ],
+      "author_initially": "Confirmed findings accepted after source/reproducer verification; factual objections were carried back to the same reviewer."
+    },
+    {
+      "id": "EV-142-SYNC-EVIDENCE-FALLBACK",
+      "date": "2026-09-27",
+      "repo": "Tools; colibri-marketplace",
+      "layer": "Luna Pro pre-write review",
+      "caught": "Unlocked fallback artifact check/write could collide after lock or persistence failure.",
+      "severity": "medium",
+      "resolution": "Return failure with no clearance when no durable artifact exists; preserve existing durable partial-artifact handling. Snapshot regression observed RED then GREEN.",
+      "refs": [
+        "Tools adversary-gate/adversary_gate.py _cmd_run_snapshot",
+        "Tools adversary-gate/gate_selftest.py snapshot_evidence_failure_refuses_clearance",
+        "Tools .colibri_reviews/sync_adversary_gate.py.json (final pre-write adjudication)"
+      ],
+      "author_initially": "Confirmed findings accepted after source/reproducer verification; factual objections were carried back to the same reviewer."
+    },
+    {
+      "id": "EV-143-BOUNDED-LARGE-DOCUMENT-REVIEW",
+      "date": "2026-09-27",
+      "repo": "Tools; colibri-code-review",
+      "layer": "Canonical broker size denial; Luna Pro commit review",
+      "caught": "411KB central docket could not be repaired through the250KB write cap; commit review also identified string refs violating array contract.",
+      "severity": "medium",
+      "resolution": "Canonical broker independently reviewed repair raises per-file bound to450000 bytes and enforces900000-byte complete serialized payload cap. Large complete payload and escaping-expansion tests observed RED then GREEN;13 broker and9 enforcement tests pass. All historical string refs wrapped in arrays with text preserved and central JSON remains CRLF/no BOM.",
+      "refs": [
+        "Tools adversary-gate/reviewed_write.py",
+        "Tools adversary-gate/test_reviewed_write.py",
+        "docs/gate_evidence.json",
+        ".adversary/reviews/gate_20260927-055004.md"
+      ],
+      "author_initially": "Confirmed findings accepted after source/reproducer verification; factual objections were carried back to the same reviewer."
+    },
+    {
+      "id": "EV-144-ROUTING-FIXTURE-ISOLATION",
+      "date": "2026-09-27",
+      "repo": "Tools; colibri-marketplace",
+      "layer": "Luna Pro pre-write review",
+      "caught": "Caller ADVERSARY_JEV_FAKE promotion value contaminated deterministic small-payload routing test.",
+      "severity": "low",
+      "resolution": "Reproduced failed small-case with inherited promotion; explicitly disable Jev in both deterministic e2e fixtures. Both pass after fix; separate Jev behavior tests retained.",
+      "refs": [
+        "Tools adversary-gate/gate_selftest.py route_e2e_small_run_no_routing_line",
+        "Tools .colibri_reviews/sync_gate_selftest.py.json (final pre-write adjudication)"
+      ],
+      "author_initially": "Confirmed findings accepted after source/reproducer verification; factual objections were carried back to the same reviewer."
+    },
+    {
+      "id": "EV-145-SYNC-FACTUAL-REBUTTALS",
+      "date": "2026-09-27",
+      "repo": "Tools; colibri-marketplace; colibri-code-review",
+      "layer": "Luna Pro review adjudication",
+      "caught": "Reviewers questioned owner-selected fallback order, missing override scan attribution, documented degraded adjudication append, and human docket link absent from code-only payload.",
+      "severity": "review adjudication",
+      "resolution": "Retained owner model order. Override is owner exemption rather than external scan. Adjudication append failure remains explicitly loud and nonblocking by existing contract; summary stays in note but detailed episode can be lost. Human docket link is staged but Markdown is intentionally absent from code payload. Carry factual context into canonical gate.",
+      "refs": [
+        "Tools adversary-gate/adversary_gate.py DEFAULT_CHAIN and cmd_record",
+        "docs/GATE_EVIDENCE_DOCKET.md",
+        "Tools .colibri_reviews/sync_adversary_gate.py.json (final pre-write adjudication)"
+      ],
+      "author_initially": "Confirmed findings accepted after source/reproducer verification; factual objections were carried back to the same reviewer."
+    }
+  ]
+}
