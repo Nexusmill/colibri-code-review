@@ -2487,6 +2487,22 @@
     "Blink birdcam/cards.py",
     "Blink tests/test_cards.py"
    ]
+  },
+  {
+   "id": "EV-153-BLINK-STATIC-CARD-VIDEOS",
+   "date": "2026-09-27",
+   "repo": "Blink",
+   "layer": "Live proving run + Luna Pro commit review BLOCK (gate_20260927-105304, P2)",
+   "caught": "Two failure paths in the static title-card-video wiring. First, the pre-commit proving run (real 1191s compilation + real card MP4s through the new ffmpeg args): the video-concat encode, built without the stills path's global -t cap, ran to 7215s because Blink containers carry lying stream timestamps (video stream 80.1s inside a 1191s container, live-observed) - the stills path's -t cap is load-bearing, not cosmetic. Second, the gate's P2: probe_media() returns container duration, which would size the audio padding past the visual track's true end for any card MP4 whose container outlives its video stream, and the output-duration check could still pass.",
+   "severity": "medium",
+   "author_initially": "Shipped the new builder without the -t cap and without any card-duration honesty check, on the assumption that each input's own length made a cap unnecessary.",
+   "resolution": "Global -t cap restored in final_video_args_from_card_videos (mirroring the proven stills path); card_video_duration() refuses card MP4s whose video-stream and container durations disagree by >0.5s; select_card_videos() routes any refusal to the painted fallback so posting never depends on the static archive. Six new tests (suite 217 -> 223 OK) plus a real-file end-to-end assembly (1199.2s, 1920x1080, 30/1 fps) verified before commit c1eb108 earned CLEAR.",
+   "refs": [
+    "Blink .adversary/reviews/gate_20260927-105304.md",
+    "Blink .adversary/reviews/gate_20260927-105559.md",
+    "Blink birdcam/enricher.py",
+    "Blink tests/test_enricher.py"
+   ]
   }
  ]
 }
