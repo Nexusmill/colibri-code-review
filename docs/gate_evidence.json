@@ -2503,6 +2503,26 @@
     "Blink birdcam/enricher.py",
     "Blink tests/test_enricher.py"
    ]
+  },
+  {
+   "id": "EV-154-FLEET-CONFIG-PAGE-41-ROUNDS",
+   "date": "2026-09-27",
+   "repo": "fleet",
+   "layer": "pre-commit adversary gate (gpt-6-luna-pro), 41 review rounds / 40 BLOCKs over commit a9c4f2c",
+   "severity": "HIGH (several; the arc spans HIGH xss/spend-bypass/shutdown-orphan findings down to LOW UI-truthfulness)",
+   "caught": "The round-table config page review forced real defects out at every layer: stored XSS via insertAdjacentHTML; backfill --yes pre-authorizing spend before the owner read the CLI estimate; store_optimize violating the EV-107 offline vacuum contract; seed-0 swallowed by walrus truthiness; halt/resume races through the flag; resume clearing the halt under a still-running job or crashed-page orphan; shutdown leaving paid children behind; the review page's paid generation unserialized with pipeline jobs; genesis price text claiming a shared $4 ceiling the ledger never enforced; orphan-detection holes (mid-write crash, spawn-record window, per-seat set vs count, phantom orphan from an empty critical-section record); Windows LockFile side-handle read/write blindness twice; an env-var delegation bypass; and the CLI's own paid commands bypassing the job slot entirely.",
+   "author_initially": "WRONG in design, corrected under review: the author's successive lock schemes (Store write-then-reread, O_EXCL file, replace+grace) each admitted two winners and were rejected by the gate before the OS byte-lock landed; the author also initially priced genesis as a shared ceiling and left the halt flag unset on some orphan paths.",
+   "resolution": "All fixed with verdict-named tests (fleet suite 412 -> 466): esc() at every Store-sourced interpolation; backfill split estimate/yes with the confirm bound to seat+workers+the exact open-(seat,question)-set digest inside a pre_spawn hook UNDER the claim; store_optimize removed from the whitelist; a shared jobslot module - OS byte lock per canonicalized store (WeakKeyDictionary identity for pathless stores), crash-orphan detection with evidence restore through the claimed fd, a switch lock serializing every halt-flag mutation (page AND CLI), CLI paid commands claiming the slot after validation, PROVEN parent delegation (ppid check + claim attempt), shutdown halt/kill with an inflight closing gate, review-page generation under the same slot, resume refusing under any live holder while really setting the halt when an orphan is seen. One rebuttal ACCEPTED (round 41 after the round-40 BLOCK): the residual owner-self-spoof of FLEET_SLOT_HELD_BY_PARENT is the G39 honesty clause's own class ('a human at a shell can always bypass - detection is the guarantee'), same standing as --no-verify.",
+   "refs": [
+    "fleet .adversary/reviews/gate_20260927-061621.md through gate_20260927-111313.md (41 reviews, ~$2.1)",
+    "fleet/roundtable/config_server.py",
+    "fleet/roundtable/jobslot.py",
+    "fleet/cli.py",
+    "fleet/roundtable/review_server.py",
+    "tests/fleet/test_rt_config_server.py",
+    "tests/fleet/test_rt_cli.py",
+    "tests/fleet/test_rt_review_server.py"
+   ]
   }
  ]
 }
