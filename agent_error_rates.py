@@ -47,7 +47,7 @@ COMMIT_RE = re.compile(r"=\s*commit\s+([0-9a-f]{7,40})")
 NEW_RE = re.compile(r"(?<![\w])new:\s*(\d+)")
 REVIEWER_RE = re.compile(r"reviewer:\s*(.+)")
 DATE_RE = re.compile(r"date:\s*([0-9]{4}-[0-9]{2}-[0-9]{2})")
-GATE_TS_RE = re.compile(r"gate_(\d{8}-\d{6})(?:-\d+)?\.md$", re.IGNORECASE)
+GATE_TS_RE = re.compile(r"gate_(\d{8}-\d{6})(?:-(\d+))?\.md$", re.IGNORECASE)
 GATE_FINDING_RE = re.compile(r"(?im)^(?:\s|\*)*(?:FINDING|Finding)\s*\d+"
                              r"|^(?:\s|\*)*\d+\.\s+(?:HIGH|MEDIUM|LOW)")
 FILES_RE = re.compile(r"files:\s*\[(.*?)\]", re.DOTALL)
@@ -190,12 +190,13 @@ def gate_episodes(repo_name, repo_root, review_dirs=None):
     try:
         primary_files = os.listdir(primary)
     except OSError as e:
-        return [], [], [{"repo": repo_name,
-                         "reason": "reviews dir unreadable: %s" % e}]
+        primary_files = []
+        extra_anoms.append({"repo": repo_name,
+                            "reason": "reviews dir unreadable: %s" % e})
     for f in primary_files:
         m = GATE_TS_RE.search(f)
         if m:
-            blocks.append((m.group(1), os.path.join(primary, f)))
+            blocks.append((m.group(1), int(m.group(2) or 0), os.path.join(primary, f)))
     for base in dict.fromkeys(os.path.normpath(b) for b in (review_dirs or [])
                               if os.path.normpath(b) != os.path.normpath(repo_root)):
         rvw = os.path.join(base, ".adversary", "reviews")
@@ -208,7 +209,7 @@ def gate_episodes(repo_name, repo_root, review_dirs=None):
         for f in more:
             m = GATE_TS_RE.search(f)
             if m:
-                blocks.append((m.group(1), os.path.join(rvw, f)))
+                blocks.append((m.group(1), int(m.group(2) or 0), os.path.join(rvw, f)))
     blocks.sort()
 
     commits = []
@@ -254,7 +255,7 @@ def gate_episodes(repo_name, repo_root, review_dirs=None):
 
     assigned = {}
     unlanded = []
-    for ts, path in blocks:
+    for ts, sequence, path in blocks:
         parsed = parse_gate_artifact(repo_name, path)
         if parsed == UNREADABLE:
             anoms.append({"repo": repo_name, "file": os.path.basename(path),
@@ -269,8 +270,13 @@ def gate_episodes(repo_name, repo_root, review_dirs=None):
                              "when": ts, "findings": parsed["new_findings"]})
             continue
         cur = assigned.get(host["sha"])
+        if cur and dt == cur["dt"] and os.path.dirname(path) != cur["directory"]:
+            anoms.append({"repo": repo_name,
+                          "reason": "same-second denials across worktrees have unknown ordering",
+                          "file": os.path.basename(path)})
         if cur is None or dt < cur["dt"]:
             assigned[host["sha"]] = {"dt": dt, "parsed": parsed,
+                                     "directory": os.path.dirname(path),
                                      "artifact": os.path.basename(path)}
 
     episodes = []

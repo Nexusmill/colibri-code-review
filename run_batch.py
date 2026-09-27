@@ -15,34 +15,46 @@ import argparse
 import os
 import sys
 import time
-import fnmatch
 import pathlib
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import scanner    # noqa: E402
 import analyzer   # noqa: E402
 import store      # noqa: E402  (shared sha cache: batch + app never re-bill unchanged files)
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
-
-_SKIP_DIR = ("__pycache__", ".git", ".hg", "node_modules", ".venv", "venv",
-             "dist", "build", ".colibri_reviews")
-
 
 def gather(paths, patterns):
     files = []
     for p in paths:
         ap = os.path.abspath(p)
         if os.path.isfile(ap):
-            files.append(ap)
+            files.append(ap)  # explicit files are a deliberate opt-in
         elif os.path.isdir(ap):
-            for root, dirs, names in os.walk(ap):
-                dirs[:] = [d for d in dirs if d not in _SKIP_DIR]
-                for n in names:
-                    if any(fnmatch.fnmatch(n, pat) for pat in patterns):
-                        files.append(os.path.join(root, n))
+            files.extend(row["path"] for row in scanner.scan(ap, patterns=patterns))
         else:
             print("skip (not found): %s" % p)
     return sorted(set(files))
+
+
+def cache_root(paths, explicit=None):
+    if explicit:
+        root = os.path.abspath(explicit)
+        if not os.path.isdir(root):
+            raise ValueError("--root must name an existing directory")
+        return root
+    roots = []
+    for value in paths:
+        path = pathlib.Path(os.path.abspath(value))
+        if not path.exists():
+            continue
+        directory = path if path.is_dir() else path.parent
+        repo = next((p for p in (directory, *directory.parents) if (p / ".git").exists()), None)
+        roots.append(str(repo or directory))
+    try:
+        return os.path.commonpath(roots)
+    except ValueError:
+        raise ValueError("Paths span drives; run each project separately or supply --root") from None
 
 
 def main():
@@ -59,9 +71,10 @@ def main():
     ap.add_argument("--temperature", type=float, default=0.15)
     ap.add_argument("--glob", default="*.py",
                     help="comma-separated filename patterns for folder walks (default *.py)")
+    ap.add_argument("--root", help="project cache root (default: repository or requested directory)")
     ap.add_argument("--out", default="colibri_batch", help="output directory for the .md reviews")
     ap.add_argument("--budget", type=float, default=0.0,
-                    help="stop before the running total would exceed this many dollars (0 = no cap)")
+                    help="stop new calls once billed spend reaches this amount; in-flight calls can exceed it (0 = no cap)")
     ap.add_argument("--force", action="store_true",
                     help="review even files whose current sha already has an up-to-date review "
                          "in .colibri_reviews (default: skip them - true resumability)")
@@ -96,13 +109,13 @@ def main():
            "static_ast": not args.no_static, "static_mypy": not args.no_static,
            "static_dis": not args.no_static}
 
-    # shared sha cache lives at the files' common base (same store the Streamlit app uses)
+    # Cache identity comes from the requested project, not matching-file distribution.
     try:
-        base = os.path.commonpath(files) if len(files) > 1 else os.path.dirname(files[0])
-        if os.path.isfile(base):
-            base = os.path.dirname(base)
-    except ValueError:
-        base = os.path.dirname(files[0])          # cross-drive: fall back to the first file's dir
+        base = cache_root(args.paths, args.root)
+        if any(os.path.commonpath([base, p]) != base for p in files):
+            ap.error("All files must be inside --root; run separate projects separately")
+    except ValueError as error:
+        ap.error(str(error))
     manifest = store.load_manifest(base)
     mlock = threading.Lock()
 
@@ -114,13 +127,13 @@ def main():
 
     def _one(i, p):
         try:
-            rel = os.path.relpath(p)
+            rel = os.path.relpath(p, base)
         except ValueError:
             rel = p            # cross-drive on Windows: relpath can't cross mounts
         # sha/status ran OUTSIDE the review try, so a file deleted between gather() and
         # here (or a manifest read error) crashed the whole batch and skipped the summary.
         try:
-            sha = store.file_sha(p)
+            code, sha = store.read_source(p)
             with mlock:
                 st_ = store.status(manifest, os.path.abspath(p), sha, args.mode)
         except Exception as e:
@@ -139,46 +152,64 @@ def main():
         prior = None
         if args.delta and st_ == "stale":
             with mlock:
-                e = manifest.get(os.path.abspath(p)) or {}
+                e = store.entry_for(manifest, p)
                 md_e = (e.get("modes") or {}).get(args.mode) or {}
             try:
-                if md_e.get("output") and os.path.isfile(md_e["output"]):
-                    prior = open(md_e["output"], encoding="utf-8", errors="ignore").read()
+                if md_e.get("output"):
+                    with open(store.output_path(base, md_e["output"]), encoding="utf-8", errors="replace") as stream:
+                        prior = stream.read()
             except OSError:
                 prior = None
         t0 = time.time()
+        cost = 0.0
+        received = False
+        md = None
+        saved = None
         try:
-            code = open(p, encoding="utf-8", errors="ignore").read()
+            with mlock:
+                if state["stopped"]:
+                    return
             md, usage = analyzer.review_code(code, rel, args.mode, cfg,
                                              prior_md=prior, fmt=args.format)
             cost = float(usage.get("cost", 0.0) or 0.0)
+            received = True
+            with mlock:
+                state["total"] += cost  # billed even if every persistence operation fails
+            complete = usage.get("complete", usage.get("finish") == "stop") is True
             ok_json = args.format == "json" and not usage.get("json_error")
             ext = (".%s.json" if ok_json else ".%s.md") % args.mode
-            name = rel.replace(os.sep, "__").replace("/", "__").replace(":", "") + ext
+            name = store._safe_name(rel) + ext
             (out / name).write_text(md, encoding="utf-8")
-            with mlock:                        # shared cache: the app sees batch reviews and vice versa
-                store.save_review(base, p, rel, sha, args.mode, md, usage, args.model)
+            with mlock:
+                saved = store.save_review(base, p, rel, sha, args.mode, md, usage, args.model)
                 manifest.update(store.load_manifest(base))
-                state["total"] += cost
-                state["done"] += 1
+            with mlock:
+                state["done" if complete else "errors"] += 1
             hi = md.count("[HIGH]") + md.count("[CRITICAL]") + md.count('"HIGH"') + md.count('"CRITICAL"')
             med = md.count("[MEDIUM]") + md.count('"MEDIUM"')
             print("[%d/%d] %-48s %6.1fs  $%.4f  finish=%s  HIGH/CRIT=%d MED=%d%s%s"
                   % (i, len(files), rel[-48:], time.time() - t0, cost, usage.get("finish"), hi, med,
                      "  json_error->md" if usage.get("json_error") else "",
                      "  (delta)" if prior else ""))
-            summary.append({"rel": rel, "status": "ok", "cost": cost, "finish": usage.get("finish"),
+            summary.append({"rel": rel, "status": "ok" if complete else "incomplete", "cost": cost, "finish": usage.get("finish"),
                             "high_crit": hi, "medium": med, "output": str(out / name),
                             "delta": bool(prior), "json_error": bool(usage.get("json_error"))})
         except Exception as e:
             with mlock:
                 state["errors"] += 1
+                if received:
+                    state["stopped"] = True  # storage failure: do not bill more work
             print("[%d/%d] %-48s  ERROR: %s" % (i, len(files), rel[-48:], e))
-            summary.append({"rel": rel, "status": "error", "error": str(e)[:300]})
+            row = {"rel": rel, "status": "error", "error": str(e)[:300], "cost": cost}
+            if received:
+                row.update({"review": md, "usage": usage, "saved_output": saved})
+            summary.append(row)
 
     workers = max(1, int(args.workers))
     if workers == 1:
         for i, p in enumerate(files, 1):
+            if state["stopped"]:
+                break
             if args.budget and state["total"] >= args.budget:
                 print("budget $%.2f reached after %d file(s); stopping." % (args.budget, i - 1))
                 break
@@ -194,10 +225,13 @@ def main():
             pending = set()
             for i, p in enumerate(files, 1):
                 with mlock:
-                    over = bool(args.budget) and state["total"] >= args.budget
+                    over = state["stopped"] or (bool(args.budget) and state["total"] >= args.budget)
                 if over:
+                    if state["stopped"]:
+                        print("persistence failure; not dispatching further files.")
+                    else:
+                        print("budget $%.2f reached; not dispatching further files." % args.budget)
                     state["stopped"] = True
-                    print("budget $%.2f reached; not dispatching further files." % args.budget)
                     break
                 pending.add(ex.submit(_one, i, p))
                 if len(pending) >= workers:
@@ -207,10 +241,17 @@ def main():
             for f in as_completed(pending):
                 f.result()
     import json as _json
-    (out / "_batch_summary.json").write_text(_json.dumps(
-        {"model": args.model, "mode": args.mode, "format": args.format,
-         "done": state["done"], "skipped": state["skipped"], "errors": state["errors"],
-         "spent": round(state["total"], 6), "files": summary}, indent=1), encoding="utf-8")
+    result = {"model": args.model, "mode": args.mode, "format": args.format,
+              "done": state["done"], "skipped": state["skipped"], "errors": state["errors"],
+              "spent": round(state["total"], 6), "files": summary}
+    try:
+        (out / "_batch_summary.json").write_text(_json.dumps(result, indent=1), encoding="utf-8")
+    except OSError as error:
+        state["errors"] += 1
+        result["errors"] = state["errors"]
+        print("ERROR saving batch summary: %s" % error)
+        # The terminal remains a recovery destination when every file write fails.
+        print("RECOVERY SUMMARY:\n" + _json.dumps(result, indent=1))
     print("DONE: %d reviewed, %d skipped, %d error(s), spent $%.4f -> %s"
           % (state["done"], state["skipped"], state["errors"], state["total"], out))
     return 1 if state["errors"] else 0

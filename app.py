@@ -1,7 +1,9 @@
 import os
+import hashlib
+import marshal
 import streamlit as st
 import pandas as pd
-from analyzer import review_code, MODES, DEFAULTS, api_key, model_max_tokens, load_spec
+from analyzer import review_code, MODES, DEFAULTS, api_key, model_max_tokens, load_spec, _build_prompt, _PROMPTS
 import json
 import urllib.request
 import scanner
@@ -61,13 +63,19 @@ with st.sidebar:
         st.caption("Model reasons freely, capped only by Max output tokens.")
         reasoning = "off"
 
+    st.markdown("### Endpoint & pricing")
+    with st.expander("Advanced", expanded=False):
+        api_base = st.text_input("Base URL", DEFAULTS["api_base"])
+        price_in = st.number_input("Price in ($/1M)", value=3.0, step=0.5, min_value=0.0)
+        price_out = st.number_input("Price out ($/1M)", value=15.0, step=0.5, min_value=0.0)
+
     st.markdown("### Limits")
     auto_out = st.toggle("Auto output ceiling (model max - never truncate)", value=True,
                          help="Reasoning models truncated by a low cap return finish=length with "
                               "ZERO findings. AUTO uses the model's own max_completion_tokens "
                               "(the ff626b1 fix, now reachable from the console).")
     if auto_out:
-        _model_ceiling = model_max_tokens(model)
+        _model_ceiling = model_max_tokens(model, api_base)
         st.caption("Output capped at the model's own ceiling: {:,} tokens.".format(_model_ceiling))
         max_tokens = None
         eff_max_out = _model_ceiling
@@ -81,12 +89,6 @@ with st.sidebar:
     delta_rr = st.toggle("Delta re-review for changed files", value=True,
                          help="Stale files get their previous review injected so the model "
                               "reports only NEW/changed findings (cheaper convergence rounds).")
-
-    st.markdown("### Endpoint & pricing")
-    with st.expander("Advanced", expanded=False):
-        api_base = st.text_input("Base URL", DEFAULTS["api_base"])
-        price_in = st.number_input("Price in ($/1M)", value=3.0, step=0.5, min_value=0.0)
-        price_out = st.number_input("Price out ($/1M)", value=15.0, step=0.5, min_value=0.0)
 
     st.markdown("### Static signals")
     st.caption("Deterministic tool output appended to the prompt so the model corroborates "
@@ -118,45 +120,88 @@ MODE_CHOICES = {"Bug Hunt": ["bug"], "Code Quality": ["quality"],
 
 
 def per_file_ceiling(tokens_in, n_modes):
-    return tokens_in * cfg["price_in"] / 1e6 + n_modes * eff_max_out * cfg["price_out"] / 1e6
+    return n_modes * (tokens_in * cfg["price_in"] / 1e6 + eff_max_out * cfg["price_out"] / 1e6)
 
 
 def process(base, items):
     prog = st.progress(0.0, text="Starting...")
     spent = 0.0
+    completed = 0
     for i, (rel, mode) in enumerate(items, 1):
         prog.progress((i - 1) / len(items), text=f"{MODES[mode]}: {rel}")
-        path = os.path.join(base, rel)
+        path = os.path.abspath(os.path.join(base, rel))
+        received = False
         try:
-            with open(path, encoding="utf-8", errors="ignore") as fh:
-                code = fh.read()
-            sha = store.file_sha(path)
+            code, sha = store.read_source(path)
             prior = None
             if delta_rr:
                 mf = st.session_state.get("manifest") or {}
                 if store.status(mf, os.path.abspath(path), sha, mode) == "stale":
-                    md_e = ((mf.get(os.path.abspath(path)) or {}).get("modes") or {}).get(mode) or {}
+                    md_e = (store.entry_for(mf, path).get("modes") or {}).get(mode) or {}
                     try:
-                        if md_e.get("output") and os.path.isfile(md_e["output"]):
-                            with open(md_e["output"], encoding="utf-8", errors="ignore") as _pf:
+                        if md_e.get("output"):
+                            with open(store.output_path(base, md_e["output"]), encoding="utf-8", errors="replace") as _pf:
                                 prior = _pf.read()
                     except OSError:
                         prior = None
             md, usage = review_code(code, rel, mode, cfg, prior_md=prior,
                                     spec_text=(st.session_state.get("spec_text")
                                                if mode == "spec" else None))
+            received = True
+            spent += usage.get("cost", 0) or 0
             out = store.save_review(base, path, rel, sha, mode, md, usage, cfg["model"])
-            spent += usage.get("cost", 0)
-            note = "  ·  truncated (raise Max output tokens)" if usage.get("finish") == "length" else ""
+            complete = usage.get("complete", usage.get("finish") == "stop") is True
+            completed += int(complete)
+            note = "" if complete else "  ·  incomplete; retry required"
             with st.expander(f"[{MODES[mode]}] {rel}   ${usage.get('cost', 0):.4f}{note}",
                              expanded=len(items) == 1):
                 st.markdown(md)
                 st.caption("saved -> " + out)
         except Exception as e:
             st.error(f"{rel} [{mode}]: {e}")
-    prog.progress(1.0, text=f"Done. Spent ${spent:.4f}")
+            if received:
+                st.markdown(md)  # retain the paid response visibly if saving failed
+                break
+    prog.progress(1.0, text=f"Finished: {completed}/{len(items)} completed. Spent ${spent:.4f}")
     st.session_state.manifest = store.load_manifest(base)
     return spent
+
+
+def queue_tokens(base, items):
+    """Estimate every actual prompt, including system, spec, prior and static text."""
+    tokens = 0
+    builder_version = hashlib.sha256(marshal.dumps(_build_prompt.__code__)).hexdigest()
+    cached = st.session_state.get("prompt_estimates", {})
+    current = {}
+    manifest = store.load_manifest(base)
+    for rel, mode in items:
+        path = os.path.abspath(os.path.join(base, rel))
+        code, sha = store.read_source(path)
+        prior = None
+        if delta_rr and store.status(manifest, path, sha, mode) == "stale":
+            record = store.entry_for(manifest, path).get("modes", {}).get(mode, {})
+            if record.get("output"):
+                try:
+                    with open(store.output_path(base, record["output"]), encoding="utf-8", errors="replace") as stream:
+                        prior = stream.read()
+                except OSError:
+                    pass
+        spec = st.session_state.get("spec_text") if mode == "spec" else None
+        key = (path, mode)
+        signature = (sha, rel, tuple(sorted(cfg.items())), _PROMPTS[mode], builder_version,
+                     hashlib.sha256((prior or "").encode("utf-8")).hexdigest(),
+                     hashlib.sha256((spec or "").encode("utf-8")).hexdigest())
+        previous = cached.get(key)
+        if previous is not None and previous[0] == signature:
+            estimate = previous[1]
+        else:
+            prompt = _build_prompt(code, rel, mode, cfg, prior_md=prior, spec_text=spec)
+            estimate = max(1, int((len(prompt) + len(_PROMPTS[mode][0])) / 3.5) + 1)
+        current[key] = (signature, estimate)
+        tokens += estimate
+    # Keep only the current queue: reruns reuse expensive enrichment without accumulating history.
+    st.session_state.prompt_estimates = current
+    return tokens
 
 
 # ------------------------------------------------------------------ scan
@@ -225,7 +270,7 @@ if st.session_state.get("scan"):
         if hide and r["score"] < 40:
             continue
         disp.append({"Select": False, "Status": label, "File": r["rel"],
-                     "in tok": r["tokens"], "≤$": round(per_file_ceiling(r["tokens"], len(modes)), 3),
+                     "in tok": r["tokens"], "Source est $": round(per_file_ceiling(r["tokens"], len(modes)), 3),
                      "_out": outstanding, "_tok": r["tokens"]})
 
     st.write(f"**{len(disp)}** files shown · {len(rows)} scanned · core first · **{mode_label}**")
@@ -233,14 +278,14 @@ if st.session_state.get("scan"):
         pd.DataFrame([{k: v for k, v in d.items() if not k.startswith("_")} for d in disp]),
         hide_index=True, use_container_width=True, height=360, key="editor",
         column_config={"Select": st.column_config.CheckboxColumn(required=False),
-                       "≤$": st.column_config.NumberColumn(format="$%.3f")},
-        disabled=["Status", "File", "in tok", "≤$"],
+                       "Source est $": st.column_config.NumberColumn(format="$%.3f")},
+        disabled=["Status", "File", "in tok", "Source est $"],
     )
     recs = edited.to_dict("records")
     picked = [d["File"] for d, e in zip(disp, recs) if e["Select"]]
     sel_tok = sum(d["_tok"] for d, e in zip(disp, recs) if e["Select"])
 
-    ui.meter(len(picked), sel_tok, eff_max_out, cfg["price_in"], cfg["price_out"],
+    ui.meter(len(picked) * len(modes), sel_tok * len(modes), eff_max_out, cfg["price_in"], cfg["price_out"],
              unbounded=(reasoning == "off"), auto_out=auto_out)
 
     b1, b2, b3 = st.columns(3)
@@ -262,20 +307,22 @@ if st.session_state.get("scan"):
 
     pend = st.session_state.get("pending")
     if pend and pend["items"]:
-        files = {rel for rel, _ in pend["items"]}
-        # token map over ALL scanned rows, not the filtered `disp`: a queued file hidden by
-        # a later filter change would otherwise contribute 0 and undercount the spend ceiling.
-        _tokmap = {r["rel"]: r["tokens"] for r in rows}
-        tok = sum(_tokmap.get(rel, 0) for rel in files)
-        # ceiling across the whole queue: input over unique files + max output per (file,mode) call
-        ceil = tok * cfg["price_in"] / 1e6 + len(pend["items"]) * eff_max_out * cfg["price_out"] / 1e6
+        try:
+            tok = queue_tokens(base, pend["items"])
+        except Exception as error:
+            tok = None
+            st.error(f"Cannot estimate this queue: {error}")
+        estimate = ((tok or 0) * cfg["price_in"] / 1e6
+                    + len(pend["items"]) * eff_max_out * cfg["price_out"] / 1e6)
         st.warning(f"Queued: **{len(pend['items'])}** review call(s) — {pend['why']}. "
-                   f"Max spend **≤ ${ceil:.2f}** at your current settings. This spends real money.")
+                   f"Estimated spend at the output ceiling: **${estimate:.2f}**. "
+                   "Includes prompt overhead; token counts and prices are estimates, not a spending cap.")
         cc1, cc2, _ = st.columns([2, 1, 3])
-        if cc1.button(f"Confirm & run  (≤ ${ceil:.2f})", type="primary", use_container_width=True):
+        if cc1.button(f"Confirm & run  (est. ${estimate:.2f})", type="primary",
+                      disabled=tok is None, use_container_width=True):
             st.session_state.pop("pending", None)
             spent = process(base, pend["items"])
-            st.success(f"Done — {len(pend['items'])} call(s), spent ${spent:.4f}.")
+            st.info(f"Run finished; spent ${spent:.4f}. Completion counts and errors are shown above.")
         if cc2.button("Cancel", use_container_width=True):
             st.session_state.pop("pending", None)
 
@@ -291,8 +338,12 @@ if st.session_state.get("scan"):
         if m:
             st.write(f"{len(m)} file(s) · ${store.total_cost(m):.4f} total")
             for _, e in sorted(m.items(), key=lambda kv: kv[1].get("rel", "")):
-                done = ", ".join(sorted((e.get("modes") or {}).keys()))
-                st.write(f"- **{e.get('rel')}** · {done}")
+                records = e.get("modes") or {}
+                done = ", ".join(sorted(mode for mode, md in records.items()
+                                       if md.get("complete") is not False)) or "none"
+                incomplete = sum(md.get("complete") is False for md in
+                                 list(records.values()) + e.get("attempts", []))
+                st.write(f"- **{e.get('rel')}** · completed: {done} · incomplete attempts: {incomplete}")
         else:
             st.write("Nothing reviewed yet.")
 else:

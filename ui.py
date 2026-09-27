@@ -73,28 +73,29 @@ def masthead(model):
     )
 
 
-def meter(n_files, tokens_in, max_out, price_in, price_out, unbounded, auto_out=False):
-    """The signature: a live instrument whose ceiling is set by the user's own token
-    threshold. Shows the MAX possible spend for the current selection + settings."""
-    in_cost = tokens_in * price_in / 1_000_000
-    ceil = in_cost + n_files * max_out * price_out / 1_000_000
+def meter(n_calls, total_input_tokens, max_out, price_in, price_out, unbounded, auto_out=False):
+    """Input tokens are already summed across every (file, mode) call by the caller.
+    Add one output allowance per call; this is a heuristic source-only estimate."""
+    in_cost = total_input_tokens * price_in / 1_000_000
+    estimated_cost = in_cost + n_calls * max_out * price_out / 1_000_000
     reach = "unbounded reasoning" if unbounded else "bounded"
     if auto_out:
         reach += " | AUTO out = model max"
-    sel = f"{n_files} file{'s' if n_files != 1 else ''}"
+    opacity = 0.9 if n_calls else 0.25
+    sel = f"{n_calls} review call{'s' if n_calls != 1 else ''}"
     st.markdown(
         f"""<div style="border:1px solid {LINE};border-radius:10px;background:
   linear-gradient(180deg,#161A21,#12151B);padding:14px 16px;margin:6px 0 12px;">
   <div style="display:flex;justify-content:space-between;align-items:center;">
-    <span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:{MUTED};">run meter · max spend</span>
+    <span style="font-family:'JetBrains Mono';font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:{MUTED};">run meter · source estimate</span>
     <span style="font-family:'JetBrains Mono';font-size:10px;color:{MUTED};">{reach}</span>
   </div>
   <div style="display:flex;align-items:baseline;gap:12px;margin-top:4px;">
-    <span style="font-family:'JetBrains Mono';font-weight:600;font-size:30px;color:{TEXT};">&#8804;&nbsp;${ceil:,.2f}</span>
-    <span style="font-family:'JetBrains Mono';font-size:12px;color:{MUTED};">{sel} &middot; {tokens_in:,} in tok &middot; &#8804;{max_out:,} out/file</span>
+    <span style="font-family:'JetBrains Mono';font-weight:600;font-size:30px;color:{TEXT};">~&nbsp;${estimated_cost:,.2f}</span>
+    <span style="font-family:'JetBrains Mono';font-size:12px;color:{MUTED};">{sel} &middot; {total_input_tokens:,} in tok &middot; &#8804;{max_out:,} out/call</span>
   </div>
-  <div style="height:4px;border-radius:2px;margin-top:10px;background:linear-gradient(90deg,{TEAL},{VIOLET});opacity:{0.9 if n_files else 0.25};"></div>
-  <div style="font-family:'JetBrains Mono';font-size:10px;color:{MUTED};margin-top:6px;">ceiling = input + (max output tokens x price out) x files &middot; actual is usually lower</div>
+  <div style="height:4px;border-radius:2px;margin-top:10px;background:linear-gradient(90deg,{TEAL},{VIOLET});opacity:{opacity};"></div>
+  <div style="font-family:'JetBrains Mono';font-size:10px;color:{MUTED};margin-top:6px;">Each mode sends the input again. Excludes prompt overhead; confirmation includes it. This is an estimate, not a spending cap.</div>
 </div>""",
         unsafe_allow_html=True,
     )

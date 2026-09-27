@@ -167,11 +167,11 @@ def test_refusals():
         with _NoKeyEnv():
             content, usage = an.review_code("x = 1\n", "pkg/mod.py")
         check("nokey_message", content.startswith("**No API key.**"))
-        check("nokey_zero_cost", usage == {"cost": 0})
+        check("nokey_zero_cost", usage.get("cost") == 0 and usage.get("complete") is False)
         with _KeyEnv():
             content, usage = an.review_code("x = 1\n", "pkg/mod.py", mode="spec", spec_text=None)
         check("spec_refusal_text", "Spec Conformance requires" in content)
-        check("spec_refusal_zero_cost", usage == {"cost": 0})
+        check("spec_refusal_zero_cost", usage.get("cost") == 0 and usage.get("complete") is False)
         check("spec_refusal_no_spend_call", "no API call was" in content)
     finally:
         _restore_module()

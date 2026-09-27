@@ -1,19 +1,16 @@
 # STORAGE.md - what colibri writes, remembers, and archives
 
 > Source of truth: `store.py` (cache + manifest + export), `scanner.py` (ranking), and the
-> `reviews_archive/` convention (commit 89efc5f). The design goal everywhere: **a paid
-> review is never lost and never re-billed while the file is unchanged.**
+> `reviews_archive/` convention (commit 89efc5f). The design goal everywhere: **completed unchanged reviews can be reused; incomplete attempts retain evidence and cost without granting completed status.**
 
 ## `.colibri_reviews/` - the per-project store
 
 Created inside the scanned project. Contents:
 
-- **One review file per (file, mode, content-sha):**
-  `<flattened-rel-path>__<mode>__<sha8>.md`. Path separators flatten to `__`; the name is
-  capped to its last 120 chars (Windows 260-char path limit) while staying unique via the
-  sha suffix. Each file opens with a header: source path, model, review timestamp,
-  in/out tokens, estimated cost - then the review body. Writes are atomic
-  (temp + `os.replace`), so a crash never leaves a half-written review.
+- **Immutable review reports:** names combine a readable relative path, a full-path
+  identity digest, mode, content hash and attempt identifier. Different sources with the
+  same content remain distinct; repeated attempts retain their own report bodies.
+  Reports use unique temporary files and atomic replacement.
 - **`_manifest.json`** - the memory. Schema:
 
   ```json
@@ -23,47 +20,72 @@ Created inside the scanned project. Contents:
       "modes": {
         "bug": {
           "sha": "<full sha256 of the file content when reviewed>",
-          "output": "<absolute path of the saved review>",
+          "output": ".colibri_reviews/<saved review>",
           "reviewed_at": "YYYY-MM-DD HH:MM",
-          "tokens_in": 0, "tokens_out": 0, "cost": 0.0
+          "tokens_in": 0, "tokens_out": 0, "cost": 0.0, "complete": true
         }
       }
     }
   }
   ```
 
-  Saves are atomic for a hard-learned reason: a crash mid-dump once corrupted the
-  manifest, `load_manifest` fell back to `{}`, and the whole project's sha cache + cost
-  ledger silently reset - every file re-billed as new. A corrupt manifest still loads as
-  `{}` (fail-open for reading), but can no longer be produced by a crash mid-write.
+  Saves use atomic replacement to avoid exposing partially written JSON. A corrupt
+  manifest still loads as `{}` (fail-open for reading), which loses cache credit and can
+  cause paid reviews to run again.
 - **`_all_reviews.md`** - written by Export: a contents list (file + modes done + total
   recorded spend) followed by every saved review concatenated; missing outputs are noted
   inline instead of failing the export.
 
+Recorded cost uses the provider-reported charge when available; otherwise it uses the
+configured token-price estimate. Export and recovery totals sum those recorded values.
+
+Incomplete records carry `complete: false`. A failed retry never replaces an existing
+completed mode record; it is retained in the entry's `attempts` history. Replaced
+records also remain in that history, and costs and exports include it. Legacy records
+without a completion flag retain their existing completed interpretation.
+
+Output references are relative to the reviewed project directory (`base`), the parent
+of `.colibri_reviews/`, including when opened from another working directory. Legacy absolute references can be resolved after relocation.
+Manifest keys remain absolute source paths. Windows keys are case-folded; POSIX keys
+retain case sensitivity. After a project move, an entry's `rel` field can help rebuild
+its absolute key at the new project directory, provided it does not conflict with an
+existing key. Ambiguous relocation mappings preserve their original absolute identities.
+Keys already inside the project are preserved. Windows case variants
+combine their mode records; distinct POSIX spellings stay separate. Malformed rows
+are skipped without discarding unrelated valid rows.
+
 ## Status semantics (what "new / done / changed" mean)
 
 `store.status(manifest, abspath, current_sha, mode)`:
-- **new** - this (file, mode) was never reviewed.
-- **reviewed** ("done" in the UI) - the saved sha equals the file's current sha.
+- **new** - this (file, mode) has no completed review.
+- **reviewed** ("done" in the UI) - a completed review's saved sha equals the current raw-byte sha.
 - **stale** ("changed") - the file's bytes changed since its review; a re-run re-bills,
   and with delta mode injects the previous review ([MODES.md](MODES.md#delta-re-review)).
 
-`modes_done` counts how many modes are current for the "All three" (`n/3`) column. The
-cache is keyed by CONTENT sha, so touching mtimes, re-cloning, or reverting a change all
-resolve correctly - only real byte changes cost money again.
+`modes_done` counts only bug, quality and feature modes that are complete and current for the "All three" (`n/3`) column. The
+cache compares each mode's latest completed source hash, so touching mtimes alone does
+not invalidate a completed review. Without a completed review for the current bytes, a
+file remains eligible for a paid retry even if its bytes are unchanged since an incomplete
+attempt.
 
 ## Shared between surfaces
 
 The console and `run_batch.py` read and write the SAME store (batch resolves it at the
-reviewed files' common base). A batch sweep shows up as `done` in the console; a console
+requested project root (or explicit `--root`)). A batch sweep shows up as `done` in the console; a console
 review makes batch print `SKIP`. Batch additionally writes its own copies + summary to
-`--out` ([BATCH.md](BATCH.md)).
+`--out` ([BATCH.md](BATCH.md)). If the summary cannot be written, batch prints recovery
+JSON and the recorded total to the terminal; when report persistence also failed, that
+JSON includes the paid response and usage.
+
+A completed record identifies the exact source buffer reviewed, using the digest computed
+from that same buffer. Later source edits do not change the record; status compares its
+digest with the current hash supplied by the caller.
 
 ## Scanner ranking
 
 `scanner.scan(root)` walks the tree with hard exclusions - deny-listed directory names
 (secrets/legal/media/junk/build/dist/venvs/vendor/caches/IDE dirs...), any subtree
-containing `pyvenv.cfg` (a bundled virtualenv), vendored path substrings, minified/lock/
+containing `pyvenv.cfg` (a bundled virtualenv), vendored directory components, minified/lock/
 map/bundle files, files over 2MB - then scores each survivor from 100:
 depth (-6/level), very dense sibling dirs (-15/-40/-80 at >30/>60/>150 files = vendored
 bundle smell), core names like `app.py`/`main.py`/`core.py`/`index.ts` (+15), primary

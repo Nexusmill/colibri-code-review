@@ -28,12 +28,12 @@
 
 ### Limits
 - **Auto output ceiling** toggle (default ON). ON = `max_tokens` is `None` and the call
-  uses **the model's own `top_provider.max_completion_tokens`** (looked up once per model
+  uses **the model's own `top_provider.max_completion_tokens`** (looked up for the selected model and endpoint
   via `analyzer.model_max_tokens`, cached in-process, fallback 131072). This exists
   because reasoning models truncated by a low cap return `finish=length` with ZERO
   findings - a paid empty review. The caption shows the resolved ceiling.
 - OFF = a **Max output tokens** number input (256-64,000, default 8,000). Thinking and
-  the written review share this budget; this is also your per-file cost ceiling.
+  the written review share this budget; the displayed cost is an estimate, not a spending cap.
 - **Temperature** slider 0.0-1.0, default **0.15**.
 - **Delta re-review for changed files** toggle (default ON): a file whose review is
   *stale* (content changed since its last review in this mode) gets its previous saved
@@ -44,7 +44,7 @@
 ### Endpoint & pricing (Advanced expander)
 - **Base URL** (default `https://openrouter.ai/api/v1`; env `API_BASE_URL` overrides the
   default). Any OpenAI-compatible endpoint works.
-- **Price in / Price out** ($/1M tokens, defaults 3.0 / 15.0) - used ONLY by the meter
+- **Price in / Price out** ($/1M tokens, defaults 3.0 / 15.0) - used by the file table, meter and confirmation estimates,
   and as a cost fallback when the API omits real billing; OpenRouter normally reports
   actual cost, which is what gets saved.
 
@@ -92,15 +92,15 @@ One row per surviving file, ranked core-first:
   date at the current sha.
 - **File** - path relative to the scanned root.
 - **in tok** - estimated input tokens (`chars / 3.5`).
-- **≤$** - the per-file worst case at current settings:
-  `in_tok x price_in/1M + n_modes x max_out x price_out/1M`.
+- **Source est $** - the source-only estimate for every selected mode:
+  `n_modes x (in_tok x price_in/1M + max_out x price_out/1M)`.
+  Full prompt overhead is included later in the confirmation estimate.
 
 ### The run meter
-The signature instrument (`ui.meter`): live **maximum** spend for the current selection -
-`input cost + files x max-out-tokens x price-out` - plus the selection size, input token
-total, per-file output ceiling, and whether reasoning is unbounded / AUTO-ceilinged.
-Actual billed cost is usually far lower; the meter is the *contract ceiling* so a run can
-never surprise you.
+The meter estimates source-token cost and an output allowance for every selected
+(file, mode) call. Selecting All three sends each file three times. This source-only
+estimate excludes prompt overhead; the confirmation estimate includes it. Neither
+display is a guaranteed maximum because tokenization and provider prices can vary.
 
 ### Actions
 - **Review selected (n)** - queues selected files x selected mode(s).
@@ -109,16 +109,22 @@ never surprise you.
   `.colibri_reviews/_all_reviews.md` and offers a download button.
 
 ### Confirm & run
-Queuing shows a warning with the exact call count and the queue-wide ceiling
-("Max spend ≤ $X - this spends real money"), computed over unique files' input plus max
-output per (file, mode) call. **Confirm & run** executes; **Cancel** discards. During the
-run each review renders in an expander titled `[Mode] path  $cost` (auto-expanded when
-the queue is a single item), with the saved file path in the caption and a
-"truncated (raise Max output tokens)" note when `finish=length`. Failures error inline
-per file without stopping the queue. The progress bar ends with the actual total spent.
+The confirmation shows the call count and estimates every actual prompt, including
+system instructions, specifications, prior reviews and static signals, plus each
+call's selected output allowance. The first estimate can run the selected static tools;
+unchanged queue items reuse their estimates within the session. Source, settings, prior-review
+or specification changes refresh the affected estimates. AUTO uses the selected model and endpoint together.
+Confirm is disabled if the queue cannot be estimated. Prices and token counts remain
+estimates, not a spending cap.
+
+Each response appears with its saved path and recorded cost (provider-reported billing
+when available, otherwise a configured token-price estimate). Empty, refused, truncated
+or invalid-JSON responses are incomplete and do not grant completed-cache credit.
+A paid save failure retains the cost, displays the response and stops further calls.
+The progress message reports how many calls completed successfully.
 
 ### Previously reviewed in this project
-An expander listing every manifest entry (file + which modes are done) and the project's
+An expander listing every manifest entry (file + completed modes and incomplete-attempt count) and the project's
 total recorded spend.
 
 ## Visual system (`ui.py`)

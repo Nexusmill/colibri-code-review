@@ -23,7 +23,7 @@ import subprocess
 import sys
 import tempfile
 
-_NONPY = (".js", ".jsx", ".ts", ".tsx", ".go", ".rs", ".java", ".c", ".h", ".cpp", ".cc",
+_NONPY = (".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts", ".go", ".rs", ".java", ".c", ".h", ".cpp", ".cc",
           ".hpp", ".cs", ".rb", ".php", ".swift", ".kt", ".scala", ".html", ".css", ".scss",
           ".json", ".md", ".yaml", ".yml", ".toml", ".xml", ".sql", ".sh", ".ps1", ".txt")
 

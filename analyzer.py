@@ -301,8 +301,22 @@ def _parse_json_review(text):
     if a < 0 or b <= a:
         raise ValueError("no JSON object in response")
     d = json.loads(t[a:b + 1])
-    if not isinstance(d, dict) or "findings" not in d:
-        raise ValueError("missing 'findings'")
+    if not isinstance(d, dict) or not isinstance(d.get("verdict"), str):
+        raise ValueError("verdict must be a string")
+    if not isinstance(d.get("findings"), list):
+        raise ValueError("findings must be a list")
+    if not isinstance(d.get("notes"), list) or not all(isinstance(n, str) for n in d["notes"]):
+        raise ValueError("notes must be a list of strings")
+    for finding in d["findings"]:
+        if not isinstance(finding, dict):
+            raise ValueError("each finding must be an object")
+        if finding.get("severity") not in ("CRITICAL", "HIGH", "MEDIUM", "LOW"):
+            raise ValueError("invalid finding severity")
+        if "line" not in finding or (finding["line"] is not None
+                and (type(finding["line"]) is not int or finding["line"] < 1)):
+            raise ValueError("finding line must be a positive integer or null")
+        if not all(isinstance(finding.get(key), str) for key in ("title", "detail", "fix")):
+            raise ValueError("finding title, detail and fix must be strings")
     return d
 
 
@@ -314,6 +328,14 @@ def _usage_of(r, c):
     if cost is None:
         cost = pin * c["price_in"] / 1_000_000 + pout * c["price_out"] / 1_000_000
     return pin, pout, (cost or 0.0)
+
+
+def _completed(ch):
+    """Only a final, nonempty answer can earn completed-cache credit."""
+    return (ch.finish_reason == "stop"
+            and isinstance(ch.message.content, str) and bool(ch.message.content.strip())
+            and not getattr(ch.message, "refusal", None)
+            and not getattr(ch.message, "tool_calls", None))
 
 
 def _normalize_content(ch):
@@ -384,9 +406,11 @@ def _validated_json(retrying, messages, content, usage, c):
             usage["cost"] += cost2
             usage["parsed"] = _parse_json_review(c2)
             usage["first_finish"] = usage["finish"]        # EV-137: keep the primary attempt's signal
+            usage["complete"] = _completed(r2.choices[0])
             usage["finish"] = r2.choices[0].finish_reason   # the retry's outcome is what shipped
             return json.dumps(usage["parsed"], indent=1), usage
         except Exception:
+            usage["complete"] = False
             usage["json_error"] = True        # keep the raw text - never lose a paid review
             return content, usage
 
@@ -400,11 +424,11 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
         raise ValueError("unknown mode %r; expected one of %s" % (mode, sorted(MODES)))
     key = api_key()
     if not key:
-        return "**No API key.** Set `OPENROUTER_API_KEY` and restart the app.", {"cost": 0}
+        return "**No API key.** Set `OPENROUTER_API_KEY` and restart the app.", {"cost": 0, "complete": False}
     if mode == "spec" and not spec_text:
         return ("**Spec Conformance requires the feature expectations.** Load them first "
                 "(spec-harness registry JSON or hand-written contracts) - no API call was "
-                "made."), {"cost": 0}
+                "made."), {"cost": 0, "complete": False}
 
     prompt = _build_prompt(code, rel_path, mode, c, prior_md=prior_md, fmt=fmt, spec_text=spec_text)
     with OpenAI(
@@ -436,7 +460,7 @@ def review_code(code, rel_path, mode="bug", cfg=None, prior_md=None, fmt="md", s
         content, fin = _normalize_content(resp.choices[0])
         pin, pout, cost = _usage_of(resp, c)
         usage = {"prompt_tokens": pin, "completion_tokens": pout, "cost": cost,
-                 "finish": fin, "model": c["model"]}
+                 "finish": fin, "model": c["model"], "complete": _completed(resp.choices[0])}
         if fmt == "json" and content:
             content, usage = _validated_json(_retrying, messages, content, usage, c)
         return content, usage

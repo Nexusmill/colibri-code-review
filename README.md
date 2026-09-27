@@ -3,8 +3,8 @@
 A small, fast **AI code-review console**. Point it at a project, it ranks the core files,
 and for each file you pick it asks an [OpenRouter](https://openrouter.ai) model to hunt for
 **bugs**, **quality** issues, or **feature** ideas — saving a Markdown report per file. A live
-"run meter" shows the **maximum** possible spend before you ever click, so a run can't surprise
-you, and re-scans only re-spend on files that actually changed.
+"run meter" estimates spend before you confirm a run. Completed reviews of unchanged
+files are reused; incomplete attempts remain available for retry.
 
 Works with **any OpenRouter model**. **GLM‑5.2** (`z-ai/glm-5.2`) and **Kimi K3**
 (`moonshotai/kimi-k3`) are pinned to the top of the picker — both are cheap and strong for
@@ -28,7 +28,7 @@ Full walkthrough (getting a key, running jobs, batch mode) is in **[INSTRUCTIONS
 python run_batch.py path/to/repo --model z-ai/glm-5.2 --mode bug --effort high
 ```
 
-One Markdown review per file, a running cost total, a `--budget` cap. Driving it from a coding
+One Markdown review per file, a running cost total, a `--budget` dispatch threshold. Driving it from a coding
 agent? See **[AGENTS.md](AGENTS.md)**.
 
 ## Static-analysis signals (Python)
@@ -61,8 +61,8 @@ Only runs for Python; other languages are skipped.
 
 ## Notes
 
-- Every review is a **paid** model call on your own OpenRouter credit. The meter shows the
-  ceiling; the saved cost is the real billed amount OpenRouter reports.
+- Every review is a **paid** model call on your own OpenRouter credit. The meter shows an
+  estimate, not a spending cap; saved cost uses the billed amount OpenRouter reports.
 - The key is read only from `OPENROUTER_API_KEY` — never stored in the app or the repo.
 - Reviews are written to `.colibri_reviews/` in the scanned project (git-ignored here).
 

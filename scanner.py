@@ -1,7 +1,7 @@
 """Directory scanner + core-file ranker.
 Walks a project, hard-excludes secrets/legal/vendored/binary trees, then scores
 each source file so authored 'core' files rank above bundled dependencies."""
-import os, hashlib
+import os, hashlib, fnmatch
 
 CODE_EXT = {".py", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".mts", ".cts",   # ES-module / typed JS are code (doctrine 2026-09-19)
             ".c", ".h", ".hpp", ".cpp",
@@ -12,19 +12,20 @@ DENY_DIRS = {".git", ".hg", ".svn", ".secrets", "secrets", "legal", "media",
              "junk", "build", "dist", "out", "__pycache__", "node_modules",
              ".venv", "venv", "site-packages", ".vs", ".idea", ".vscode",
              "vendor", "third_party", "thirdparty", ".mypy_cache", ".pytest_cache",
-             ".ruff_cache", "coverage", "htmlcov", "obj", ".tox", ".eggs", "dist-info"}
-DENY_SUBSTR = ("site-packages", "node_modules", "dist-info", ".egg-info",
-               os.sep + "vendor" + os.sep, os.sep + "venv" + os.sep, os.sep + ".venv" + os.sep)
-SKIP_FILE = (".min.js", ".min.css", ".map", "-lock.", ".bundle.")
+             ".ruff_cache", ".colibri_reviews", "coverage", "htmlcov", "obj", ".tox", ".eggs", "dist-info"}
 MAX_BYTES = 2_000_000     # skip huge generated blobs
 
 
 def _is_vendor(rel):
-    low = rel.lower()
-    return any(s in low for s in DENY_SUBSTR)
+    parts = os.path.normpath(rel).lower().split(os.sep)[:-1]
+    return any(p in DENY_DIRS or p.endswith((".egg-info", ".dist-info")) for p in parts)
 
 
-def scan(root):
+def scan(root, patterns=None):
+    if patterns is not None:
+        patterns = [patterns] if isinstance(patterns, str) else list(patterns)
+        if any(not isinstance(pattern, str) for pattern in patterns):
+            raise TypeError("patterns must contain glob strings")
     root = os.path.abspath(root)
     cand = []            # (path, rel, ext, dirpath)
     dir_count = {}
@@ -37,9 +38,14 @@ def scan(root):
                    and not d.endswith(".egg-info") and not d.endswith(".dist-info")]
         for fn in fns:
             ext = os.path.splitext(fn)[1].lower()
-            if ext not in CODE_EXT:
+            if patterns is None:
+                matched = ext in CODE_EXT
+            else:
+                matched = any(fnmatch.fnmatch(fn, pattern) for pattern in patterns)
+            if not matched:
                 continue
-            if any(s in fn.lower() for s in SKIP_FILE):
+            low = fn.lower()
+            if low.endswith((".min.js", ".min.css", ".map")) or "-lock." in low or ".bundle." in low:
                 continue
             p = os.path.join(dp, fn)
             rel = os.path.relpath(p, root)

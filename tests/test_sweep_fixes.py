@@ -35,28 +35,43 @@ if len(sys.argv) >= 4 and sys.argv[1] == "store-worker":
 
 
 def test_budget():
-    rb_path = os.path.join(ROOT, "run_batch.py")
-    # stub `analyzer` (real one needs openai/py3.13) before run_batch imports it
     fake = types.ModuleType("analyzer")
     fake.api_key = lambda: "fake"
-    fake.model_max_tokens = lambda m: 8000
+    fake.model_max_tokens = lambda *args: 8000
+    billed = []
     def _rev(code, rel, mode, cfg, prior_md=None, fmt="md", spec_text=None):
         time.sleep(0.03)
-        return ("## Verdict\nok\n", {"cost": 0.05, "prompt_tokens": 1, "completion_tokens": 1, "finish": "stop"})
+        billed.append(0.05)
+        return ("## Verdict\nok\n", {"cost": 0.05, "prompt_tokens": 1,
+                "completion_tokens": 1, "finish": "stop", "complete": True})
     fake.review_code = _rev
-    sys.modules["analyzer"] = fake
-    spec = importlib.util.spec_from_file_location("run_batch", rb_path)
-    rb = importlib.util.module_from_spec(spec); spec.loader.exec_module(rb)
-
-    d = tempfile.mkdtemp(); N = 40
-    for i in range(N):
-        open(os.path.join(d, "f%02d.py" % i), "w").write("x=%d\n" % i)
-    out = os.path.join(d, "rev")
-    sys.argv = ["run_batch.py", d, "--model", "fake", "--mode", "bug",
-                "--workers", "4", "--budget", "0.30", "--glob", "*.py", "--out", out]
-    rb.main()
-    s = json.load(open(os.path.join(out, "_batch_summary.json"), encoding="utf-8"))
-    check("budget_enforced_with_workers", s["done"] < N and s["spent"] <= 0.30 + 0.05 * 4)
+    previous = sys.modules.get("analyzer")
+    previous_argv = sys.argv
+    try:
+        sys.modules["analyzer"] = fake
+        rb = _load("run_batch")
+        with tempfile.TemporaryDirectory() as d:
+            N = 40
+            for i in range(N):
+                with open(os.path.join(d, "f%02d.py" % i), "w") as stream:
+                    stream.write("x=%d\n" % i)
+            out = os.path.join(d, "rev")
+            sys.argv = ["run_batch.py", d, "--model", "fake", "--mode", "bug",
+                        "--workers", "4", "--budget", "0.30", "--glob", "*.py", "--out", out]
+            rc = rb.main()
+            with open(os.path.join(out, "_batch_summary.json"), encoding="utf-8") as stream:
+                result = json.load(stream)
+            check("budget_enforced_with_workers",
+                  rc == 0 and result["errors"] == 0
+                  and 0 < result["done"] == len(billed) < N
+                  and abs(result["spent"] - sum(billed)) < 1e-9
+                  and 0.30 <= sum(billed) <= 0.30 + 0.05 * 4 + 1e-9)
+    finally:
+        sys.argv = previous_argv
+        if previous is None:
+            sys.modules.pop("analyzer", None)
+        else:
+            sys.modules["analyzer"] = previous
 
 
 def test_store_lock():
