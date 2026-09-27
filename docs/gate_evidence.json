@@ -2464,6 +2464,29 @@
     "Tools adversary-gate/gate_selftest.py caller-header-bracket-name-survives",
     "Tools .adversary/reviews/gate_20260927-065622.md"
    ]
+  },
+  {
+   "id": "EV-152-BLINK-CARDS-8-ROUND-BLOCK",
+   "date": "2026-09-27",
+   "repo": "Blink",
+   "layer": "Luna Pro commit review BLOCK (9 rounds, 14 distinct findings)",
+   "caught": "First commit of birdcam/cards.py (a 920-image paid title-card generator) shipped 14 distinct latent failure-path defects (16 raw findings across 9 review rounds; two round-2 reports were stale re-reports of already-fixed code) that the independent reviewer refused until every one was fixed: --days 0/negative silently planning the full paid range; resume-skip losing manifest rows; non-atomic card/font writes able to accept partial files (a partial font would fail every overlay AFTER billing a prediction); force-regeneration able to destroy a valid archived card with an undersized replacement; the index listing .raw/.tmp strays as cards; --index-only crashing on a missing dir and later overwriting a fresher index without the lock; cost report undercounting billed retries of completed predictions; overlapping runs clobbering manifest rows and double-billing; timestamp-lock staleness and takeover races; date.max overflow in plan_days; and a non-dict manifest images value crashing record() after a paid generation. The entry id retains the '8-ROUND' label from first filing - ids are immutable reference keys; the corrected figures live in the fields.",
+   "severity": "medium",
+   "author_initially": "Shipped all 14 distinct defects on the first commit attempt. Two round-2 findings were stale re-reports of already-fixed code - addressed by fixing the two genuine round-2 findings so the fresh review verified the bytes rather than rebutting in prose. AMENDED 2026-09-27 (gate_20260927-094919 caught the arithmetic): the accurate count is 9 BLOCK rounds, 16 raw findings, 2 stale re-reports, 14 distinct real findings; the original row understated both rounds (8) and findings (13).",
+   "resolution": "Every finding fixed with a RED-first regression (tests/test_cards.py grew 14 -> 33 tests; full suite 217 OK) before commit Blink c2ae400 earned CLEAR. Structural remedies: atomic temp+validate+replace at the save chokepoints (card, font, manifest), an OS-level msvcrt/fcntl lock replacing the timestamp design, merge-on-write manifest saves, manifest healing at load, honest billed-vs-archived cost accounting, and lock-gated --index-only. Escape-rate ledger: 16 raw findings / 0 caught pre-gate / all caught at the commit gate; per-round raw counts (2,4,1,2,2,2,1,1,1), and at least 4 lived in code introduced by earlier remediation rounds within the same session - the gate's rounds kept converging.",
+   "refs": [
+    "Blink .adversary/reviews/gate_20260927-091454.md",
+    "Blink .adversary/reviews/gate_20260927-091850.md",
+    "Blink .adversary/reviews/gate_20260927-092143.md",
+    "Blink .adversary/reviews/gate_20260927-092538.md",
+    "Blink .adversary/reviews/gate_20260927-092925.md",
+    "Blink .adversary/reviews/gate_20260927-093333.md",
+    "Blink .adversary/reviews/gate_20260927-093822.md",
+    "Blink .adversary/reviews/gate_20260927-094046.md",
+    "Blink .adversary/reviews/gate_20260927-094339.md",
+    "Blink birdcam/cards.py",
+    "Blink tests/test_cards.py"
+   ]
   }
  ]
 }
