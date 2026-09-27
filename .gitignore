@@ -39,3 +39,7 @@ Thumbs.db
 .vscode/
 .adversary/
 .mimosa/
+
+# Local maintenance scratch (preserved locally)
+/junk/
+/_commit_msg.txt
