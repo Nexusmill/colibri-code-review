@@ -2611,6 +2611,28 @@
     "Nexusmill tests/test_perfection_accel.py (rows E1-F3/G2/E3-F2/G4/G7/W8 - 24/24)",
     "Nexusmill commit c2fcc882 + junk/perfection/accel/ (contracts, LEDGER, e_dispatches)"
    ]
+  },
+  {
+   "id": "EV-160-PERFECTION-AB-REDIRECT-CHAIN",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK gate_20260928-140001 (gpt-6-luna-pro) on the perfection R1 wave for PatternSkin/accel_bootstrap.py",
+   "severity": "HIGH (supply-chain: capture-mode pin poisoning via a redirect chain)",
+   "caught": "My https->http downgrade guard inspected only resp.geturl() - the FINAL landing. An https -> http -> https(attacker) chain passes it, and in capture mode (no pinned hash, Authenticode advisory-only) the plaintext hop lets an attacker supply the bytes that get recorded as everyone else's pin; the capture record logs the ORIGINAL url, so the human review of the capture cannot see the downgrade either.",
+   "author_initially": "no - accepted at first read; the chain mechanism was correct and the capture-mode impact was real",
+   "resolution": "Fixed in the same wave: _make_downloader() builds the opener with an HTTPRedirectHandler subclass that refuses ANY redirect hop out of an https origin (raise inside redirect_request, before urllib follows it); the final-URL check is retained as a backstop. New battery rows F2c/F2d RED-proven against the pre-amendment bytes; hop mutation flips F2c exactly. Landed ec9a6ffc.",
+   "refs": "junk/perfection/accel_bootstrap/contracts_r1.md (amendment G-HOP); tests/test_perfection_accel_bootstrap.py t2_redirect; PatternSkin/accel_bootstrap.py _make_downloader"
+  },
+  {
+   "id": "EV-161-PERFECTION-AB-ARM-AND-TRANSPORT",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCKs gate_20260928-140642 + gate_20260928-140805 (gpt-6-luna-pro) on the same wave",
+   "severity": "MEDIUM (arch gap) + documented reviewer-transport artifact (false positive)",
+   "caught": "REAL catch (140805): struct.calcsize('P')*8 is 64 on ARM64 too, so a Windows-on-ARM CPython 3.12 passed the bitness gate and pip would refuse the win_amd64 wheels only after the multi-GB download - the exact late failure the gate existed to prevent. Fixed same wave: probe now also prints platform.machine(), _probe_ok accepts only AMD64/x86_64 spellings; F1g runs the probe live and asserts the 3-field shape (RED pre-fix); ARM mutation flips F1e. TRANSPORT ARTIFACT (both rounds): the reviewer reported the test binding a bracketed placeholder address; the staged bytes contain a literal loopback address and the battery bound+served green - the IP-literal redaction documented in the accel.py Stage E saga, reproduced here across a bare re-dispatch AND two byte-evidence rebuttals (round 2 dispatched context-less after a %-formatting error killed the context write - itself the G33 shell lesson repeated in python heredoc form). The point is UNDECIDABLE at the reviewer layer: it can never see the literal.",
+   "author_initially": "the ARM finding: no, accepted immediately. The placeholder finding: disputed with byte evidence across two rounds (staged-blob search + green battery rows + port-from-bound-socket argument); the dispute was correct but unwinnable at that layer",
+   "resolution": "ARM gap fixed (ec9a6ffc). Placeholder finding resolved by making the bytes decidable: the regression server now resolves its loopback address at runtime (socket.gethostbyname) and builds the URL from the same resolved value - no address literal in source, nothing for the transport to redact, identical behavior. CLEAR gate_20260928-141517 on the final diff. LESSON: when a reviewer's finding is provably a transport artifact, rebut once with byte evidence, then REMOVE the redaction trigger from the bytes rather than burning rounds arguing; also %-formatting a context template that contains literal % sigils is the G33 trap in python form (use replace-templating).",
+   "refs": "junk/perfection/accel_bootstrap/contracts_r1.md (amendments G-ARM, G-BIND); gate_context_r1b/r1c/r1d.txt; .adversary/reviews/gate_20260928-140642.md, gate_20260928-140805.md, gate_20260928-141517.md"
   }
  ]
 }
