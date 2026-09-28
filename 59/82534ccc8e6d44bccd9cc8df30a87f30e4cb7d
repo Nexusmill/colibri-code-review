@@ -1,0 +1,17 @@
+{
+ "type": "CLEAR",
+ "commit": "5982534ccc8e6d44bccd9cc8df30a87f30e4cb7d",
+ "caller": "zcode",
+ "when": "20260928-142351",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "bfdc95b4faa5fcd6f3dc8f85f34e845606647bda8d4e46bbefba6c53be67fd68",
+   "model": "openai/gpt-6-luna-pro",
+   "when": "20260928-142349",
+   "artifact": ".adversary\\reviews\\gate_20260928-142349.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260928-142349.md": "model: openai/gpt-6-luna-pro | provider: OpenAI | usage: {'prompt_tokens': 6526, 'completion_tokens': 1130, 'total_tokens': 7656, 'cost': 0.001128095, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 1377, 'cache_write_tokens': 1377, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.001128095, 'upstream_inference_prompt_cost': 0.000563095, 'upstream_inference_completions_cost': 0.000565}, 'completion_tokens_details': {'reasoning_tokens': 1093, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nVERDICT: CLEAR"
+ }
+}
