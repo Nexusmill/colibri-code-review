@@ -2523,6 +2523,25 @@
     "tests/fleet/test_rt_cli.py",
     "tests/fleet/test_rt_review_server.py"
    ]
+  },
+  {
+   "id": "EV-155-FLEET-CONFIG-PAGE-TOPICS-FIX-22-ROUNDS",
+   "date": "2026-09-27",
+   "repo": "fleet",
+   "layer": "pre-commit adversary gate (gpt-6-luna-pro primary; one qwen/qwen3.8-flash fallback round), 22 review rounds over commits 6fb629c7 + b17db828 (the owner-reported Draft-topics failure)",
+   "severity": "HIGH (the owner hit the failure live, twice) down to MEDIUM",
+   "caught": "The owner's live Draft-topics failure had three stacked causes the first arc's rig tests could not see: (1) EV-154's 'PROVEN parent delegation' was never proven in a real child - os.getppid() on Windows is not the spawner's pid (probe: child 246716 vs parent 212276), so every page-spawned job died exit 2 'a job is already running'; (2) seats.slugify() validates 2-24 chars, so a real 68-character search title raised BadTable inside the topics draw before the [:24] slice could run - exit 1, empty topics box; (3) the log panel had no dismissal and job finishes were silent. The gate arc then caught: a double unlock_fd (EBADF killed the request handler mid-response); the dimensional grace bug time.time() - _row_age(row), never < 3, so the crash-grace window was dead code; prompts push opening the Lance store + MiniLM embedder just to take the job slot; a free child's pid in the record read as a crash leftover; _mark_record_done matching by a timestamp that straddled seconds; our own claim rewrite destroying the very crash evidence it was about to judge (snapshot restored through the claimed fd); try_claim overwriting a live spawn-handoff record; dead-supervisor+dead-child leftovers with no all-clear path; and page/CLI halt-flag mutations racing each other.",
+   "author_initially": "WRONG in the exact way the honesty clause warns about: EV-154's round-41 'proven delegation' rested on an in-process test rig that shares one pid with its 'child', so the ppid check could not fail there; the author called it PROVEN and shipped it. Withdrawn wholesale in round 42 in favor of child-claims-itself (the page holds the slot only for the spawn instant; real children retry-claim for 2s).",
+   "resolution": "All fixed with verdict-named tests (fleet suite 466 -> 470; the two arcs together took 412 -> 470): children claim the slot themselves and record the supervising page's pid via FLEET_PAGE_PID, preserved through their own claim rewrite; orphan = live recorded child + DEAD recording page; dead supervisor + dead child (supervisor != child) = crash leftover whose all-clear is the owner's Resume (clear_leftover, slot re-probe, switch-locked resume); the CLI child writes an atexit done-marker so a normal completion never reads as leftover; try_claim refuses to overwrite a live handoff record and restores it; seats.slugify_name() (the unvalidated transform) + stem[:14]+index topic ids with a duplicate belt; the log panel is dismissible (collapsed by default, auto-opens on failure); every finish is spoken with its exit code ('FAILED: X (exit N)' in red); children run PYTHONUNBUFFERED. Verified live on the final code with the owner's own field: a real Draft-topics run drafted 4 topics, exit 0, all four visible in the page's topics box.",
+   "refs": [
+    "fleet .adversary/reviews/gate_20260927-133756.md through gate_20260927-180019.md (22 reviews, ~$2.3)",
+    "fleet/roundtable/jobslot.py",
+    "fleet/roundtable/config_server.py",
+    "fleet/cli.py",
+    "fleet/roundtable/seats.py",
+    "tests/fleet/test_rt_config_server.py",
+    "tests/fleet/test_rt_cli.py"
+   ]
   }
  ]
 }
