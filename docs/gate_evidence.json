@@ -2595,6 +2595,22 @@
     "colibri-code-review commit 84cf3e1",
     "Nexusmill AGENT_STATE 2026-09-28 perfection accel entry (the run the rows describe)"
    ]
+  },
+  {
+   "id": "EV-159-PERFECTION-ACCEL-E-WAVE-SAGA",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCKs gate_20260928-024848 through gate_20260928-033501 (gpt-6-luna-pro) - 7 rounds on the Stage-E waves in PatternSkin/accel.py, plus commit-gate re-raises",
+   "severity": "MEDIUM (cache-coherence + a stale twin index blob + dispute resolution)",
+   "caught": "The gpu_healthy hardening arc: (1) my test forced an import failure with a module PRESENT in sys.modules (imports cleanly however hostile - must use a meta-path blocker; popping re-imports REAL cupy on GPU boxes = environment-dependent test); (2) invalidating only _CAPS stranded _GPUSTACK_KICKED=True with no probe running (lost update vs a finishing probe); (3) check-then-act TOCTOU on the busy flag (closed with one-lock discipline: _CAPS_CB_LOCK across helper check+reset, probe entry busy-set, probe exit write+clear); (4) caps-invalidation ordered BEFORE the stack clear let a racing rebuild re-cache the failed GPU forever (moved LAST); (5) the unlocked _CAPS publish could land after any invalidation (fixed with _CAPS_GEN generation-stamped publication - a stalled rebuild returns its dict but never publishes); (6) a SPLIT VERDICT on the busy-branch semantics (1 CLEAR vs 3 BLOCK) resolved by a runtime tier latch rather than an override; (7) the twin path blender_dev/.../accel.py carried a STALE INDEX blob because later git adds named only the primary path (the EV-133 class, again).",
+   "author_initially": "Adjudicated the busy-branch as designed layer separation (one gate dispatch ACCEPTED, three re-raised it fresh-context); on the split, resolved autonomously with a latch instead of rebutting again or using the owner-only OVERRIDE; accepted all other findings as real.",
+   "resolution": "Waves 2-8 all gated CLEAR; landed in commit c2fcc882 (final sha8 f34daaaa; twin index blobs verified identical). The latch: gpu_healthy runtime failures latch the tier dead for SELECTION (active_tier_key + get_xp skip it); set_preferred_tier (tier dropdown) or restart clears; install truth stays in the stack cache - the honest docstring states recovery is explicit, not automatic.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260928-024848.md through gate_20260928-033836.md (7 gate rounds + commit-gate re-raises)",
+    "Nexusmill PatternSkin/accel.py (gpu_healthy / _invalidate_caps_and_stack / _CAPS_GEN / _RUNTIME_TIER_DEAD)",
+    "Nexusmill tests/test_perfection_accel.py (rows E1-F3/G2/E3-F2/G4/G7/W8 - 24/24)",
+    "Nexusmill commit c2fcc882 + junk/perfection/accel/ (contracts, LEDGER, e_dispatches)"
+   ]
   }
  ]
 }
