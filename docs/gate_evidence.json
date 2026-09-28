@@ -2633,6 +2633,17 @@
    "author_initially": "the ARM finding: no, accepted immediately. The placeholder finding: disputed with byte evidence across two rounds (staged-blob search + green battery rows + port-from-bound-socket argument); the dispute was correct but unwinnable at that layer",
    "resolution": "ARM gap fixed (ec9a6ffc). Placeholder finding resolved by making the bytes decidable: the regression server now resolves its loopback address at runtime (socket.gethostbyname) and builds the URL from the same resolved value - no address literal in source, nothing for the transport to redact, identical behavior. CLEAR gate_20260928-141517 on the final diff. LESSON: when a reviewer's finding is provably a transport artifact, rebut once with byte evidence, then REMOVE the redaction trigger from the bytes rather than burning rounds arguing; also %-formatting a context template that contains literal % sigils is the G33 trap in python form (use replace-templating).",
    "refs": "junk/perfection/accel_bootstrap/contracts_r1.md (amendments G-ARM, G-BIND); gate_context_r1b/r1c/r1d.txt; .adversary/reviews/gate_20260928-140642.md, gate_20260928-140805.md, gate_20260928-141517.md"
+  },
+  {
+   "id": "EV-162-MANIFEST-SEVERITY-CONSISTENCY",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "pre-commit gate BLOCK gate_20260928-142242 (gpt-6-luna-pro) on the docs tranche of the same perfection run",
+   "severity": "data-consistency (metadata contradiction, not a code defect)",
+   "caught": "The remediation-manifest row for PS-AB-REDIRECT-DOWNGRADE quoted the gate's HIGH classification for the capture-mode chain-poisoning variant inside its finding text but carried severity:'low' - the metadata contradicted the row's own prose, which under-prioritizes the security issue for any reader or tooling that trusts the field (the pre-escalation shipped-flow exposure was genuinely low: hash-pinned; the capture-mode variant the fix also closes is high).",
+   "author_initially": "no - the contradiction was real; the row text and the field disagreed with each other",
+   "resolution": "Severity amended to high in place with the amendment noted in the row's verification field (rows are never deleted; amendments in place with evidence). Committed with the docs tranche.",
+   "refs": "docs/remediation_manifest.json entries[-2]; gate_20260928-142242.md"
   }
  ]
 }
