@@ -2579,6 +2579,22 @@
     "Nexusmill tests/test_hunt_r11_fixes.py (the guarded house shape)",
     "Nexusmill commit 90d54cc6 (re-gate CLEAR)"
    ]
+  },
+  {
+   "id": "EV-158-DOCKET-APPEND-TEMPLATE-DRIFT",
+   "date": "2026-09-28",
+   "repo": "colibri-code-review",
+   "layer": "gate-review BLOCKs gate_20260928-015613/-015908/-020105/-020232/-020447 (gpt-6-luna-pro) on the docket append itself",
+   "severity": "MEDIUM (governance-file consumer breakage: BOM + non-canonical schema; reviewer-friction class)",
+   "caught": "The EV-156/EV-157 append reused the STALE ai_parts-era append template: force-added a UTF-8 BOM (EV-135 had ruled this file BOM-free), used pre-covenant field names (catch/outcome vs caught/resolution) without layer/severity/author_initially/refs, and the whole-file reserialize (indent=2 + LF) turned the diff into 5,130 reformatted lines under which the reviewer twice claimed required fields were missing while they were present in the bytes - the false-claim pattern vanished the moment the diff collapsed to 37 lines.",
+   "author_initially": "Rebutted the author_initially-missing and date-missing claims as factually false (they were - proven by field dumps and verbatim quoted rows); accepted the refs-precision and sha-consistency findings as real.",
+   "resolution": "Rows canonicalized (caught/resolution/layer/severity/author_initially/refs), exact artifact filenames cited, the mis-transcribed commit sha 90d84cc6 corrected everywhere to 90d54cc6, file reserialized to the file's own convention (indent=1, CRLF, no BOM, ensure_ascii=False) -> 37-line diff -> CLEAR gate_20260928-020650 -> commit 84cf3e1. Lesson banked: read a governance file's EXISTING encoding/format from HEAD before appending (BOM/CRLF/indent are per-file conventions), and reviewer false-positives cluster on reformat-noise diffs - fix the diff, not just the rebuttal.",
+   "refs": [
+    "colibri-code-review .adversary/reviews/gate_20260928-015613.md through gate_20260928-020447.md (5 BLOCKs)",
+    "colibri-code-review .adversary/reviews/gate_20260928-020650.md (CLEAR)",
+    "colibri-code-review commit 84cf3e1",
+    "Nexusmill AGENT_STATE 2026-09-28 perfection accel entry (the run the rows describe)"
+   ]
   }
  ]
 }
