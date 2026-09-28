@@ -2542,6 +2542,43 @@
     "tests/fleet/test_rt_config_server.py",
     "tests/fleet/test_rt_cli.py"
    ]
+  },
+  {
+   "id": "EV-156-PERFECTION-ACCEL-REPAIR-FALLBACK-P2",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "commit": "90d54cc6",
+   "session": "zcode perfection run on PatternSkin/accel.py (3rd core, local-first per owner order 2026-09-28); author glm-5.3, gate reviewer gpt-6-luna-pro per the 2026-09-26 GATE_LADDER reshuffle (MiMo removed).",
+   "layer": "perfection local plan-gate (adversary_gate run --context, gpt-6-luna-pro - the new 2026-09-26 GATE_LADDER primary's first perfection catch)",
+   "severity": "MEDIUM (functional degradation on a reachable path, not the HIGH the skip draft flirted with)",
+   "caught": "Plan-gate BLOCK (gate_20260928-013315, gpt-6-luna-pro - the new gate primary's first perfection catch) on the R1 wave in PatternSkin/accel.py: the F1 fix for PS-ACCEL-USERRES-EMPTY guarded repair_scipy by SKIPPING the repair when user_resource returns '' - technically safe (never a CWD-relative pip target again) but it stranded locked-down-profile users entirely when the sibling finish_pending_installs already uses a ~/.patternskin/lib fallback that ensure_dep_path keeps on sys.path and could have completed the repair.",
+   "resolution": "Finding ACCEPTED (adversarial verify: pre-wave bytes were no better - pip --target 'modules' installed into CWD - but the honest fix is the fallback, not the skip). Amended: repair computes mod = join(r,'modules') if r else join(~, '.patternskin', 'lib'). Verdict-named rows G-P2 (pip ran + absolute target under user_resource('')) added RED->GREEN. Re-gate CLEAR gate_20260928-013550 same model. Gate cost: 2 dispatches.",
+   "author_initially": "Guard all 3 user_resource sites by SKIPPING the repair when the resource is '' - technically safe (no CWD-relative target) and I believed skip-fail-honest beat fallback risk.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260928-013315.md (BLOCK) + gate_20260928-013550.md (amendment CLEAR)",
+    "Nexusmill PatternSkin/accel.py repair_scipy / finish_pending_installs / ensure_dep_path",
+    "Nexusmill tests/test_perfection_accel.py (G-P2 verdict-named rows, RED->GREEN)",
+    "Blender 5.1 scripts/modules/bpy/utils/__init__.py user_resource (the ''-return source)"
+   ]
+  },
+  {
+   "id": "EV-157-PERFECTION-ACCEL-PYTEST-COLLECTION",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "commit": "90d54cc6",
+   "session": "zcode perfection run on PatternSkin/accel.py (3rd core). Also banked: the G-COMMIT PreToolUse deny killed a chained printf+_git_do.py Bash call PRE-EXECUTION - _commit_msg.txt was never written and the gated commit reused the STALE KBR message; erratum recorded in AGENT_STATE; rule: write _commit_msg.txt in its OWN Bash call before running _git_do.py.",
+   "layer": "pre-commit adversary gate (gpt-6-luna-pro), commit attempt for 90d54cc6",
+   "severity": "MEDIUM (test-suite consumer breakage; zero product impact)",
+   "caught": "Commit-gate BLOCK (gate_20260928-014629, gpt-6-luna-pro) on the same run: the new battery file tests/test_perfection_accel.py executed its checks at MODULE scope with a bare sys.exit() - pytest default test_*.py discovery would import it during collection and die on SystemExit (collection error) even with all checks passing.",
+   "resolution": "Guarded with if __name__ == \"__main__\" (the newer house shape, e.g. test_hunt_r11_fixes.py; the _runtests.py subprocess path is unchanged - it runs the file AS __main__). Both consumer paths proven: subprocess exit 0 with 12/12, plain module import executes nothing and does not exit. Re-gate CLEAR on commit 90d54cc6. SECOND catch by the new gpt-6-luna-pro primary in one run.",
+   "author_initially": "Module-scope battery + sys.exit mirroring test_accel_tiers.py; I did not check what the newer test files (test_hunt_r11+) had already standardized on.",
+   "refs": [
+    "colibri-code-review .adversary/reviews/gate_20260928-014629.md (BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20260928-015211.md (commit-gate CLEAR for 90d54cc6, notarized in refs/notes/adversary)",
+    "Nexusmill tests/test_perfection_accel.py (__main__ guard)",
+    "Nexusmill tests/test_hunt_r11_fixes.py (the guarded house shape)",
+    "Nexusmill commit 90d54cc6 (re-gate CLEAR)"
+   ]
   }
  ]
 }
