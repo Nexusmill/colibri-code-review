@@ -2721,6 +2721,17 @@
    "author_initially": "no - all catches reproduced or recomputed at the bytes before each fix; the arithmetic one corrected a number I had just written",
    "resolution": "Crop direction documented as left/right with the branch comment fixed; arithmetic corrected to 2.6 mm/side with prompt margin guidance raised to > 3 mm (ai_prompts.json hardened to 'roughly 4 mm wide' margins); size report now prints measured pixels + computed dpi, and the exact PNGs are stamped with that dpi (546.5 -> 152.4 x 234.99 mm, Pillow-verified); the 4K deliverables moved to media/laser/ (asset dir) with README/AGENT_STATE paths repointed and the pipeline writing there by default. Raw pre-crop intermediates stay in gitignored junk.",
    "refs": "reviews/gate_20260929-011453.md, 011158, 010938, 010648; laser/fetch_ai_art.py crop_exact(); media/laser/*_exact.png"
+  },
+  {
+   "id": "EV-170-TRANSPARENT-MASTER-FIDELITY",
+   "date": "2026-09-29",
+   "repo": "Nexusmill",
+   "layer": "gate BLOCK (first round of the transparency+spine tranche; CLEAR gate_20260929-015411 on Nexusmill 1daa2cb3) plus the LARGE guard on the 27 MB spine raw",
+   "severity": "medium (physical-size metadata loss on engraving masters)",
+   "caught": "make_transparent.py saved the new RGBA master without carrying the input PNG's DPI stamp - the very metadata fetch_ai_art.py exists to write (546.5 dpi covers, 595 dpi spine). Converting an *_exact.png through the tool silently produced a transparent master that DPI-honoring importers would place at the wrong physical size, defeating the exact-mm chain. Separately, the LARGE guard refused the 27.3 MB pre-strip spine raw outside the asset dirs. En route (own crash, not a gate catch): strip_exact referenced PIL Image before the module-level import was hoisted - the generation had already succeeded so the paid image was saved and only post-processing needed a re-run (no re-spend).",
+   "author_initially": "no - reproduced by reading the saved files (no dpi key in PNG info) before the fix",
+   "resolution": "make_transparent.py now reads img.info['dpi'], validates it, rounds to 0.1, and passes it to save(); all three masters regenerated and Pillow-verified (546.5 -> 152.40 x 234.99 mm; 595.0 -> 25.40 x 234.96 mm). The spine raw joined the other pre-crop raws in gitignored junk/. Landed as Nexusmill 1daa2cb3 with cover_front2/back/spine transparent masters, make_transparent.py (Otsu alpha ramp, coverage warnings, hardened CLI), and fetch_ai_art.py --which spine (9:16 + central-column prompt + brightness-centroid strip extraction).",
+   "refs": "reviews/gate_20260929-015411.md (adjudicated fixed); laser/make_transparent.py; media/laser/*_transparent.png"
   }
  ]
 }
