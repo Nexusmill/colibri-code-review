@@ -2644,6 +2644,61 @@
    "author_initially": "no - the contradiction was real; the row text and the field disagreed with each other",
    "resolution": "Severity amended to high in place with the amendment noted in the row's verification field (rows are never deleted; amendments in place with evidence). Committed with the docs tranche.",
    "refs": "docs/remediation_manifest.json entries[-2]; gate_20260928-142242.md"
+  },
+  {
+   "id": "EV-163-VALIDATE-BEFORE-BUILD",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "pre-commit gate BLOCK gate_20260928-223907 (gpt-6-luna-pro) on the first staging of the new laser/generate_baroque_cover.py (no commit existed yet; the wave landed only later, fully remediated, as b79dfd38)",
+   "severity": "low (crash instead of controlled error on degenerate CLI input)",
+   "caught": "laser/generate_baroque_cover.py ran build() before validate(); --holes 1 divides by (n-1) in hole_ys() and --holes 0 later indexes an empty hole list, so the advertised n_holes>=4 validation was bypassed with a traceback instead of a controlled VALIDATION ERROR.",
+   "author_initially": "no - reproduced RED on both exact inputs before the fix",
+   "resolution": "validate_config() (config-level checks) now runs before build(); validate_bounds() (sheet containment) stays post-build. Both inputs exit 2 with messages; systematic-debugging skill loaded per G38 before the edit.",
+   "refs": "reviews/gate_20260928-223907.md; Nexusmill laser/generate_baroque_cover.py validate_config/main"
+  },
+  {
+   "id": "EV-164-INPUT-SPACE-GUARD-FAMILY",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "pre-commit gate BLOCK gate_20260928-224357 (gpt-6-luna-pro), three P2 findings in one review",
+   "severity": "medium (invalid cut files written with exit 0)",
+   "caught": "Three input-space gaps in validate_config(): (a) --spine 60 --hole-d 40 passes the spine-gap check yet 20mm-radius holes overshoot the 5/16mm insets (open edge cuts, not lace holes); (b) --cover-height 20 passes the positive-dimension check while hole rows land at y=24..-4 outside the cover; (c) --hole-d nan defeats both gap<5 and <=0 comparisons (NaN comparisons are False) and produces nan path coordinates.",
+   "author_initially": "no - all three reproduced RED at the exact reported inputs",
+   "resolution": "Guards added: hole_d must fit 2*(min_inset-2); 2*hole_end_margin+hole_d must fit cover_h; every dimension key checked with 'not (v > 0) or not isfinite(v)' which also rejects NaN. All exit 2; default geometry byte-identical.",
+   "refs": "reviews/gate_20260928-224357.md; validate_config()"
+  },
+  {
+   "id": "EV-165-ENGRAVE-PIECE-CONTAINMENT",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "pre-commit gate BLOCK gate_20260928-224817 (gpt-6-luna-pro)",
+   "severity": "medium (engraving outside the cut piece, still inside the sheet)",
+   "caught": "--cover-height 100 passed every config check because validate_bounds() only proved drawings stay on the 300mm SHEET; the fixed-size cartouche (ry=50 plus ~19mm crest) put engraving ~6mm beyond the cover's top edge - a piece that would engrave air and waste the sheet.",
+   "author_initially": "no - reproduced RED ('front cover engraving exceeds its piece' only after the fix)",
+   "resolution": "Structural guard instead of a minimum-size constant: each piece now draws into its own Canvas tracking engrave-only bounds; validate_pieces() proves engraving stays inside each piece rectangle (+-0.05mm) before the canvases merge per sheet. Catches ANY ornament overflow at ANY parameter combination, not just the reported one.",
+   "refs": "reviews/gate_20260928-224817.md; Canvas.ebounds/merge, build(), validate_pieces()"
+  },
+  {
+   "id": "EV-166-HOLE-PITCH-VE-HOLE-DIAMETER",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "pre-commit gate BLOCK gate_20260928-225553 (gpt-6-luna-pro)",
+   "severity": "medium (adjacent holes merge into slots; damaged cover)",
+   "caught": "--holes 100 passed every existing check (count, end margins, containment) because no check related hole PITCH to hole DIAMETER: 100 holes on a 235mm cover pitch at ~1.9mm while holes are 4mm - the cut circles overlap into slots.",
+   "author_initially": "no - reproduced RED (exit 0 before, exit 2 after)",
+   "resolution": "pitch = (cover_h - 2*hole_end_margin)/(n_holes-1) must be >= hole_d + 2mm. First guard version itself divided by zero at --holes 1 and was caught by my own regression battery before commit - final version computes pitch only when n_holes>=2 (that near-miss is the strongest row in this batch: the guard needed a guard).",
+   "refs": "reviews/gate_20260928-225553.md; validate_config() pitch guard"
+  },
+  {
+   "id": "EV-167-INNER-FIRST-CUT-ORDER",
+   "date": "2026-09-28",
+   "repo": "Nexusmill",
+   "layer": "pre-commit gate BLOCK (gpt-6-luna-pro, response sha 51ea2366), final round before CLEAR",
+   "severity": "medium (piece released before its holes are cut if subpath order is honored)",
+   "caught": "Every red cut path emitted the piece's outer rectangle BEFORE its lace-hole subpaths. Bambu Studio's 'Inner Shape First' defaults on, but the FILE itself ordered outer-first - any tool that honors SVG subpath order cuts the outline first, releasing the piece mid-job and shifting the un-cut holes.",
+   "author_initially": "no - accepted immediately; inner-first belongs in the file, not in a slicer default",
+   "resolution": "cover() and spine() now emit all hole ellipses first and the outer rectangle last inside each cut path. Verified on the emitted SVGs: every cut path's first M-subpath is a 40-point hole ellipse, the 4-corner rectangle is the final subpath (cover 7 subpaths, spine 13). CLEAR gate_20260928-230255 (sha 7330d7fb), commit b79dfd38 notarized.",
+   "refs": "reviews/gate_20260928-225921.md (BLOCK) + gate_20260928-230255.md (CLEAR); cover()/spine() cut Sub construction; output/01_sheet1_front_cover_spine.svg CUT group"
   }
  ]
 }
