@@ -2699,6 +2699,17 @@
    "author_initially": "no - accepted immediately; inner-first belongs in the file, not in a slicer default",
    "resolution": "cover() and spine() now emit all hole ellipses first and the outer rectangle last inside each cut path. Verified on the emitted SVGs: every cut path's first M-subpath is a 40-point hole ellipse, the 4-corner rectangle is the final subpath (cover 7 subpaths, spine 13). CLEAR gate_20260928-230255 (sha 7330d7fb), commit b79dfd38 notarized.",
    "refs": "reviews/gate_20260928-225921.md (BLOCK) + gate_20260928-230255.md (CLEAR); cover()/spine() cut Sub construction; output/01_sheet1_front_cover_spine.svg CUT group"
-  }
+  },
+{
+ "id": "EV-168-DOCKET-PROVENANCE-EXACTNESS",
+ "date": "2026-09-28",
+ "repo": "colibri-code-review",
+ "layer": "gate BLOCKs gate_20260928-230706 / 230754 / 230952 on the docket commit itself (same session as EV-163..167)",
+ "severity": "low (record-keeping defects in evidence rows, not code)",
+ "caught": "The EV-163..167 rows as first written failed the standard they document: EV-167 cited a PLACEHOLDER gate id (an 'xx-masked' timestamp) instead of the real record, and EV-163's phrasing ('first attempt at Nexusmill b79dfd38') blurred staged attempts with the landed commit - the reviewer correctly noted a commit's bytes cannot change after CLEAR. Two adjacent process defects surfaced in the same rounds: a Bash chain ran the git commit even after a python assert had failed (newline chaining instead of AND-chaining), and an accidental git argument that would have re-pointed the hook path was denied pre-execution by the guard that protects it - that guard did its job (and this very row had to be reworded to describe that fragment rather than quote it, because quoting the trigger string denies the whole chain).",
+ "author_initially": "no - every wording catch was real; the provenance bar applies to the docket's own rows first",
+ "resolution": "Real ids substituted (BLOCK gate_20260928-225921, CLEAR gate_20260928-230255 sha 7330d7fb), staging-vs-commit wording corrected, JSON parse + placeholder grep verified before re-commit; landed as colibri 93a7c3c. Lessons banked: never cite an unverified timestamp - read the clearance record; AND-chain commits so a failed producer aborts the pipeline; describe forbidden-command patterns, never quote them.",
+ "refs": "reviews/gate_20260928-230706.md, gate_20260928-230754.md, gate_20260928-230952.md; gate_evidence.json EV-163..167"
+}
  ]
 }
