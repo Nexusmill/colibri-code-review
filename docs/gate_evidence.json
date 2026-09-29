@@ -2732,6 +2732,22 @@
    "author_initially": "no - reproduced by reading the saved files (no dpi key in PNG info) before the fix",
    "resolution": "make_transparent.py now reads img.info['dpi'], validates it, rounds to 0.1, and passes it to save(); all three masters regenerated and Pillow-verified (546.5 -> 152.40 x 234.99 mm; 595.0 -> 25.40 x 234.96 mm). The spine raw joined the other pre-crop raws in gitignored junk/. Landed as Nexusmill 1daa2cb3 with cover_front2/back/spine transparent masters, make_transparent.py (Otsu alpha ramp, coverage warnings, hardened CLI), and fetch_ai_art.py --which spine (9:16 + central-column prompt + brightness-centroid strip extraction).",
    "refs": "reviews/gate_20260929-015411.md (adjudicated fixed); laser/make_transparent.py; media/laser/*_transparent.png"
+  },
+  {
+   "id": "EV-171",
+   "date": "2026-09-29",
+   "repo": "Nexusmill",
+   "gate_review": "gate_20260929-035640",
+   "model": "openai/gpt-6-luna-pro",
+   "files": [
+    "laser/fetch_ai_art.py"
+   ],
+   "findings": [
+    "P2: --refine spine looked for junk/laser_debug/cover_spine.png while generation writes the raw to output/ai - fresh-run refine always exited 'source not found'",
+    "P2: refine branch wrote cover_<key>_refined.png before os.makedirs(OUT_DIR) - FileNotFoundError AFTER the paid prediction when the dir was missing"
+   ],
+   "remediation": "refine_src(key) helper (OUT_DIR primary, junk fallback for moved raws; covers keep exact-dir masters) + os.makedirs(OUT_DIR) moved BEFORE upload; verdict-named battery laser/test_fetch_refine.py (5 tests), RED proven on staged pre-fix bytes (5 failed) then GREEN",
+   "class": "path-mismatch + post-spend crash ordering"
   }
  ]
 }
