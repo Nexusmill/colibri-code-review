@@ -2763,6 +2763,23 @@
    ],
    "remediation": "morphological open demoted to opt-in (default 0); new default cleanup = component-area despeckle (scipy.ndimage.label + bincount, --despeckle 5): only connected blobs < 5 px dropped; any feature of at least 5 px extent survives (a 1-px-wide line survives iff it is >= 5 px long). AMENDED 2026-09-29 after colibri gate catch gate_20260929-041014: the original row claimed '1-px lines of any length survive' - false for lines shorter than 5 px; corrected in docket + make_transparent.py docstring/help + test battery + README + AGENT_STATE, and turned into an assertion (test_gate_r2_despeckle_boundary_is_area_not_length: 1x3 drops, 1x5 keeps). Masters rebuilt earlier remain correct: opaque 33.5/26.9/32.6%, semi 0.000%.",
    "class": "detail-destroying default (kernel-width erosion vs component-area intent)"
+  },
+  {
+   "id": "EV-173",
+   "date": "2026-09-29",
+   "repo": "Nexusmill",
+   "gate_review": "gate (jewelry-box first commit attempt), response 12d90f33",
+   "model": "openai/gpt-6-luna-pro",
+   "files": [
+    "laser/generate_jewelry_box.py"
+   ],
+   "findings": [
+    "HIGH: strip_with_slots notched BOTH edges to the same midline - slots ran the full strip height, severing every kumiko strip",
+    "HIGH: tray ledge ring hardcoded at the topmost carcase ring - the 15mm lattice collided with the lid (lid closes on the rim)",
+    "MEDIUM: --length 10 --width 10 passed validation but produced a zero-area ledge-ring hole"
+   ],
+   "remediation": "strip_with_slots(side) - one edge only, long=top/cross=bottom egg-crate; --tray-depth param (default 15mm = strip height) with guards (depth >= STRIP_H or lid cannot close; depth <= height-wall; footprint keeps both ledge holes >= 10mm); verdict-named battery tests (H1 single-edge + simple-polygon, H2 ledge-depth + CLI guards, M3 tiny footprint), RED on staged pre-fix bytes (3 gate tests + 1 more failed), GREEN post-fix. The battery then caught a bug IN the fix itself: bottom-edge traversal emitted notch vertices unmirrored, self-crossing the outline - fixed by mirroring vertex order per traversal direction (assertion did its job).",
+   "class": "geometry-severing joint + assembly collision + degenerate-input hole"
   }
  ]
 }
