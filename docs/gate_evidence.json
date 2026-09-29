@@ -2700,16 +2700,27 @@
    "resolution": "cover() and spine() now emit all hole ellipses first and the outer rectangle last inside each cut path. Verified on the emitted SVGs: every cut path's first M-subpath is a 40-point hole ellipse, the 4-corner rectangle is the final subpath (cover 7 subpaths, spine 13). CLEAR gate_20260928-230255 (sha 7330d7fb), commit b79dfd38 notarized.",
    "refs": "reviews/gate_20260928-225921.md (BLOCK) + gate_20260928-230255.md (CLEAR); cover()/spine() cut Sub construction; output/01_sheet1_front_cover_spine.svg CUT group"
   },
-{
- "id": "EV-168-DOCKET-PROVENANCE-EXACTNESS",
- "date": "2026-09-28",
- "repo": "colibri-code-review",
- "layer": "gate BLOCKs gate_20260928-230706 / 230754 / 230952 on the docket commit itself (same session as EV-163..167)",
- "severity": "low (record-keeping defects in evidence rows, not code)",
- "caught": "The EV-163..167 rows as first written failed the standard they document: EV-167 cited a PLACEHOLDER gate id (an 'xx-masked' timestamp) instead of the real record, and EV-163's phrasing ('first attempt at Nexusmill b79dfd38') blurred staged attempts with the landed commit - the reviewer correctly noted a commit's bytes cannot change after CLEAR. Two adjacent process defects surfaced in the same rounds: a Bash chain ran the git commit even after a python assert had failed (newline chaining instead of AND-chaining), and an accidental git argument that would have re-pointed the hook path was denied pre-execution by the guard that protects it - that guard did its job (and this very row had to be reworded to describe that fragment rather than quote it, because quoting the trigger string denies the whole chain).",
- "author_initially": "no - every wording catch was real; the provenance bar applies to the docket's own rows first",
- "resolution": "Real ids substituted (BLOCK gate_20260928-225921, CLEAR gate_20260928-230255 sha 7330d7fb), staging-vs-commit wording corrected, JSON parse + placeholder grep verified before re-commit; landed as colibri 93a7c3c. Lessons banked: never cite an unverified timestamp - read the clearance record; AND-chain commits so a failed producer aborts the pipeline; describe forbidden-command patterns, never quote them.",
- "refs": "reviews/gate_20260928-230706.md, gate_20260928-230754.md, gate_20260928-230952.md; gate_evidence.json EV-163..167"
-}
+  {
+   "id": "EV-168-DOCKET-PROVENANCE-EXACTNESS",
+   "date": "2026-09-28",
+   "repo": "colibri-code-review",
+   "layer": "gate BLOCKs gate_20260928-230706 / 230754 / 230952 on the docket commit itself (same session as EV-163..167)",
+   "severity": "low (record-keeping defects in evidence rows, not code)",
+   "caught": "The EV-163..167 rows as first written failed the standard they document: EV-167 cited a PLACEHOLDER gate id (an 'xx-masked' timestamp) instead of the real record, and EV-163's phrasing ('first attempt at Nexusmill b79dfd38') blurred staged attempts with the landed commit - the reviewer correctly noted a commit's bytes cannot change after CLEAR. Two adjacent process defects surfaced in the same rounds: a Bash chain ran the git commit even after a python assert had failed (newline chaining instead of AND-chaining), and an accidental git argument that would have re-pointed the hook path was denied pre-execution by the guard that protects it - that guard did its job (and this very row had to be reworded to describe that fragment rather than quote it, because quoting the trigger string denies the whole chain).",
+   "author_initially": "no - every wording catch was real; the provenance bar applies to the docket's own rows first",
+   "resolution": "Real ids substituted (BLOCK gate_20260928-225921, CLEAR gate_20260928-230255 sha 7330d7fb), staging-vs-commit wording corrected, JSON parse + placeholder grep verified before re-commit; landed as colibri 93a7c3c. Lessons banked: never cite an unverified timestamp - read the clearance record; AND-chain commits so a failed producer aborts the pipeline; describe forbidden-command patterns, never quote them.",
+   "refs": "reviews/gate_20260928-230706.md, gate_20260928-230754.md, gate_20260928-230952.md; gate_evidence.json EV-163..167"
+  },
+  {
+   "id": "EV-169-RASTER-PIPELINE-EXACTNESS",
+   "date": "2026-09-29",
+   "repo": "Nexusmill",
+   "layer": "gate BLOCKs gate_20260929-011453 / 011158 / 010938 / 010648 on the nano-banana-pro cover-art tranche; CLEAR on Nexusmill 71b7bc55",
+   "severity": "medium (documentation/arithmetic defects that would mislead future engraving work, plus a blocked oversized-asset commit)",
+   "caught": "Three defects in laser/fetch_ai_art.py across successive reviews: (1) the docstring and README claimed the 2:3-to-cover crop trims top/bottom, but h/w 1.5 -> 1.5419 mathematically forces a WIDTH crop (3392->3279 px measured) - the code was right and its own branch comment ('should not happen at 2:3') was wrong; (2) after correcting direction I stated the trim as ~1.3 mm per side - double-halved arithmetic; the true figure is 113 px x (152.4 mm / 3279 px) = 2.6 mm per side, so the margin guidance under-advised prompt tuning; (3) the size report printed cropped[0] * COVER_W_MM / cropped[0] - a constant expression that always claimed 152.4 mm - and the PNG carried no DPI metadata, so no physical size was actually established. A fourth catch was the LARGE guard refusing three ~30 MB 4K PNGs outside the repo's asset dirs. Meta-catch during this row's own landing: a hand-spliced marker appended the row AFTER the entries array closed, corrupting the JSON - recovered via raw_decode and re-appended; string-splicing structured JSON is retired in favor of decode-append-encode.",
+   "author_initially": "no - all catches reproduced or recomputed at the bytes before each fix; the arithmetic one corrected a number I had just written",
+   "resolution": "Crop direction documented as left/right with the branch comment fixed; arithmetic corrected to 2.6 mm/side with prompt margin guidance raised to > 3 mm (ai_prompts.json hardened to 'roughly 4 mm wide' margins); size report now prints measured pixels + computed dpi, and the exact PNGs are stamped with that dpi (546.5 -> 152.4 x 234.99 mm, Pillow-verified); the 4K deliverables moved to media/laser/ (asset dir) with README/AGENT_STATE paths repointed and the pipeline writing there by default. Raw pre-crop intermediates stay in gitignored junk.",
+   "refs": "reviews/gate_20260929-011453.md, 011158, 010938, 010648; laser/fetch_ai_art.py crop_exact(); media/laser/*_exact.png"
+  }
  ]
 }
