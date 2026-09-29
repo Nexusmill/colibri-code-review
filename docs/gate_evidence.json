@@ -2748,6 +2748,21 @@
    ],
    "remediation": "refine_src(key) helper (OUT_DIR primary, junk fallback for moved raws; covers keep exact-dir masters) + os.makedirs(OUT_DIR) moved BEFORE upload; verdict-named battery laser/test_fetch_refine.py (5 tests), RED proven on staged pre-fix bytes (5 failed) then GREEN",
    "class": "path-mismatch + post-spend crash ordering"
+  },
+  {
+   "id": "EV-172",
+   "date": "2026-09-29",
+   "repo": "Nexusmill",
+   "gate_review": "gate_20260929-035640 (round 2, response aabddb3c)",
+   "model": "openai/gpt-6-luna-pro",
+   "files": [
+    "laser/make_transparent.py"
+   ],
+   "findings": [
+    "MEDIUM: default --open 2 (5x5 erode->dilate) removed gold features narrower than five px - fine tooling lines and powder dots - not just isolated speckle; default transparent master could lose engraving detail"
+   ],
+   "remediation": "morphological open demoted to opt-in (default 0); new default cleanup = component-area despeckle (scipy.ndimage.label + bincount, --despeckle 5): only connected blobs < 5 px dropped; any feature of at least 5 px extent survives (a 1-px-wide line survives iff it is >= 5 px long). AMENDED 2026-09-29 after colibri gate catch gate_20260929-041014: the original row claimed '1-px lines of any length survive' - false for lines shorter than 5 px; corrected in docket + make_transparent.py docstring/help + test battery + README + AGENT_STATE, and turned into an assertion (test_gate_r2_despeckle_boundary_is_area_not_length: 1x3 drops, 1x5 keeps). Masters rebuilt earlier remain correct: opaque 33.5/26.9/32.6%, semi 0.000%.",
+   "class": "detail-destroying default (kernel-width erosion vs component-area intent)"
   }
  ]
 }
