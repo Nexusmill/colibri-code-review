@@ -292,3 +292,14 @@ was dropped because the quote came from the jCodemunch index cache, not the file
 code was right; the "verbatim" quote was not. Lesson banked (G36-adjacent): byte-exact
 quotes used as review evidence are re-read from the live file at dispatch time. An index
 cache is not a source of record.
+
+## 2026-09-30 Replay cap-fix saga (EV-178)
+
+**EV-178 (Tools, 2026-09-30)** — kimi-k2.7-code went 3-for-3 on REAL measurement-integrity
+defects in `replay_local.py` (landing `6fe0161`): byte-identical no-op "buggy" rounds
+deflating the catch rate; never-sent pseudo-rows polluting rounds/malformed-rate/median;
+and the author's first fix counting the skip bucket after filtering it (caught by the
+author's own battery before review). All adopted with pinning rows. Fleet signal: kimi
+clean single-verdict formats throughout, while coder-next rolls on the same payloads
+produced one degenerate repetition loop and two duplicate-verdict markers — live evidence
+for kimi as the rebuttal tier.

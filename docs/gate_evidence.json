@@ -2880,6 +2880,20 @@
     "G36 review-freshness canon",
     "adversary-gate/adversary_gate.py:905-907 (live disk bytes, re-read at dispatch)"
    ]
+  },
+  {
+   "id": "EV-178",
+   "date": "2026-09-30",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (kimi-k2.7-code rounds on the replay cap fix, landing Tools 6fe0161)",
+   "caught": "Three REAL measurement-integrity defects in replay_local.py, all adopted: (1) a no-op mutation (nothing mutable survives the 30k cap, or the diff never had a mutable line) made the 'buggy' round byte-identical to clean - a CLEAR on it deflated the catch rate the owner's local-first decision depends on; (2) follow-through: nomutation pseudo-rows (wall_s=0.0, never sent) were aggregated into rounds, the malformed-rate denominator, and the latency median; (3) the author's first fix for (2) counted nomutation AFTER filtering it (nomutation_skipped always 0) - caught by the author's own battery row failing 15/16 before any reviewer saw it.",
+   "severity": "MEDIUM (data integrity of the decision metric)",
+   "author_initially": "assumed every diff had a mutable added line; assumed the skip bucket was excluded from aggregation",
+   "resolution": "Buggy rounds with no mutation are skipped and recorded outcome=nomutation (never sent); report() counts nomutation BEFORE filtering and aggregates only SENT rows; battery row report_nomutation_excluded_from_catch_denominator pins rounds==6/median==40/nomutation_skipped==1. Fleet signal from the same saga: kimi-k2.7-code went 3-for-3 on real catches (plus a clean single-verdict CLEAR on the docket commit) while qwen3-coder-next rolls produced one degenerate self-arguing repetition loop to token exhaustion and two duplicate-verdict-marker formats on rebuttal-style payloads - live evidence for kimi as the rebuttal tier.",
+   "refs": [
+    "Tools 6fe0161",
+    "gate artifacts gate_20260930-094129/095517.md"
+   ]
   }
  ]
 }
