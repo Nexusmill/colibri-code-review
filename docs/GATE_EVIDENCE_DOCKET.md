@@ -303,3 +303,15 @@ author's own battery before review). All adopted with pinning rows. Fleet signal
 clean single-verdict formats throughout, while coder-next rolls on the same payloads
 produced one degenerate repetition loop and two duplicate-verdict markers — live evidence
 for kimi as the rebuttal tier.
+
+## 2026-09-30 Chain-reorder saga (EV-178)
+
+**EV-178 (Tools, 2026-09-30)** — two BLOCK rounds on the reliability-tilted chain
+reorder (`019b890`). r1 alleged the bare-ladder/pinned-chain split was newly introduced
+(disproven: documented design, prior ladder equally bare, parity row strips pins by
+intent). r2 was a new failure class: a SELF-REFUTING BLOCK — the artifact's body
+concluded "The finding is wrong. The change is correct." and still emitted
+`VERDICT: BLOCK`. Kernel adopted: ladder comments now say "endpoint pins live in
+DEFAULT_CHAIN" instead of "(reliability-pinned)" on bare entries. Lesson: when the body
+agrees with the rebuttal but the verdict line contradicts it, address any surviving
+kernel and re-run with an addendum — never argue the verdict line.
