@@ -2850,6 +2850,36 @@
     "Nexusmill .adversary/reviews/gate_20260930-054148.md",
     "Nexusmill commit d1f74dd6"
    ]
+  },
+  {
+   "id": "EV-176",
+   "date": "2026-09-30",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (rounds 1-3 of the 5-round saga on replay_local.py landing Tools 5a9a30d; round 4's catch is EV-177; round 5 = CLEAR)",
+   "caught": "r1: reviewer asserted _call_model does not exist and proposed calling _call_local directly - the fix would 404 (double-handling the local: prefix; _call_one_model strips it before _call_local). r2: reviewer asserted the invert_guard mutation 'corrupts diffs by inserting + mid-line' - disproven by a 5-case execution transcript (line-start anchor, indentation preserved, already-negated guards skipped, context lines never touched). r3: reviewer fabricated citations - quoted 'def _call_model(entry, payload, timeout=900)' and a 'model = entry[\"model\"]' line that do not exist in the file (dict-entry API hallucinated against an UNSTAGED module the payload cannot contain). Root cause across all three: the reviewer audits calls into adversary_gate.py it cannot see and invents its API.",
+   "severity": "HIGH (claimed) / none (actual)",
+   "author_initially": "code correct; quotes accurate",
+   "resolution": "All three rebutted via --context with byte-level evidence; round 5 CLEAR. Fair kernels ADDRESSED as new battery rows: run_round end-to-end behind a fake transport (2 rows) and invert_guard coverage (2 rows) - replay_selftest 12/12. Process fix for the root cause: run_round's docstring now documents the verbatim upstream contract so reviewers of future diffs see the API in the staged bytes. Mitigation for reviewers: when a call target is unstaged, treat --context verbatim quotes as ground truth and do not fabricate the hidden signature. (Amended in place 2026-09-30 after the gate reviewed this docket commit itself: layer now names the full 5-round arc and cross-references EV-177.)",
+   "refs": [
+    "Tools 5a9a30d",
+    "gate artifacts gate_20260930-083200/083430/083654.md"
+   ]
+  },
+  {
+   "id": "EV-177",
+   "date": "2026-09-30",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (round 4, replay_local.py landing 5a9a30d)",
+   "caught": "The reviewer caught a REAL defect - in the AUTHOR'S EVIDENCE, not the code: the round-4 rebuttal context quoted _call_model's return as a bare passthrough of _call_model_ex's 4-tuple, while run_round 3-unpacks it. The live file reads 'return _call_model_ex(model, user_content, timeout, attempts=attempts)[:3]' - the [:3] slice was dropped because the quote came from the jCodemunch INDEX CACHE, not the file. Code was correct; the author's 'verbatim' quote was not.",
+   "severity": "MEDIUM (evidence integrity)",
+   "author_initially": "believed the quote was verbatim from source",
+   "resolution": "Round-5 context quoted the disk bytes (lines 905-907) and owned the quote error; CLEAR. LESSON (G36-adjacent, now banked): verbatim source quotes used as review/rebuttal evidence MUST be re-read from the live file at dispatch time - an index cache is not a source of record for byte-exact claims. adversary_gate.py re-indexed after the discrepancy was found. (Amended in place 2026-09-30: refs now carry the commit link and the line-anchored source of the [:3] quote.)",
+   "refs": [
+    "Tools 5a9a30d",
+    "gate artifact gate_20260930-083918.md",
+    "G36 review-freshness canon",
+    "adversary-gate/adversary_gate.py:905-907 (live disk bytes, re-read at dispatch)"
+   ]
   }
  ]
 }

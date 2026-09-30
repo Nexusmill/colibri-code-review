@@ -270,3 +270,25 @@ test_two_drawer_config_builds ran the generator CLI without --outdir,
 so every full-suite run silently overwrote the committed 3-drawer
 map/SVGs with a 2-drawer layout - the .lac work surfaced it as
 mysterious map drift. Suite 77 -> 95, all verdict-named.
+
+## 2026-09-30 Local-rung replay harness landing (EV-176, EV-177)
+
+**EV-176 (Tools, 2026-09-30)** — three BLOCK rounds on `replay_local.py` (landing
+`5a9a30d`) alleged: `_call_model` does not exist (with a proposed fix that would have
+404'd on double prefix-handling), an `invert_guard` regex that "corrupts diffs", and a
+dict-entry API cited to lines that do not exist in the file. All three disproven with
+byte-level evidence (5-case execution transcript for the regex; live round-trip for the
+call path); root cause: the reviewer audits calls into UNSTAGED `adversary_gate.py` and
+invents its API. Kernels adopted: four new battery rows (run_round end-to-end behind a
+fake transport; invert_guard coverage) and the upstream contract now documented in the
+staged docstring. Mitigation for reviewers: when the call target is unstaged, treat
+`--context` verbatim quotes as ground truth; never fabricate the hidden signature.
+
+**EV-177 (Tools, 2026-09-30)** — the strongest row of the saga: round 4 caught a REAL
+defect in the AUTHOR'S REBUTTAL EVIDENCE. The round-4 context quoted `_call_model` as a
+bare 4-tuple passthrough while the code 3-unpacks it; the live file reads
+`return _call_model_ex(model, user_content, timeout, attempts=attempts)[:3]` — the slice
+was dropped because the quote came from the jCodemunch index cache, not the file. The
+code was right; the "verbatim" quote was not. Lesson banked (G36-adjacent): byte-exact
+quotes used as review evidence are re-read from the live file at dispatch time. An index
+cache is not a source of record.
