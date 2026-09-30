@@ -1,0 +1,24 @@
+{
+ "type": "CLEAR",
+ "commit": "1cbb379a87eae0d03f8a7cffbc9863bd87c878b6",
+ "caller": "zcode",
+ "when": "20260930-092038",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "612d980130d7704bdec0ca8a3f752124d17d3beb462837920c6872a178c1eebd",
+   "model": "moonshotai/kimi-k2.7-code",
+   "when": "20260930-092034",
+   "artifact": ".adversary\\reviews\\gate_20260930-092034.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20260930-092034.md": "model: moonshotai/kimi-k2.7-code | provider: Inceptron | usage: {'prompt_tokens': 1788, 'completion_tokens': 28476, 'total_tokens': 30264, 'cost': 0.0965947056, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0965947056, 'upstream_inference_prompt_cost': 0.0012001056, 'upstream_inference_completions_cost': 0.0953946}, 'completion_tokens_details': {'reasoning_tokens': 30220, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\n VERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260930-091120.md",
+  "outcomes": {
+   "fixed": 1
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
