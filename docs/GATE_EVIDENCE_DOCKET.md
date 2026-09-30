@@ -242,3 +242,31 @@ EV-155 (fleet, 2026-09-27) records the 22-round arc behind the owner's live Draf
 - **EV-167 (inner-first cut order in the file):** gate_20260928-225921 (BLOCK) -> gate_20260928-230255 (CLEAR, sha 7330d7fb). Every red cut path emitted the outer rectangle BEFORE its lace holes; Bambu Studio's Inner Shape First defaults on, but the FILE ordered outer-first, so any subpath-order-honoring tool releases the piece before its holes are cut. cover() and spine() now emit all hole ellipses first, rectangle last - verified on the emitted SVGs (cover cut path = 7 M-subpaths, holes first, 3-L rect last). Notarized on Nexusmill b79dfd38.
 
 All five rounds: same file, one landing commit (Nexusmill b79dfd38), every finding reproduced RED before its fix and every fix regression-batteried (10 adversarial inputs exit 2, default + variants exit 0). The saga is a clean demonstration of the input-space guard-class: four of five catches were parameter combinations no single check covered.
+
+## 2026-09-30 .lac packager tranche (EV-175)
+
+**EV-175 (Nexusmill, 2026-09-30)** records the 21-round arc behind the
+Bambu .lac packager commit d1f74dd6 (media/laser/chest.lac - the owner-
+ordered deliverable): a broken path anchor from the junk->laser source
+move; the fa.generate (url, metrics) contract violated twice (heightmap
+branch, then the --look branch the round after); rotated-part rasters
+axis-aligned (transposed art on assembled faces) and bbox rasters
+burning wood the cut removes (now masked even-odd to the part outline);
+the input-space family (px_per_mm 0/neg/inf/overflow -> band [1,32],
+NaN map coordinates -> load-time refusal); the truth-in-the-map family
+(duplicate rows, truncated maps, swapped art assignments - all now
+refused against the generator's mirrored part->art mapping); and the
+doc-drift family (the plan sheet's corner detail redrawn twice - the
+crossed-slot fiction, then parallel strips - before the true
+perpendicular L; budget arithmetic 3-vs-4 sheets). Round 20 is the
+transport-artifact lesson: the payload masker rewrites dotted-quad
+version strings as IP literals, so the FileVersion rebuttal could never
+stick across dispatches - resolved by building the value at runtime from
+parts, bytes identical. The commit-time large-file guard also forced the
+7.7 MB .lac out of laser/output/ into media/ without touching
+--no-verify. Same session, systematic-debugging (read-only-file probe)
+caught a pre-existing battery bug outside the gate's sight:
+test_two_drawer_config_builds ran the generator CLI without --outdir,
+so every full-suite run silently overwrote the committed 3-drawer
+map/SVGs with a 2-drawer layout - the .lac work surfaced it as
+mysterious map drift. Suite 77 -> 95, all verdict-named.

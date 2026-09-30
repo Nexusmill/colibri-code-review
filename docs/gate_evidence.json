@@ -2815,6 +2815,60 @@
    ],
    "remediation": "Landed 9284305a: rail-frame front with proud drawer fronts + finger recess; full-shelf dividers (post-to-post length x wall-to-wall depth) on side-wall cleats; notched-corner bottom; L-bracket corner posts; drawer back/base sized at the thick stock end; engraving map covers every face incl. pulled-open drawer interiors; sheet-relative wood %; derived-part floors and caps. Battery laser/test_drawer_chest.py 77 green incl. verdict-named tests per round.",
    "class": "casework geometry for laser (frame openings, shelf spans, post overlap) + claim-vs-part truth"
+  },
+  {
+   "id": "EV-175",
+   "date": "2026-09-30",
+   "repo": "Nexusmill",
+   "gate_review": "22 review artifacts (Nexusmill .adversary/reviews/gate_20260930-041515..054148), commit d1f74dd6",
+   "model": "openai/gpt-6-luna-pro",
+   "files": [
+    "laser/make_lac.py",
+    "laser/test_make_lac.py",
+    "laser/make_chest_art.py",
+    "laser/jb_carve.py",
+    "laser/jb3_plan.py",
+    "laser/test_drawer_chest.py"
+   ],
+   "findings": [
+    "HIGH: jb_carve.py NEXUS anchor broke in the junk->laser move (outputs would land ABOVE the repo); HIGH: make_chest_art treated fa.generate's (url, metrics) tuple as image bytes - fixed in the heightmap branch, then round 2 caught the SAME contract bug still live in the --look branch",
+    "MEDIUM: rasters on ROTATED parts were axis-aligned (art would read transposed on the assembled face) - rasters now carry the cut object's rotation affine and are resampled to the part's LOCAL size; MEDIUM: bbox rasters engraved wood the cut removes - heightmaps now masked even-odd to the part's own outline",
+    "Input-space family: px_per_mm 0/neg silently 1-px rasters, then inf/512 overflow (final band [1,32] with the 0.1mm scanning-interval rationale); NaN map coordinates compare False against every drift bound - refused at load",
+    "Truth-in-the-map family: duplicate map rows (double burn), truncated maps shipping missing engravings, and a swapped art-to-part assignment all passed placement checks - build now enforces the generator's full part->art mapping (mirrored + lockstep-tested)",
+    "Doc-drift family: the pre-approval plan sheet still drew the crossed-slotted corner the chest saga had proven impossible AND a first redraw drew parallel strips - final panel draws the true perpendicular L (A 12x3, B 3x8.5 butting A); budget rows said 3 sheets (packer needs 4) and '3 untouched' (2-3 of the 6-7 pack)",
+    "Round-20: reviewer BLOCKed claiming staged bytes still had the old DEFAULT_OUT - staged blob proved the media/laser path was already in (stale-payload read), rebuttal upheld; the commit-time large-file guard had already forced the .lac from laser/output/ to media/laser/ WITHOUT --no-verify",
+    "TRANSPORT ARTIFACT (2nd documented case): the review payload masker rewrites the dotted-quad FileVersion 01.05.00.00 to a placeholder because it pattern-matches IPv4 - rebuttal could never stick since every dispatch re-masks; resolved the sanctioned way, the version is now built at runtime from parts ('.'.join) keeping emitted bytes identical"
+   ],
+   "remediation": "All findings fixed or factually rebutted with staged-blob evidence; verdict-named tests added (suite 77 -> 95): rotation-parity, raster clip, duplicate/missing/swapped/nan map refusals, px-per-mm band, coverage lockstep. Landing commit d1f74dd6 (CLEAR, notarized). Separately, systematic-debugging (read-only-file probe) caught a PRE-EXISTING battery bug: test_two_drawer_config_builds ran the CLI without --outdir, silently clobbering the committed 3-drawer map/SVGs with a 2-drawer layout on every suite run - all run_cli calls now carry --outdir and a verdict test enforces it source-wise.",
+   "class": "contract-drift between mirrored sources; input-space guards; transport-artifact rebuttal limits",
+   "layer": "gate-review BLOCK (20 rounds) + commit-time large-file guard + harness G-BUGROUTE/G-COMMIT skill gates",
+   "severity": "2 HIGH (path anchor, generate-contract), 8 MEDIUM (rotation, clip, guards, coverage, docs), 3 LOW; landing round CLEAR",
+   "author_initially": "round-3 FileVersion disputed as the IP-masker transport artifact (upheld; resolved by runtime-joined value); round-20 stale-payload DEFAULT_OUT claim disputed with staged-blob proof (upheld); all other findings accepted and fixed without dispute",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260930-041515.md",
+    "Nexusmill .adversary/reviews/gate_20260930-042106.md",
+    "Nexusmill .adversary/reviews/gate_20260930-042334.md",
+    "Nexusmill .adversary/reviews/gate_20260930-042741.md",
+    "Nexusmill .adversary/reviews/gate_20260930-045133.md",
+    "Nexusmill .adversary/reviews/gate_20260930-045507.md",
+    "Nexusmill .adversary/reviews/gate_20260930-045719.md",
+    "Nexusmill .adversary/reviews/gate_20260930-050006.md",
+    "Nexusmill .adversary/reviews/gate_20260930-050228.md",
+    "Nexusmill .adversary/reviews/gate_20260930-050532.md",
+    "Nexusmill .adversary/reviews/gate_20260930-050826.md",
+    "Nexusmill .adversary/reviews/gate_20260930-051107.md",
+    "Nexusmill .adversary/reviews/gate_20260930-051315.md",
+    "Nexusmill .adversary/reviews/gate_20260930-051555.md",
+    "Nexusmill .adversary/reviews/gate_20260930-051906.md",
+    "Nexusmill .adversary/reviews/gate_20260930-052216.md",
+    "Nexusmill .adversary/reviews/gate_20260930-052455.md",
+    "Nexusmill .adversary/reviews/gate_20260930-052750.md",
+    "Nexusmill .adversary/reviews/gate_20260930-053207.md",
+    "Nexusmill .adversary/reviews/gate_20260930-053744.md",
+    "Nexusmill .adversary/reviews/gate_20260930-053940.md",
+    "Nexusmill .adversary/reviews/gate_20260930-054148.md",
+    "Nexusmill commit d1f74dd6"
+   ]
   }
  ]
 }
