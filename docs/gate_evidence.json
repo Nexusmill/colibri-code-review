@@ -2959,9 +2959,10 @@
    "caught": "The perfection close-out docs commit (accel_bootstrap Stage E D2-zero + filmstrip STOP ruling) was BLOCKed on a REAL schema defect: the new docs/deferred_manifest.json row banking the three Stage-E hardening residuals omitted the `id` field. Every other live row carries one (verified: last-7 rows pre-fix all True, the new row the only False), so any id-keyed lookup/archive path over the manifest could not reference the record.",
    "severity": "process: schema convention broken by an agent-authored manifest append (docs file, not code)",
    "author_initially": "the agent (GLM-5.3) had appended the row via a json round-trip without first checking the file's per-row field convention - the same class the EV-158 docket-template-drift catch documented (match the target file's own row shape before appending), re-learned on the sibling manifest.",
-   "resolution": "Row re-keyed with id=PERFECTION-AB-E-RESIDUALS (round 1, same session), then refs converted to the sibling array-of-strings type (round 2 - the SAME commit caught twice, proving the first fix was made without re-reading sibling TYPES). Lesson upgraded: EVERY manifest append reads 2-3 sibling rows for field set AND field types (EV-158 covered formatting; EV-182 covers fields + types); commit re-dispatched and cleared.",
+   "resolution": "Three gate rounds on the same close-out: (1) row re-keyed with id=PERFECTION-AB-E-RESIDUALS; (2) the DOCKET row itself caught refs-as-string vs the sibling array type; (3) the deferred row's 'none reachable' rationale contradicted its own banked sleep trigger - rewritten to reachable-but-compound-low-probability with the honest ownership-token fix named. Lesson chain: manifest appends read sibling rows for field set AND types AND then re-audit the PROSE for internal contradiction - a deferral row is a claim, and the gate audits claims (EV-172's prose-arithmetic class, now in deferral rationales). All fixed same-session; commit cleared.",
    "refs": [
-    "gate_20261001-132428 (missing id) + gate_20261001-132813 (refs type)",
+    "gate_20261001-132428 (missing id) + gate_20261001-133745 (rationale self-contradiction), both Nexusmill",
+    "gate_20261001-132813 (refs type), colibri",
     "docs/deferred_manifest.json row PERFECTION-AB-E-RESIDUALS",
     "junk/perfection/accel_bootstrap/e_dispatches/ (Stage E outputs)",
     "AGENT_STATE 2026-10-01 perfection entries"
