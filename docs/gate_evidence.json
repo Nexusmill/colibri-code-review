@@ -2916,6 +2916,23 @@
     "Nexusmill commit 1e09c553 (art tranche, cleared by the new primary in 4 rounds)",
     "gate_20261001-042205/043509/044617/050722 (the new primary's art-tranche rounds)"
    ]
+  },
+  {
+   "id": "EV-180",
+   "date": "2026-10-01",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (1 round, 2 findings, both real)",
+   "caught": "The v3 chest assembly diagram tranche (jb_chest_assembly.py, owner order after the old diagram proved to document the retired v1 ring box) drew panel A's rails/back wall spanning between pw_a+pw_b = 145 mm and pitched the rails at bay_h alone (32). Verified against generator source before any edit: rails and back wall are cut at wall_len_L = L - 2*POST_W = 162 (generate_drawer_chest.py:127,150) - plate B sits on the SIDE faces and consumes no front-face length - and the generator declares pitch = bay_h + t = 35 with bay_h the CLEAR 32 mm opening (:134 comment, :286 pitch, :219 drawer_front_h = bay + rail - 1). The drawn 145 mm span and 32 mm pitch contradicted the diagram's own labels (162 x 3, pitch 35) and the generator's declared semantics.",
+   "severity": "documentation-defect class with real consequence: anyone using the diagram dimensionally would cut or align the rail frame 17 mm short and pitch the bays wrong",
+   "author_initially": "the drawing formulas were derived by feel from the dims dump (i*bay + rail_h from the wall top) instead of from the generator's declared pitch semantics - the reviewer's second finding explicitly noted the smoke tests only asserted strings, not geometry",
+   "resolution": "FIXED in Nexusmill 3b699fdb (round 2 CLEAR): panel A now presents only plate A at the front corners with rails/back wall at the true 162 span; rails stack at pitch 35 from a frame top one stock thickness above the wall top, filling the full H=108 (4 rails x 3 + 3 bays x 32 = H exactly); the proud drawer front reads +1 mm over each bounding rail (front_h = pitch - 1 = 34). NEW test_rail_geometry_matches_generator parses the DRAWN gold rail rects out of the SVG (both panels) and asserts count=4, the 162 mm span, and the 35 mm pitch against generator-derived values - the drawing's geometry is now tested, not just its strings. En route the geometry-audit loop also caught and fixed 2 more layout regressions introduced by the taller 108 mm frame (C footer re-crossing into panel F's column; a 1 mm front-offset error caught while correcting the pitch formula).",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261001-084607.md (the BLOCK, 2 findings)",
+    "Nexusmill laser/generate_drawer_chest.py:127 (wall_len_L = L - 2*POST_W), :150 (rails cut at wall_len_L), :134/:286 (pitch = bay + rail), :219 (drawer_front_h)",
+    "Nexusmill laser/jb_chest_assembly.py (panel A/C rail formulas; y_ft frame-top convention)",
+    "Nexusmill laser/test_chest_assembly.py test_rail_geometry_matches_generator (SVG-parsed rail geometry)",
+    "Nexusmill commit 3b699fdb (diagram tranche, round-2 CLEAR, suite 106/106)"
+   ]
   }
  ]
 }
