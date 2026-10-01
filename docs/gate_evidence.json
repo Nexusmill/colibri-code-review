@@ -2950,6 +2950,22 @@
     "colibri EV-179 (the CODE_EXTS blind spot's first documented fabrications)",
     "Tools/adversary-gate/adversary_gate.py CODE_EXTS + gate_selftest.py:65 (the pinned .txt-not-code policy awaiting the owner ruling)"
    ]
+  },
+  {
+   "id": "EV-182",
+   "date": "2026-10-01",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (1 finding, deepseek-v4-pro-0813@baidu, round gate_20261001-132428)",
+   "caught": "The perfection close-out docs commit (accel_bootstrap Stage E D2-zero + filmstrip STOP ruling) was BLOCKed on a REAL schema defect: the new docs/deferred_manifest.json row banking the three Stage-E hardening residuals omitted the `id` field. Every other live row carries one (verified: last-7 rows pre-fix all True, the new row the only False), so any id-keyed lookup/archive path over the manifest could not reference the record.",
+   "severity": "process: schema convention broken by an agent-authored manifest append (docs file, not code)",
+   "author_initially": "the agent (GLM-5.3) had appended the row via a json round-trip without first checking the file's per-row field convention - the same class the EV-158 docket-template-drift catch documented (match the target file's own row shape before appending), re-learned on the sibling manifest.",
+   "resolution": "Row re-keyed with id=PERFECTION-AB-E-RESIDUALS (round 1, same session), then refs converted to the sibling array-of-strings type (round 2 - the SAME commit caught twice, proving the first fix was made without re-reading sibling TYPES). Lesson upgraded: EVERY manifest append reads 2-3 sibling rows for field set AND field types (EV-158 covered formatting; EV-182 covers fields + types); commit re-dispatched and cleared.",
+   "refs": [
+    "gate_20261001-132428 (missing id) + gate_20261001-132813 (refs type)",
+    "docs/deferred_manifest.json row PERFECTION-AB-E-RESIDUALS",
+    "junk/perfection/accel_bootstrap/e_dispatches/ (Stage E outputs)",
+    "AGENT_STATE 2026-10-01 perfection entries"
+   ]
   }
  ]
 }
