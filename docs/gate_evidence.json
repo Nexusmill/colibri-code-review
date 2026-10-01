@@ -2933,6 +2933,23 @@
     "Nexusmill laser/test_chest_assembly.py test_rail_geometry_matches_generator (SVG-parsed rail geometry)",
     "Nexusmill commit 3b699fdb (diagram tranche, round-2 CLEAR, suite 106/106)"
    ]
+  },
+  {
+   "id": "EV-181",
+   "date": "2026-10-01",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (1 finding, false premise, rebutted with index bytes and UPHELD by the reviewer)",
+   "caught": "The 30%-rescale tranche (chest 130.2x88.2x75.6 for the owner's magnetic sheet hold-downs, --bed-margin 15mm, 57 parts on 2 sheets) was BLOCKed with one HIGH finding claiming the staged change 'does not include the regenerated chest_engraving_map.txt or the re-cropped media/laser/*.png art files', predicting the default .lac build and CI would break. The review payload's file list showed only the 7 .py files - the known CODE_EXTS blind spot: .txt and .png never enter review payloads, so the reviewer inferred the generated artifacts were missing.",
+   "severity": "process: a correct tranche blocked by the payload blind spot, not by any code defect",
+   "author_initially": "the agent had staged all 29 files (git add of laser/output/ and media/laser/ before _git_do); the driver log itself said staged count=29",
+   "resolution": "REBUTTED WITH INDEX BYTES and UPHELD (round-2 CLEAR, gate_20261001-111006): (1) git diff --cached --stat showed the map (56 lines changed) plus all 10 jb_chest_*.png with changed bytes and chest_sheet01/02.lac modified, 03/04 deleted; (2) git show :laser/output/chest_engraving_map.txt row 3 read 'jb_chest_top.png | top | sheet 01 | 15.0 | 15.0 | 130.2 | 88.2 | False' - the regenerated rescaled map at the 15 mm bed margin; (3) the full laser suite (106/106) includes the map/art invariant tests that read the committed files, impossible to pass with stale artifacts. The reviewer re-verified against the bytes and CLEARED; the adjudication was recorded rebutted-upheld and the tranche landed as Nexusmill 467f5b48. Third documented instance (after EV-179) of the CODE_EXTS blind spot generating a false finding about invisible-by-construction files - the owner ruling on widening the payload file set is still pending.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261001-103957.md (the BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261001-111006.md (the rebuttal CLEAR)",
+    "Nexusmill commit 467f5b48 (the rescale tranche: DESIGN_SCALE 0.7, --bed-margin, re-cropped art, 2-sheet lacs)",
+    "colibri EV-179 (the CODE_EXTS blind spot's first documented fabrications)",
+    "Tools/adversary-gate/adversary_gate.py CODE_EXTS + gate_selftest.py:65 (the pinned .txt-not-code policy awaiting the owner ruling)"
+   ]
   }
  ]
 }
