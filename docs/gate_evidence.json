@@ -2967,6 +2967,22 @@
     "junk/perfection/accel_bootstrap/e_dispatches/ (Stage E outputs)",
     "AGENT_STATE 2026-10-01 perfection entries"
    ]
+  },
+  {
+   "id": "EV-183",
+   "date": "2026-10-01",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (1 finding, deepseek-v4-pro-0813@baidu, round gate_20261001-160317)",
+   "caught": "The keyvault perfection-wave commit was BLOCKed on a REAL regression IN THE WAVE ITSELF: the new _list_entries filter `if n and n != \"[empty]\"` unconditionally dropped any legitimate entry NAMED '[empty]' (the vault stores arbitrary names; secret_set only forbids '/' and newlines) - such a key would vanish from unlock's cache, become unreadable and unupdatable (secret_set would take the add branch and fail).",
+   "severity": "process: remediation-introduced defect caught pre-commit (the G41 class the discipline exists for)",
+   "author_initially": "the agent's W3 filter treated keepassxc's '[empty]' marker as a name-blacklist instead of recognizing the marker is only ever the SOLE listing line (its own live probe had shown exactly out='[empty]\n' for an empty group).",
+   "resolution": "THREE-round saga on one filter: r1 caught the wave's unconditional '[empty]' name-blacklist (a real entry named [empty] vanished); the agent's r1 fix (filter only the sole-marker line) was itself BLOCKed by r2 - a vault whose ONLY entry is literally '[empty]' is indistinguishable from the marker in ls output. Final fix refuses to guess: the sole-marker case disambiguates with one direct `show` of that exact name (real entry answers its value; empty group errors). Battery rows W3a/W3a2/W3a3 pin all three behaviors. Lesson chain: display-format markers must be resolved by asking the source of truth, not by pattern-matching the display - and a first fix in this class deserves its own adversarial look BEFORE staging.",
+   "refs": [
+    "gate_20261001-160317 (r1: name-blacklist regression) + gate round 2 (r2: sole-entry ambiguity)",
+    "PatternSkin/keyvault.py _list_entries",
+    "tests/test_perfection_keyvault.py W3a/W3a2/W3a3",
+    "colibri record .colibri_reviews/PatternSkin__keyvault.py__bug__4bc56fc6.md"
+   ]
   }
  ]
 }
