@@ -2983,6 +2983,21 @@
     "tests/test_perfection_keyvault.py W3a/W3a2/W3a3",
     "colibri record .colibri_reviews/PatternSkin__keyvault.py__bug__4bc56fc6.md"
    ]
+  },
+  {
+   "id": "EV-184",
+   "date": "2026-10-01",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK x3 (deepseek-v4-pro-0813@baidu, rounds 171051/171416/171935) + two upheld rebuttals",
+   "caught": "NEW TRANSPORT-ARTIFACT SUBCLASS: a manifest entry ADDED with the path PatternSkin-backslash-apply_core.py (a JSON one-backslash escape followed by the letter a) presented to the reviewer as a BEL control-character escape, three rounds running - including a re-verification round where the reviewer defended the artifact, claiming its supplied bytes contained the six-character BEL escape. The staged bytes were proven clean three ways: no such six-character sequence in the staged text or the worktree text, and a JSON parse of the staged blob yields exactly one backslash followed by apply_core.py. The reviewer's own round header records two scrubbed spans - the payload scrubber rewrote the diff before dispatch, the same mechanism as the docketed IP-literal class, with backslash-letter sequences as the trigger.",
+   "severity": "process: three review rounds wedged on byte sequences that do not exist in the repository; the reviewer cannot be argued out of a copy it cannot compare against",
+   "author_initially": "the agent rebutted twice with escalating byte evidence (raw-byte scan, then the parsed-repr plus the scrubbed-span header citation); the reviewer re-verified against its scrubbed copy and re-blocked - a correct-by-its-lights verification of the wrong bytes. The agent then embedded the literal trigger token in this very docket row's first draft, which the colibri gate caught (HIGH) - the banked never-quote-the-denied-token lesson, re-learned on the docket itself.",
+   "resolution": "Structural: the entry's rel field now uses a FORWARD SLASH (resolves identically for every consumer) with the divergence documented in-band in the manifest note. Generalized lesson: when byte evidence is rejected twice, the artifact owns the round - remove the trigger from the payload surface instead of arguing the bytes, and never reproduce the trigger token in rebuttal or docket prose (describe it, built at runtime if a check needs it).",
+   "refs": [
+    "gate_20261001-171051, -171416, -171935, -172249 (.adversary/reviews/ both repos)",
+    "Nexusmill .colibri_reviews/_manifest.json apply_core entry note",
+    "prior art: the IP-literal artifact class (accel.py perfection Stage E)"
+   ]
   }
  ]
 }
