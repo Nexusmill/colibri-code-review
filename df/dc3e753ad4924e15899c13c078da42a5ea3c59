@@ -1,0 +1,24 @@
+{
+ "type": "CLEAR",
+ "commit": "dfdc3e753ad4924e15899c13c078da42a5ea3c59",
+ "caller": "zcode",
+ "when": "20261001-051218",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "dd814a7bbf7fb66d180d92cc1c0452b296be84c781fb2705a1dea38567432872",
+   "model": "deepseek/deepseek-v4-pro-0813@baidu/fp8+streamlake",
+   "when": "20261001-051217",
+   "artifact": ".adversary\\reviews\\gate_20261001-051217.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261001-051217.md": "model: deepseek/deepseek-v4-pro-0813@baidu/fp8+streamlake | provider: Baidu | usage: {'prompt_tokens': 1901, 'completion_tokens': 11967, 'total_tokens': 13868, 'cost': 0.00818337696, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00818337696, 'upstream_inference_prompt_cost': 0.00041152848, 'upstream_inference_completions_cost': 0.00777184848}, 'completion_tokens_details': {'reasoning_tokens': 11959, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20260930-224112.md",
+  "outcomes": {
+   "fixed": 1
+  },
+  "detail": ".adversary/adjudications.json"
+ }
+}
