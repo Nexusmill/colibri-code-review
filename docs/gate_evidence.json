@@ -2894,6 +2894,28 @@
     "Tools 6fe0161",
     "gate artifacts gate_20260930-094129/095517.md"
    ]
+  },
+  {
+   "id": "EV-179",
+   "date": "2026-09-30",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (5 consecutive rounds, all fabricated or self-refuting)",
+   "caught": "The art-tranche commit (10 dedicated per-dimension chest heightmaps replacing the stretched/aliased set; owner-audited) could not earn CLEAR: qwen3-coder-next@Parasail produced 5 consecutive failing reviews on a verified-staged tree (suite 101/101, all deliverables built): r1 claimed the map and PNGs unstaged (they were staged - git show :path disproves); r2 claimed the staged map still carried old art names (grep count 0) and invented drawer widths 142.0/142.3 vs the generator-produced 143.0/143.1; r3's own body conceded the anchor arithmetic then BLOCKed anyway (EV-178 class); r4 claimed ART_PLAN lacks jb_chest_post_b.png (present in the visible bytes); r5 walked the code, concluded each item 'matches'/'is correct', and emitted BLOCK anyway. Interleaved malformed responses (50-70KB) indicate endpoint degradation; malformed is fail-closed terminal per _review_outcome/_call_model_ex, so the chain can never advance past a degrading primary on BLOCK-class outputs.",
+   "severity": "process: deliverable blocked by reviewer malfunction, not by any code defect",
+   "author_initially": "agent rebutted each round with staged-blob evidence (git show greps, executed suite, PIL opens of staged binaries); round-1 real finding (stale art name in a synthetic test row) was accepted and fixed immediately",
+   "resolution": "RESOLVED 2026-10-01 by the owner's per-provider pricing re-evaluation: prices must be read from the OpenRouter per-provider page/endpoints API for the PINNED endpoint - the 2026-09-30 table had priced ds-pro at deepinfra ($1.30/$2.60) while baidu/fp8 is $0.2376/$0.7128/$0.00756-cache (output cheaper than coder-next, cache 9x cheaper). Chain reordered (Tools 1086f8b): deepseek-v4-pro-0813@baidu/fp8 PRIMARY, coder-next demoted to failover. The new primary's first live review cleared the Tools commit in ONE round, then worked the wedged Nexusmill art tranche to CLEAR in 4 rounds while catching 2 REAL defects the old primary missed in 5 (retired-art thumbnail reference aborting fresh checkouts; a latent rotated-row aspect flaw in the new invariant test) - the tranche landed as Nexusmill 1e09c553. Residual owner question kept OPEN: the CODE_EXTS .txt blind spot (machine-bound maps invisible to review payloads) remains - both primers fabricated about the map until shown git-show transcripts.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20260930-221220.md",
+    "Nexusmill .adversary/reviews/gate_20260930-221521.md",
+    "Nexusmill .adversary/reviews/gate_20260930-221748.md",
+    "Nexusmill .adversary/reviews/gate_20260930-222451.md",
+    "Nexusmill .adversary/reviews/gate_20260930-223348.md",
+    "colibri EV-178 (the self-refuting-review class)",
+    "Tools/adversary-gate/adversary_gate.py CODE_EXTS (line 58) + gate_selftest.py line 65 (the pinned .txt-not-code policy)",
+    "Tools commit 1086f8b (chain reorder; batteries 203/203 18/18 23/23 50/50)",
+    "Nexusmill commit 1e09c553 (art tranche, cleared by the new primary in 4 rounds)",
+    "gate_20261001-042205/043509/044617/050722 (the new primary's art-tranche rounds)"
+   ]
   }
  ]
 }
