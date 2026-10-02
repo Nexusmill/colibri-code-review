@@ -2998,6 +2998,21 @@
     "Nexusmill .colibri_reviews/_manifest.json apply_core entry note",
     "prior art: the IP-literal artifact class (accel.py perfection Stage E)"
    ]
+  },
+  {
+   "id": "EV-185",
+   "date": "2026-10-02",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (3 findings: 2 HIGH + 1 LOW/MED, deepseek-v4-pro-0813@baidu, cycle-break tranche round 3)",
+   "caught": "The cycle-break tranche was BLOCKed on three REAL missed-call-site defects the batteries could not reach: (1) HIGH apply_core feathering path called the unbound accel alias inside a swallowed except - silent no-feather on successful apply; (2) HIGH heightmap's SVG loader called accel.ensure_dep_path() after the agent deleted the 'dead' accel import - it was NOT dead, the agent's comment-filtered grep had hidden the body call (the SECOND time in two days a comment-filtered sweep hid a live call site); (3) LOW/MED import_module with an empty __package__ raises TypeError, not ImportError, so the standalone-exec fallback in accel._ipc_mod never ran.",
+   "severity": "process: two HIGH swallowed-NameError paths below the batteries' coverage floor - exactly the class only an independent diff reader can see",
+   "author_initially": "the agent's call-site sweeps filtered lines containing '#' (inline comments), hiding live calls; and re-homed an import form without enumerating the exception types the new form could raise.",
+   "resolution": "All three fixed same-session (name-import extended + call rewritten; direct-submodule import restored with the original dual try/except; except broadened to ImportError+TypeError). Lesson hardened: call-site sweeps NEVER filter by comment content; every import-form change enumerates the new form's exception surface.",
+   "refs": [
+    "gate round 3 of the cycle-break commit (60fb62f8's saga)",
+    "junk/cycle_break_r1/LEDGER.md incidents section",
+    "prior: EV-183 (same class - wave-introduced defects caught by the gate)"
+   ]
   }
  ]
 }
