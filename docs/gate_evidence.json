@@ -3013,6 +3013,21 @@
     "junk/cycle_break_r1/LEDGER.md incidents section",
     "prior: EV-183 (same class - wave-introduced defects caught by the gate)"
    ]
+  },
+  {
+   "id": "EV-186",
+   "date": "2026-10-02",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK x3 + CLEAR-on-rebuttal (deepseek-v4-pro-0813@baidu, support_report tranche)",
+   "caught": "The support_report review wave was BLOCKed THREE consecutive times on the read_log_tail byte-cap implementation - each a real defect in the NEW code the previous round inspired: (r1) the sibling budget was counted in CHARACTERS while the consent ruling caps BYTES (a multibyte log would pull the sibling and overspend); (r2) the front-trim slice could land mid-UTF-8-sequence and the boundary U+FFFD re-expansion overshot cap by a few bytes; (r3) the convergence loop's safety escape (cut >= len(enc)) compared against the REASSIGNED enc and exited early on an all-invalid tail, returning cap+4 bytes. A fourth finding (invalid JSON in the remediation manifest) was REBUTTED with a live json.load of the working tree (parses clean; the artifact lived in the staged-blob view) - reviewer accepted, CLEAR.",
+   "severity": "process: consent-capping arithmetic is exactly the class where each fix introduces the next edge - byte/char unit mixing, boundary expansion, loop escapes",
+   "author_initially": "the agent wrote cap logic three times in decoded-string space before moving the ENTIRE budget to bytes and enforcing the final cap with a halving char-drop (each char >= 1 byte -> strictly decreasing, converges, keeps maximal tail).",
+   "resolution": "Final form: byte-budgeted reads (live first, sibling within remaining BYTES), single decode, then a halving front-trim loop proving len(out.encode()) <= cap for ANY input incl. all-invalid. Battery rows W1e-W1h pin all four edges (multibyte-full, multibyte-concat, half-invalid, all-invalid). Landed fa379bf8.",
+   "refs": [
+    "gate rounds gate_20261002-16xx..1710 (.adversary/reviews/)",
+    "tests/test_perfection_support_report.py W1e/f/g/h",
+    "docs/remediation_manifest.json SR-ROLLED-TAIL / SR-PAYLOAD-FIT rows"
+   ]
   }
  ]
 }
