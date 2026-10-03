@@ -1,0 +1,17 @@
+{
+ "type": "CLEAR",
+ "commit": "6a77f94a7152279b50a717f2d22d6d75e729a690",
+ "caller": "unknown",
+ "when": "20261003-144924",
+ "files": {
+  ".githooks/adversary_audit.py": {
+   "sha": "6077853f9883394a94c670c93a9a3f0f185521f4ced7c16817fb54f87939e090",
+   "model": "xai:grok-4.6",
+   "when": "20261003-144838",
+   "artifact": ".adversary\\reviews\\gate_20261003-144838.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261003-144838.md": "model: xai:grok-4.6 | provider: xai | usage: {'input_tokens': 6316, 'input_tokens_details': {'cached_tokens': 6272}, 'output_tokens': 6074, 'output_tokens_details': {'reasoning_tokens': 5985}, 'total_tokens': 12390, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 396680000, 'context_details': {'input_tokens': 6316, 'output_tokens': 6081}} | scrubbed: 0 | files: ['.githooks/adversary_audit.py'] | caller: unknown\n\nThe staged delta is only membership of `.txt` in `CODE_EXTS` plus the parity comment. `_is_code` / `_changed_code` / `_audit_commit` already key off that set; no caller contract, note schema, epoch, or baseline path is altered. Retroactive classification matches prior `CODE_EXTS` extensions (not the HOOK_NAMES docs-class epoch).\n\nVERDICT: CLEAR"
+ }
+}
