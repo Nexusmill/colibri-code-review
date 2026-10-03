@@ -1,0 +1,29 @@
+{
+ "type": "CLEAR",
+ "commit": "f2f5df1e5d32cd55db38d9e50234f711e9ed9f6e",
+ "caller": "unknown",
+ "when": "20261003-175701",
+ "files": {
+  ".githooks/.gitattributes": {
+   "sha": "bfd06e84939f5bce5a52b9a7ce8267d678d692661b3fa26de0424d73a62c7703",
+   "model": "xai:grok-4.6",
+   "when": "20261003-175613",
+   "artifact": ".adversary\\reviews\\gate_20261003-175613.md"
+  },
+  ".githooks/adversary_audit.py": {
+   "sha": "3057073410aaa87b6b1763ba381732eb7ccfc6775cf78187de8b946fe0d36f14",
+   "model": "xai:grok-4.6",
+   "when": "20261003-175613",
+   "artifact": ".adversary\\reviews\\gate_20261003-175613.md"
+  },
+  ".githooks/adversary_text_rules_epoch": {
+   "sha": "bc92472dd46089df002787f78bb4ef7d4671b8ac42122be951d72750cf115717",
+   "model": "xai:grok-4.6",
+   "when": "20261003-175613",
+   "artifact": ".adversary\\reviews\\gate_20261003-175613.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261003-175613.md": "model: xai:grok-4.6 | provider: xai | usage: {'input_tokens': 10473, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 22296, 'output_tokens_details': {'reasoning_tokens': 22292}, 'total_tokens': 32769, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 1539540000, 'context_details': {'input_tokens': 10473, 'output_tokens': 22303}} | scrubbed: 0 | files: ['.githooks/.gitattributes', '.githooks/adversary_audit.py', '.githooks/adversary_text_rules_epoch'] | caller: unknown\n\nVERDICT: CLEAR"
+ }
+}
