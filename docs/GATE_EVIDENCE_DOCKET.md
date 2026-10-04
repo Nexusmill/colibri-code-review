@@ -315,3 +315,16 @@ concluded "The finding is wrong. The change is correct." and still emitted
 DEFAULT_CHAIN" instead of "(reliability-pinned)" on bare entries. Lesson: when the body
 agrees with the rebuttal but the verdict line contradicts it, address any surviving
 kernel and re-run with an addendum — never argue the verdict line.
+
+## 2026-10-03 Prospective text activation (EV-187)
+
+**EV-187 (Tools)** — the xAI backup gate caught a real retroactive `.txt`
+classification error: commit `3165db811249` legitimately lacked two text
+evidence keys under the old rule. The owner selected an anchored prospective
+boundary. Commit `625d4c586456` adds a separate immutable text marker,
+preserves existing baselines and notes, and keeps all staged text reviewed.
+The final Tools audit walks 142 commits with no violations or overrides.
+All three destination migrations passed their own exact-byte xAI gates.
+Missing, malformed, moved and shallow markers apply the rule everywhere;
+nine disposable Git regressions cover the boundary. Installation and fresh
+source isolation passed; the running native Codex binding needs quit/reopen.

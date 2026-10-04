@@ -3028,6 +3028,22 @@
     "tests/test_perfection_support_report.py W1e/f/g/h",
     "docs/remediation_manifest.json SR-ROLLED-TAIL / SR-PAYLOAD-FIT rows"
    ]
+  },
+  {
+   "id": "EV-187",
+   "date": "2026-10-03",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (native xai:grok-4.6, gate_20261003-144900) + real history audit",
+   "caught": "Adding .txt to the vendored auditor retroactively reclassified legacy commits without a text-rule activation boundary. The real Tools audit found commit3165db811249: its legitimate pre-rule note omitted model-pins/evidence/2026-09-16/pin_live.txt and pins_probe.txt, so the new auditor rejected previously valid history.",
+   "severity": "MEDIUM: CI history audit rejected legitimate old notaries under a newly introduced classification rule",
+   "author_initially": "Accepted the finding after reproducing the exact missing-note keys. Asked the owner to choose prospective activation or retrospective legacy review; the owner selected the recommended anchored prospective policy. No baseline shift or fabricated historical note was used.",
+   "resolution": "Tools625d4c586456 adds a separate HEAD-tree text activation marker, validated against every full-history addition. Missing/uncommitted/malformed/moved/shallow markers apply txt review everywhere; gated prefixes remain code and staged txt always requires independent review. Installer writes once and restores the committed marker after working-copy deletion. Exact-byte xAI reviews cleared source/catalog and corrected manifest separately; normal gates wrote CLEAR notaries. Three destination migrations also cleared and committed. Final Tools history audit:142 walked,135 code, zero violations/overrides; original baseline and hook-name epoch unchanged. Fresh installed runtime and source-isolation checks passed; running Codex native binding still requires quit/reopen.",
+   "refs": [
+    "Tools .adversary/reviews/gate_20261003-144900.md BLOCK; gate_20261003-180242.md source/catalog CLEAR; gate_20261003-180445.md corrected manifest CLEAR",
+    "Tools625d4c586456934ff495c342af544bbaa3508359 and adversary-gate/test_text_epoch.py (9 real disposable Git regressions)",
+    "Tools docs/tasks/2026-10-03-text-review-activation.md;189 unittest tests (2 skips), audit50/50, installer78/78, gate206/206",
+    "colibri-marketplace6e7bdfa7dbe4; colibri-code-reviewf2f5df1e5d32; jcodemunch-mcp77aadcb40d86"
+   ]
   }
  ]
 }
