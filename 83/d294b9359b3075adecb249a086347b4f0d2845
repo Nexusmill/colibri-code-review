@@ -1,0 +1,17 @@
+{
+ "type": "CLEAR",
+ "commit": "83d294b9359b3075adecb249a086347b4f0d2845",
+ "caller": "unknown",
+ "when": "20261003-181107",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "fce8f00862679673a96fadfb8b9a2100fbffc4f1a848c771d7443d067af36ddd",
+   "model": "xai:grok-4.6",
+   "when": "20261003-180936",
+   "artifact": ".adversary\\reviews\\gate_20261003-180936.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261003-180936.md": "model: xai:grok-4.6 | provider: xai | usage: {'input_tokens': 2257, 'input_tokens_details': {'cached_tokens': 512}, 'output_tokens': 6575, 'output_tokens_details': {'reasoning_tokens': 6443}, 'total_tokens': 8832, 'num_sources_used': 0, 'num_server_side_tools_used': 0, 'cost_in_usd_ticks': 431960000, 'context_details': {'input_tokens': 2257, 'output_tokens': 6582}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: unknown\n\nThe staged delta is an append-only JSON array insertion: the prior last object is closed with a comma, EV-187 is inserted with the existing field set (`id`/`date`/`repo`/`layer`/`caught`/`severity`/`author_initially`/`resolution`/`refs`), and the root object still closes once. Visible prior rows are untouched; the new strings need no extra escaping; there is no trailing comma; EOF newline is added. Internal counts, hashes, and the three migration refs are self-consistent with the author notes. Nothing in the provided hunks breaks callers or the docket contract.\n\nVERDICT: CLEAR"
+ }
+}
