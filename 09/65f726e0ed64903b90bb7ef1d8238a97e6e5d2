@@ -1,0 +1,17 @@
+{
+ "type": "CLEAR",
+ "commit": "0965f726e0ed64903b90bb7ef1d8238a97e6e5d2",
+ "caller": "zcode",
+ "when": "20261005-045108",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "205d8c3564853228030148a033254f13e397dd429d8961562af7fd4548461d88",
+   "model": "deepseek/deepseek-v4-pro-0813@baidu/fp8+streamlake",
+   "when": "20261005-045107",
+   "artifact": ".adversary\\reviews\\gate_20261005-045107.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261005-045107.md": "model: deepseek/deepseek-v4-pro-0813@baidu/fp8+streamlake | provider: Baidu | usage: {'prompt_tokens': 2099, 'completion_tokens': 9406, 'total_tokens': 11505, 'cost': 0.04001844, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.04001844, 'upstream_inference_prompt_cost': 0.00277068, 'upstream_inference_completions_cost': 0.03724776}, 'completion_tokens_details': {'reasoning_tokens': 9398, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nVERDICT: CLEAR"
+ }
+}
