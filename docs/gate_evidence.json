@@ -3074,6 +3074,20 @@
       "Blink docs/remediation/2026-10-05-hunt-remediation-contracts.md (gate-round addendum 2 + escape-ledger: 4/4 round introductions caught at the gate, 0 escaped)",
       "Blink6c65bb3"
     ]
+  },
+  {
+   "id": "EV-190",
+   "date": "2026-10-08",
+   "repo": "Blink",
+   "layer": "gate-review BLOCK",
+   "caught": "Pop-only song enforcement (owner order 2026-10-08) first shipped with a combined genre+style_prompt flavor check; the reviewer traced generate_song to prove music-2.6 performs ONLY the style_prompt, so a genre=\"pop\" label could shield a non-pop style prompt and $0.15/song would be spent off-spec.",
+   "severity": "MEDIUM",
+   "author_initially": "Accepted immediately; claim independently re-verified against generate_song source (run_replicate payload) before the fix.",
+   "resolution": "Per-field enforcement: _has_flavor(word, text) checks genre and style_prompt separately, each stamped with its slot's pop style when lacking a pop word; two new gate-finding tests (style-shield, genre-shield) plus the existing word-boundary 'popular' trap stay green.",
+   "refs": [
+    "Blink .adversary/reviews/gate_20261008-084956.md BLOCK",
+    "Blink docs/remediation_manifest.json (2026-10-08 row)"
+   ]
   }
  ]
 }
