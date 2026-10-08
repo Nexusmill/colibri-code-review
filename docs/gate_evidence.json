@@ -3046,34 +3046,34 @@
    ]
   },
   {
-    "id": "EV-188",
-    "date": "2026-10-05",
-    "repo": "Blink",
-    "layer": "gate-review BLOCK (deepseek/deepseek-v4-pro-0813, gate_20261005-041829)",
-    "caught": "Two introductions in the G41 remediation round's OWN new code, caught before commit: (High) check_password saved a scrubbed blink.token while discarding the just-verified password - with a stale/wrong .env (the tool's whole reason to exist) the next open_session would re-inject the wrong value, so the recovery tool no longer recovered; (Medium) delete_clip's new body-read could raise aiohttp ClientConnectionError/ClientPayloadError (not OSError subclasses) mid-body after a 2xx, aborting the whole clean pass - a failure mode the pre-fix bytes could not have.",
-    "severity": "HIGH: secret-recovery tool regression; MEDIUM: new crash path in the delete confirmation flow",
-    "author_initially": "Both findings adversarially re-verified line-by-line against the staged bytes before any edit (the .env re-injection chain traced through open_session; the aiohttp exception hierarchy confirmed against the installed package) - both CONFIRMED, no rebuttals attempted.",
-    "resolution": "Blink6c65bb3 (via two gate rounds, final CLEAR): S-1b _update_env_credentials writes the verified BLINK_USERNAME/BLINK_PASSWORD into .env atomically (recovery completes; 0b bat echo updated to the new truth); S-9b the body-read failure path now treats aiohttp.ClientError as confirm-and-stop (2xx already arrived) while still raising on unexpected exceptions. Verdict-named tests test_s1b_* and test_s9b_midbody_transport_error_still_confirms, RED-verified before each fix; suite 249 OK.",
-    "refs": [
-      "Blink .adversary/reviews/gate_20261005-041829.md BLOCK; gate_20261005-044703.md CLEAR",
-      "Blink docs/remediation/2026-10-05-hunt-remediation-contracts.md (gate-round addendum 1)",
-      "Blink6c65bb3 fix(security): remediate hunt findings S-1..S-9 + gate findings"
-    ]
+   "id": "EV-188",
+   "date": "2026-10-05",
+   "repo": "Blink",
+   "layer": "gate-review BLOCK (deepseek/deepseek-v4-pro-0813, gate_20261005-041829)",
+   "caught": "Two introductions in the G41 remediation round's OWN new code, caught before commit: (High) check_password saved a scrubbed blink.token while discarding the just-verified password - with a stale/wrong .env (the tool's whole reason to exist) the next open_session would re-inject the wrong value, so the recovery tool no longer recovered; (Medium) delete_clip's new body-read could raise aiohttp ClientConnectionError/ClientPayloadError (not OSError subclasses) mid-body after a 2xx, aborting the whole clean pass - a failure mode the pre-fix bytes could not have.",
+   "severity": "HIGH: secret-recovery tool regression; MEDIUM: new crash path in the delete confirmation flow",
+   "author_initially": "Both findings adversarially re-verified line-by-line against the staged bytes before any edit (the .env re-injection chain traced through open_session; the aiohttp exception hierarchy confirmed against the installed package) - both CONFIRMED, no rebuttals attempted.",
+   "resolution": "Blink6c65bb3 (via two gate rounds, final CLEAR): S-1b _update_env_credentials writes the verified BLINK_USERNAME/BLINK_PASSWORD into .env atomically (recovery completes; 0b bat echo updated to the new truth); S-9b the body-read failure path now treats aiohttp.ClientError as confirm-and-stop (2xx already arrived) while still raising on unexpected exceptions. Verdict-named tests test_s1b_* and test_s9b_midbody_transport_error_still_confirms, RED-verified before each fix; suite 249 OK.",
+   "refs": [
+    "Blink .adversary/reviews/gate_20261005-041829.md BLOCK; gate_20261005-044703.md CLEAR",
+    "Blink docs/remediation/2026-10-05-hunt-remediation-contracts.md (gate-round addendum 1)",
+    "Blink6c65bb3 fix(security): remediate hunt findings S-1..S-9 + gate findings"
+   ]
   },
   {
-    "id": "EV-189",
-    "date": "2026-10-05",
-    "repo": "Blink",
-    "layer": "gate-review BLOCK (gate_20261005-043135, second dispatch of the same round)",
-    "caught": "Two more introductions in the fix's own helper _update_env_credentials: (Medium) the .env read sat before the guard, so an unreadable .env (permissions, encoding, a directory) crashed AFTER the Blink session was already saved - raw traceback, unclosed aiohttp session, .env never updated; (High) the atomic tmp->replace dropped the destination's permission mode, so on POSIX a 0600 .env would silently become umask-default 0644 - a secret-exposure class.",
-    "severity": "HIGH: permission-mode loss exposing .env to other local users; MEDIUM: post-save crash path",
-    "author_initially": "Both CONFIRMED by trace before editing (the read-before-guard ordering read straight off the staged diff; the mode-drop is the documented atomic-write discipline's own mirror requirement, making this the textbook pattern-transplant catch - the discipline was stated in the contract but incompletely applied).",
-    "resolution": "Blink6c65bb3: guarded read (OSError/ValueError -> hand-edit guidance + return, session untouched) and os.chmod(tmp, existing mode / 0600 for new files) before the replace. Tests test_s1c_unreadable_env_prints_guidance_and_touches_nothing (deterministic directory-as-.env probe, RED-verified) and test_s1c_env_mode_is_preserved_across_the_atomic_write (RED on POSIX, honest vacuous-pass note on Windows recorded in the contract).",
-    "refs": [
-      "Blink .adversary/reviews/gate_20261005-043135.md BLOCK; gate_20261005-044703.md CLEAR",
-      "Blink docs/remediation/2026-10-05-hunt-remediation-contracts.md (gate-round addendum 2 + escape-ledger: 4/4 round introductions caught at the gate, 0 escaped)",
-      "Blink6c65bb3"
-    ]
+   "id": "EV-189",
+   "date": "2026-10-05",
+   "repo": "Blink",
+   "layer": "gate-review BLOCK (gate_20261005-043135, second dispatch of the same round)",
+   "caught": "Two more introductions in the fix's own helper _update_env_credentials: (Medium) the .env read sat before the guard, so an unreadable .env (permissions, encoding, a directory) crashed AFTER the Blink session was already saved - raw traceback, unclosed aiohttp session, .env never updated; (High) the atomic tmp->replace dropped the destination's permission mode, so on POSIX a 0600 .env would silently become umask-default 0644 - a secret-exposure class.",
+   "severity": "HIGH: permission-mode loss exposing .env to other local users; MEDIUM: post-save crash path",
+   "author_initially": "Both CONFIRMED by trace before editing (the read-before-guard ordering read straight off the staged diff; the mode-drop is the documented atomic-write discipline's own mirror requirement, making this the textbook pattern-transplant catch - the discipline was stated in the contract but incompletely applied).",
+   "resolution": "Blink6c65bb3: guarded read (OSError/ValueError -> hand-edit guidance + return, session untouched) and os.chmod(tmp, existing mode / 0600 for new files) before the replace. Tests test_s1c_unreadable_env_prints_guidance_and_touches_nothing (deterministic directory-as-.env probe, RED-verified) and test_s1c_env_mode_is_preserved_across_the_atomic_write (RED on POSIX, honest vacuous-pass note on Windows recorded in the contract).",
+   "refs": [
+    "Blink .adversary/reviews/gate_20261005-043135.md BLOCK; gate_20261005-044703.md CLEAR",
+    "Blink docs/remediation/2026-10-05-hunt-remediation-contracts.md (gate-round addendum 2 + escape-ledger: 4/4 round introductions caught at the gate, 0 escaped)",
+    "Blink6c65bb3"
+   ]
   },
   {
    "id": "EV-190",
@@ -3088,6 +3088,17 @@
     "Blink .adversary/reviews/gate_20261008-084956.md BLOCK",
     "Blink docs/remediation_manifest.json (2026-10-08 row)"
    ]
+  },
+  {
+   "id": "EV-191",
+   "date": "2026-10-08",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK x10 (tiered-gate implementation, cleared on review 11)",
+   "caught": "The tiered reviewer restructure (owner order 2026-10-08) drew TEN BLOCK rounds with 22 confirmed findings (5 HIGH, 11 MEDIUM, 6 LOW), every one in code that round introduced; IDs in round order - F1 tier-1 SystemExit left tier=1 crashing _review_outcome(None) [H]; F2 _tier_split keyed on env-injectable DEFAULT_MODEL, force-splitting manual overrides [H]; F3 audit-drain had no item locking, duplicate paid submissions [H]; F4 the :batch suffix landed inside a provider pin so the audit NEVER batched [H]; F5 _scoped_window materialized every span line pre-cap [M]; F6 adjudication dropped WARN denial episodes [M]; F7 cmd_status showed WARN clearances stale [L]; F8 a no-severity finding survived WARN, not proven LOW [M]; F9 the certified runtime accepted WARN rows as install evidence [M]; F10 audit WARN recorded verbatim instead of collapsing [L]; F11 the spawned drain raced the selftest queue [L]; F12 hook-named files could ride tier 1 [M]; F13 xAI/local rungs lacked the output cap [L]; F14 a rejected batch receipt resubmitted forever [M]; F15 orphaned drain locks never self-healed [M]; F16 the audit default pointed at the DELISTED ds-pro-0813:batch [H]; F17 adjudication severity filtering diverged from the run path [M]; F18 reviewed_write silently downgraded to the tier-1 flash [M]; F19 the orphan-lock steal raced remove+recreate [M]; F20 audit rows recorded the provider tuple slot as the model [L]; F21 the autoland GATE_LADDER failed fleet parity [M]; F22 a pre-write WARN was logged as verdict BLOCK [L].",
+   "severity": "HIGH (5), MEDIUM (11), LOW (6) - 22 total",
+   "author_initially": "Round-1 author intent was 'tier-1 failure escalates'; the crash path proved the intent unimplemented - the message lied. Each finding re-verified against current bytes before fixing (none rebutted).",
+   "resolution": "All 22 remediated with verdict-named tests (tiering_selftest.py, final 38 rows); one honest rebuttal-adjacent note: F3's paid-double-submission impact was already barred by the batch receipt lock - the item lock still landed for the duplicate-rows/racing-removal reality. Landed as Tools fa5c6dd after the 11th review returned CLEAR; batteries gate 206/206, tiering 38/38, fleet 18/18, audit 50/50, callmodel 23/23, install 78/78. AMENDED in place same day: the first filing undercounted (said 8 rounds / 15 findings / 3-8-4) and the docket reviewer BLOCKed the inconsistent row - this amendment reconciles count, severities, and the F1..F22 enumeration.",
+   "docket_note": "The strongest rows are the ones the author could not see: F4 (batch suffix swallowed by a provider pin - fake verdicts return before model parsing) and F16 (delisted default audit model) both passed the author's full battery and only the paid independent reviewer caught them."
   }
  ]
 }
