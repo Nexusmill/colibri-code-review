@@ -328,3 +328,24 @@ All three destination migrations passed their own exact-byte xAI gates.
 Missing, malformed, moved and shallow markers apply the rule everywhere;
 nine disposable Git regressions cover the boundary. Installation and fresh
 source isolation passed; the running native Codex binding needs quit/reopen.
+## 2026-10-10 Experiment-10 transfer landing (EV-195)
+
+The semantic-delta payload + BLOCK-finding adjudication tranche (owner order
+2026-10-10, local-gate experiment #10) drew one BLOCK on its first round:
+hy4-preview flagged that finding_adjudicator.py was missing from
+runtime_loader.CATALOG, so the certified enforcement runtime would not
+ship it and the gate's deferred import would fail silently in production
+while every working-tree test stayed green. Remediated in-session with
+the CATALOG entry plus an AST-based catalog guard test. The finding is
+itself the transfer's thesis: verbatim anchor, concrete trigger, producing
+caller, broken behavior - the anchor quad the layer now enforces.
+## 2026-10-10 Experiment-10 transfer deployment (EV-196)
+
+A second BLOCK caught a real deadlock: the CATALOG addition makes the
+immutable active installer emit old-catalog manifests the new loader
+rejects. The bootstrap activation escaped it - and then exposed a deeper
+collision (write_generation validates a new-catalog manifest against a
+generation directory the failed attempt wrote under the old catalog).
+Unblocked by removing the poisoned derived generation dir; runtime now
+pins 2f90fae (20 files). Epoch-handling for write_generation is the open
+follow-up.
