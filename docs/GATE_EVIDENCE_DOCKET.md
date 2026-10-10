@@ -349,3 +349,11 @@ generation directory the failed attempt wrote under the old catalog).
 Unblocked by removing the poisoned derived generation dir; runtime now
 pins 2f90fae (20 files). Epoch-handling for write_generation is the open
 follow-up.
+## 2026-10-10 EV-196 resolved (0ac7e77)
+
+write_generation now self-heals stale-era generation directories for the
+same commit under a digest proof (generation bytes are a deterministic
+function of commit+catalog); foreign bytes and the ACTIVE commit's
+directory are hard refusals. The landing validated the normal activation
+path end-to-end - post-commit auto-activation installed 0ac7e770 with no
+manual bootstrap. Row amended in place with refs.
