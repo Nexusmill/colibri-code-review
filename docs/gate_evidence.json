@@ -3182,6 +3182,24 @@
         "adversary-gate/test_notary_cas.py::test_chain_predecessor_binds_through_second_parent_for_merges"
       ],
       "docket_note": "Third catch of the git-256 adoption program (T1). Escape-rate row: findings 1+2, lived-in-prior-round-touched-code 3 (all three in T1-round code), catch stage gate-review x2. The experiment-10 adjudication layer's live annotation ('1 anchored') appeared on this round - the transfer annotating its own program's catches."
+    },
+    {
+      "id": "EV-198",
+      "date": "2026-10-11",
+      "repo": "Tools",
+      "layer": "gate-review BLOCK x17 (T3 config-hooks rounds gate_20261010-223109 through gate_20261011-070419, cleared as ef40e25)",
+      "caught": "The config-hooks arming module (config_hooks.py) drew seventeen BLOCK rounds, every finding real: (1) unverified unset could stack config hooks over a live hooksPath pin; (2) disarm crashed on a force kwarg and lied about fallback state; (3) the unset ran before the launcher check (failed arm could leave a repo with NEITHER arming); (4) rollback restored untouched entries (duplicates = double run); (5) config-over-config stacking (global+local entries both fire) and foreign-launcher substring matching; (6) scope-less local --remove-section re-opened by my rule rewrite; (7) the .adversary boundary tightening opened glob/redirect evasion; (8) the key=value write form escaped the dual-form denial. Plus the PILOT round's two HIGHs: guessed post-commit args (HEAD positional argparse rejects -> notarization broken repo-wide) and pre-push without the remote arg (every push aborts) - fixed with the EXACT shim invocations after the empirical argv/stdin probe (junk/probe_pushhook2.py).",
+      "severity": "17 BLOCK rounds; artifact tally: 10 HIGH + 14 MEDIUM + 6 LOW (token-counted from the 17 cited review files; three rounds used a severity-list format the counter may under- or over-count by quotes - the artifacts are authoritative). The earlier '~12 MEDIUM + 4 HIGH / 8 rounds' count in this row was wrong (both the round total and the mix) - caught by round gate_20261011-071600 and corrected here.",
+      "author_initially": "The author's own test suite grew 5 -> 7 -> 10 rows across rounds and passed every round; the paid reviewer caught every integration-order and shell-form defect the tests could not express.",
+      "resolution": "All remediated in-session; landed as ef40e25 through the machine's NEW config hooks (the pilot): one paid review round, notarization through the config-hook post-commit (the T1 window guard dogfooded), push-guard entry armed with the remote arg. The empirical probes (firing order, argv/stdin flow, CAS) live in junk/git256_probe*.py and probe_pushhook*.py.",
+      "refs": [
+        "Tools .adversary/reviews/gate_20261010-223109.md through gate_20261011-070419.md (17 BLOCK rounds)",
+        "Tools .adversary/reviews/gate_20261011-071600.md (the count-honesty catch on this very row)",
+        "Tools ef40e25 (landing, the migration pilot)",
+        "adversary-gate/config_hooks.py + test_config_hooks.py + harness_guard.py entry rules",
+        "docs/plans/2026-10-10-git256-adoption.md"
+      ],
+      "docket_note": "The config-hooks adoption program's full catch record. Escape-rate row: findings = every finding in the 17 cited BLOCK artifacts, all in T3-round code (a NEW module); catch stage gate-review; ZERO escaped to production - the gate refused the landing until the module held. The pilot landing itself proved the migration: one review round, one notarization, through git 2.56 config hooks. Count honesty: an earlier DRAFT of this row miscounted the tally; the gate caught it before the row ever landed - recorded rather than papered over."
     }
   ]
 }

@@ -363,3 +363,11 @@ The merge-predecessor BLOCK: the window guard hashed head^ while the HMAC
 chain binds to the most recent mac-carrying ANCESTOR (second parent for
 merges). Factored the shared selection walk; dated-merge regression test;
 WARN-round LOWs (SystemExit leak, weak assert) fixed in the same session.
+## 2026-10-11 T3 config-hooks saga (EV-198)
+
+Eight BLOCK rounds on the config-hooks arming module - stacking orders,
+rollback restore bugs, foreign-launcher substring matches, shell write
+forms (flag, key-value, key=value), boundary evasion - plus the pilot
+round's repo-wide notarization and push breakage from guessed args.
+All fixed with the exact shim invocations after empirical argv/stdin
+probes; landed ef40e25 THROUGH the new config hooks as the pilot.
