@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "91acb47277e98f634966cd4de74162e2632ffa5f",
+ "caller": "zcode",
+ "when": "20261011-155606",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "4933c876b456c0e89696651ac80dbe1ee142ef7595be613f02851e5783d5ead1",
+   "model": "tencent/hy4-preview@tencent/fp8",
+   "verdict": "WARN",
+   "when": "20261011-155604",
+   "artifact": ".adversary\\reviews\\gate_20261011-155604.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261011-155604.md": "model: tencent/hy4-preview@tencent/fp8 | provider: Tencent | usage: {'prompt_tokens': 303336, 'completion_tokens': 13706, 'total_tokens': 317042, 'cost': 0.258534837, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.258534837, 'upstream_inference_prompt_cost': 0.2276840016, 'upstream_inference_completions_cost': 0.0308508354}, 'completion_tokens_details': {'reasoning_tokens': 13501, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nLOW, docs/gate_evidence.json, end-of-file (the `}` closing the root object; the final line of the new blob), trigger: the change re-serializes the entire docket \u2014 re-indenting every line from the pre-existing indent=2 back to the canonical indent=1 \u2014 and appends entry EV-201, but emits the file with no trailing newline; the diff shows `+}` immediately followed by `\\ No newline at end of file`, whereas the removed pre-image line `-}` ended with a newline, impact: violates the file's own recorded governance-JSON convention (EV-135 / EV-158: no BOM, CRLF, indent=1, ensure_ascii=False, and a trailing newline). The file no longer ends in a newline \u2014 the exact LOW convention regression EV-135 caught on this same file \u2014 so byte-dump/convention assertions and POSIX text-file consumers now see a last line with no terminator.\n\nVERDICT: WARN"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261011-155604.md": {
+   "embedded": "f429ff3d6465b77e7ca8578c5e4ebc0339872f552d52704e83c94de85feb2f9a",
+   "disk": "f429ff3d6465b77e7ca8578c5e4ebc0339872f552d52704e83c94de85feb2f9a"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "ed982efdec204866816839bc962fff90ea73f0b3bb7a7abf6370ede75e5ed8e7"
+}
