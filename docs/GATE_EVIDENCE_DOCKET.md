@@ -385,3 +385,16 @@ segment, existence-derived catalog) - the SAME BYTES run at the author
 suite and ship in plugin 0.3.8. Two BLOCK rounds caught the three
 paths the port missed and a runbook that would have dead-ended a plugin
 operator; one finding was rebutted by the author's own render test.
+
+
+## 2026-10-11 OpenRouter observability pipeline, round 1 (EV-201)
+
+**BLOCK, 1 MEDIUM** (gate_20261011-153637): `control.py` spawned the poller with
+Windows-only Popen `creationflags` unconditionally — a `TypeError` on POSIX after
+`docker compose up`, poller never starts — and `cmd_stop` could only force-kill via
+Windows `taskkill`. The whole control plane had been live-verified on Windows only.
+Fixed, not rebutted: `_popen_creationflags`/`terminate_pid` platform splits + 4
+branch-forcing tests. Notable: the remediation itself re-committed the same class once
+(`signal.SIGKILL` at call time, absent on Windows) and the author's own RED-first
+platform-forcing test caught it before re-review — the T1 invariant-test pattern paying
+for itself inside one cycle.
