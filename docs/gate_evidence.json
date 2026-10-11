@@ -3200,6 +3200,23 @@
         "docs/plans/2026-10-10-git256-adoption.md"
       ],
       "docket_note": "The config-hooks adoption program's full catch record. Escape-rate row: findings = every finding in the 17 cited BLOCK artifacts, all in T3-round code (a NEW module); catch stage gate-review; ZERO escaped to production - the gate refused the landing until the module held. The pilot landing itself proved the migration: one review round, one notarization, through git 2.56 config hooks. Count honesty: an earlier DRAFT of this row miscounted the tally; the gate caught it before the row ever landed - recorded rather than papered over."
+    },
+    {
+      "id": "EV-199",
+      "date": "2026-10-11",
+      "repo": "colibri-marketplace",
+      "layer": "gate-review BLOCK x2 (adversary-gate plugin 0.3.7 refresh, rounds gate_20261011-093046 + 094218, cleared b7db336)",
+      "caught": "Round 1: (HIGH) the refresh flattened the plugin's tools/hooks/ shims into tools/, breaking install_gate's CANON paths and the dispatcher self-check (the plugin would refuse to arm and every installed hook would fail closed); (MEDIUM) the vendored _run_git carried a bare timeout=60 with no TimeoutExpired handling - an upstream Tools defect surfaced by the vendoring. Round 2: (HIGH x2) overwriting the plugin's layout-adapted installer with Tools' version, and vendoring enforcement_runtime/runtime_loader whose catalog paths assume the Tools suite layout.",
+      "severity": "3 HIGH + 1 MEDIUM across 2 rounds",
+      "author_initially": "The author bulk-copied 17 modules + shims without reading the plugin's OWN adapted architecture (0.3.6 shims exec adversary_gate.py directly at tools/ level; tools/hooks/ holds the dispatchers; the certified-runtime machinery was never part of the plugin).",
+      "resolution": "TimeoutExpired fixed at the Tools SOURCE (fail-closed SystemExit; landed 123d323 with the round-071104 LOW and the census work, tier-2 CLEAR, runtime auto-installed). The plugin rebuilt to its own architecture: adapted shims/dispatchers/installer restored from 0.3.6, non-plugin modules dropped (imports verified deferred/guarded), refreshed 9-module core all compiling; landed b7db336.",
+      "refs": [
+        "colibri-marketplace .adversary/reviews/gate_20261011-093046.md + 094218.md",
+        "colibri-marketplace b7db336 (0.3.7 landing)",
+        "Tools 123d323 (the TimeoutExpired source fix)",
+        "colibri-marketplace plugins/adversary-gate/tools/ (final layout)"
+      ],
+      "docket_note": "Lesson recorded: vendoring is not copying - the plugin's files are ADAPTED (paths, execution model, module set) and refreshing means refreshing the core, not transplanting the source repo's architecture. Escape-rate row: findings 4, lived-in-refresh-code 4, catch stage gate-review x2, zero escaped (0.3.7 never shipped broken)."
     }
   ]
 }

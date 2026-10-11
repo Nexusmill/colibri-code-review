@@ -173,3 +173,11 @@ notarization chain - rewritten commits are UNNOTARIZED until re-recorded. Layer 
 agent-issued rewrites with the consequence spelled out; the push guard and auditor
 remain the detection guarantee. The notary write is additionally guarded by the
 chain-predecessor window invariant (git-refs adoption, T1).
+
+
+Config-hooks arming (owner order 2026-10-11): the machine's git hooks now ride
+git 2.54+ config-based entries invoking the certified launcher (see
+Tools/adversary-gate/CONFIG_HOOKS_ARMING.md); the global hooksPath dispatcher
+arming is retired on this machine. Layer 2 denies agent writes to the
+hook.adversary-* entries (dual-form + key=value); the notary, auditor and
+push guard layers are unchanged.

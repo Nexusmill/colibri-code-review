@@ -371,3 +371,10 @@ forms (flag, key-value, key=value), boundary evasion - plus the pilot
 round's repo-wide notarization and push breakage from guessed args.
 All fixed with the exact shim invocations after empirical argv/stdin
 probes; landed ef40e25 THROUGH the new config hooks as the pilot.
+## 2026-10-11 Plugin 0.3.7 refresh catches (EV-199)
+
+Two BLOCK rounds on the adversary-gate marketplace refresh: flattened
+shim layout broke the installer and self-check; a bare timeout=60 in
+the vendored _run_git (fixed at Tools source); and transplanting the
+certified-runtime modules whose paths assume the source suite. Plugin
+rebuilt to its own architecture; landed b7db336.
