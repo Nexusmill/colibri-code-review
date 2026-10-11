@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "ab7025666fc59c45854fd9cf4f32628bebe66914",
+ "caller": "zcode",
+ "when": "20261011-101057",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "07a97796796927a986fe26e07e996afa28ea8dd595464eea2b5d3ddfd1fb9a95",
+   "model": "tencent/hy4-preview@tencent/fp8",
+   "verdict": "CLEAR",
+   "when": "20261011-101055",
+   "artifact": ".adversary\\reviews\\gate_20261011-101055.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261011-101055.md": "model: tencent/hy4-preview@tencent/fp8 | provider: Tencent | usage: {'prompt_tokens': 1527, 'completion_tokens': 15375, 'total_tokens': 16902, 'cost': 0.0353888001, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 512, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0353888001, 'upstream_inference_prompt_cost': 0.0007812126, 'upstream_inference_completions_cost': 0.0346075875}, 'completion_tokens_details': {'reasoning_tokens': 15367, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261011-101055.md": {
+   "embedded": "9eb6583b45a68298eebb7db3e2f408769e9691f546481bb89741137024dd1459",
+   "disk": "9eb6583b45a68298eebb7db3e2f408769e9691f546481bb89741137024dd1459"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "b5912d9d248447cd70f23e2a7129878a690d998b3eb01dda86a2dfd7c60e6d1a"
+}
