@@ -3165,6 +3165,23 @@
         "Tools adversary-gate/enforcement_runtime.py::_retire_stale_generation",
         "Tools adversary-gate/test_enforcement_runtime.py (3 EV-196 tests)"
       ]
+    },
+    {
+      "id": "EV-197",
+      "date": "2026-10-10",
+      "repo": "Tools",
+      "layer": "gate-review BLOCK (T1 notary window guard, round gate_20261010-215850)",
+      "caught": "hy4-preview MEDIUM (1 anchored per the new adjudication layer): _chain_predecessor_digest hashed only head^'s note, but _prior_note_mac selects the chain predecessor as the most recent mac-carrying ANCESTOR in git-log order - for merge commits that can be the second parent. The T1 guard protected the wrong predecessor for merges, and the code comment asserted the false first-parent claim.",
+      "severity": "1 MEDIUM",
+      "author_initially": "The author verified the finding against _prior_note_mac's source before fixing (the walk is `git log --format=%H` ancestor order, HEAD excluded) - the reviewer's trace was exactly right.",
+      "resolution": "Remediated in Tools 381a0f7: selection factored into _chain_predecessor_commit (the shared walk), used by BOTH _prior_note_mac and the digest helper; watched regression test with a dated merge (second parent carries the only mac - fails on the pre-fix code). Follow-on WARN round gate_20261010-220719 (2 LOW: SystemExit leak past the cleanup; a trivially-true test assert) remediated in 54ddf49 (SystemExit-safe verification block, real before/after digest assert); 54ddf49 cleared tier-2 and the certified runtime auto-activated to it.",
+      "refs": [
+        "Tools .adversary/reviews/gate_20261010-215850.md (BLOCK round)",
+        "Tools .adversary/reviews/gate_20261010-220719.md (WARN round, 2 LOW)",
+        "Tools 381a0f7 + 54ddf49 (remediation landings)",
+        "adversary-gate/test_notary_cas.py::test_chain_predecessor_binds_through_second_parent_for_merges"
+      ],
+      "docket_note": "Third catch of the git-256 adoption program (T1). Escape-rate row: findings 1+2, lived-in-prior-round-touched-code 3 (all three in T1-round code), catch stage gate-review x2. The experiment-10 adjudication layer's live annotation ('1 anchored') appeared on this round - the transfer annotating its own program's catches."
     }
   ]
 }

@@ -357,3 +357,9 @@ function of commit+catalog); foreign bytes and the ACTIVE commit's
 directory are hard refusals. The landing validated the normal activation
 path end-to-end - post-commit auto-activation installed 0ac7e770 with no
 manual bootstrap. Row amended in place with refs.
+## 2026-10-10 T1 notary guard catch (EV-197)
+
+The merge-predecessor BLOCK: the window guard hashed head^ while the HMAC
+chain binds to the most recent mac-carrying ANCESTOR (second parent for
+merges). Factored the shared selection walk; dated-merge regression test;
+WARN-round LOWs (SystemExit leak, weak assert) fixed in the same session.

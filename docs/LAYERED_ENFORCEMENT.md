@@ -164,3 +164,12 @@ remote side branch (`--only <repo> --pr N --head <branch> --apply`; dry run with
    proves every checkout and worktree (`armed | dangling | unset | overridden`). A never-installed
    repo is gated at commit immediately; its first push of old un-notarized code is refused until
    the installer writes the baseline. Other machines and CI keep the per-clone recipe.
+
+
+
+Re-notarization awareness (owner order 2026-10-10): history-rewriting commands
+(rebase, git history reword/split/drop, filter-branch/filter-repo) orphan the SHA-keyed
+notarization chain - rewritten commits are UNNOTARIZED until re-recorded. Layer 2 denies
+agent-issued rewrites with the consequence spelled out; the push guard and auditor
+remain the detection guarantee. The notary write is additionally guarded by the
+chain-predecessor window invariant (git-refs adoption, T1).
