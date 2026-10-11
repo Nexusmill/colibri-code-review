@@ -3217,6 +3217,23 @@
         "colibri-marketplace plugins/adversary-gate/tools/ (final layout)"
       ],
       "docket_note": "Lesson recorded: vendoring is not copying - the plugin's files are ADAPTED (paths, execution model, module set) and refreshing means refreshing the core, not transplanting the source repo's architecture. Escape-rate row: findings 4, lived-in-refresh-code 4, catch stage gate-review x2, zero escaped (0.3.7 never shipped broken)."
+    },
+    {
+      "id": "EV-200",
+      "date": "2026-10-11",
+      "repo": "Tools + colibri-marketplace",
+      "layer": "gate-review BLOCK x2 (certified-runtime layout port, rounds gate_20261011-111645 + 114151; landed Tools 5db106f + 7897ce0, plugin 20b5a56 / 0.3.8)",
+      "caught": "Round 1 (Tools): pending_dispatchers/complete_pending/_is_dispatcher_target still hardcoded the gate-dir name after every other path went GATE_DIR-derived - deferred dispatcher swaps would never complete in a plugin-layout install. Round 2 (plugin): the runbook hardcoded the Tools-suite gate dir and a THREE-entry loop (omitting the activate entry) - an operator following it in a plugin tree would write a dead launcher path and arm 3 of 4 entries, which arm() then refuses; the subset refusal message also said 'all three'; and the marketplace description claimed layout-derivation since 0.3.8 while the vendored files said 0.3.7. A third finding (launcher single-quote handling) was verified NOT a defect - the template already single-quotes the marker so the existing quote-doubling is correct PowerShell escaping; the author's first 'fix' double-escaped and was caught by his own render test before landing.",
+      "severity": "2 MEDIUM + 1 LOW across 2 rounds; 1 finding rebutted-by-test",
+      "author_initially": "The port derived 11 path sites from __file__ and missed 3 more (pending/, hooks/, dispatcher-target); the grep check that verified 'zero hardcoded gate-dir strings' ran BEFORE the last three were edited in a separate session step.",
+      "resolution": "All landed: Tools 5db106f (the port: GATE_DIR/segment/catalog derivation, discovered generation segment, existence-derived catalog, port test proving the plugin tree round-trips write->validate->launch) + 7897ce0 (runbook four-entry layout-derived, subset message, quote docstring); plugin 20b5a56 (0.3.8) vendors the trio with in-place derivation proven (GATE_DIR=tools, 7-entry catalog, hooks dispatchers, plugin launcher path).",
+      "refs": [
+        "Tools .adversary/reviews/gate_20261011-111645.md + 114151.md (via the plugin repo round)",
+        "colibri-marketplace .adversary/reviews/gate_20261011-114151.md",
+        "Tools 5db106f + 7897ce0; colibri-marketplace 20b5a56 (0.3.8)",
+        "adversary-gate/test_runtime_port.py (the plugin-layout proof)"
+      ],
+      "docket_note": "The port's own law held: layout claims must be DERIVED, and every derivation must be proven in the target tree - the port test (plugin fixture round-trip) and the in-place plugin-tree probe are the two proofs. Escape-rate row: findings 4, in-port-code 4, catch stage gate-review x2 + author-self-test x1, zero escaped."
     }
   ]
 }

@@ -38,12 +38,13 @@ hy4-preview → kimi-k2.7-code via OpenRouter pins), `ADVERSARY_MAX_TOKENS`,
   `adversary_gate.py` integration) are harness-side; Codex-side policy
   (`codex_*`) is NOT part of the plugin distribution (author-machine only).
 
-### NOT included in the plugin (author-machine machinery)
-`enforcement_runtime.py` / `runtime_loader.py` (certified-generation runtime),
-`reviewed_write.py`, `codex_guard.py` / `codex_policy.py`, `config_hooks.py`
-(machine-wide config-hooks migration tool). Their absence is deliberate
-(EV-199): the plugin's `adversary_gate.py` imports of them are deferred and
-guarded, so the plugin core runs standalone.
+### Certified runtime - SHIPPED since plugin 0.3.8 (owner order 2026-10-11 port)
+`runtime_loader.py`, `enforcement_runtime.py`, and `config_hooks.py` now ship
+in the plugin, LAYOUT-DERIVED so the same bytes run at the author suite and
+in the plugin tree (derivation proven in place; EV-200). `reviewed_write.py`
+and the `codex_*` pair remain author-machine-only (Codex harness integration
+and broker machinery); imports are guarded so the plugin core runs
+standalone without them.
 
 ---
 

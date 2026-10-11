@@ -378,3 +378,10 @@ shim layout broke the installer and self-check; a bare timeout=60 in
 the vendored _run_git (fixed at Tools source); and transplanting the
 certified-runtime modules whose paths assume the source suite. Plugin
 rebuilt to its own architecture; landed b7db336.
+## 2026-10-11 Certified-runtime layout port (EV-200)
+
+The runtime trio is now layout-derived (GATE_DIR, discovered generation
+segment, existence-derived catalog) - the SAME BYTES run at the author
+suite and ship in plugin 0.3.8. Two BLOCK rounds caught the three
+paths the port missed and a runbook that would have dead-ended a plugin
+operator; one finding was rebutted by the author's own render test.
