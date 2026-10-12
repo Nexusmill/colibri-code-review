@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "a406bb1fea9d1d7e1673874db2fb10e8584c0006",
+ "caller": "zcode",
+ "when": "20261012-152312",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "9a7986a464441a862df89a1e498c204e73cab6916d6dbfee789f054722bcdb35",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261012-152301",
+   "artifact": ".adversary\\reviews\\gate_20261012-152301.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261012-152301.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1452, 'completion_tokens': 8076, 'total_tokens': 9528, 'cost': 0.010051536, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 256, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.010051536, 'upstream_inference_prompt_cost': 0.000360336, 'upstream_inference_completions_cost': 0.0096912}, 'completion_tokens_details': {'reasoning_tokens': 7758, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nVerified against the provided bytes:\n\n- Structure: the added block is inserted as a sibling element of the top-level evidence array. The context `]` closes the preceding element's array field, the added `},` terminates the previously-last element, and the added object's `{` \u2026 is closed by the trailing context `}`, with `]` then `}` closing the array and root object. Brace/bracket nesting balances; no trailing/double comma is introduced.\n- Hunk arithmetic: old 11 lines \u2192 new 26 lines = +15, exactly the 15 `+` lines shown; new last line 3280+25 = 3305, matching the scoped window's `}` at 3305.\n- JSON lexing: none of the added string literals (`layer`, `caught`, `author_initially`, `resolution`, all three `refs` values) contains an unescaped `\"` or control character; the single quotes in the `layer` value are legal inside a JSON string.\n- Scope: this is a docs evidence asset only \u2014 no call sites, symbols, money, or security surface is touched by the change itself. The entry honestly labels itself unadjudicated/deferred, consistent with its `severity` and `resolution` fields; the gate defects it *describes* are pre-existing in `adversary_gate.py` and explicitly docketed by owner order, not introduced or enabled here.\n\nNo real defect found in the change.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261012-152301.md": {
+   "embedded": "25ed6b4522a376a1b894476c14afad6cd1d143800c6071ed62aeca6e8f797235",
+   "disk": "25ed6b4522a376a1b894476c14afad6cd1d143800c6071ed62aeca6e8f797235"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "ce5c1485dbcdf3b74c490d09cef640f95493d8bef6e230152778f0d8b8acd086"
+}
