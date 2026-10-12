@@ -3285,6 +3285,21 @@
     ".adversary/reviews/gate_20261012-132752.md (Tools)",
     "junk/hy4-eval (replay evidence for the ladder order)"
    ]
+  },
+  {
+   "id": "EV-204",
+   "date": "2026-10-12",
+   "repo": "Tools",
+   "layer": "evaluation findings - DEFERRED for later consideration (owner order 2026-10-12: 'simply docket those for later consideration')",
+   "caught": "Two suspected gate defects surfaced by the replay evaluations, convergently flagged by independent model families but never gate-round adjudicated: (1) EPOCH ROLLBACK (payload gate_20261009-024657, originally hy4-CLEAR): _current_rules_epoch reads the WORKING-TREE .githooks/adversary_rules_epoch, harness_guard deliberately leaves .githooks/ editable, and the gate reviews staged-only content - writing the old epoch back unstaged makes stale clearances pass and notarize (defeats the H4 expiry). Premises verified against live code 2026-10-12; flagged independently by flash-effort-high and (unanimously) by the fusion council. (2) CHAIN-MAC RE-ANCHORING (payload gate_20261009-070634, originally hy4-CLEAR): _verify_chain_mac's GENESIS prior-walk re-derives the chain link from the note set AT AUDIT TIME while _prior_note_mac derived it at WRITE time; a later-arriving notarized ancestor re-anchors the recomputed prior and flags a genuinely-notarized commit as NOTE INTEGRITY tampered (also: the legacy exemption is decided by note-authored fields). Flagged by flash-effort-high and unanimously by the fusion council; multi-clone scenario not executed end-to-end (PLAUSIBLE, not confirmed).",
+   "severity": "2 suspected MEDIUM (unadjudicated)",
+   "author_initially": "N/A - evaluation findings; hy4 cleared both payloads at the time (suspected false negatives, evidenced by the convergence of flash-high and the 3-family council on both)",
+   "resolution": "DEFERRED - docketed for a later adjudication/remediation round per owner order; both live in the current on-disk gate code as of 2026-10-12 (3544504).",
+   "refs": [
+    "junk/hy4-eval/results (arm1/arm2/arm3/promptv2)",
+    "adversary-gate/adversary_gate.py _current_rules_epoch + _verify_chain_mac",
+    "memory: prompt-v2-prototype-hallucination"
+   ]
   }
  ]
 }
