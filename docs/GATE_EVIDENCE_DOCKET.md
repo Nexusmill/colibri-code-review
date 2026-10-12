@@ -410,3 +410,11 @@ only passed because it ran after UTC midnight). Plus an IndexError on a bare
 inclusive-end/exclusive-boundary windows + 6 new tests (suite 30); landed in
 Tools 89d6633. Lesson: boundary semantics escape authors who test only the
 happy middle — the reviewer reads the arithmetic, not the live-run luck.
+
+## EV-203 - 2026-10-12 - Tools 3544504 - the new tier-2 ladder reviews its own replacement
+
+**Rounds:** gate_20261012-122708 (BLOCK, 4 findings) -> 130726 (WARN/3) -> 131547 (WARN/2) -> 132223 (WARN/1) -> 132752 (CLEAR).
+
+**Catch:** deepseek-v4.1-flash effort high (the newly pinned tier-2) reviewed the ladder swap that installed it. Headline: `BatchReviewPending` SUBCLASSES `SystemExit`, so the new audit-fallback's inner `except SystemExit` swallowed the pending-resume signal and would have paid a second batch alongside the live one (HIGH, fixed by clause order + delist-gated fallback). Plus: fleet `GATE_LADDER` left mirroring retired hy4/kimi (MEDIUM, parity restored); audit rows misattributing the serving model (LOW); pre-write path losing the tier-2 effort/budget via the compat API (LOW); non-hermetic test (LOW); money-safety comment corrected to the adjudicated sunk-receipt semantics (LOW); batch scan_queue not forwarding the documented effort + stale docstring (LOW); `or "high"` resurrecting the documented empty-disable (LOW); pending-test not arming the fallback (LOW); manual `--model` overrides inheriting forced effort/budget against the verbatim-override doctrine (LOW).
+
+**Lesson:** when a fallback wraps an exception that SUBCLASSES the pending signal, clause order is the money-safety invariant - and a moved call seam (compat -> new API) must sweep every consumer in the same diff: fleet mirror, pre-write caller, batch transport, tests.

@@ -1223,7 +1223,7 @@
    "caught": "A FALSE refusal, twice, recorded because it is evidence about the layer: the tranche moved `_bounded_gunzip` from runtime/http_routes.py to security.bounded_gunzip so import-scip could share the gzip-bomb guard. Round 1 kept the old name bound with `from ..security import bounded_gunzip as _bounded_gunzip`; round 2 with a module-level `_bounded_gunzip = bounded_gunzip` assignment. The pre-check compares DEFINITIONS (def/class) between the old and new bytes, saw the def gone with six unstaged references in tests/test_v1_108_95.py, and refused before any review - both times, while that test file passed on both trees. Only staging the caller re-pointed (the test now imports the helper from its new home) let the review run.",
    "severity": "NONE (false positive of the layer) - the code was correct on all three trees",
    "author_initially": "Believed an import alias was a binding the check would honour; then believed an assignment would be. Neither is: the check is definition-based by design - Tools de3f953 added it after Tools 8245433 shipped exactly the hole where a reviewer never sees unstaged callers (EV-060) - and an alias is exactly what a reviewer cannot verify without the callers staged.",
-   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import … as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
+   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import \u2026 as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
    "refs": [
     "jcodemunch-mcp .adversary/reviews/ (rounds 1-2 wrote NO artifact - a REFUSED pre-check exits before the review; the captures are the session scratchpad gate_scipcap_r1.txt / gate_scipcap_r2.txt)",
     "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK, first round the pre-check let through)",
@@ -3266,6 +3266,25 @@
     "Tools 89d6633"
    ],
    "docket_note": "Boundary-condition classes (inclusive/exclusive endpoints, empty inputs) keep escaping authors who test only the happy middle - the reviewer sees the arithmetic, not the author's live-run luck."
+  },
+  {
+   "id": "EV-203",
+   "date": "2026-10-12",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK/WARN x4 then CLEAR (rounds gate_20261012-122708/130726/131547/132223/132752, feature: owner ladder order - tier-2 deepseek-v4.1-flash effort high, hy4 retired, kimi eliminated)",
+   "caught": "The NEW tier-2 ladder (deepseek-v4.1-flash effort high) reviewed its own replacement in 5 rounds and BLOCK/WARN-ed 10 real findings before the CLEAR: (1) BatchReviewPending SUBCLASSES SystemExit so the audit fallback's inner except swallowed the resume signal and would double-bill a second batch (HIGH); (2) fleet GATE_LADDER left mirroring retired hy4/kimi rungs breaking validated parity (MEDIUM); (3) audit evidence rows hard-coded the primary model when the backup served (LOW); (4) pre-write reviewed_write path lost the tier-2 effort/budget via the compat _call_model API (LOW); (5) non-hermetic test needing OPENROUTER_API_KEY (LOW); (6) fallback money-safety comment narrower than the sunk-receipt reality - adjudicated as designed, comment corrected (LOW); (7) batch lane documented effort high but scan_queue never forwarded reasoning + stale docstring (LOW); (8) `or \"high\"` resurrection of the documented empty-disable + pending-test not arming the fallback + manual --model overrides inheriting forced effort/budget against verbatim-override doctrine (3 LOWs across rounds 131547/132223). Plus this docket edit itself was caught twice: an arithmetic miscount in the severity tally (8 vs 10 findings), then EV-203 appended in a parallel top-level rows[] instead of the established entries[] covenant container (fragmenting the evidence log - fixed by moving the row into entries with the covenant shape).",
+   "severity": "1 HIGH + 1 MEDIUM + 8 LOW (ladder diff) + 2 LOW (docket-edit catches)",
+   "author_initially": "No - every finding was verified against the bytes before fixing; the exception-ordering HIGH (BatchReviewPending subclasses SystemExit) was the one class the author's own comment claimed to have handled while writing the inversion.",
+   "resolution": "All remediated in Tools 3544504 (5 rounds to CLEAR, notarized) and this row; lesson recorded: a fallback wrapping a pending-signal exception makes clause order the money invariant, and a moved call seam must sweep every consumer (fleet mirror, pre-write caller, batch transport, tests) in the same diff.",
+   "refs": [
+    "Tools 3544504",
+    ".adversary/reviews/gate_20261012-122708.md (Tools)",
+    ".adversary/reviews/gate_20261012-130726.md (Tools)",
+    ".adversary/reviews/gate_20261012-131547.md (Tools)",
+    ".adversary/reviews/gate_20261012-132223.md (Tools)",
+    ".adversary/reviews/gate_20261012-132752.md (Tools)",
+    "junk/hy4-eval (replay evidence for the ladder order)"
+   ]
   }
  ]
 }
