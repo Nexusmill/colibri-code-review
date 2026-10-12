@@ -3250,6 +3250,22 @@
     "openrouter-observability/tests/test_orobs_poller.py (TestControlPlatformSplit)"
    ],
    "docket_note": "Two lessons: (1) a locally-live-verified Windows feature still ships POSIX crashes - the external reviewer is the only eyes that never ran the code on the author's OS; (2) the author's own RED-first platform-forcing test caught the SIGKILL variant the round-1 fix introduced, which is the T1 invariant-test pattern paying for itself within one remediation cycle."
+  },
+  {
+   "id": "EV-202",
+   "date": "2026-10-12",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (round gate_20261011-215739, feature: observability bulk backfill via analytics generation_id)",
+   "caught": "day_windows treated the --end date as an exclusive midnight, so a single-day backfill enumerated NOTHING and any run silently skipped the end day's generations (the default --end is today); plus split_management_token crashed with IndexError on a bare 'sk-or-v1-' prefix, and the new backfill command was missing from the CLI usage text.",
+   "severity": "1 MEDIUM + 2 LOW",
+   "author_initially": "The author tested backfill only with a multi-month range run after UTC midnight, so the missing end day happened to be covered; the boundary semantics (inclusive date vs exclusive instant) were never exercised at the edges. The reviewer diff-read the window arithmetic cold and got all three.",
+   "resolution": "Fixed: day_windows now covers start..end INCLUSIVE and returns exclusive boundary dates (single-day range = one window); split_management_token returns '' on a bare prefix; backfill added to the docstring. Tests grew 24->30 incl. boundary cases; live re-run enumerated 2908 ids (one more than the buggy pass). Landed Tools 89d6633.",
+   "refs": [
+    "Tools .adversary/reviews/gate_20261011-215739.md",
+    "openrouter-observability/poller.py (day_windows / split_management_token)",
+    "Tools 89d6633"
+   ],
+   "docket_note": "Boundary-condition classes (inclusive/exclusive endpoints, empty inputs) keep escaping authors who test only the happy middle - the reviewer sees the arithmetic, not the author's live-run luck."
   }
  ]
 }

@@ -398,3 +398,15 @@ branch-forcing tests. Notable: the remediation itself re-committed the same clas
 (`signal.SIGKILL` at call time, absent on Windows) and the author's own RED-first
 platform-forcing test caught it before re-review — the T1 invariant-test pattern paying
 for itself inside one cycle.
+
+
+## 2026-10-12 Observability backfill, round 3 (EV-202)
+
+**BLOCK, 1 MEDIUM + 2 LOW** (gate_20261011-215739): `day_windows` treated
+`--end` as an exclusive midnight — single-day backfills enumerated nothing and
+every run silently skipped the end day's generations (the author's live test
+only passed because it ran after UTC midnight). Plus an IndexError on a bare
+`sk-or-v1-` prefix and the new command missing from the usage text. Fixed with
+inclusive-end/exclusive-boundary windows + 6 new tests (suite 30); landed in
+Tools 89d6633. Lesson: boundary semantics escape authors who test only the
+happy middle — the reviewer reads the arithmetic, not the live-run luck.
