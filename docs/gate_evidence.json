@@ -3300,6 +3300,24 @@
     "adversary-gate/adversary_gate.py _current_rules_epoch + _verify_chain_mac",
     "memory: prompt-v2-prototype-hallucination"
    ]
+  },
+  {
+   "id": "EV-205",
+   "date": "2026-10-13",
+   "repo": "Tools",
+   "layer": "gate-review rounds gate_20261013-021017..052126: 19 total, 13 with blocking findings, 1 WARN-landed clearance, remainder self-corrected between submissions. Feature: daily-docket flip - AUDIT_PCT=100 + periodic audit-drain daemon + pre-push ship gate",
+   "caught": "The 19-round review battle (13 rounds carrying findings) caught every escape hatch the author's own first drafts left open: (1) round 021017 MEDIUM x2 - the BLOCK row keyed by append-only tree had NO resolution path (fix-forward could never clear it) and the stop flag could silently no-op the drain daemon; (2) round 022523 MEDIUM - fix-forward resolution required an audit CLEAR row that tier-2-interactive fixes (which enqueue nothing) can never produce; (3) round 023307 MEDIUM - REJECTED (dead-lettered) audits were being treated as resolved, letting a 4xx storm silently disarm the whole barrier; (4) round 031046 MEDIUM - the ship gate was universal but the drain backstop covered only the Tools repo (non-Tools repos could lock forever); (5) round 033733 MEDIUM - tree-equality keying let a partial-staging SUBSET commit escape its own audit entirely; (6) round 035949 MEDIUM - a notarization exemption made the BLOCK branch dead code (every outgoing commit is notarized by construction); (7) round 041533 MEDIUM - a stale BLOCK row poisoned every future commit touching the same files with no in-band escape; (8) round 043459 MEDIUM - single-entry superset matching let commits spanning two review rounds through; (9) round 044646 HIGH - the union matcher reported ANY commit with unaudited files under every blocked row, permanently refusing all tier-2/gate-suite pushes; (10) round 045602 MEDIUM x2 - descendant resolution ignored row timestamps (a BLOCK could be laundered by any later notarized commit) and stale CLEAR rows older than the BLOCK laundered smuggled files; (11) round 050607/051126 MEDIUM - POSIX killpg on an inherited process group would kill the stop command/wrapper/CI job itself; (12) LOWs: drain timeout orphaning locks for ~65 min, unreadable-queue crash paths (unhashable tree values, non-object rows), test cache poisoning of last-known-good prompts, machine-state-dependent daemon tests, a real os.killpg in a unit test.",
+   "severity": "1 HIGH + 10 MEDIUM rounds (12 MEDIUM findings by count) + ~10 LOW findings; 2 LOW landed recorded: mixed-tier commit gap, per-checkout audit state",
+   "author_initially": "Each round's fix was verified against bytes before the next round; three of the author's remediations were themselves broken by the next round (the notarization self-resolution introduced in 035426 became the dead-branch finding of 035949; the REJECTED-resolves ruling of 023307 was reversed by 024131 as laundering; the single-entry union of 041533 became the spanning-rounds bypass of 043459).",
+   "resolution": "All landed as Tools 517f28c (WARN with 2 recorded LOWs): time-scoped file-coverage matching (tree-exact vs intersection classes, cleared-after, fix-forward-descendant-postdating), REJECTED never resolves, notarization never resolves, union QUEUED gating, POSIX session isolation for both daemons, drain timeout aligned to the gate's poll budget, repo auto-discovery for the drain.",
+   "refs": [
+    "Tools 517f28c",
+    ".adversary/reviews/gate_20261013-021017.md (Tools)",
+    ".adversary/reviews/gate_20261013-035949.md (Tools)",
+    ".adversary/reviews/gate_20261013-044646.md (Tools)",
+    ".adversary/reviews/gate_20261013-052126.md (Tools)",
+    "junk/hy4-eval (the replay evidence the ladder+docket program stands on)"
+   ]
   }
  ]
 }

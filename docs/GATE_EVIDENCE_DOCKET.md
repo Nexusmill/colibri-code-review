@@ -424,3 +424,14 @@ happy middle — the reviewer reads the arithmetic, not the live-run luck.
 **(1) Epoch rollback** (`_current_rules_epoch` reads the working tree; `.githooks/` stays editable; gate reviews staged-only): unstaged epoch writeback defeats stale-clearance expiry. Premises verified in live code; flagged independently by flash-high and unanimously by the fusion council. Originally hy4-CLEAR (suspected false negative). **(2) Chain-mac re-anchoring** (audit-time GENESIS walk vs write-time prior; note-authored exemption fields): later-arriving notarized ancestors can flag valid notes as tampered. PLAUSIBLE (multi-clone path not executed). Also originally hy4-CLEAR.
 
 Both deferred for a later adjudication round; refs in the machine-readable row.
+
+
+## EV-205 - 2026-10-13 - Tools 517f28c - the daily-docket ship gate, 19 rounds (13 carrying findings)
+
+**Rounds:** 021017..052126 (18 BLOCK/WARN + WARN-land). The deepest review battle in the gate's history - over a push-gate refinement, not new surface area.
+
+**Catches (headline):** every escape hatch in the author's own first drafts: unresolvable BLOCK rows (no fix-forward path, ever); REJECTED-as-resolved (a 4xx submission storm silently disarming the barrier); notarization-exemption dead branch (every outgoing commit is notarized by construction); stale-ROW poisoning of all future commits touching the same files; partial-staging subset escape from tree-equality keying; spanning-rounds bypass of single-entry matching; a HIGH union matcher that permanently refused ALL tier-2/gate-suite pushes; POSIX killpg on an inherited group killing the stop command itself.
+
+**Meta-lesson (the docket's strongest row yet):** three of the author's own remediations were broken by the NEXT round - each fix addressed the reported trigger and opened a different hole (self-resolution -> dead branch; REJECTED-resolves -> laundering; single-entry union -> spanning bypass). Consecutive adversarial rounds on the SAME diff are the only thing that caught them; single-round review would have shipped all three.
+
+**Resolution:** Tools 517f28c - time-scoped file-coverage matching throughout; 2 LOWs landed recorded (mixed-tier commit gap, per-checkout audit state).
