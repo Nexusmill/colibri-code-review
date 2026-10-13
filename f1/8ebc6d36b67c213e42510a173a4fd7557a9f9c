@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "f18ebc6d36b67c213e42510a173a4fd7557a9f9c",
+ "caller": "zcode",
+ "when": "20261013-120337",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "859a52f54de356792d9565a466ad35a7b4298bb6fb46d826faa81e8e14dfd51b",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261013-120335",
+   "artifact": ".adversary\\reviews\\gate_20261013-120335.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261013-120335.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2281, 'completion_tokens': 9419, 'total_tokens': 11700, 'cost': 0.00402443448, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 512, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00402443448, 'upstream_inference_prompt_cost': 0.00018148248, 'upstream_inference_completions_cost': 0.003842952}, 'completion_tokens_details': {'reasoning_tokens': 8807, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\n## Adversarial review \u2014 docs/gate_evidence.json (staged)\n\n**Hunk 1 (@@ -1218,17 +1218,17 @@, EV-077 `resolution`)**\nOnly byte-level delta is `\\u2026` \u2192 literal `\u2026` inside the string. Decoded JSON value is identical (U+2026 either way); key order, refs, and all other fields are untouched in the visible 17-line block. This is a representation change, not a record change, and no provided bytes show any consumer that compares raw source text or requires ASCII-only encoding. No defect found.\n\n**Hunk 2 (@@ -3313,11 +3313,27 @@, appended EV-206)**\n\nStructural check, using the indentation visible in the diff:\n- old tail: `   ]` (refs close) \u2192 `  }` (entry close) \u2192 ` ]` (array close) \u2192 `}` (root, no trailing newline).\n- new tail: `   ]` \u2192 **added `  },`** (closes the preceding entry) \u2192 **added `  {` \u2026 `   ]`** (EV-206 object, fields at 3 spaces, refs items at 4, refs close at 3) \u2192 context `  }` (now closes EV-206) \u2192 ` ]` \u2192 `}`.\n\nBrace/bracket accounting closes exactly: +16 added lines, 1 removed line, matching `-11` / `+27`. The re-used `  }` line is correctly the *new* entry's terminator, and the preceding entry is now terminated by the added `  },` \u2014 no unbalanced or dangling object.\n\nJSON lexical check of the added text: strings contain only parentheses, hyphens, colons, semicolons and a trailing period; no unescaped `\"` and no backslash sequences, so all seven keys parse as valid JSON. Key set (`id, date, layer, caught, severity, author_initially, resolution, refs` + `repo`) matches the sibling entries in the visible window. `date` 2026-10-13 agrees with the `gate_20261013-*` artifact stamps in `layer`/`refs`/`resolution`; the referenced commits (4cedc53, 158d6b8) and round IDs (114935 WARN, 115326 CLEAR) are mutually consistent within the entry. Append position is after the preceding 20261013 entry, so the array stays time-ordered. Trailing-newline addition is a pure file-terminator normalization.\n\nNothing in the operation can break the array, a reader, or an existing record; no unverifiable external claim is asserted as verified fact inside the change (severity/status are recorded as evidence, not as gate outcomes for this commit). No finding survives scrutiny.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261013-120144.md",
+  "outcomes": {
+   "fixed": 3
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261013-120335.md": {
+   "embedded": "86fd7f3d88af0854f33b227024459f8ee07767c7ace223073d986328817306bb",
+   "disk": "86fd7f3d88af0854f33b227024459f8ee07767c7ace223073d986328817306bb"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "61b15e1ba981459fb3c2f04f61bc2ae53da9457d00f96ba653b0d5f4509d8cc6"
+}
