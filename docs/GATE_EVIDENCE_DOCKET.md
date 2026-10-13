@@ -435,3 +435,18 @@ Both deferred for a later adjudication round; refs in the machine-readable row.
 **Meta-lesson (the docket's strongest row yet):** three of the author's own remediations were broken by the NEXT round - each fix addressed the reported trigger and opened a different hole (self-resolution -> dead branch; REJECTED-resolves -> laundering; single-entry union -> spanning bypass). Consecutive adversarial rounds on the SAME diff are the only thing that caught them; single-round review would have shipped all three.
 
 **Resolution:** Tools 517f28c - time-scoped file-coverage matching throughout; 2 LOWs landed recorded (mixed-tier commit gap, per-checkout audit state).
+## EV-206 - 2026-10-13 - Tools 4cedc53/158d6b8 - prompt-layer consumer matrix
+
+- **Catch (LOW):** round gate_20261013-114935 found a dead, divergent duplicate of the
+  _builtin_instructions/_resolve_instructions pair in hy4_review.py - the 2b insert
+  anchored at def review() landed a second pair after _feed while the tranche-2 pair
+  (without the expectation-audit branch) stayed above it. Runtime was correct (Python
+  rebinds to the later pair; 10/10 tests green) but a future edit at the first grep hit
+  would have been silently inert on the fail-open path (F811-class).
+- **Author initially:** shipped the WARN inside the landing commit, duplicate unnoticed
+  and invisible to the passing tests.
+- **Resolution:** same-session remediation 158d6b8 deleted the earlier EA-less pair;
+  batteries green, py_compile clean; the follow-up round took VERDICT: CLEAR with no
+  findings (artifact gate_20261013-115326.md).
+- **Refs:** Tools 4cedc53, 158d6b8; .adversary/reviews/gate_20261013-114935.md (WARN
+  round); Tools .adversary/reviews/gate_20261013-115326.md (CLEAR round).
