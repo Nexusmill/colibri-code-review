@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "bba00f074a2fbced769a55b037917c23abeb1fdd",
+ "caller": "zcode",
+ "when": "20261013-090632",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "90057993eff49e8d66b2683a84d789295db1cb1790d7418522618dcdf1a6f27a",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261013-090606",
+   "artifact": ".adversary\\reviews\\gate_20261013-090606.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261013-090606.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2128, 'completion_tokens': 8690, 'total_tokens': 10818, 'cost': 0.00368580672, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00368580672, 'upstream_inference_prompt_cost': 0.00014028672, 'upstream_inference_completions_cost': 0.00354552}, 'completion_tokens_details': {'reasoning_tokens': 8171, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json` as a document/fabrication asset, checking both JSON well-formedness and the internal consistency of the claims in the new `EV-205` entry.\n\nChecks performed and results:\n\n- **JSON structure/brace balance**: The diff converts the prior entry's closer to `+  },`, opens a new object with `+  {`, and lets the pre-existing context line `   }` close the new entry before the array `]` and root `}`. Brace/bracket pairing is balanced and the added object (id/date/repo/layer/caught/severity/author_initially/resolution/refs) is complete. No trailing-comma or unterminated-array defect. The `\\ No newline at end of file` marker is pre-existing and not introduced here.\n- **Arithmetic in the severity claim** `\"1 HIGH + 10 MEDIUM rounds (12 MEDIUM findings by count)\"`: the enumerated items yield MEDIUM x2 (021017) + 022523 + 023307 + 031046 + 033733 + 035949 + 041533 + 043459 + MEDIUM x2 (045602) + 050607/051126 = 12 MEDIUM findings and 1 HIGH, matching the stated \"12 MEDIUM findings by count\" and \"1 HIGH\". No disproving arithmetic contradiction.\n- **Cross-references**: date `2026-10-13` postdates the prior entry's `as of 2026-10-12`; `resolution` and `severity` agree on \"WARN \u2026 2 recorded LOWs\". No contradiction with visible bytes.\n- **Referenced external artifacts** (`.adversary/reviews/...`, `Tools 517f28c`, `junk/hy4-eval`): not supplied within the reviewed bytes; per scope these are not reportable as defects, and no external specification was invented to test them.\n- **Injection scan**: the added prose is descriptive evidence text; it contains no instruction-like content addressed to this review (no pre-approval/skip-review language).\n\nI could not construct a concrete trigger with a real impact (crash, invalid JSON, broken consumer contract, money/security harm) from the provided bytes. The residual narrative looseness in round-counting is interpretive and unverifiable against supplied evidence, so I discard it rather than assert it.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261013-085654.md",
+  "outcomes": {
+   "fixed": 1
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261013-090606.md": {
+   "embedded": "cc959ace7405b1c33a1fc351be51c1271eab679b1c75c28b8ebacf8e935fb643",
+   "disk": "cc959ace7405b1c33a1fc351be51c1271eab679b1c75c28b8ebacf8e935fb643"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "547a98e6b7f8017e2fe8a736dd144eed01d19c6fcd2aa8a1e8ae1c2397b4a99b"
+}
