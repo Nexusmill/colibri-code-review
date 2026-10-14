@@ -3381,6 +3381,52 @@
     "Tools .adversary/reviews/gate_20261014-122219.md (CLEAR round on the fix)",
     "live pyc evidence: generations/f645df8.../Tools/*/__pycache__ mtimes 12:12:09.97-12:12:10.92"
    ]
+  },
+  {
+   "id": "EV-210",
+   "date": "2026-10-14",
+   "repo": "Blink",
+   "layer": "adversary gate round 2 of the planner-budget fix (gate_20261014-135109.md, deepseek-v4.1-flash@baidu/fp8): LOW on the diff's own live evidence",
+   "caught": "The budget raise (PLANNER_MAX_TOKENS 16000->65536) fixed the token starvation but left the planner on the shared HTTP_TIMEOUT_SECONDS=90 - while the change's own live proof recorded a 123s 8-song plan. The reviewer reasoned from the REMEDIATION MANIFEST row in the diff: 'the new budget is the first configuration that can sit past' the timeout, risking paid-for-and-discarded completions aborting into TimeoutError on both LLM_ATTEMPTS (the same plain-video outage the fix claims closed). It explicitly flagged the one-cheap-verification path and named both remedies (time the call, or raise the planner timeout).",
+   "severity": "LOW",
+   "author_initially": "had not considered wall-time at all - the probe's 123s success was treated as proof without noticing it exceeded the 90s constant it ran under (per-socket-op semantics, not a deadline, made it survive by server-delivery luck)",
+   "resolution": "ADDRESSED IN THE SAME SESSION: PLANNER_HTTP_TIMEOUT_SECONDS=300 threaded via a new optional _http_json(timeout=...) param whose default preserves the shared 90s for every other caller; test_http_json_timeout_default_and_override pins default+override; the budget test asserts call_openrouter passes 300s. Committed in Blink afbf650.",
+   "refs": [
+    "Blink afbf650",
+    ".adversary/reviews/gate_20261014-135109.md",
+    "birdcam/enricher.py PLANNER_HTTP_TIMEOUT_SECONDS"
+   ]
+  },
+  {
+   "id": "EV-211",
+   "date": "2026-10-14",
+   "repo": "Blink",
+   "layer": "adversary gate round 3 of the same fix (gate_20261014-135713.md): LOW on a NEW TEST the round-2 remediation introduced",
+   "caught": "test_http_json_timeout_default_and_override called _http_json with only _open_url patched - _guard_url still ran a live socket.getaddrinfo('replicate.com'), so the suite would error on any offline/air-gapped box, contradicting the test file's own module contract 'Offline unit tests ... (no network, no ffmpeg)'. The reviewer also verified the positive (the positional/kwargs assertions matched the real call shape) before clearing.",
+   "severity": "LOW",
+   "author_initially": "wrote the offline-contract test with a live DNS dependency - exactly the class of error the file's existing guard tests already solved (they pin enricher.socket.getaddrinfo)",
+   "resolution": "ADDRESSED IN THE SAME SESSION: the test now pins getaddrinfo exactly like test_allowed_host_public_ip_passes; battery 256 OK; round 3 returned CLEAR (gate_20261014-135957.md). Committed in Blink afbf650.",
+   "refs": [
+    "Blink afbf650",
+    ".adversary/reviews/gate_20261014-135713.md",
+    "tests/test_enricher.py test_http_json_timeout_default_and_override"
+   ]
+  },
+  {
+   "id": "EV-212",
+   "date": "2026-10-14",
+   "repo": "Tools",
+   "layer": "live push-path breakage (surfaced by the gate_selftest harness repair; first live exercise of the config pre-push hook since the 2026-10-11 migration)",
+   "caught": "EVERY git push on the machine was dead since the config-hooks migration: the config template (config_hooks.py _EVENT_ARGS) embedded a hookdir-style literal '\"$1\"' in the pre-push command - the shell expands it EMPTY while git APPENDS the real remote and url AFTER the command, so adversary_gate's argparse died with 'unrecognized arguments: origin <url>' before any guard logic ran. The migration round's probe (junk/probe_pushhook2.py, gate_20261011-063610) validated the no-arg entries (every commit since proves those) but pre-push was never exercised live; undetected because nothing had been pushed from any repo since the migration. Additionally the harness repair surfaced two gate findings (round 133017): removing the fixture's hookdir pin made gate_selftest machine-dependent (config hooks execute the INSTALLED snapshot, not the working tree under test), and config_hooks' exact-byte arming comparison would misreport live legacy entries as foreign.",
+   "severity": "HIGH",
+   "author_initially": "The '\"$1\"' literal was a pattern transplant from the hookdir script form into the config-command form during the 2026-10-11 migration; the harness drift (stale ladder literals, reasoning-kwarg mocks, double-fired fixtures) had kept gate_selftest from ever running the push rows to expose it.",
+   "resolution": "8c7d2c3 (round 140424 CLEAR, both 133017 findings adjudicated fixed): template drops the literal; check-push accepts the appended argv (remote = first non-empty, tolerating not-yet-corrected live entries whose literal expands empty); config_hooks gains _command_matches with exactly one legacy-token tolerance; gate_selftest hermeticity restored via GIT_CONFIG_GLOBAL isolation (the fixture's hookdir pin is the only hook and execs the working tree). Live-proven post-install: the probe push now reaches the real PUSH GUARD refusal for un-notarized history instead of the argparse crash. The live global entry still carries the legacy literal - tolerated by the parser; the owner may clean it to the canonical command at leisure.",
+   "refs": [
+    "Tools 8c7d2c3",
+    "Tools .adversary/reviews/gate_20261014-133017.md (BLOCK round, 2 findings)",
+    "Tools .adversary/reviews/gate_20261014-140424.md (CLEAR round)",
+    "live probe junk/prepush_driver.py: pre-fix 'unrecognized arguments: origin <url>', post-fix PUSH GUARD refusal"
+   ]
   }
  ]
 }

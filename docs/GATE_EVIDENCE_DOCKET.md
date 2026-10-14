@@ -450,3 +450,36 @@ Both deferred for a later adjudication round; refs in the machine-readable row.
   findings (artifact gate_20261013-115326.md).
 - **Refs:** Tools 4cedc53, 158d6b8; .adversary/reviews/gate_20261013-114935.md (WARN
   round); Tools .adversary/reviews/gate_20261013-115326.md (CLEAR round).
+## EV-210 - 2026-10-14 - Blink afbf650 - planner budget raised, deadline forgotten
+
+- **Catch (LOW):** round gate_20261014-135109.md reviewed the PLANNER_MAX_TOKENS
+  16000->65536 fix for the multi-song starvation outage and caught what the author's
+  own live proof recorded but the author never reasoned about: the successful 8-song
+  probe took 123s while call_openrouter still rode the shared HTTP_TIMEOUT_SECONDS=90.
+  The reviewer tied the finding to the diff's own remediation row ("the new budget is
+  the first configuration that can sit past it"), traced the TimeoutError path to both
+  LLM_ATTEMPTS failing -> plain-video posting (the exact outage the fix claims closed),
+  priced the paid-for-and-discarded completion risk, and named the one-call verification.
+- **Author initially:** treated the 123s probe as proof, not noticing it exceeded the
+  90s constant it ran under - it survived on per-socket-op semantics (server delivery
+  luck), not on a deadline the code guaranteed.
+- **Resolution:** same-session PLANNER_HTTP_TIMEOUT_SECONDS=300 via a default-preserving
+  _http_json(timeout=...) param; default/override threading pinned by tests; round 3
+  CLEAR (gate_20261014-135957.md). Blink afbf650.
+- **Refs:** Blink afbf650; Blink .adversary/reviews/gate_20261014-135109.md;
+  birdcam/enricher.py PLANNER_HTTP_TIMEOUT_SECONDS.
+
+## EV-211 - 2026-10-14 - Blink afbf650 - the offline-contract test that did live DNS
+
+- **Catch (LOW):** round gate_20261014-135713.md caught a defect IN the round-2
+  remediation itself: the new test_http_json_timeout_default_and_override patched only
+  _open_url, so _guard_url ran a live socket.getaddrinfo('replicate.com') - the suite
+  would error on any offline box, contradicting the test file's own module contract
+  ("Offline unit tests ... no network, no ffmpeg"). The reviewer verified the positive
+  too (assertion shapes match the real call) before clearing the fix itself.
+- **Author initially:** wrote the no-network test with a network dependency - the exact
+  class the file's existing guard tests had already solved by pinning getaddrinfo.
+- **Resolution:** same-session fix pinned enricher.socket.getaddrinfo like its siblings;
+  battery 256 OK; round 3 CLEAR (gate_20261014-135957.md). Blink afbf650.
+- **Refs:** Blink afbf650; Blink .adversary/reviews/gate_20261014-135713.md;
+  tests/test_enricher.py test_http_json_timeout_default_and_override.
