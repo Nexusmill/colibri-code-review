@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "7c6047cf2d39e1364be2f0ff70e05b2733deca42",
+ "caller": "zcode",
+ "when": "20261014-122635",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "4879408a17ba70ec9373511e0d0967058a40c97f219fd4133198465950154395",
+   "model": "qwen/qwen3.8-omni-flash",
+   "verdict": "WARN",
+   "when": "20261014-122634",
+   "artifact": ".adversary\\reviews\\gate_20261014-122634.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261014-122634.md": "model: qwen/qwen3.8-omni-flash | provider: Alibaba | usage: {'prompt_tokens': 1648, 'completion_tokens': 10429, 'total_tokens': 12077, 'cost': 0.00514883, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00514883, 'upstream_inference_prompt_cost': 0.0002472, 'upstream_inference_completions_cost': 0.00490163}, 'completion_tokens_details': {'reasoning_tokens': 10267, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nLOW docs/gate_evidence.json EV-209 `caught` / `refs`: the narrative says the `__pycache__` mtimes \u201cmatched the audit-queue spawn second (12:12:09) exactly,\u201d but the supplied evidence ref in the same entry gives a range of `12:12:09.97-12:12:10.92`, which includes times in `12:12:10`. Trigger: a future audit or gate consumer reads this record as proof of an exact same-second correlation. Impact: the evidence record overstates the forensic precision of the pyc timing and can mislead later diagnosis of the generation-pollution incident.\n\nVERDICT: WARN"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261014-122634.md": {
+   "embedded": "c3a72094de96c51d4e0db5062c3a5ffd86c7215dd92b7affec68d18ac09ee315",
+   "disk": "c3a72094de96c51d4e0db5062c3a5ffd86c7215dd92b7affec68d18ac09ee315"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "de62b342c94ded286f80dd0bf44eaa75a67b141420412f4f7857bc8e14b86163"
+}
