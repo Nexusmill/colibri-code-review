@@ -1223,7 +1223,7 @@
    "caught": "A FALSE refusal, twice, recorded because it is evidence about the layer: the tranche moved `_bounded_gunzip` from runtime/http_routes.py to security.bounded_gunzip so import-scip could share the gzip-bomb guard. Round 1 kept the old name bound with `from ..security import bounded_gunzip as _bounded_gunzip`; round 2 with a module-level `_bounded_gunzip = bounded_gunzip` assignment. The pre-check compares DEFINITIONS (def/class) between the old and new bytes, saw the def gone with six unstaged references in tests/test_v1_108_95.py, and refused before any review - both times, while that test file passed on both trees. Only staging the caller re-pointed (the test now imports the helper from its new home) let the review run.",
    "severity": "NONE (false positive of the layer) - the code was correct on all three trees",
    "author_initially": "Believed an import alias was a binding the check would honour; then believed an assignment would be. Neither is: the check is definition-based by design - Tools de3f953 added it after Tools 8245433 shipped exactly the hole where a reviewer never sees unstaged callers (EV-060) - and an alias is exactly what a reviewer cannot verify without the callers staged.",
-   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import … as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
+   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import \u2026 as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
    "refs": [
     "jcodemunch-mcp .adversary/reviews/ (rounds 1-2 wrote NO artifact - a REFUSED pre-check exits before the review; the captures are the session scratchpad gate_scipcap_r1.txt / gate_scipcap_r2.txt)",
     "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK, first round the pre-check let through)",
@@ -3333,6 +3333,37 @@
     "Tools 158d6b8",
     ".adversary/reviews/gate_20261013-114935.md (WARN round)",
     "Tools .adversary/reviews/gate_20261013-115326.md (CLEAR round)"
+   ]
+  },
+  {
+   "id": "EV-207",
+   "date": "2026-10-14",
+   "repo": "Tools",
+   "layer": "gate-review round gate_20261013-112721 (batch gen-id feed at drain: receipt lifecycle + prompt attribution)",
+   "caught": "Two LOWs in _call_batch_model's completed branch: (1) the completed-batch receipt is never marked after a successful fetch, so a byte-identical replay (the drain's own queue-file recovery moves entries back) re-fetches and re-feeds the same gen-batch id - duplicate ids-feed lines double-record cost for append-per-line consumers; (2) on resume the bytes sent are the persisted prompt sidecar while the prompt_meta fed to the observability pipeline describes the CURRENT resolution, attributing the generation to a prompt version that did not produce it.",
+   "severity": "LOW x2",
+   "author_initially": "Shipped as WARN with 2 recorded LOWs in 2471ae1 (prior session) to land the consumer-matrix tranche; the WARN rows also kept the installed runtime pinned at 488ef99 (activate refuses WARN-cleared catalog blobs).",
+   "resolution": "Same-session remediation 0881fb2: fail-open fetched-mark on the receipt (one feed per completed generation; replays re-parse without re-feeding) + submission-time meta persisted beside the core sidecar (batch-review-core-<sha>.meta.json) so resumes feed and record the meta of the bytes actually sent, attributing nothing when unattributable; artifact header aligned via the _LAST_PROMPT_META sibling; BatchFeedAttestationTests (5) RED-first.",
+   "refs": [
+    "Tools 2471ae1",
+    "Tools 0881fb2",
+    "Tools .adversary/reviews/gate_20261013-112721.md (WARN round)"
+   ]
+  },
+  {
+   "id": "EV-208",
+   "date": "2026-10-14",
+   "repo": "Tools",
+   "layer": "gate-review round gate_20261014-120101 (tier-2 review of the EV-207 remediation diff itself)",
+   "caught": "A defect IN the remediation: the fetched-mark was written unconditionally after the feed attempt, but _orobs_feed swallows every failure and returned nothing - a transiently failed feed (unwritable path, ENOSPC at that instant) would be marked fetched, so the replay the mark exists to serve would skip the feed forever and the generation id never reaches the OROBS pipeline.",
+   "severity": "LOW",
+   "author_initially": "Shipped in remediation commit 0881fb2 as WARN (1 LOW) - the author's hostile diff review checked the mark-write failure path but not the feed's silent-failure interaction with the new mark.",
+   "resolution": "Same-session follow-up f645df8: _orobs_feed returns True only when the line landed (False on id-less bodies and all swallowed failures) and the receipt marks fetched on that signal alone; verdict-named test test_failed_feed_is_not_marked_fetched_and_replay_retries_it RED-first; round took VERDICT: CLEAR (artifact gate_20261014-120732.md) and the post-commit activate installed generation f645df8 - the 488ef99 runtime pin is broken.",
+   "refs": [
+    "Tools 0881fb2",
+    "Tools f645df8",
+    "Tools .adversary/reviews/gate_20261014-120101.md (WARN round)",
+    "Tools .adversary/reviews/gate_20261014-120732.md (CLEAR round)"
    ]
   }
  ]
