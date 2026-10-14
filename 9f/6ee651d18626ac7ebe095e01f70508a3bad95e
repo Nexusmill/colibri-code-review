@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "9f6ee651d18626ac7ebe095e01f70508a3bad95e",
+ "caller": "zcode",
+ "when": "20261014-140839",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "7d3e882ba7a3fa5d9daae58dfe401bf8b9d08444cf6b6a9e0f9c9dc14c70f595",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261014-140838",
+   "artifact": ".adversary\\reviews\\gate_20261014-140838.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261014-140838.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2688, 'completion_tokens': 14633, 'total_tokens': 17321, 'cost': 0.009164634, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.009164634, 'upstream_inference_prompt_cost': 0.0004023936, 'upstream_inference_completions_cost': 0.0087622404}, 'completion_tokens_details': {'reasoning_tokens': 13917, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\n**Review of `docs/gate_evidence.json` (staged addition of EV-210, EV-211, EV-212)**\n\nChecks performed against the supplied bytes:\n\n**Well-formedness.** The prior entry's `refs` array is closed by the unchanged context line `]`; the first added line `},` closes that entry and the added `{` opens `EV-210`. Brace/bracket accounting across the hunk balances exactly: 3 added `{` (EV-210/211/212) against 3 added `}` (previous entry, EV-210, EV-211), with the trailing context `}` closing EV-212, then `]` closing the array and `}` closing the root. Line arithmetic matches the hunk header (`-3376,11 +3376,57`: 8 leading + 3 trailing context = 11 old; 8 + 46 + 3 = 57 new; file end at 3432). No trailing commas in any field list or `refs` array.\n\n**String escaping.** The only embedded quotes are in EV-212 (`'\\\"$1\\\"'`), correctly escaped as `\\\"`; the single-quoted narrative fragments in EV-210/211/212 need no escaping. No raw control characters or unescaped `\"` in any added string.\n\n**Schema consistency.** The added objects carry the same field set/shape as the visible neighbouring entry and the two sibling additions (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`). IDs EV-210/211/212 are mutually distinct and follow the neighbouring sequence. Severity values (`LOW`, `LOW`, `HIGH`) are internally consistent with each entry's framing.\n\n**Internal cross-consistency of the claims.** EV-210 (token budget 16000\u219265536 vs shared 90s timeout, remediation `PLANNER_HTTP_TIMEOUT_SECONDS=300`) and EV-211 (test for `_http_json(timeout=...)` default/override, `_guard_url`/`getaddrinfo` offline contract) both attribute the fix to Blink `afbf650` and reference the same `birdcam/enricher.py` / `tests/test_enricher.py` surface \u2014 no conflicting commit or file attribution. EV-212's `caught` (argparse `unrecognized arguments: origin <url>`) matches its resolution (check-push taking the first non-empty appended arg) and its live-probe ref (pre-fix argparse crash \u2192 post-fix PUSH GUARD refusal). Gate-round timestamps are monotonic (135109 \u2192 135713 \u2192 133017 \u2192 140424) and each finding's resolution names the review file that adjudicated it. The \"round 3\" finding at `135713` and the re-run CLEAR at `135957` are consistent with the repo's practice (visible in the preceding entry) of re-running a numbered round until CLEAR.\n\n**Out-of-scope material.** The claims about the Blink and Tools repositories, commits and review files cannot be refuted from the supplied bytes; the change is a documentation append and introduces no executable path, so there is no call-site, state-ordering, or money-safety surface to attack here.\n\nNo finding survives verification.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261014-140710.md",
+  "outcomes": {
+   "fixed": 2
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261014-140838.md": {
+   "embedded": "4702559f84b57052064d65dc657576e2b0e5df84bb97002067d642520cb89807",
+   "disk": "4702559f84b57052064d65dc657576e2b0e5df84bb97002067d642520cb89807"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "7223ebe8bcda1bc2ed4b559feb2964fd9ef06c00a3c891fffb0b9f29b0b10514"
+}
