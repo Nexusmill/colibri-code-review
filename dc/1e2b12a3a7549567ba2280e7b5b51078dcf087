@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "dc1e2b12a3a7549567ba2280e7b5b51078dcf087",
+ "caller": "zcode",
+ "when": "20261014-122722",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "153a1eaf3dfc2e597963f3324e7107d788ef640d76402c57ca6fa6cea3e55b94",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261014-122721",
+   "artifact": ".adversary\\reviews\\gate_20261014-122721.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261014-122721.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1725, 'completion_tokens': 3879, 'total_tokens': 5604, 'cost': 0.0025809777, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0025809777, 'upstream_inference_prompt_cost': 0.0002582325, 'upstream_inference_completions_cost': 0.0023227452}, 'completion_tokens_details': {'reasoning_tokens': 3429, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json` (record EV-209).\n\nChecks performed:\n\n- **JSON validity**: The two modified lines (\"caught\", \"resolution\") contain no unescaped double quotes, braces, or commas; surrounding structure (`\"severity\"`, `\"author_initially\"`, `\"refs\"`, closing braces) is untouched. Parsing is unaffected.\n- **Internal consistency of the new \"caught\" wording**: The amendment replaces the overstated \"matched the audit-queue spawn second (12:12:09) exactly\" with a measured window: docscan at `12:12:09.97`, queue-id second `121209` (= 12:12:09), autoland trailing to `12:12:10.92`. This is consistent with the pre-existing ref line `mtimes 12:12:09.97-12:12:10.92` \u2014 the lower and upper bounds match exactly, and `121209` is the numeric form of the `12:12:09` second. No contradiction with the retained latency/masking narrative.\n- **New \"resolution\" sentence**: Appends an in-place amendment note referencing a LOW gate round. It does not alter the prior fix narrative (`-B` vs `-I`, `a4adf61`, `AuditDrainSpawnTests`, pycache cleanup, re-notarization). It introduces no false claim about the fix mechanics.\n- **Refs coupling**: The new prose cites `gate_20261014-122634` while `refs` lists `gate_20261014-122219.md`. Both can legitimately coexist (fix-round CLEAR vs. a later wording-regulation round); the doctrine about record-keying applies to `.colibri_reviews/_manifest.json`, not this evidence file, so no \"hidden/fragmented record\" is created by this prose.\n\nNo finding survives scrutiny: the change is a wording correction that moves a claim *toward* the evidence already recorded in the same record, and no call sites, state, or contracts in the visible bytes are affected.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261014-122721.md": {
+   "embedded": "71b7d455d5e4ac0c4301bb5f5dc235561b0eac15ede73d97c2700ffd7aab6058",
+   "disk": "71b7d455d5e4ac0c4301bb5f5dc235561b0eac15ede73d97c2700ffd7aab6058"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "1690f6458539528fc227f40565a07913493dccb9766cab6cd6390001d325da6a"
+}
