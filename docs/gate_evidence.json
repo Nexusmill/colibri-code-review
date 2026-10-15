@@ -1223,7 +1223,7 @@
    "caught": "A FALSE refusal, twice, recorded because it is evidence about the layer: the tranche moved `_bounded_gunzip` from runtime/http_routes.py to security.bounded_gunzip so import-scip could share the gzip-bomb guard. Round 1 kept the old name bound with `from ..security import bounded_gunzip as _bounded_gunzip`; round 2 with a module-level `_bounded_gunzip = bounded_gunzip` assignment. The pre-check compares DEFINITIONS (def/class) between the old and new bytes, saw the def gone with six unstaged references in tests/test_v1_108_95.py, and refused before any review - both times, while that test file passed on both trees. Only staging the caller re-pointed (the test now imports the helper from its new home) let the review run.",
    "severity": "NONE (false positive of the layer) - the code was correct on all three trees",
    "author_initially": "Believed an import alias was a binding the check would honour; then believed an assignment would be. Neither is: the check is definition-based by design - Tools de3f953 added it after Tools 8245433 shipped exactly the hole where a reviewer never sees unstaged callers (EV-060) - and an alias is exactly what a reviewer cannot verify without the callers staged.",
-   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import \u2026 as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
+   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import … as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
    "refs": [
     "jcodemunch-mcp .adversary/reviews/ (rounds 1-2 wrote NO artifact - a REFUSED pre-check exits before the review; the captures are the session scratchpad gate_scipcap_r1.txt / gate_scipcap_r2.txt)",
     "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK, first round the pre-check let through)",
@@ -3444,6 +3444,21 @@
     "Tools .adversary/reviews/gate_20261014-190355.md (BLOCK round)",
     "Tools .adversary/reviews/gate_20261014-191855.md (CLEAR round)",
     "Tools .adversary/reviews/gate_20261014-192725.md (full-catalog certification CLEAR)"
+   ]
+  },
+  {
+   "id": "EV-214",
+   "date": "2026-10-15",
+   "repo": "Nexusmill",
+   "layer": "gate tier-2 round gate_20261015-053306 (G42/G43 landing tranche; tier-1 429-incomplete, tier-2 qwen3.8-omni-flash BLOCK)",
+   "caught": "The G42 fail-arm's remediation predicate was keyed on TOOL TYPE not LOCATION: ($tool -ne 'Bash') was unconditionally true for Write/Edit, so during a current-repo FAIL lock any Write/Edit to exempt harness paths (repo-memory package, .zcode, ~/.zcode/health/ledger.json itself) was ALLOWED - a fail-locked session could rewrite the ledger to current_fail:false or edit the guard's own dependencies with no audit, while the deny text claimed only in-repo fixes were permitted (silent contract break; the guard could defang itself).",
+   "severity": "HIGH",
+   "author_initially": "defended the design intent (harness surfaces hold failing deps) but the reviewer was right: legitimate harness fixes are Bash+marker operations, and the ledger-rewrite escape had no counter - accepted as CONFIRMED",
+   "resolution": "Location-keyed predicate: during FAIL, Write/Edit allowed ONLY for paths inside the current repo; harness surfaces reachable only via Bash chains carrying repo_health/grounding/adversary/_git_do/git-commit/propagate markers. Header + deny text updated to state the actual contract. Red-green: reviewer trigger case (Write repo-memory/repo_memory/cli.py mid-FAIL) now DENIES; ledger.json Write DENIES; in-repo Write + marker Bash still ALLOW; healthy-path semantics unchanged (outside-commit deny, REPO_MEM_LOGGED allow).",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261015-053306.md (BLOCK round)",
+    "Nexusmill tools/zcode_repo_guards.ps1 (gate r1 fix, 2026-10-15)",
+    "owner order 2026-10-15 (session health protocol + cross-repo ledger)"
    ]
   }
  ]
