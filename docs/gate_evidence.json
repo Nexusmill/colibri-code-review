@@ -3460,6 +3460,22 @@
     "Nexusmill tools/zcode_repo_guards.ps1 (gate r1 fix, 2026-10-15)",
     "owner order 2026-10-15 (session health protocol + cross-repo ledger)"
    ]
+  },
+  {
+   "id": "EV-215",
+   "date": "2026-10-15",
+   "repo": "Nexusmill",
+   "layer": "gate tier-2 round gate_20261015-054732 (G42/G43 landing tranche round 2; five MEDIUM findings A-E)",
+   "caught": "Round 2 on the r1-fixed guard: (A) both arms bypassable via the SANCTIONED MCP edit surface (safe_write/safe_replace not in the matcher nor the tool filter) - the r1 HIGH was not actually closed; (B) fail-arm inCurrent used the RAW un-normalized path with a hardcoded 'nexusmill' substring (Nexusmill\\..\\Tools traversal escapes; registry current not honored); (C) the Bash 'same-chain store log verified' marker is unobservable pre-execution and free-text forgeable - false assurance in code and contract; (D) whole-blob exemption let any harness reference (health_ledger.py, log_external.py) launder an outside-repo mutation past G43; (E) the health pass had no aggregate budget (11 repos x 2 git calls x 6s = 132s worst case vs a 45s hook that kills the ENTIRE grounding payload on timeout).",
+   "severity": "MEDIUM (x5; A is the r1 HIGH residual)",
+   "author_initially": "accepted all five as CONFIRMED - the reviewer verified the sanctioned-surface bypass against the repo's own grounding directive text",
+   "resolution": "Guard v3: matcher covers the MCP edit tools and classifies their payloads Write-equivalent; inCurrent normalized + registry-derived root; Bash arm verifies declared intent (log_external.py in chain) with the store row as post-hoc audit; path-context-scoped exemptions with per-token outside detection; health_ledger aggregate budget (REPO_HEALTH_BUDGET=25s) with budget-skipped reporting. Battery: all five trigger cases flip to deny/skip, all legitimate paths still allow.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261015-054732.md (BLOCK round)",
+    "Nexusmill tools/zcode_repo_guards.ps1 (v3)",
+    "Nexusmill .zcode/config.json (matcher extension)",
+    "Nexusmill tools/repo_health/health_ledger.py (budget)"
+   ]
   }
  ]
 }
