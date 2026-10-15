@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "2e8f0c0e93c8472888bb4373d0e6edf8befb842f",
+ "caller": "zcode",
+ "when": "20261015-054013",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "deb4f4ca0b9d846d83d81ea3487488018f154df00ac7b40c4d5c8b4e33b589a5",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261015-054011",
+   "artifact": ".adversary\\reviews\\gate_20261015-054011.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261015-054011.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2630, 'completion_tokens': 12580, 'total_tokens': 15210, 'cost': 0.015885, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.015885, 'upstream_inference_prompt_cost': 0.000789, 'upstream_inference_completions_cost': 0.015096}, 'completion_tokens_details': {'reasoning_tokens': 11807, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json` against the provided bytes: the replaced line in hunk 1, the appended entry in hunk 2, and the end-of-file change.\n\nChecks performed and their outcomes:\n\n1. **JSON structural integrity at the insertion point.** The previous array element is closed with the added `+  },` (comma present), the new object is opened by `+  {`, all nine keys (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`) are unique and comma-separated, `refs` closes with `+   ]`, and the trailing object/array/root braces are supplied by the unchanged context `   }`, `  ]`, `}`. Delimiter balance is preserved; the hunk header accounting (`@@ -3440,11 +3440,26 @@`, 11 old lines \u2192 26 new lines, +15 added lines) matches the 15 added lines exactly, and the resulting last line (3465) matches the scoped window's `3465: }`. No missing, extra, or dangling comma.\n\n2. **String content of the new entry.** Every value is a double-quoted JSON string containing only single quotes, parentheses, `~`, `/`, `:`, `-`, and `+`; there are no embedded `\"` or `\\` characters that would need escaping, so no parse break in `caught`, `author_initially`, `resolution`, or the three `refs` strings.\n\n3. **The edited resolution line (hunk 1).** The only byte difference is `import \\u2026 as` \u2192 `import \u2026 as`; `\\u2026` decodes to U+2026 HORIZONTAL ELLIPSIS, identical to the literal character shown, so the recorded value is unchanged. A literal U+2026 in a JSON string is legal under the JSON grammar (only control characters, `\"`, and `\\` must be escaped), so this is value-preserving, not a corruption.\n\n4. **End-of-file.** `-}` \u2192 `+}` with `\\ No newline at end of file`; the root object still closes after the array. No content change; trailing-newline state is formatting only.\n\n5. **Schema/scope coherence with visible siblings.** EV-214 carries the same key set as the visible EV-077 entry, uses the same `repo`/`layer`/`caught`/`severity`/`author_initially`/`resolution`/`refs` shape, and its cited review id (`gate_20261015-053306`) and date (2026-10-15) are consistent in form with neighboring 2026-10-14 entries. Its claims concern an external repository (`Nexusmill tools/zcode_repo_guards.ps1`) not present in the provided bytes, so no contradiction with supplied evidence can be established; I do not treat unverifiable external state as a defect.\n\n6. **Influence text.** No text in the diff requests that this review be skipped or softened. The clause \"recorded here as data, not as a verdict\" describes the evidence log's own scope in prose about a prior Tools-layer decision; it is not an instruction directed at this review.\n\nNo quoted line in the provided bytes supports a defect that this change introduces: the additions are well-formed, the escape-to-literal swap is semantically neutral, and the brace/comma accounting is correct. Nothing survives my own verification as a reportable finding.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261015-054011.md": {
+   "embedded": "c60d947970b4077c070ceb44ecc6adeee55646c0ed6aebe749b72f6016427a15",
+   "disk": "c60d947970b4077c070ceb44ecc6adeee55646c0ed6aebe749b72f6016427a15"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "55aa66e164cc2e1136f1b08fdc665ab80f8a10ce8857c3b50a3711b249c1c69a"
+}
