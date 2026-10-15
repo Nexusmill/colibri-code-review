@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "9e4abb40f8745d9dd73ba534f401ddf49dcae3e0",
+ "caller": "zcode",
+ "when": "20261015-055833",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "91e68f0fe7bc793d16f45d32a863ea45e7b4ceb820b7d05a3d76ea067929cd77",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261015-055832",
+   "artifact": ".adversary\\reviews\\gate_20261015-055832.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261015-055832.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1814, 'completion_tokens': 5288, 'total_tokens': 7102, 'cost': 0.0068898, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0068898, 'upstream_inference_prompt_cost': 0.0005442, 'upstream_inference_completions_cost': 0.0063456}, 'completion_tokens_details': {'reasoning_tokens': 4662, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nNo refutable defect found in the staged change.\n\nChecks run against the provided bytes:\n\n- **JSON structure.** The added block closes the preceding entry with `+  },` and opens a new object `+  {`, and the trailing context lines `   }` / `  ]` / ` }` still close the new object, the entries array, and the root object respectively. Line-count arithmetic matches the hunk header: 16 added lines + 11 context lines = 27 new lines (`@@ -3455,11 +3455,27 @@`), spanning 3455\u20133481 with the file's final `}` intact. The new object contains no trailing comma and no misplaced brace.\n- **String escaping.** The new object's keys are `id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs` \u2014 no duplicate keys. Every added string is double-quoted with no unescaped `\"` or lone `\\`; the only backslash sequences are `\\\\..\\\\` in `(Nexusmill\\\\..\\\\Tools traversal escapes; registry current not honored)`, which are valid JSON escapes. Single quotes (`'nexusmill'`, `'same-chain store log verified'`) need no escaping inside double-quoted strings.\n- **Numeric claim.** The one arithmetic statement in the entry, `11 repos x 2 git calls x 6s = 132s worst case vs a 45s hook`, is correct (132 > 45), so no interval/overflow error.\n- **Internal consistency.** EV-215 explicitly labels item A as `(A) both arms bypassable via the SANCTIONED MCP edit surface (safe_write/safe_replace not in the matcher nor the tool filter) - the r1 HIGH was not actually closed` and still discloses it in the text under `\"severity\": \"MEDIUM (x5; A is the r1 HIGH residual)\"`. The downgrade is stated openly rather than concealed, and the supersession of the earlier entry's `\"severity\": \"HIGH\"` resolution is exactly what an append-only evidence ledger records; it is not a broken contract with the surrounding bytes visible here.\n- **Untestable claims.** Items such as `health_ledger aggregate budget (REPO_HEALTH_BUDGET=25s)`, `registry-derived root`, `Nexusmill .adversary/reviews/gate_20261015-054732.md (BLOCK round)` reference files outside the provided bytes; per the grounding contract they cannot be quoted and are not reported, and I do not invent external specifications to fault them.\n- **No instruction-shaped content.** The narrative phrases (`accepted as CONFIRMED`, `accepted all five as CONFIRMED`) are ledger records of a prior review round, not claims that this change is pre-approved nor requests to soften this review; they were treated as data.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261015-055832.md": {
+   "embedded": "ad587d0845d327aeec65a2ec596cc2851f181fb5ae7b3ec4170da5656f91dc7a",
+   "disk": "ad587d0845d327aeec65a2ec596cc2851f181fb5ae7b3ec4170da5656f91dc7a"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "798a688f51e5bab0a40e74b0d5a5d8e3b39693b483515bd5b63a9be20ad7dd21"
+}
