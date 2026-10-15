@@ -3491,6 +3491,36 @@
     "Nexusmill tools/repo_health/health_ledger.py (_budget_s)",
     "Nexusmill .adversary/reviews/ round-3 BLOCK"
    ]
+  },
+  {
+   "id": "EV-217",
+   "date": "2026-10-15",
+   "repo": "Nexusmill",
+   "layer": "gate tier-1 round 4 (G42/G43 tranche; 1 MEDIUM + 1 LOW)",
+   "caught": "(MEDIUM) Bash outside-detection only matched ABSOLUTE drive-letter tokens, so a relative target ('cd ../Blink && rm -f data/out.bin', 'cd ../Tools && git commit -am x') produced no token at all: outside stayed false and BOTH arms failed - G43 allowed an unlogged cross-repo mutation, and the G42 fail-arm's no-outside condition was defeated by the same input. (LOW) the .zcode exemption was unanchored ([\\/]\\.zcode matches ANY repo's .zcode subtree), silently exemptting e.g. Blink\\.zcode\\config.json from G43.",
+   "severity": "MEDIUM",
+   "author_initially": "accepted both as CONFIRMED (row re-appended 2026-10-15: the original append died with a G-COMMIT-blocked chain before running)",
+   "resolution": "Token scan extended to dot-dot RELATIVE tokens resolved against the hook cwd; .zcode exemption anchored to the harness USERPROFILE root. Battery: ../Blink rm DENIES healthy and mid-FAIL; with log_external intent ALLOWS; Blink/.zcode write DENIES; harness .zcode stays exempt; regressions green.",
+   "refs": [
+    "Nexusmill tools/zcode_repo_guards.ps1 (r4)",
+    "Nexusmill round-4 tier-1 BLOCK review"
+   ]
+  },
+  {
+   "id": "EV-218",
+   "date": "2026-10-15",
+   "repo": "Nexusmill",
+   "layer": "gate tier-2 round 5 (G42/G43 tranche; self-reference findings)",
+   "caught": "(1 MEDIUM, the deep one) a fail-locked agent could defang the guard THROUGH the guard's own remediation allowance: Write/Edit to the in-repo apparatus (repos.json relocating 'current', zcode_repo_guards.ps1, assess_current's tuple) is 'inside the current repo' and therefore remediation-shaped - two permitted calls relocate the G43 baseline or disarm the fail-arm with no audit row, while the deny text and manifest claimed the class closed. (2 MEDIUM) the commit swapped the nexusmill-memory MCP entry to launch_wrapper.py but assess_current never checked it - a missing/renamed wrapper leaves every store call failing while the ledger prints PASS. (3 LOW) the 4200-char health truncation lacked the lone-surrogate guard the same file documents for the snapshot slice.",
+   "severity": "MEDIUM (x2) + LOW",
+   "author_initially": "accepted all three as CONFIRMED; finding 1 is the honest G39-class boundary - prevention for direct mid-FAIL apparatus writes, DETECTION for everything else",
+   "resolution": "(1) mid-FAIL direct Write/Edit/MCP to the guard apparatus (guards/grounding/repo_health/.zcode config) is denied - apparatus fixes go through Bash+marker chains (auditable); cross-session tamper DETECTED by HEAD-pinned sha256 apparatus hashes recorded in the ledger (same HEAD + changed bytes = FAIL; new HEAD re-records, so legitimate commits never false-alarm). (2) launch_wrapper.py added to assess_current. (3) surrogate guard copied onto the health truncation. Battery: tamper simulation exit=1 with named file, rerun exit=0; direct repos.json/guard writes DENY mid-FAIL; in-repo non-apparatus + marker-chain apparatus fixes ALLOW; regressions green.",
+   "refs": [
+    "Nexusmill tools/zcode_repo_guards.ps1 (apparatus lock)",
+    "Nexusmill tools/repo_health/health_ledger.py (hash pin + wrapper check)",
+    "Nexusmill tools/zcode_grounding.ps1 (surrogate guard)",
+    "Nexusmill round-5 tier-2 BLOCK review"
+   ]
   }
  ]
 }
