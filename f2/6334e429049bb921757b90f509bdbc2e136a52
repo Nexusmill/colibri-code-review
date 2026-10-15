@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "f26334e429049bb921757b90f509bdbc2e136a52",
+ "caller": "zcode",
+ "when": "20261014-193812",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "a8d4e966adda13707031105cb662dac9c4c9c45a11ac0768536a025f6e5a3cc2",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261014-193811",
+   "artifact": ".adversary\\reviews\\gate_20261014-193811.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261014-193811.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1958, 'completion_tokens': 10487, 'total_tokens': 12445, 'cost': 0.0131718, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0131718, 'upstream_inference_prompt_cost': 0.0005874, 'upstream_inference_completions_cost': 0.0125844}, 'completion_tokens_details': {'reasoning_tokens': 10026, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nReviewed the staged bytes: the change is purely additive (hunk `@@ -3422,11 +3422,29 @@`, 18 inserted lines, 0 deletions), and it is a well-formed extension of the evidence log rather than code. Checks I ran against the provided bytes:\n\n- **JSON structure**: the inserted `  },` closes the preceding entry, `  {` opens `EV-213`, and the entry's own `refs` array is closed by the inserted `   ]`; the trailing context lines (`  }`, ` ]`, `}`) \u2014 the file's pre-existing closers \u2014 then close the new object, the array, and the root in that order. Comma placement is correct (all but the last `refs` element carry a comma), and the entry's key set (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`) matches the shape of the visible predecessor `EV-212`.\n- **String hygiene**: no unescaped double quotes or control characters in the inserted values (inner quotation uses single quotes only), so the document parses.\n- **Line-number consistency**: the diff's context line `    \"author_initially\": \"The '\\\"$1\\\"' literal ...` matches the scoped window's line 3422 verbatim, and the hunk tail `}` matches line 3450, so the hunk header and the supplied window agree; the reused closing brace is the file's own and does not shift any other line.\n- **Callers/contracts**: no code, schema, validator, or manifest row is touched by this diff; nothing in the provided bytes is broken by the insertion, and the added text contains no instruction addressed to the reviewer (the `owner order` / `CLEAR round` / `full-catalog \u2026 openly declared in --context` phrases are historical provenance for a different commit, not a claim that this change is pre-approved or a request to skip review).\n\nNo verifiable defect survives inspection; anything further (e.g. id uniqueness against entries outside the supplied window) would rest on bytes not present here.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261014-193811.md": {
+   "embedded": "ddfe82881014165b8cbc106e24ea49c3be1504b6397a34dd9fa31789833575f5",
+   "disk": "ddfe82881014165b8cbc106e24ea49c3be1504b6397a34dd9fa31789833575f5"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "3dda60774659dd37d477751d0b89b069ee9577314e6713e15610fc43f93e3e67"
+}
