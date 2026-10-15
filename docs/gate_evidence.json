@@ -3521,6 +3521,21 @@
     "Nexusmill tools/zcode_grounding.ps1 (surrogate guard)",
     "Nexusmill round-5 tier-2 BLOCK review"
    ]
+  },
+  {
+   "id": "EV-219",
+   "date": "2026-10-15",
+   "repo": "Nexusmill",
+   "layer": "gate rounds 6 (G42/G43 tranche; detection-gap findings)",
+   "caught": "(MEDIUM) the Bash write-shape list was an enumerated verb set: shell redirect ('echo hi > C:/Blink/probe.txt'), sed -i, python -c file-writes, tee, del, new-item, and git state-changers (clean/checkout/reset/stash/apply/restore/rebase/merge/push/pull) never set isMutating - the guard did not even OBSERVE those outside-repo mutations (a detection gap, distinct from the disclaimed intent-marker forgeability). (LOW) the r5 tamper alarm was computed against a baseline the same run overwrote: run N flags tamper, run N+1 compares tampered-vs-tampered and prints PASS - one-shot, erasable by re-running the ledger exactly as the guard instructs.",
+   "severity": "MEDIUM + LOW",
+   "author_initially": "accepted both as CONFIRMED",
+   "resolution": "Write-shapes broadened (redirect-to-absolute, sed -i, python -c, tee/del/new-item, git state-changers - a false 'mutating' only routes into the outside-token scan, so read-only in-repo commands still allow); tamper alarm made STICKY (flag persists until git HEAD actually moves) with every detection appended to ~/.zcode/health/tamper_log.jsonl (append-only durable evidence). Battery: redirect/sed/git-clean outside DENY healthy; read-only python -c and in-repo cp ALLOW; tamper run exit=1, rerun exit=1 (sticky), logged; log-intent chains ALLOW.",
+   "refs": [
+    "Nexusmill tools/zcode_repo_guards.ps1 (r6 write-shapes)",
+    "Nexusmill tools/repo_health/health_ledger.py (sticky + tamper_log.jsonl)",
+    "Nexusmill round-6 tier-1 BLOCK review"
+   ]
   }
  ]
 }
