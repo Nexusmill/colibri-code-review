@@ -3476,6 +3476,21 @@
     "Nexusmill .zcode/config.json (matcher extension)",
     "Nexusmill tools/repo_health/health_ledger.py (budget)"
    ]
+  },
+  {
+   "id": "EV-216",
+   "date": "2026-10-15",
+   "repo": "Nexusmill",
+   "layer": "gate tier-2 round gate_20261015-060553-ish (G42/G43 tranche round 3; 1 MEDIUM + 2 LOW)",
+   "caught": "(1 MEDIUM) Bash token scan lacked root EQUALITY: a token that IS the current repo root (no trailing separator - exactly what 'cd <repo> && python _git_do.py' or 'git -C <repo> commit' produces) failed StartsWith(root+'') and was classified OUTSIDE - the guard denied the repo's own sanctioned commit chain at healthy state and revoked the documented remediation-commit allowance during FAIL, with a deny message naming the current repo as the outside target. (2 LOW) float(os.environ.get('REPO_HEALTH_BUDGET','25')) dies at module scope on an EMPTY env value (get returns '' - the manifest's own docketed recurring class), silently disarming the whole G42 fail-arm with zero payload signal. (3 LOW) the nosession one-shot flag collapse: an abandoned deny's flag could unlock a DIFFERENT repo's edit in a later session (flag content never read, not target-bound).",
+   "severity": "MEDIUM (+2 LOW)",
+   "author_initially": "accepted all three as CONFIRMED - finding 1 would have blocked the house commit pattern itself",
+   "resolution": "Root-equality term added to the Bash token skip; budget parsed defensively (_budget_s: empty/invalid falls back to 25.0); one-shot flag TARGET-BOUND via a path hash in the flag name (stale flags cannot unlock other targets). Battery: own-repo commit chain ALLOW at healthy AND FAIL; traversal still DENY; Blink deny does not consume for fleet; Blink retry consumes its own flag; empty-budget env runs to PASS; py_compile clean.",
+   "refs": [
+    "Nexusmill tools/zcode_repo_guards.ps1 (r3)",
+    "Nexusmill tools/repo_health/health_ledger.py (_budget_s)",
+    "Nexusmill .adversary/reviews/ round-3 BLOCK"
+   ]
   }
  ]
 }
