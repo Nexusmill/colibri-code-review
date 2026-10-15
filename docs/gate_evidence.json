@@ -3427,6 +3427,24 @@
     "Tools .adversary/reviews/gate_20261014-140424.md (CLEAR round)",
     "live probe junk/prepush_driver.py: pre-fix 'unrecognized arguments: origin <url>', post-fix PUSH GUARD refusal"
    ]
+  },
+  {
+   "id": "EV-213",
+   "date": "2026-10-14",
+   "repo": "Tools",
+   "layer": "gate tier-2 round gate_20261014-190355 (review of the generation CUT, owner order 2026-10-14)",
+   "caught": "The CUT as first drafted was INERT (MEDIUM): snapshot-mode loaders derive their catalog from the GENERATION PACKAGE, so the automatic install chain would self-perpetuate prompt-layer-free generations forever - every gate review would keep printing 'prompt layer degraded to builtin' while the code comments, module docstring and a green test_generation_cut.py all asserted the cut had landed; nothing in the change detected or required the one-time source-tree bootstrap.",
+   "severity": "MEDIUM",
+   "author_initially": "The author's two-stage install analysis had the same flaw dressed differently - it assumed the post-cut enforcement_runtime inside a new generation would derive the grown catalog, but existence-derivation runs against the package (which lacks the file until an install includes it: chicken-and-egg).",
+   "resolution": "c2f1b8d (round 191855 CLEAR, 190355 adjudicated cleared-unedited): two tests pin the requirement (source-tree cut-readiness; the self-perpetuation property that makes the bootstrap mandatory). Bootstrap executed same session: full-catalog CLEAR certification landed via a catalog-file staging commit (6f6c63d, 28-file enumeration - the gate's own 'full-catalog review may certify unchanged files' mechanism, openly declared in --context); generation-dir era collision resolved per the system's own guidance (active pointed back one generation, duplicate dir removed, deterministic rebuild) - 839db86 reinstalled WITH the tranche; isolated hook-context probe proves resolution origin=langfuse, version=1, real tranche text (not the builtin).",
+   "refs": [
+    "Tools c2f1b8d",
+    "Tools 6f6c63d (full-catalog certification)",
+    "Tools 839db86 (tranche-bearing active generation)",
+    "Tools .adversary/reviews/gate_20261014-190355.md (BLOCK round)",
+    "Tools .adversary/reviews/gate_20261014-191855.md (CLEAR round)",
+    "Tools .adversary/reviews/gate_20261014-192725.md (full-catalog certification CLEAR)"
+   ]
   }
  ]
 }
