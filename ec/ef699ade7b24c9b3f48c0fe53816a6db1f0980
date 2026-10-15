@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "ecef699ade7b24c9b3f48c0fe53816a6db1f0980",
+ "caller": "zcode",
+ "when": "20261015-061006",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "e0d19e9ddd4c4170d75f1415437d84a66cb3944b28ebb2296f6fab55442b2c98",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261015-061005",
+   "artifact": ".adversary\\reviews\\gate_20261015-061005.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261015-061005.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1749, 'completion_tokens': 10956, 'total_tokens': 12705, 'cost': 0.0136719, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0136719, 'upstream_inference_prompt_cost': 0.0005247, 'upstream_inference_completions_cost': 0.0131472}, 'completion_tokens_details': {'reasoning_tokens': 10418, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged hunk as bytes and verified its structural claims.\n\n**Structural verification (JSON validity):** The hunk header claims `@@ -3471,11 +3471,26 @@` (11 old lines \u2192 26 new). Counting the displayed lines confirms it exactly: 11 context lines (`author_initially`, `resolution`, `refs` open, 4 ref items, `]`, `}`, `]`, `}`) and 15 added lines (`},`, `{`, the nine field lines, `\"refs\": [`, three items, `]`). The nesting balances: the reused context brace `   }` now closes the new object, the added `+  },` closes the prior object, and the trailing `  ]` / ` }` still close the array and root. No stray/missing brace, no missing or dangling comma (prior object's `refs` array is last, so `},` is legal; the new object's `refs` array is last, so `}` without a preceding comma is legal). No unescaped double quotes or backslashes appear in any added string; single quotes are used throughout the prose.\n\n**Claims check:** The entry is a documentation record (EV-216) describing prior guard fixes. Its substantive claims concern `tools/zcode_repo_guards.ps1` and `tools/repo_health/health_ledger.py`, neither of which is part of this change set or supplied here; per the grounding contract I do not treat those absent, unrelated files as defects, and I will not invent an external schema for `docs/gate_evidence.json`. No text in the added bytes asks the reviewer to skip or soften review; the `author_initially` field is the file's own documented field shape (matching the prior entry), not an instruction directed at this review.\n\n**Discarded hypotheses:**\n- Duplicate `id`/`refs` keys inside the added object \u2014 none; all keys are unique and each appears once.\n- Duplicate `EV-216` elsewhere in the 573 KB file \u2014 the offending bytes would lie in the omitted body; I cannot quote them, so this stays a hypothesis, not a finding.\n- `StartsWith(root+'')` prose inconsistency \u2014 this describes old, non-supplied code inside a descriptive string; impact is at most informational, and it is not behavior introduced by this change.\n\nNo concrete input, state, or sequence in the change's reachable content produces a wrong result, crash, or contract break.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261015-061005.md": {
+   "embedded": "9fd94dea2d4ef9315159584dd52e569ba4b5241cf5d916939f8d4a85d2b49058",
+   "disk": "9fd94dea2d4ef9315159584dd52e569ba4b5241cf5d916939f8d4a85d2b49058"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "3a96f843aa05dfc3b7493c36117141d58e1ad808d1806dfcdeed9b1806de5904"
+}
