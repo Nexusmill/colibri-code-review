@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "1c33a48c2d517c1e731e84f7dc6aa6388bbc19e8",
+ "caller": "zcode",
+ "when": "20261015-063231",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "8d3e718ecb0528db980e86617f0f3278ea81a3503e46c17b0bdfc1235f3e8143",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261015-063229",
+   "artifact": ".adversary\\reviews\\gate_20261015-063229.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261015-063229.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2192, 'completion_tokens': 6754, 'total_tokens': 8946, 'cost': 0.0087624, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0087624, 'upstream_inference_prompt_cost': 0.0006576, 'upstream_inference_completions_cost': 0.0081048}, 'completion_tokens_details': {'reasoning_tokens': 6400, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nReviewed the staged append of rows EV-217 and EV-218 to `docs/gate_evidence.json` against the supplied bytes:\n\n- Structural/JSON validity: the hunk header `@@ -3486,11 +3486,41 @@` reconciles exactly (11 context/old lines + 30 added lines = 41 new), the old closing `   }` is retained to close EV-218, EV-217 is closed by `  },`, both `refs` arrays are closed with `   ]` and contain no trailing comma, and the root ` ]` / `}` still terminate the file. The document remains syntactically valid JSON, including the `\\\\/` and `\\\\.` escape sequences, which decode legally.\n- Internal consistency: `layer` (\"1 MEDIUM + 1 LOW\" / \"self-reference findings\"), `severity` (\"MEDIUM\" / \"MEDIUM (x2) + LOW\"), and the per-row `refs` (r4/round-4, r5/round-5) agree; the r3\u2192r4\u2192r5 chain continues the preceding row without contradiction.\n- Verifiability scope: the resolution claims reference apparatus in other repositories (`zcode_repo_guards.ps1`, `health_ledger.py`, `zcode_grounding.ps1`) that are not part of this change set; per review scope these are not defects of this document, and no supplied byte contradicts the recorded claims.\n- No duplicate-ID evidence is present in the provided window, and no pre-approval or review-suppression instruction text is embedded in the added content.\n\nNo finding survives verification.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261015-063229.md": {
+   "embedded": "4ff3529f22c939402a50f5ff203729019e3554eebcfd1c0e5b8d40a3d113ebb6",
+   "disk": "4ff3529f22c939402a50f5ff203729019e3554eebcfd1c0e5b8d40a3d113ebb6"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "7bcf8534eff3a3e723471e22c83f39529d1ce3a43c4b0294cc2e578547b2d6a3"
+}
