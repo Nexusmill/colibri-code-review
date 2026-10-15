@@ -3536,6 +3536,22 @@
     "Nexusmill tools/repo_health/health_ledger.py (sticky + tamper_log.jsonl)",
     "Nexusmill round-6 tier-1 BLOCK review"
    ]
+  },
+  {
+   "id": "EV-220",
+   "date": "2026-10-15",
+   "repo": "3DPrinting",
+   "layer": "gate rounds 1-3 reviewing the 3DPrinting as-left commit that became bb65151 (owner ordered committing the repo's as-left state 2026-10-15; the rounds below are the scrutiny it received)",
+   "caught": "(R1 MEDIUM) gen_superman_album.py eachlabs_collect_workflow passed a dict step-output straight to requests.get (MissingSchema) - losing already-paid outputs AND skipping the direct-prediction fallback; (R1 LOW x2) import-time KeyError on missing EACHLABS_API_KEY; docstring claimed a parallel workflow the code never builds. (R2 MEDIUM) eachlabs_workflow.py opened its log at import before WORKDIR existed (fresh-checkout FileNotFoundError, no DONE sentinel); (R2 LOW) two sibling scripts' unguarded f.result() aborted before manifest writes. (R3 LOW) covers fallback passed Recraft's square_hd preset to Qwen which takes aspect ratios.",
+   "severity": "MEDIUM (x2) + LOW (x4)",
+   "author_initially": "accepted all as CONFIRMED; fixed in-session (dict guard per the sibling pattern, graceful key fatal, docstring truth, mkdir-before-log, guarded f.result, size normalization)",
+   "resolution": "Commit bb65151 landed with clearance after round 3 (WARN accepted residual: two LOW content-consistency notes reported to the owner - contradictory user-verbatim lyric claims across the album/bonus manifests, and the workflow route rendering every variation with the [Build Up] cue while the manifest declares per-variation cues). All fixes py_compile-verified; 89 files committed (fixture artifacts rev2-18, pinout crops, video-gen scripts, tablet STL); junk/, memory logs, .bak left untracked per convention.",
+   "refs": [
+    "3DPrinting bb65151",
+    "3DPrinting .adversary/reviews/gate_20261015-083229.md (BLOCK r1)",
+    "gate_20261015-083739.md (BLOCK r2)",
+    "gate_20261015-084221.md / gate_20261015-084828.md (WARN)"
+   ]
   }
  ]
 }
