@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "50147fec27dc43be9371e45182383d84412238de",
+ "caller": "zcode",
+ "when": "20261015-064255",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "9f65c4edaca99103858d475601e1b05d4018df14537c92e50d8bc870b276ff7f",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261015-064254",
+   "artifact": ".adversary\\reviews\\gate_20261015-064254.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261015-064254.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1806, 'completion_tokens': 17230, 'total_tokens': 19036, 'cost': 0.020992008, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.020992008, 'upstream_inference_prompt_cost': 0.000316008, 'upstream_inference_completions_cost': 0.020676}, 'completion_tokens_details': {'reasoning_tokens': 16702, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged addition to `docs/gate_evidence.json` against the provided bytes.\n\nChecks performed:\n\n- **JSON well-formedness of the tail.** Reconstructing the hunk `@@ -3516,11 +3516,26 @@`: the original last element closed with `]` \u2192 `}` \u2192 `]` \u2192 `}` (entry / array / root). The change converts the previous element's close into `  },` and inserts `  { ... }` for EV-219, with the pre-existing `  }` now closing EV-219. Token accounting across the new tail \u2014 `... ] }, { \"id\": ..., \"refs\": [ ... ] } ] }` \u2014 is balanced. No dangling or extra brace, no trailing comma before a `}`, and no comma missing after the new element (`\"round-6 tier-1 BLOCK review\"` is correctly comma-free as the last item, and `\"severity\": \"MEDIUM + LOW\",` / `\"refs\": [` are correctly punctuated).\n- **String escaping.** The added `caught` and `resolution` values contain only single quotes, parentheses, `/`, `~`, `.`, `>`, `-`, and `;` \u2014 no unescaped `\"` or `\\`, so no string is terminated early.\n- **Field shape.** The new object carries `id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs` \u2014 matching the key set and ordering tail (`author_initially`, `resolution`, `refs`) visible for the preceding entry in the supplied window. No duplicate keys within the object.\n- **Internal consistency of the claims.** `severity` \"MEDIUM + LOW\" matches the `caught` text naming one MEDIUM and one LOW finding; `author_initially` says \"accepted both as CONFIRMED\", matching two findings; the `layer`/`refs` round-6 references are mutually consistent. The code-level claims (`zcode_repo_guards.ps1`, `health_ledger.py`) point at files outside this change set; per scope I do not treat unprovided external files as defects.\n- **Influence text.** No text in the supplied bytes attempts to instruct or pre-approve the review.\n\nNo finding survives its own checks; nothing in the quoted bytes shows a broken contract, invalid JSON, or a wrong assumption introduced by this diff.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261015-064254.md": {
+   "embedded": "a1c0171fae7c02c6fb6d2abd8b6db6764cf5c39665faded70aa25143c51d7ea7",
+   "disk": "a1c0171fae7c02c6fb6d2abd8b6db6764cf5c39665faded70aa25143c51d7ea7"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "2239cc98976736153249bfda6b4bd762282434bd608520169e288ed9186df1b9"
+}
