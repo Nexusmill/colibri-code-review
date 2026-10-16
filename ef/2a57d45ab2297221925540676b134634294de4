@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "ef2a57d45ab2297221925540676b134634294de4",
+ "caller": "zcode",
+ "when": "20261016-001103",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "f6d1cbeaf97267d61b27eaef15177a94a9398ff6829704a1c707da74089394ae",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261016-001102",
+   "artifact": ".adversary\\reviews\\gate_20261016-001102.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261016-001102.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2465, 'completion_tokens': 9265, 'total_tokens': 11730, 'cost': 0.0118575, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0118575, 'upstream_inference_prompt_cost': 0.0007395, 'upstream_inference_completions_cost': 0.011118}, 'completion_tokens_details': {'reasoning_tokens': 8738, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nReviewed the staged change to `docs/gate_evidence.json` against the provided bytes.\n\nChecks performed:\n- Structural: the insertion is `+  },` + a new object + `+   ]` between the previous record's `refs` close and the pre-existing context lines `   }` / `  ]` / ` }`. After the change the array has the previous object (closed by the inserted `  },`) and EV-221 (closed by the retained context `   }`), then array close and root close. No removed lines exist, the hunk arithmetic matches (11 context `-3547,11` \u2192 27 added/context `+3547,27`, 16 inserted lines), and no comma is doubled or missing. Result is valid JSON, and the scoped window (3547 `\"author_initially\"` \u2026 3573 `}`) is consistent with the added record landing inside the array.\n- Schema: the new record carries exactly the same field set as the sibling record (id, date, repo, layer, caught, severity, author_initially, resolution, refs); indentation matches the file's nesting (fields at 3, `refs` elements at 4, object braces at 2).\n- Quoting: no unescaped `\"` appears in any of the added string values (\"layer\", \"caught\", \"severity\", \"author_initially\", \"resolution\", refs entries); single quotes/apostrophes are legal inside JSON strings, so parsing is unaffected. The retained \"no newline at end of file\" marker is on an unchanged context line, so it is preserved.\n- Internal consistency: `layer` (\"rounds 7-42\", 36 dispatches) matches `caught` (\"36 gate rounds\"), the round list (r7\u2026r42) contains no contradictions with `author_initially`'s two rebuttal notes (r30/r42 are distinct claims within those rounds), and `resolution`'s \"LANDING PENDING\" is stated transparently rather than as a false clearance claim.\n- No text in the added bytes instructs a reviewer to skip, soften, or pre-approve anything; the entries are descriptive records, not review instructions.\n\nNo defect reachable in this change (valid JSON appended record, no code paths, no callers, no state). Unverifiable self-reported counts (\"139/139\", \"10/11\") are outside the bytes supplied and are not treated as findings.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261015-235157.md",
+  "outcomes": {
+   "fixed": 2
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261016-001102.md": {
+   "embedded": "96a731fccb9d631f8ebdf409b987a03a5547c1f4df4bf68e766c1efe6dc71aa2",
+   "disk": "96a731fccb9d631f8ebdf409b987a03a5547c1f4df4bf68e766c1efe6dc71aa2"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "cffd76351c016406a512601fa13d0b734e9af3be0a213f3e23ee9736e4c3a146"
+}
