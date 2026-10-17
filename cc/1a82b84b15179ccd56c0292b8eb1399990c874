@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "cc1a82b84b15179ccd56c0292b8eb1399990c874",
+ "caller": "zcode",
+ "when": "20261016-221014",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "9648f148a96e69d7fa8ffed4bd1db6222016045087a41435417112b8ef684a4d",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261016-221012",
+   "artifact": ".adversary\\reviews\\gate_20261016-221012.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261016-221012.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2838, 'completion_tokens': 16168, 'total_tokens': 19006, 'cost': 0.020027208, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.020027208, 'upstream_inference_prompt_cost': 0.000625608, 'upstream_inference_completions_cost': 0.0194016}, 'completion_tokens_details': {'reasoning_tokens': 15566, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json` (an evidence-ledger JSON document) against the provided bytes.\n\nChecks performed:\n\n- **JSON well-formedness of the added region.** Reconstructed the post-change structure from the hunk: `\u2026\"refs\": [ \u2026 ]` + `  },` + `{ \"id\": \"EV-222\", \u2026 \"refs\": [ \u2026 ] }` + `  },` + `{ \"id\": \"EV-223-P0-LANDING-ROUNDS\", \u2026 \"refs\": [ \u2026 ] }` + `   }` / `  ]` / `}`. Every object/array opened is closed, comma placement is correct (EV-221 gains its comma at `+  },`, EV-223 is last and closes without one), no trailing commas, no unescaped quotes or literal newlines inside string values. The removed `-}` (no newline) / added `+}` (newline) is benign.\n- **Hunk arithmetic.** `@@ -3563,11 +3563,45 @@`: 11 \u2192 45 lines matches 8 context + 34 `+` lines + 3 trailing context, and the scoped window (lines 3563\u20133607) agrees.\n- **Internal consistency of the new entries.** EV-222: `r43-r71` = 29 rounds, matching \"29 gate rounds\"; battery `139 -> 244` continues EV-221's `19 -> 139`. EV-223: `BLOCK x4 + WARN x2` = six rounds; findings tally (r1: 3, r2: 1, r3: 1, r4: 1, r5: 3, r6: 1 = 10) matches \"Ten findings\"; 6 review refs + 1 CLEAR note matches \"six review rounds \u2026 final dispatch CLEAR\"; `nineteen \u2192 27` suite growth is consistent with the nine fixes.\n- **Cross-entry continuity.** EV-221 covers r7\u2013r42, EV-222 r43\u2013r71 (no gap/overlap); dates and review filenames (`gate_20261016-*`) are internally coherent and time-ordered.\n- **Influence/prompt-injection text.** The `author_initially`/`resolution` fields record past review outcomes (\"factually rebutted \u2026 ACCEPTED\", \"[no] disputes\") but contain no instruction to skip or soften *this* review and no claim of pre-approval of the staged change; they are ordinary content of the ledger's historical fields.\n- Duplicate-ID and cross-file claims are not verifiable from the provided window (the rest of the file is omitted), so no finding is asserted on them.\n\nNo defect that this change introduces or enables survives verification.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261016-215851.md",
+  "outcomes": {
+   "fixed": 8
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261016-221012.md": {
+   "embedded": "cc7b24e4d5e321cc8b1d61b37903e3ea6a744c245cd0439c2e9debbcb2d75bca",
+   "disk": "cc7b24e4d5e321cc8b1d61b37903e3ea6a744c245cd0439c2e9debbcb2d75bca"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "e1ee1cbaef1f1259edf172c6d1231324bb3e1b04a4976f0c7335964cb2a21ced"
+}
