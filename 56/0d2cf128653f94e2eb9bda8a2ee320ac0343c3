@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "560d2cf128653f94e2eb9bda8a2ee320ac0343c3",
+ "caller": "zcode",
+ "when": "20261017-165131",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "496d3c08ff752037d860ca5e68bc6645506ef4e02485c4e010a239068f21b52c",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261017-165130",
+   "artifact": ".adversary\\reviews\\gate_20261017-165130.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261017-165130.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2151, 'completion_tokens': 24809, 'total_tokens': 26960, 'cost': 0.030190308, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.030190308, 'upstream_inference_prompt_cost': 0.000419508, 'upstream_inference_completions_cost': 0.0297708}, 'completion_tokens_details': {'reasoning_tokens': 24527, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI checked the staged hunk against the appended content byte-for-byte: the inserted ` },` closes the preceding evidence object (which previously relied on the now-repurposed trailing `}` context line), the inserted ` {` opens the new EV-225 object, and the retained trailing context lines `  }`, ` ]`, ` }` close EV-225, the outer entries array, and the root object respectively. Brace/bracket balance is preserved, the preceding object gains the comma its new sibling requires, the new object's last member `\"refs\": [...]` correctly carries no trailing comma, and no added string contains an unescaped quote or backslash. The internal cross-references (round-1/2 WARN and round-3 CLEAR artifact timestamps 161207/162706/163618, tranche CLEAR 164128, commits 403e169/d78e99b/d18b0af/bea1a55, `_PREGATE_LOGIC_VERSION=3`) are mutually consistent and ordered, and the `amends: \"EV-224\"` target matches the id cited in the refs list. The referenced Tools sources/review files are outside this change's bytes, so their absence is not a defect of this row. No reachable defect was found in the change itself.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261017-165130.md": {
+   "embedded": "75673c2584637903e551738190adcffa3cc64711c75e1c545668c136b490e250",
+   "disk": "75673c2584637903e551738190adcffa3cc64711c75e1c545668c136b490e250"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "63b233b930634819c022f918f6cb448227f310099f15ef8b7c12485efe810293"
+}
