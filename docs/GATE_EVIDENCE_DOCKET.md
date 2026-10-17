@@ -514,3 +514,18 @@ Both deferred for a later adjudication round; refs in the machine-readable row.
   arming commit landed CLEAR (3DPrinting b425415, artifact cited in refs); real regex/invocation fix is
   owner-ordered work on adversary_gate.py `_pregate_check_one`. Full row with artifact refs:
   gate_evidence.json EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK.
+
+## EV-225 - the EV-224 fix session: three WARN-round catches and the runtime refusing to install WARN-cleared engines (2026-10-17)
+
+Owner option (a): a SEPARATE session fixed the biome pre-gate (the session whose
+commit was blocked did not edit the gate). The remediation itself was policed:
+round 1 WARNed that the temp-cwd probe dropped repo biome.json authority; round 2
+WARNed that _repo_root()/_run_git fails via SystemExit (degrade path would hard-
+abort) and that the check logic changed twice under one _PREGATE_LOGIC_VERSION;
+and post-commit activation REFUSED to certify either WARN round as installed
+enforcement - the machine kept executing the old engine until round 3 landed
+CLEAR (d18b0af). validate_generation also caught a -B-less snapshot import
+dropping __pycache__ into the generation package (cleaned same session). The
+blocked universal-tools 1.2.0 tranche then landed UNCHANGED through the fixed
+engine (bea1a55, tier-2 CLEAR). Full row with artifact refs:
+gate_evidence.json EV-225-PREGATE-BIOME-FIX-3-ROUND-ACTIVATION-GATEKEEPING.

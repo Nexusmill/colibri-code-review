@@ -3620,6 +3620,27 @@
    "Nexusmill e5995de1 (original twin commit)",
    "biome 2.5.15"
   ]
+ },
+ {
+  "id": "EV-225-PREGATE-BIOME-FIX-3-ROUND-ACTIVATION-GATEKEEPING",
+  "date": "2026-10-17",
+  "repo": "Tools (adversary-gate engine) - executes EV-224's owner-ordered real fix",
+  "layer": "pre-commit local pre-gate remediation + certified runtime activation + validate_generation",
+  "caught": "Three catches inside the remediation itself. (1) Round-1 WARN (gate_20261017-161207.md): the rewritten probe ran biome with the temp dir as cwd, silently dropping repo-level biome.json authority the old stdin path had via cwd - a NEW false-block route for config-dependent repos (LOW; no armed repo ships a biome config today). (2) Round-2 WARN (gate_20261017-162706.md): _repo_root() inside the helper reaches _run_git, which fails via SystemExit (uncatchable by except Exception) - a documented degrade path became a hard abort - and the call falsified _local_pregate's no-git-I/O invariant; plus the check logic changed twice while _PREGATE_LOGIC_VERSION stayed 2, letting cached passes skip the config-aware classification. (3) The certified-runtime layer held the line twice: post-commit activation REFUSED to install enforcement bytes cleared only at WARN (403e169, d78e99b) - the gate policing its own maintenance until round 3 cleared (gate_20261017-163618.md) - and validate_generation refused the next commit after an unguarded (-B-less) snapshot import dropped __pycache__ into the d18b0af generation package (self-inflicted by the fixing session, cleaned, generation restored to its manifest set).",
+  "severity": "LOW findings, process-level wedges - but the activation gatekeeping prevented a WARN-cleared engine from silently becoming the machine-wide executing gate",
+  "author_initially": "agent (zcode GLM-5.3, separate fix session per owner option (a) - the session landing the blocked tranche did NOT edit the gate, removing the G39 conflict-of-interest); the first helper draft carried an unclosed try block and was refused by safe_replace's py_compile gate before touching the file",
+  "resolution": "Final design (d18b0af): path-mode biome check --reporter=json on a temp probe copy, classification ONLY on category=parse diagnostics (exit codes, lint/format findings and text regexes can never refuse), repo config honored via --config-path with the root THREADED AS A PARAMETER from _local_pregate (zero git I/O in the check), _PREGATE_LOGIC_VERSION=3; selftest rows T1/T2/T2b/T4/T5/T5b RED-first (battery 212/212, PBT 22/22). The blocked universal-tools dedrift tranche then landed UNCHANGED through the fixed engine (bea1a55, tier-2 CLEAR gate_20261017-164128.md) and the runtime re-pinned to it. Fix contract with the escape-rate ledger row: Tools/docs/plans/2026-10-17-biome-pregate-fix.md.",
+  "amends": "EV-224 - its resolution's owner-ordered real fix is EXECUTED; the 3DPrinting parked .mjs and any pars-containing staged js file now pass the fixed pre-gate",
+  "refs": [
+   "Tools/adversary-gate/adversary_gate.py _pregate_biome_parse + _pregate_check_one",
+   "Tools 403e169 / d78e99b / d18b0af (three fix rounds) and bea1a55 (tranche)",
+   "Tools/.adversary/reviews/gate_20261017-161207.md (round-1 WARN)",
+   "Tools/.adversary/reviews/gate_20261017-162706.md (round-2 WARN)",
+   "Tools/.adversary/reviews/gate_20261017-163618.md (round-3 CLEAR)",
+   "Tools/.adversary/reviews/gate_20261017-164128.md (tranche tier-2 CLEAR)",
+   "Tools/docs/plans/2026-10-17-biome-pregate-fix.md (Fix-Contract, 3 rounds)",
+   "biome 2.5.15; EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK"
+  ]
  }
  ]
 }
