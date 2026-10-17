@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "a7d8b72a9f9eb47fd088c0c6207c1dcc092aa3e7",
+ "caller": "zcode",
+ "when": "20261017-111141",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "05714a64997753bbfe121bdbf96585873f74df1566dfa36f3403f1b96f3096a6",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261017-111139",
+   "artifact": ".adversary\\reviews\\gate_20261017-111139.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261017-111139.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 2102, 'completion_tokens': 21955, 'total_tokens': 24057, 'cost': 0.026750808, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.026750808, 'upstream_inference_prompt_cost': 0.000404808, 'upstream_inference_completions_cost': 0.026346}, 'completion_tokens_details': {'reasoning_tokens': 21511, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reconstructed the surrounding JSON structure from the hunk and checked the added record byte by byte.\n\n- Structure: the hunk replaces the entry-closing `  }` with `  },`, opens a sibling object ` {`, and the trailing context ` ]` / `}` still closes the top-level array and root object in the right order. Nesting, commas, and the final element's lack of a trailing comma are all correct; the file remains valid JSON.\n- Field level: the nine keys (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`) are unique; every string value is double-quote delimited with no internal `\"` or backslash that would break parsing (`'const x = 1;'`, `'The contents aren't fixed'`, `$?`, `(~2783-2788)` are all legal inside a JSON string); the `refs` array's items are comma-separated with no trailing comma.\n- Internal consistency: the cited artifacts line up with each other (`gate_20261017-110143.md` \u2194 \"b425415 CLEAR review artifact\"; \"cited in refs\" \u2194 the refs list), timestamps are monotonic (110143 \u2192 110602), and the \"workaround + owner-ordered fix\" framing matches the stated severity rather than hiding the still-live defect. The citation of \"this row's round-1 BLOCK\" is consistent with the established pattern in the adjacent entry (`r1 BLOCK` \u2026 `r5 WARN`) where review rounds of the same proposed row are recorded.\n- The added text contains no instructions aimed at the reviewer (no pre-approval claim, no request to skip or soften review), so there is nothing to report on that axis. Claims about files outside the provided bytes (probe transcripts, gate source) are not independently verifiable here and, per scope, are not defects of this diff.\n\nNo concrete trigger in the reachable content of this change produces a wrong result, broken consumer, or corrupted ledger.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261017-110602.md",
+  "outcomes": {
+   "fixed": 3
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261017-111139.md": {
+   "embedded": "d50440d24f797277e92f678cca45a18728d53dd47747d05d39d6c9f8690266bb",
+   "disk": "d50440d24f797277e92f678cca45a18728d53dd47747d05d39d6c9f8690266bb"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "fe1ca9a328d4a08088d7b503732f87309435e796f9502a8e875ffd96a646890b"
+}
