@@ -498,3 +498,19 @@ Both deferred for a later adjudication round; refs in the machine-readable row.
   config.json crashed every CLI path, skip guard ignored tarball existence; r6 WARN - a comment-wording LOW on the F1 raise's rationale (comment-only, not re-raised on the final CLEAR). The r4 fix triggered a live 
   corpus heal (460/460 issue dumps re-fetched, tarballs skipped, zero errors). Final dispatch one-round CLEAR. 
   Full row with refs: gate_evidence.json EV-223-P0-LANDING-ROUNDS.
+
+## 2026-10-17 3DPrinting arming: pre-gate biome stdin false-block (EV-224)
+
+- **EV-224 (pre-commit local pre-gate, deterministic layer; biome 2.5.15):** the pre-gate refused the
+  3DPrinting zcode-arming commit with `biome-parse tools/zcode_stop_gate.mjs` on a file with NO parse error
+  - a byte-identical vendored copy of the gate-cleared Nexusmill twin (e5995de1). Reproduced live with a
+  captured transcript: biome 2.5.15 `check` exits 1 "The contents aren't fixed" on canonical minimal input
+  (P1: `const x = 1;`) and on the format-canonical + shebang-stripped twin (P3; P4: the not-fixed exit is not
+  even stdin-specific) - the disable flags do not prevent it - so the pre-gate fires on any non-zero exit whose
+  output matches /pars/i, and the match lands on `JSON.parse` inside the source biome echoes (P2). Any staged
+  .js/.mjs containing "pars" false-blocks; content-preserving fixes do not clear it. EV-124 "deterministic
+  layers never false-block" class: tool-version drift re-evaluating under broken exit semantics. Remediation:
+  local .mjs left uncommitted (junk/), Stop hook wired to the committed Nexusmill twin by absolute path; the
+  arming commit landed CLEAR (3DPrinting b425415, artifact cited in refs); real regex/invocation fix is
+  owner-ordered work on adversary_gate.py `_pregate_check_one`. Full row with artifact refs:
+  gate_evidence.json EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK.

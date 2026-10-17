@@ -3602,6 +3602,24 @@
     "Nexusmill .adversary/reviews/gate_20261016-215225.md (WARN, comment-wording LOW)",
     "Nexusmill 6adaa1c6 (CLEAR notarized in refs/notes/adversary)"
    ]
-  }
+  },
+ {
+  "id": "EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK",
+  "date": "2026-10-17",
+  "repo": "3DPrinting (zcode arming) + machine-wide pre-gate",
+  "layer": "pre-commit local pre-gate (deterministic layer; biome 2.5.15)",
+  "caught": "The pre-gate refused 3DPrinting's arming commit with 'biome-parse tools/zcode_stop_gate.mjs' on a file with NO parse error - a byte-identical vendored copy of the gate-cleared Nexusmill twin (e5995de1). Root cause, reproduced live with the capture at 3DPrinting/.adversary/probes/biome_stdin_falseblock_2026-10-17.txt: biome 2.5.15 check exits 1 'The contents aren't fixed' on canonical minimal input (P1: 'const x = 1;') and on the format-canonical + shebang-stripped twin alike (P3; P4 shows the not-fixed exit is not even stdin-specific), i.e. the disable flags do not prevent it; the pre-gate therefore fires on ANY non-zero exit whose output matches /pars/i, and the match lands on 'JSON.parse' / 'parses to null' INSIDE THE SOURCE TEXT biome echoes in its diff body (P2). Net: any staged .js/.mjs whose own content contains the substring 'pars' is refused; content-preserving fixes do not clear it, and re-commits of already-reviewed code re-block. EV-124 doctrine ('deterministic layers never false-block') violation class: tool-version drift re-evaluating under broken exit semantics.",
+  "severity": "MEDIUM - machine-wide latent false-block on legitimate .js/.mjs commits containing 'pars'; no security impact; blocks vendored/twin code",
+  "author_initially": "agent (zcode GLM-5.3, 3DPrinting arming session): initially attempted the suggested 'fix and re-stage' (biome-canonical reformat), which did NOT clear the refusal and exposed the not-fixed-on-canonical behavior; an initial 'path-mode exit 0' claim was a pipe artifact ($? captured head's status) and is corrected in the transcript (P4)",
+  "resolution": "Refusal routed around honestly, no content contorted: the local .mjs stays UNCOMMITTED (parked in 3DPrinting junk/), and the 3DPrinting .zcode/config.json Stop hook is wired to the byte-identical COMMITTED Nexusmill twin by absolute path; the arming commit landed gate-CLEAR (3DPrinting b425415; review artifact gate_20261017-110143.md, cited in refs) and the stop gate resolves its per-repo ledger from CWD so behavior is identical. A real fix (scope the regex to actual biome parse diagnostics, or correct the invocation/exit handling for 2.5.15) is owner-ordered work on Tools/adversary-gate/adversary_gate.py _pregate_check_one (~line 2783) - flagged in the arming report and 3DPrinting docs/AGENT_STATE.md.",
+  "refs": [
+   "3DPrinting/.adversary/reviews/gate_20261017-110143.md (b425415 CLEAR review artifact)",
+   "3DPrinting/.adversary/probes/biome_stdin_falseblock_2026-10-17.txt (live probe transcript P1-P4)",
+   "colibri-code-review/.adversary/reviews/gate_20261017-110602.md (this row's round-1 BLOCK)",
+   "Tools/adversary-gate/adversary_gate.py _pregate_check_one biome branch (~2783-2788)",
+   "Nexusmill e5995de1 (original twin commit)",
+   "biome 2.5.15"
+  ]
+ }
  ]
 }
