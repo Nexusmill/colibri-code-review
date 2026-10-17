@@ -483,3 +483,18 @@ Both deferred for a later adjudication round; refs in the machine-readable row.
   battery 256 OK; round 3 CLEAR (gate_20261014-135957.md). Blink afbf650.
 - **Refs:** Blink afbf650; Blink .adversary/reviews/gate_20261014-135713.md;
   tests/test_enricher.py test_http_json_timeout_default_and_override.
+## 2026-10-16 colibri-bounty P0 landing rounds (EV-223)
+
+- **EV-223 (gate-review BLOCK x4 + WARN, tier-1 deepseek-v4.1-flash with one qwen3.8-omni-flash failover):** 
+  five dispatch rounds on the Nexusmill colibri-bounty P0 sync-layer landing (6adaa1c6). 
+  Ten findings across six review rounds, none disputed, every code remediation RED-first (offline suite 19 -> 27): r1 - a failed sherlock 
+  issues fetch persisted has_issues_dump=0 WITH the repo's pushed_at, so the skip guard blocked every retry 
+  forever while status/CLI reported success (+2 LOW: null warden/tag joins; wrong-premise default-root test); 
+  r2 - --max-pages bounded against the cumulative checkpoint counter (bounded runs on advanced checkpoints 
+  fetched ZERO pages, exited 0); r3 - `if limit:` conflated 0 with None (--limit 0 from a budget counter 
+  triggered the MOST expensive full sync) and negatives tail-sliced; r4 - the pushed_at skip guard applied 
+  uniformly, but sherlock findings publish as ISSUES with NO git push: pre-publication syncs kept empty dumps 
+  forever, silently; r5 WARN 3 LOW - --max-pages 0/-1 silent zero-page ok, wrong-shape-but-valid-JSON 
+  config.json crashed every CLI path, skip guard ignored tarball existence; r6 WARN - a comment-wording LOW on the F1 raise's rationale (comment-only, not re-raised on the final CLEAR). The r4 fix triggered a live 
+  corpus heal (460/460 issue dumps re-fetched, tarballs skipped, zero errors). Final dispatch one-round CLEAR. 
+  Full row with refs: gate_evidence.json EV-223-P0-LANDING-ROUNDS.

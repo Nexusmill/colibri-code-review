@@ -3568,6 +3568,40 @@
     "Nexusmill tests/test_repo_health_ledger.py (the 139-row battery built round by round)",
     "Nexusmill docs/remediation_manifest.json (the cumulative G42-G44 row, rounds 1-42 amended in place)"
    ]
+  },
+  {
+   "id": "EV-222",
+   "date": "2026-10-16",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK + tier-2 (29 rounds r43-r71, deepseek-v4.1-flash primary with qwen3.8-omni-flash failovers)",
+   "caught": "29 gate rounds in ONE landing session (r43-r71, reviews gate_20261016-052513..145926 + one live post-landing catch): 46 findings (incl. plant-the-sanctioned-script HIGH, traversal-blessing HIGH, unquoted-substitution defang HIGH) and 1 precedence claim factually rebutted via --context and ACCEPTED - all in the newly-built G42-G44 repo-health apparatus; every finding RED-GREEN closed in tests/test_repo_health_ledger.py (139 -> 244 rows); ~10 fix-side slips caught by the battery before dispatch",
+   "severity": "HIGH (46 findings incl. 3 HIGH classes in newly-built enforcement-apparatus code)",
+   "author_initially": "One precedence claim factually rebutted via --context and ACCEPTED (the reviewer re-verified against the bytes); no other disputes",
+   "resolution": "d7f17fa3 c5ddf500 The r7-r42 convergence pattern did NOT hold for this landing - rounds kept finding NEW classes in new code and in the fixes themselves. The battery as canary caught every fix-side slip pre-dispatch. Byte-extraction beats hand-typed probes (r70 F1: an isolated probe lied because the shipped byte differed). The --context rebuttal route works - the reviewer re-verified against the bytes and accepted.",
+   "refs": [
+    "Nexusmill docs/remediation_manifest.json (G42-G44 apparatus row, rounds 1-71)",
+    "docs/AGENT_STATE.md 2026-10-16 session-1",
+    ".adversary/reviews/gate_20261016-*.md"
+   ]
+  },
+  {
+   "id": "EV-223-P0-LANDING-ROUNDS",
+   "date": "2026-10-16",
+   "repo": "Nexusmill (colibri-bounty P0 sync layer)",
+   "layer": "gate-review BLOCK x4 + WARN x2 (tier-1 deepseek-v4.1-flash, one qwen3.8-omni-flash failover; six review rounds on one landing, final dispatch CLEAR)",
+   "caught": "Ten findings across six review rounds, all in fresh plan-authored sync code: r1 MEDIUM - a failed sherlock issues fetch persisted has_issues_dump=0 WITH the repo's pushed_at, so the skip guard blocked every retry forever while status/CLI reported success (+2 LOW: null warden/tag joins crashed page upserts; default-root test tested the wrong premise once config.json shipped); r2 MEDIUM - --max-pages bounded against the cumulative checkpoint counter: bounded runs on advanced checkpoints fetched ZERO pages and exited 0; r3 MEDIUM - `if limit:` conflated 0 with None (--limit 0 from a budget counter triggered the MOST expensive full sync) and negatives tail-sliced; r4 MEDIUM - the pushed_at skip guard applied uniformly, but sherlock findings publish as ISSUES with NO git push: repos synced pre-publication kept empty dumps forever, silently; r5 WARN 3 LOW - --max-pages 0/-1 silent zero-page ok, wrong-shape-but-valid-JSON config.json crashed every CLI path, skip guard ignored tarball existence (NULL/deleted files skipped while status counted them present); r6 WARN 1 LOW - comment-wording nit on the gate-F1 raise's rationale comment (comment-only, not re-raised on the final CLEAR dispatch, left as-is in the landed bytes).",
+   "severity": "MEDIUM (sticky silent-false-success and permanent-silent-incompleteness classes in the corpus layer that P1 replay depends on)",
+   "author_initially": "No disputes - all ten confirmed against the bytes on first read; nine fixed RED-first with battery rows (suite 19 -> 27); the tenth (r6 comment-wording LOW) confirmed but left as-is (comment-only). The r4 fix additionally triggered a live re-run that healed the already-synced corpus (460/460 issue dumps refreshed).",
+   "resolution": "Nine fixed and re-reviewed to CLEAR (Nexusmill 6adaa1c6, final dispatch CLEAR notarized; battery 27/27 offline + grounding suite); the r6 comment-wording LOW stands in the landed bytes (comment-only). Live corpus verified post-fix: sherlock refresh fetched:0 skipped:460 issues:460 errors:0.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261016-210145.md (r1 BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261016-211234.md (r2 BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261016-212557.md (r3 BLOCK, qwen failover)",
+    "Nexusmill .adversary/reviews/gate_20261016-213220.md (r4 BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261016-214206.md (r5 WARN)",
+    "Nexusmill .adversary/reviews/gate_20261016-215225.md (WARN, comment-wording LOW)",
+    "Nexusmill 6adaa1c6 (CLEAR notarized in refs/notes/adversary)"
+   ]
   }
  ]
 }
