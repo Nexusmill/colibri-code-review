@@ -3641,6 +3641,22 @@
    "Tools/docs/plans/2026-10-17-biome-pregate-fix.md (Fix-Contract, 3 rounds)",
    "biome 2.5.15; EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK"
   ]
+ },
+ {
+  "id": "EV-226-ZCODE-TWIN-9-ROUND-PORT",
+  "date": "2026-10-17",
+  "repo": "Tools",
+  "layer": "gate-review BLOCK (nine rounds on the repo-by-repo zcode arming twin port)",
+  "caught": "Nine real defect classes in agent-authored hook/guard code across the rounds: (1) the G42 fail-arm denied its own deny message's recovery command; (2) the test suite could burn the owner's one-shot escape; (3) a re-commit without re-staging had the gate review stale index bytes; (4) payload slice caps summed past the 10000-char budget, silently deleting the AGENTS.md snapshot - the blank-slate condition the hook exists to prevent; (5) subprocess calls bounded for errors but not latency inside the 45s hook window; (6) the mid-FAIL apparatus lock enumerated 3 of 6 shipped mounts and omitted the git metadata dir - a fail-locked agent could defang the stop gate or the commit gate with one silent Write; (7) fail-triggers with no in-band remediation shape (store-missing, repo-gitless); (8) locale-codepage stdout silently losing G44 ingestion for any non-ANSI store summary while both tests stayed green on the shared failure prefix; (9) a mkdir remediation arm admitting traversal, then - over-corrected - rejecting the whitespace the segment split leaves behind.",
+  "severity": "MEDIUM-to-HIGH cluster (the apparatus-enumeration and codepage classes defeat the arming the port exists to install)",
+  "author_initially": "Accepted and fixed each test-first; one rebuttal filed and ACCEPTED by the reviewer (the shared one-shot escape contract across the mjs gate family - F2 round 7, explicitly not re-raised round 8).",
+  "resolution": "All fixed and pinned by decision-level rows in tests/test_zcode_twin.py (23 cases); landed as Tools 65eb0c7 after the round-10 CLEAR.",
+  "refs": [
+   "Tools 65eb0c7",
+   "Tools/.adversary/reviews/gate_20261017-210531.md through gate_20261017-230249.md (rounds 1-10)",
+   "Tools/docs/superpowers/plans/2026-10-17-zcode-twin-port.md",
+   "owner order 2026-10-17: the port is completed by the agent for the agent, repo by repo"
+  ]
  }
  ]
 }

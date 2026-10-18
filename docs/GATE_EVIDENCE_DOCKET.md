@@ -529,3 +529,25 @@ dropping __pycache__ into the generation package (cleaned same session). The
 blocked universal-tools 1.2.0 tranche then landed UNCHANGED through the fixed
 engine (bea1a55, tier-2 CLEAR). Full row with artifact refs:
 gate_evidence.json EV-225-PREGATE-BIOME-FIX-3-ROUND-ACTIVATION-GATEKEEPING.
+
+
+## 2026-10-17 Tools zcode arming twin: nine BLOCK rounds on agent-authored guard code (EV-226)
+
+- **EV-226 (gate-review BLOCK, nine rounds, Tools 65eb0c7):** the repo-by-repo zcode twin
+  port (owner order: "the port is to be completed by you for you, its repo by repo") put
+  five hook scripts + a health helper + a project .zcode/config.json through the gate, and
+  the external reviewer caught nine real defect classes the author's own 21-test suite sat
+  green over: the G42 fail-arm denying its own recovery command; the suite able to burn the
+  owner's one-shot escape; a stale-index re-commit reviewed against pre-fix bytes; payload
+  caps summing past the 10000-char budget so the snapshot was silently dropped (the
+  blank-slate condition the hook exists to prevent); subprocess latency unbounded inside
+  the 45s hook window; the mid-FAIL apparatus lock covering only 3 of 6 mounts and omitting
+  the git metadata dir (one silent Write could defang the stop gate or the commit gate);
+  fail-triggers with no in-band remediation; locale-codepage stdout silently losing G44
+  ingestion for non-ANSI summaries while tests passed on the shared failure prefix; and a
+  mkdir remediation arm first admitting traversal, then rejecting split-residue whitespace.
+  Every fix landed test-first (23 decision-level cases); one rebuttal - the shared one-shot
+  escape as the mjs gate family's cross-gate contract - was filed and ACCEPTED by the
+  reviewer (round 8 explicitly did not re-raise it). The pattern this row evidences: the
+  gate's value on the agent's OWN enforcement code, where self-review is weakest. Full row
+  with artifact refs: gate_evidence.json EV-226-ZCODE-TWIN-9-ROUND-PORT.
