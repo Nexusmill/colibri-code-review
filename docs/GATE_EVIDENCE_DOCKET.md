@@ -582,3 +582,19 @@ reserialized at the wrong indent - the EV-158 class, a one-row addition dressed 
 7,400-line diff. All fixed with a stub-server contract test; suite 28/28; the sibling
 Nexusmill and Tools guards took the EV-229 fix the same session. Full row with artifact
 refs: gate_evidence.json EV-230-INGEST-READ-CODEC.
+## EV-231 - the jcodemunch-mcp arming port gauntlet: nine rounds, two MEDIUMs, and the near-false rebuttal (2026-10-18)
+
+Fully arming a fourth repo for zcode (grounding twin, guards, repo_health suite, gate
+driver) took the gate nine rounds. The port's own hole: the two newly wired hook scripts
+sat in none of the three apparatus enumerations, so mid-FAIL the G6 guard itself was
+defangable (the r64 class). The deeper catch: the shared-ledger outage rows wrote
+current=null, which the guard's own-name test can never honor - G42 disarmed exactly in
+the fail-closed state it exists for; the ledger now self-identifies via its own location.
+Round 6 is the row's cautionary core: a rebuttal claiming a staged .gitignore rule the
+reviewer could not see was ONE VERIFY STEP from shipping false - the rule's patch had
+silently never applied (a failed earlier script aborted before reaching it); the
+check-ignore probe caught it and converted the rebuttal into a fix. Six LOW classes
+fixed besides (notary signalling, foreign-verdict ownership, skip/dirty display,
+recovery-path marker, fallback-name asymmetry, budget-era drift); the master-side
+backlog (sticky tamper per-repo keying, add -A gating) is reported to the owner. Full
+row with artifact refs: gate_evidence.json EV-231-JCM-PORT-GATE-GAUNTLET.
