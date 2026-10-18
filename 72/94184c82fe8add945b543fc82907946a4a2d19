@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "7294184c82fe8add945b543fc82907946a4a2d19",
+ "caller": "zcode",
+ "when": "20261018-092414",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "28990f9f77f1daa089d8ccc426737e9af5336b820194a58772790ef38189962c",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "WARN",
+   "when": "20261018-092351",
+   "artifact": ".adversary\\reviews\\gate_20261018-092351.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261018-092351.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 3322, 'completion_tokens': 17332, 'total_tokens': 20654, 'cost': 0.021569208, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.021569208, 'upstream_inference_prompt_cost': 0.000770808, 'upstream_inference_completions_cost': 0.0207984}, 'completion_tokens_details': {'reasoning_tokens': 16867, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\n**Finding (LOW) \u2014 docs/gate_evidence.json, EV-077 object `\"resolution\"` field (hunk around line 1234), file serialization deviates from HEAD and from the stated scope**\n\nStaged side, verbatim from the provided bytes:\n\n`+   \"resolution\": \"\u2026 a definition-based removed-symbol check treats `import \\u2026 as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.\",`\n\nHEAD side of the same line:\n\n`-   \"resolution\": \"\u2026 a definition-based removed-symbol check treats `import \u2026 as` and `name = other` rebindings as removals; \u2026`\n\nThe rebuttal asserts: `the only content change is EV-230's closing brace gaining a comma and the 14-line EV-231 object appended at the tail`.\n\nTrigger: generating the staged diff (or any later re-serialization of this docket) and reading hunk 1.\n\nImpact: the claim is false as written \u2014 the staged diff is not purely additive. An existing evidence line is rewritten by exactly the ensure_ascii representation flip the rebuttal says was eliminated at the root (literal U+2026 in HEAD `ab960ee` becomes the 6-byte escape `\\u2026`). The parsed JSON value is identical, so no crash, no lost data, no wrong result for any JSON consumer; the harm is informational only (misleading diff-minimality claim, and this one line will flip again \u2014 visible churn \u2014 whenever the file is next emitted in HEAD's convention). The appended EV-231 object itself checks out structurally: the preceding object closes with `+  },`, the new object's fields are comma-terminated, its `refs` array ends with `+   ]`, and the following `   }` / `  ]` / ` }` context lines close object, array and root correctly \u2014 no missing or trailing comma, valid JSON.\n\nVERDICT: WARN"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261018-092135.md",
+  "outcomes": {
+   "fixed": 2
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261018-092351.md": {
+   "embedded": "2a0cb37d7a2b98fb21b97a69a8d2550a618eab12d7f2ef227391b819c25d8d3f",
+   "disk": "2a0cb37d7a2b98fb21b97a69a8d2550a618eab12d7f2ef227391b819c25d8d3f"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "691df3ea7e0eeefb3750a38627830ab9221b27154bed5df55512fa084760c6ef"
+}
