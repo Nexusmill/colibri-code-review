@@ -1,0 +1,89 @@
+{
+ "type": "CLEAR",
+ "commit": "f4073288f32a8efeca571f4f617ef52e5e49b435",
+ "caller": "zcode",
+ "when": "20261018-051242",
+ "files": {
+  ".zcode/config.json": {
+   "sha": "d80acd6566652a037c891cfcf5e1f85d51ecb62495a36dda58af41aadba270ee",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  },
+  "docs/gate_evidence.json": {
+   "sha": "4ec40f1a553f7e70adeb27e642c258900e9a1a947508830892535ff276bed1e5",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  },
+  "tests/test_zcode_twin.py": {
+   "sha": "61d3c603e589de056aacfc8b7d2f1aa14eac0f04b8799cf33eee8ce1c2d5b37d",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  },
+  "zcode/session_health.py": {
+   "sha": "f96a78df3d28800cc76b5f0b79139839bd34f06b196bdf5ddfded70df2f70b08",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  },
+  "zcode/zcode_grounding.ps1": {
+   "sha": "5c483b24b131fe6731e40765a40bd5dccac797b3ea95b3b5be9186959fe3e13a",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  },
+  "zcode/zcode_jcm_guard.ps1": {
+   "sha": "b88064e451ae5ea8d4dc86a844c3c49dd127457533bdfa8bcb8cc79afb5c449c",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  },
+  "zcode/zcode_jcm_mark.ps1": {
+   "sha": "de3d23a2be897aa96160ac557f404dd05060b020c05b7daaf90474d23aadae77",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  },
+  "zcode/zcode_repo_guards.ps1": {
+   "sha": "0b4739b4bdcd7e71108e07441113348a3a40919574edce24c31975bcaa4ccdf2",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  },
+  "zcode/zcode_stop_gate.mjs": {
+   "sha": "bfec19b056abd6f52c35bffd9e534191df735bb65df0653ceb9fcbd4356676b5",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-051238",
+   "artifact": ".adversary\\reviews\\gate_20261018-051238.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261018-051238.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 68194, 'completion_tokens': 67095, 'total_tokens': 135289, 'cost': 0.099767976, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 4096, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.099767976, 'upstream_inference_prompt_cost': 0.019253976, 'upstream_inference_completions_cost': 0.080514}, 'completion_tokens_details': {'reasoning_tokens': 66523, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['.zcode/config.json', 'docs/gate_evidence.json', 'tests/test_zcode_twin.py', 'zcode/session_health.py', 'zcode/zcode_grounding.ps1', 'zcode/zcode_jcm_guard.ps1', 'zcode/zcode_jcm_mark.ps1', 'zcode/zcode_repo_guards.ps1', 'zcode/zcode_stop_gate.mjs'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged change set against the provided bytes, tracing each hook's control flow against the tests that exercise it, the config wiring, and the budget arithmetic.\n\nChecks that mattered and held:\n\n- **`.zcode/config.json`**: parses as valid JSON; the second `PreToolUse` object is a genuine sibling element (comma after the first block, `]` closing the array), so the G42/G43 guard is actually mounted. All `args` script paths match files added by this change.\n- **`zcode_repo_guards.ps1` G42 fail-arm shapes** (`test_g42_fail_arm_shapes`): traced each row against `$remMarker`/`$allRem`/`$directApparatus`/`$outside` \u2014 `mkdir E:\\repo-memory\\...` allowed, `mkdir E:\\repo-memory\\..\\..\\other` denied (`[^\\s;|&./\\\\]*` cannot swallow `..`), `.gitignore` not matched by `\\.git[\\\\/]`, every mount blocked by `$apparatus`. Consistent.\n- **G43 one-shot flag**: content-compare (`$prev.Trim() -eq $paths`) defeats the 15-bit hash collision, and the test's `ph()` reproduces the guard's normalized string exactly (deterministic, not flaky). Bash intent check matches the declared `log_external.py` shape and rejects `python -c`.\n- **`zcode_jcm_guard.ps1`**: marker/burn ordering means the `OVERRIDE` burns only on a would-be-deny; `Get-Item ... -is [IO.FileInfo]` keeps a directory/undeletable override denying. Sibling-scope anchored spellings behave as the port note claims.\n- **`zcode_grounding.ps1`** budget: recomputed the worst cases (large/small/missing `AGENTS.md`, all three display blocks at cap + markers). Slack (240) exceeds the marker sum (~175); the final guard's first branch preserves the snapshot; the second (tail-cutting) branch is unreachable given `$cap`/`$snapReserve` arithmetic. `len(ctx) <= 10000` holds; the lone-high-surrogate trims are correctly placed before re-append.\n- **`session_health.py`**: `encoding=\"utf-8\", errors=\"replace\"`, inner 30s < outer 35s, `id:2` validity gate distinguishes retrieval failure from an empty store. The 28-test count matches the evidence claim.\n\nNothing I could substantiate survived as a defect introduced or enabled by this change.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261018-041540.md",
+  "outcomes": {
+   "fixed": 5
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261018-051238.md": {
+   "embedded": "19f2bc6d6e751154a32928199c1df35c619686dcd6dc7ec6786bf84375f6fc0a",
+   "disk": "19f2bc6d6e751154a32928199c1df35c619686dcd6dc7ec6786bf84375f6fc0a"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "e3cf41558143635d6067774732ddb9506fdc4c6a5c76968c7cbb46efd22320c3"
+}
