@@ -3688,6 +3688,38 @@
     "Tools .adversary/reviews/gate_20261018-013610.md",
     "Tools ea14805"
    ]
+  },
+  {
+   "id": "EV-229-TWIN-PORT-TIER2-CATCHES",
+   "date": "2026-10-18",
+   "repo": "colibri-code-review",
+   "layer": "gate-review BLOCK (tier 2, qwen3.8-omni-flash) on the colibri-code-review zcode twin port",
+   "caught": "Two real defects in the ported guard code, both inherited verbatim from the Tools/Nexusmill twins: (1) MEDIUM - the G6 jcm guard's one-shot OVERRIDE escape used Test-Path + Remove-Item without -Force/-Recurse, so a directory or undeletable OVERRIDE file made the guard ALLOW without burning (silently disabling the G6 rule machine-wide) - the exact M2 class the co-shipped stop gate had already fixed in mjs; (2) LOW - the G43 one-shot unlock flag was bound only by a 15-bit polynomial hash of the target path whose stored content was never read back, so a colliding path could ride another target's unlock.",
+   "severity": "MEDIUM (the OVERRIDE class fails the G6 rule open machine-wide) + LOW (probabilistic unlock confusion)",
+   "author_initially": "Accepted immediately - both fixed red-first with verdict-named tests (override-directory no-release + burn positive; hash-collision no-unlock with a python-computed colliding path over the guard-normalized form), 27/27 green after.",
+   "resolution": "zcode_jcm_guard.ps1 OVERRIDE now burns only a REGULAR FILE that actually deletes (stop-gate M2 semantics); zcode_repo_guards.ps1 unlock now requires the flag's stored content to equal the current target path. EXPOSURE NOTE: the same unfixed OVERRIDE shape still lives in Nexusmill/tools/zcode_jcm_guard.ps1 and Tools/zcode/zcode_jcm_guard.ps1 - fix owed in those repos.",
+   "refs": [
+    "colibri-code-review .adversary/reviews/gate_20261018-041540.md (tier-2 BLOCK)",
+    "colibri-code-review tests/test_zcode_twin.py (override/hash-collision verdict tests)",
+    "Tools 65eb0c7 (the port source that carried the defects in)",
+    "stop gate M2 finding 1 (the fixed shape this port now mirrors)"
+   ]
+  },
+  {
+   "id": "EV-230-INGEST-READ-CODEC",
+   "date": "2026-10-18",
+   "repo": "colibri-code-review",
+   "layer": "gate-review BLOCK (tier 2) rounds 2-3 on the zcode twin port + the sibling Tools backport round (tier-1 WARN)",
+   "caught": "Round 3: (1) MEDIUM - session_health.ingest() read the repo-memory server's UTF-8 stdout with text=True (locale codec): on cp1252 hosts 0x8D-class continuation bytes (U+200D) raise UnicodeDecodeError and the fail-open handler converts it into a permanently 'unavailable' G44 ingestion - the read side of the exact silent-loss class the file's own main() comment claims fixed for the write side; measured caveat: THIS machine's getpreferredencoding is utf-8 (Python 3.11.9, UTF-8 system locale), so the loss is latent here and live on cp1252 hosts - the reviewer's 'cp1252 on this machine' premise was corrected by measurement, the class stands. (2) MEDIUM - the burn-positive override test planted a REAL OVERRIDE at the machine-global non-session-keyed path with no try/finally: a hung child or a concurrent guard instance in another repo (demonstrated live by this session's parallel Tools+colibri gate rounds) could strand it = a silent unauthorized one-shot release for the next denied call in ANY repo. Sibling LOW (Tools round, WARN): the same test was also order-dependent (write_text fails when %TEMP%\\zskill-gate does not exist yet). Round 2's EV-158-class catch (gate_evidence.json reserialized at indent=2/LF instead of its recorded indent=1/CRLF convention, exploding a one-row addition into a ~7,400-line review payload) is folded here as the third class.",
+   "severity": "MEDIUM x2 (latent-on-this-host G44 loss class; test-artifact escape-stranding) + LOW (order dependence) + the EV-158 payload-hygiene class",
+   "author_initially": "Accepted immediately; the cp1252-on-this-machine premise was corrected by measurement (getpreferredencoding()==utf-8) while accepting the class fix - explicit encoding costs nothing and pins the contract.",
+   "resolution": "ingest() now decodes encoding='utf-8', errors='replace'; the burn test self-provisions its parent dir and unwinds in try/finally; a stub-server test pins the UTF-8 read contract (red on cp1252 hosts, contract-pinning here); gate_evidence.json re-serialized at indent=1/CRLF so the staged diff collapsed to 17 lines. Suite 28/28 fresh. Sibling fixes: Nexusmill/tools/zcode_jcm_guard.ps1 (EV-229 backport, live red-green probe) and the Tools twin (guard + tests, suite 25/25) fixed in the same session.",
+   "refs": [
+    "colibri-code-review .adversary/reviews/gate_20261018-044348.md (r3 tier-2 BLOCK)",
+    "colibri-code-review .adversary/reviews/gate_20261018-043111.md (r2 tier-2 BLOCK, EV-158 class)",
+    "Tools .adversary/reviews/gate_20261018-044042.md (tier-1 WARN, order-dependence LOW)",
+    "EV-158 (the serialization-convention precedent)"
+   ]
   }
  ]
 }

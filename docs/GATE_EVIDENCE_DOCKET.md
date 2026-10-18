@@ -551,3 +551,34 @@ gate_evidence.json EV-225-PREGATE-BIOME-FIX-3-ROUND-ACTIVATION-GATEKEEPING.
   reviewer (round 8 explicitly did not re-raise it). The pattern this row evidences: the
   gate's value on the agent's OWN enforcement code, where self-review is weakest. Full row
   with artifact refs: gate_evidence.json EV-226-ZCODE-TWIN-9-ROUND-PORT.
+
+
+## EV-229 - the tier-2 catch on the colibri-code-review twin port (2026-10-18)
+
+The first repo-by-repo port of the arming twin INTO colibri-code-review (from the Tools
+twin) was BLOCKed by its own tier-2 review with two real defects the port had carried
+in verbatim from its sources: the G6 guard's one-shot OVERRIDE escape failed OPEN on a
+directory or undeletable OVERRIDE (Test-Path is true for directories; Remove-Item
+without -Force silently no-ops; the guard then allowed without burning - the exact M2
+class the co-shipped stop gate had already fixed in mjs), and the G43 one-shot unlock
+flag was bound by a 15-bit path hash whose stored content was never read back, so a
+colliding path could ride another target's unlock. Both were fixed red-first with
+verdict-named tests (27/27); the same unfixed OVERRIDE shape remains exposed in the
+Nexusmill and Tools G6 guards until those repos take the fix. The pattern this row
+evidences: porting reviewed code re-imports its review debt - every port needs its own
+gate round. Full row with artifact refs: gate_evidence.json EV-229-TWIN-PORT-TIER2-CATCHES.
+
+
+## EV-230 - the later rounds on the twin port: read-side codec, test hygiene, serialization (2026-10-18)
+
+Rounds 2-3 of the colibri twin port's own gate kept earning their keep: the G44 ingest
+reader rode the locale codec instead of the UTF-8 the memory server emits (latent on
+this UTF-8-locale host, live on any cp1252 machine - the read side of the silent-loss
+class the file's own comment claimed fixed), the burn-positive override test could
+strand a REAL machine-global one-shot escape with no cleanup (an interleaving this
+session's own parallel gate rounds demonstrated live), the same test was order-dependent
+on a missing parent dir (the Tools round's WARN), and the docket JSON itself was
+reserialized at the wrong indent - the EV-158 class, a one-row addition dressed as a
+7,400-line diff. All fixed with a stub-server contract test; suite 28/28; the sibling
+Nexusmill and Tools guards took the EV-229 fix the same session. Full row with artifact
+refs: gate_evidence.json EV-230-INGEST-READ-CODEC.
