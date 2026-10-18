@@ -598,3 +598,23 @@ fixed besides (notary signalling, foreign-verdict ownership, skip/dirty display,
 recovery-path marker, fallback-name asymmetry, budget-era drift); the master-side
 backlog (sticky tamper per-repo keying, add -A gating) is reported to the owner. Full
 row with artifact refs: gate_evidence.json EV-231-JCM-PORT-GATE-GAUNTLET.
+
+## EV-232 - the RSI corpus library's own birth gauntlet: four rounds, six census defects, one unprovable rebuttal (2026-10-18)
+
+The recursive-self-improvement program's very first tranche - the library that mines every colibri review into root causes - went through four BLOCK rounds and a WARN. The catches: append-mutated ledgers duplicated wholesale on every collect, edited sources left phantom findings behind, distinct review records (base vs __r2 files, same-sha re-audit segments) collided and deleted each other, manifest modes collapsed to the last row, the certain-skip tier was unreachable dead code, and the rollback test proved nothing. A clean rebuild after the fixes recovered 33 reviews and 143 manifest rows the defects had silently destroyed. The cautionary core is round 1's rebuttal: the fixtures WERE staged, but .md files never reach the code-review payload, so the reviewer correctly refused out-of-band citations - upheld-as-unprovable, then fixed structurally by inlining the fixtures as code. Suite 19 -> 30; landed e8b01231. Full row with artifact refs: gate_evidence.json EV-232-RSI-T1-GATE-ROUNDS.
+
+## EV-233 - the RSI trend instrument's own honesty claims: two rounds, both about the baseline comparison (2026-10-18)
+
+T5 - the measurement tranche of the same RSI program - drew two BLOCKs on the honesty
+instrument's own honesty. Round 1: with no snapshot denominator, the renderer still
+printed "at or below baseline" - a directional claim nothing measured, two sections under
+a headline that said n/a. Round 2 (tier-2 after a provider error): the headline summed
+every agent and compared the aggregate against a single-author baseline - agent-mix
+drift alone could read as improvement; proven live on the real corpus, where the pre-fix
+83.7 aggregate was the owner's rows diluting phantom-man's true 86.2 into a false
+below-baseline read. Both fixed RED-first (verdict-named regressions; suite 79 -> 85): a
+missing denominator now renders an explicit no-comparison statement, and the headline is
+matched to the baseline's own author population with per-author rows as never-compared
+context. Landed c82015de round-3 CLEAR. Full row with artifact refs: gate_evidence.json
+EV-233-RSI-T5-HONESTY-INSTRUMENT.
+Round-3 CLEAR artifact: Nexusmill .adversary/reviews/gate_20261018-144707.md.

@@ -1223,7 +1223,7 @@
    "caught": "A FALSE refusal, twice, recorded because it is evidence about the layer: the tranche moved `_bounded_gunzip` from runtime/http_routes.py to security.bounded_gunzip so import-scip could share the gzip-bomb guard. Round 1 kept the old name bound with `from ..security import bounded_gunzip as _bounded_gunzip`; round 2 with a module-level `_bounded_gunzip = bounded_gunzip` assignment. The pre-check compares DEFINITIONS (def/class) between the old and new bytes, saw the def gone with six unstaged references in tests/test_v1_108_95.py, and refused before any review - both times, while that test file passed on both trees. Only staging the caller re-pointed (the test now imports the helper from its new home) let the review run.",
    "severity": "NONE (false positive of the layer) - the code was correct on all three trees",
    "author_initially": "Believed an import alias was a binding the check would honour; then believed an assignment would be. Neither is: the check is definition-based by design - Tools de3f953 added it after Tools 8245433 shipped exactly the hole where a reviewer never sees unstaged callers (EV-060) - and an alias is exactly what a reviewer cannot verify without the callers staged.",
-   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import \u2026 as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
+   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import … as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
    "refs": [
     "jcodemunch-mcp .adversary/reviews/ (rounds 1-2 wrote NO artifact - a REFUSED pre-check exits before the review; the captures are the session scratchpad gate_scipcap_r1.txt / gate_scipcap_r2.txt)",
     "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK, first round the pre-check let through)",
@@ -3733,6 +3733,39 @@
    "refs": [
     "jcodemunch-mcp/.adversary/reviews/gate_20261018-{081511,082716,083227,083910,084523,085433,085847,090958,091628}.md",
     "commits 4a0f0d1, b4fcebf (jcodemunch-mcp nexusmill-local)"
+   ]
+  },
+  {
+   "id": "EV-232-RSI-T1-GATE-ROUNDS",
+   "date": "2026-10-18",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK x4 then WARN (5 rounds; a tier-1 provider error failed over to tier-2 each time)",
+   "caught": "Six census-integrity defects in the newborn RSI corpus library itself: remediations/refuted ledgers re-inserted whole files on every append (quadratic duplication); findings rows survived their source's edit as phantoms (same review_id, no eviction); distinct review records collided and silently deleted each other (x__bug__sha.md vs __r2, same-sha re-audits - 33 reviews recovered post-fix); manifest rows collapsed one-row-per-mode to the last mode (143 rows recovered) and never evicted removed entries; the documented sha256 certain-skip tier was logically unreachable dead code; the rollback test was vacuous.",
+   "severity": "HIGH (the error-corpus library's own census is the baseline the whole RSI program trends against)",
+   "author_initially": "Round-1 Finding 1 (fixtures missing from the change set) was rebutted on git-output evidence and the rebuttal was upheld as UNPROVABLE by the reviewer: the .md fixtures were staged but invisible to the code-review lane - the rebuttal cited bytes the payload never carries. The class was then fixed structurally (fixtures inlined as code constants in sample_reviews.py) rather than argued again.",
+   "resolution": "Every finding fixed red-first across four BLOCK rounds (suite 19 -> 30); T1 landed e8b01231 with WARN clearance; the clean-rebuild census recovered the destroyed rows (964 reviews / 851 findings / 715 manifest rows). Pattern this row evidences: a rebuttal is only as good as the bytes the reviewer can SEE - resolve payload-visibility classes structurally, never with out-of-band citations.",
+   "refs": [
+    "Nexusmill tools/rsi/* (commit e8b01231)",
+    "Nexusmill .adversary/reviews/gate_20261018-090430.md .. gate_20261018-094557.md",
+    "Nexusmill docs/superpowers/specs/2026-10-18-rsi-design.md"
+   ]
+  },
+  {
+   "id": "EV-233-RSI-T5-HONESTY-INSTRUMENT",
+   "date": "2026-10-18",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK x2 then CLEAR (3 dispatch rounds; round-2 tier-1 provider errored, tier-2 qwen3.8-omni-flash answered)",
+   "caught": "Two defects in the RSI trend instrument's honesty claims - the decision-critical output of the program that exists to trend error writing honestly. (r1, MEDIUM) with no error-rate snapshot the renderer still printed 'Current ledger rate is at or below baseline' - an unmeasured directional claim contradicting the n/a headline two sections earlier in the same artifact. (r2, MEDIUM) the headline summed EVERY agent in the latest snapshot and compared that aggregate against the 0.862 baseline that was measured on ONE author (phantom-man): no mechanism tied the compared populations together, so agent-mix drift alone could read as improvement or regression - proven live, where the pre-fix real report's 83.7 aggregate was the owner's lower-rate rows diluting phantom-man's true 86.2 into a false below-baseline read.",
+   "severity": "MEDIUM x2 (false success/failure in the honesty report the RSI program trends by)",
+   "author_initially": "Both accepted immediately and fixed RED-first; no rebuttals attempted.",
+   "resolution": "Three-way claim branch (rate None renders an explicit no-comparison statement); headline computed over the baseline's own author population only (BASELINE_AUTHOR constant; a snapshot lacking that author yields no comparison); per-author rows rendered as labeled context that is never compared. Two verdict-named regressions (test_render_without_rate_claims_no_comparison, test_trend_without_baseline_author_claims_no_comparison); suite 79 -> 85; landed c82015de with round-3 CLEAR and notarization.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261018-143308.md (r1 tier-1 BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261018-144149.md (r2 tier-2 BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261018-144707.md (round-3 CLEAR)",
+    "Nexusmill tools/rsi/measure.py",
+    "Nexusmill tools/rsi/tests/test_measure.py",
+    "Nexusmill commit c82015de"
    ]
   }
  ]
