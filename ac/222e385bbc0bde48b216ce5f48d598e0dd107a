@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "ac222e385bbc0bde48b216ce5f48d598e0dd107a",
+ "caller": "zcode",
+ "when": "20261017-230619",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "d5865ad14f7230455ebb83f0d84747c684fd12ac8ab4cbb538860502deeae6e4",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261017-230617",
+   "artifact": ".adversary\\reviews\\gate_20261017-230617.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261017-230617.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1767, 'completion_tokens': 10644, 'total_tokens': 12411, 'cost': 0.0133029, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0133029, 'upstream_inference_prompt_cost': 0.0005301, 'upstream_inference_completions_cost': 0.0127728}, 'completion_tokens_details': {'reasoning_tokens': 10334, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nChecked the added record against the surrounding bytes:\n\n- Brace/bracket accounting balances: the previous entry's refs `]` is followed by the inserted `},` (closing that entry), the inserted `{` opens the new entry, the inserted `]` closes `EV-226`'s refs, and the pre-existing context `}`, `]`, `}` close the new entry, the entries array, and the root \u2014 valid JSON, with 16 added lines vs. the hunk's `+3636,27` (11 + 16). No trailing comma before the array close.\n- No unescaped `\"` inside any added string value.\n- Internal counts self-consistent: the `caught` string enumerates exactly nine defect classes `(1)\u2026(9)` matching `\"Nine real defect classes\"` and the `layer` statement that the nine gate-review rounds were BLOCK, with `resolution` placing the landing \"after the round-10 CLEAR\" (round 10 being the CLEAR, not a ninth BLOCK) \u2014 the refs' \"rounds 1-10\" reconciles rather than contradicts.\n- The record is descriptive history (prior review outcomes in the same style as the sibling `EV-224` rows); nothing in it directs the reader to skip or soften review, and no claim of pre-approval of this change is asserted.\n\nNo defect that survives verification was found in the reviewed bytes.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261017-230617.md": {
+   "embedded": "9d3a7c9a6473c80a2dbffcfbf9927b4d69f569428bf3f0ddb15c6256ee125005",
+   "disk": "9d3a7c9a6473c80a2dbffcfbf9927b4d69f569428bf3f0ddb15c6256ee125005"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "a3912337952bcc60d4eb9243f72d234e8acd765064bbaacf0d655f7cc0f2adee"
+}
