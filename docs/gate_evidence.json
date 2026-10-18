@@ -3603,60 +3603,91 @@
     "Nexusmill 6adaa1c6 (CLEAR notarized in refs/notes/adversary)"
    ]
   },
- {
-  "id": "EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK",
-  "date": "2026-10-17",
-  "repo": "3DPrinting (zcode arming) + machine-wide pre-gate",
-  "layer": "pre-commit local pre-gate (deterministic layer; biome 2.5.15)",
-  "caught": "The pre-gate refused 3DPrinting's arming commit with 'biome-parse tools/zcode_stop_gate.mjs' on a file with NO parse error - a byte-identical vendored copy of the gate-cleared Nexusmill twin (e5995de1). Root cause, reproduced live with the capture at 3DPrinting/.adversary/probes/biome_stdin_falseblock_2026-10-17.txt: biome 2.5.15 check exits 1 'The contents aren't fixed' on canonical minimal input (P1: 'const x = 1;') and on the format-canonical + shebang-stripped twin alike (P3; P4 shows the not-fixed exit is not even stdin-specific), i.e. the disable flags do not prevent it; the pre-gate therefore fires on ANY non-zero exit whose output matches /pars/i, and the match lands on 'JSON.parse' / 'parses to null' INSIDE THE SOURCE TEXT biome echoes in its diff body (P2). Net: any staged .js/.mjs whose own content contains the substring 'pars' is refused; content-preserving fixes do not clear it, and re-commits of already-reviewed code re-block. EV-124 doctrine ('deterministic layers never false-block') violation class: tool-version drift re-evaluating under broken exit semantics.",
-  "severity": "MEDIUM - machine-wide latent false-block on legitimate .js/.mjs commits containing 'pars'; no security impact; blocks vendored/twin code",
-  "author_initially": "agent (zcode GLM-5.3, 3DPrinting arming session): initially attempted the suggested 'fix and re-stage' (biome-canonical reformat), which did NOT clear the refusal and exposed the not-fixed-on-canonical behavior; an initial 'path-mode exit 0' claim was a pipe artifact ($? captured head's status) and is corrected in the transcript (P4)",
-  "resolution": "Refusal routed around honestly, no content contorted: the local .mjs stays UNCOMMITTED (parked in 3DPrinting junk/), and the 3DPrinting .zcode/config.json Stop hook is wired to the byte-identical COMMITTED Nexusmill twin by absolute path; the arming commit landed gate-CLEAR (3DPrinting b425415; review artifact gate_20261017-110143.md, cited in refs) and the stop gate resolves its per-repo ledger from CWD so behavior is identical. A real fix (scope the regex to actual biome parse diagnostics, or correct the invocation/exit handling for 2.5.15) is owner-ordered work on Tools/adversary-gate/adversary_gate.py _pregate_check_one (~line 2783) - flagged in the arming report and 3DPrinting docs/AGENT_STATE.md.",
-  "refs": [
-   "3DPrinting/.adversary/reviews/gate_20261017-110143.md (b425415 CLEAR review artifact)",
-   "3DPrinting/.adversary/probes/biome_stdin_falseblock_2026-10-17.txt (live probe transcript P1-P4)",
-   "colibri-code-review/.adversary/reviews/gate_20261017-110602.md (this row's round-1 BLOCK)",
-   "Tools/adversary-gate/adversary_gate.py _pregate_check_one biome branch (~2783-2788)",
-   "Nexusmill e5995de1 (original twin commit)",
-   "biome 2.5.15"
-  ]
- },
- {
-  "id": "EV-225-PREGATE-BIOME-FIX-3-ROUND-ACTIVATION-GATEKEEPING",
-  "date": "2026-10-17",
-  "repo": "Tools (adversary-gate engine) - executes EV-224's owner-ordered real fix",
-  "layer": "pre-commit local pre-gate remediation + certified runtime activation + validate_generation",
-  "caught": "Three catches inside the remediation itself. (1) Round-1 WARN (gate_20261017-161207.md): the rewritten probe ran biome with the temp dir as cwd, silently dropping repo-level biome.json authority the old stdin path had via cwd - a NEW false-block route for config-dependent repos (LOW; no armed repo ships a biome config today). (2) Round-2 WARN (gate_20261017-162706.md): _repo_root() inside the helper reaches _run_git, which fails via SystemExit (uncatchable by except Exception) - a documented degrade path became a hard abort - and the call falsified _local_pregate's no-git-I/O invariant; plus the check logic changed twice while _PREGATE_LOGIC_VERSION stayed 2, letting cached passes skip the config-aware classification. (3) The certified-runtime layer held the line twice: post-commit activation REFUSED to install enforcement bytes cleared only at WARN (403e169, d78e99b) - the gate policing its own maintenance until round 3 cleared (gate_20261017-163618.md) - and validate_generation refused the next commit after an unguarded (-B-less) snapshot import dropped __pycache__ into the d18b0af generation package (self-inflicted by the fixing session, cleaned, generation restored to its manifest set).",
-  "severity": "LOW findings, process-level wedges - but the activation gatekeeping prevented a WARN-cleared engine from silently becoming the machine-wide executing gate",
-  "author_initially": "agent (zcode GLM-5.3, separate fix session per owner option (a) - the session landing the blocked tranche did NOT edit the gate, removing the G39 conflict-of-interest); the first helper draft carried an unclosed try block and was refused by safe_replace's py_compile gate before touching the file",
-  "resolution": "Final design (d18b0af): path-mode biome check --reporter=json on a temp probe copy, classification ONLY on category=parse diagnostics (exit codes, lint/format findings and text regexes can never refuse), repo config honored via --config-path with the root THREADED AS A PARAMETER from _local_pregate (zero git I/O in the check), _PREGATE_LOGIC_VERSION=3; selftest rows T1/T2/T2b/T4/T5/T5b RED-first (battery 212/212, PBT 22/22). The blocked universal-tools dedrift tranche then landed UNCHANGED through the fixed engine (bea1a55, tier-2 CLEAR gate_20261017-164128.md) and the runtime re-pinned to it. Fix contract with the escape-rate ledger row: Tools/docs/plans/2026-10-17-biome-pregate-fix.md.",
-  "amends": "EV-224 - its resolution's owner-ordered real fix is EXECUTED; the 3DPrinting parked .mjs and any pars-containing staged js file now pass the fixed pre-gate",
-  "refs": [
-   "Tools/adversary-gate/adversary_gate.py _pregate_biome_parse + _pregate_check_one",
-   "Tools 403e169 / d78e99b / d18b0af (three fix rounds) and bea1a55 (tranche)",
-   "Tools/.adversary/reviews/gate_20261017-161207.md (round-1 WARN)",
-   "Tools/.adversary/reviews/gate_20261017-162706.md (round-2 WARN)",
-   "Tools/.adversary/reviews/gate_20261017-163618.md (round-3 CLEAR)",
-   "Tools/.adversary/reviews/gate_20261017-164128.md (tranche tier-2 CLEAR)",
-   "Tools/docs/plans/2026-10-17-biome-pregate-fix.md (Fix-Contract, 3 rounds)",
-   "biome 2.5.15; EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK"
-  ]
- },
- {
-  "id": "EV-226-ZCODE-TWIN-9-ROUND-PORT",
-  "date": "2026-10-17",
-  "repo": "Tools",
-  "layer": "gate-review BLOCK (nine rounds on the repo-by-repo zcode arming twin port)",
-  "caught": "Nine real defect classes in agent-authored hook/guard code across the rounds: (1) the G42 fail-arm denied its own deny message's recovery command; (2) the test suite could burn the owner's one-shot escape; (3) a re-commit without re-staging had the gate review stale index bytes; (4) payload slice caps summed past the 10000-char budget, silently deleting the AGENTS.md snapshot - the blank-slate condition the hook exists to prevent; (5) subprocess calls bounded for errors but not latency inside the 45s hook window; (6) the mid-FAIL apparatus lock enumerated 3 of 6 shipped mounts and omitted the git metadata dir - a fail-locked agent could defang the stop gate or the commit gate with one silent Write; (7) fail-triggers with no in-band remediation shape (store-missing, repo-gitless); (8) locale-codepage stdout silently losing G44 ingestion for any non-ANSI store summary while both tests stayed green on the shared failure prefix; (9) a mkdir remediation arm admitting traversal, then - over-corrected - rejecting the whitespace the segment split leaves behind.",
-  "severity": "MEDIUM-to-HIGH cluster (the apparatus-enumeration and codepage classes defeat the arming the port exists to install)",
-  "author_initially": "Accepted and fixed each test-first; one rebuttal filed and ACCEPTED by the reviewer (the shared one-shot escape contract across the mjs gate family - F2 round 7, explicitly not re-raised round 8).",
-  "resolution": "All fixed and pinned by decision-level rows in tests/test_zcode_twin.py (23 cases); landed as Tools 65eb0c7 after the round-10 CLEAR.",
-  "refs": [
-   "Tools 65eb0c7",
-   "Tools/.adversary/reviews/gate_20261017-210531.md through gate_20261017-230249.md (rounds 1-10)",
-   "Tools/docs/superpowers/plans/2026-10-17-zcode-twin-port.md",
-   "owner order 2026-10-17: the port is completed by the agent for the agent, repo by repo"
-  ]
- }
+  {
+   "id": "EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK",
+   "date": "2026-10-17",
+   "repo": "3DPrinting (zcode arming) + machine-wide pre-gate",
+   "layer": "pre-commit local pre-gate (deterministic layer; biome 2.5.15)",
+   "caught": "The pre-gate refused 3DPrinting's arming commit with 'biome-parse tools/zcode_stop_gate.mjs' on a file with NO parse error - a byte-identical vendored copy of the gate-cleared Nexusmill twin (e5995de1). Root cause, reproduced live with the capture at 3DPrinting/.adversary/probes/biome_stdin_falseblock_2026-10-17.txt: biome 2.5.15 check exits 1 'The contents aren't fixed' on canonical minimal input (P1: 'const x = 1;') and on the format-canonical + shebang-stripped twin alike (P3; P4 shows the not-fixed exit is not even stdin-specific), i.e. the disable flags do not prevent it; the pre-gate therefore fires on ANY non-zero exit whose output matches /pars/i, and the match lands on 'JSON.parse' / 'parses to null' INSIDE THE SOURCE TEXT biome echoes in its diff body (P2). Net: any staged .js/.mjs whose own content contains the substring 'pars' is refused; content-preserving fixes do not clear it, and re-commits of already-reviewed code re-block. EV-124 doctrine ('deterministic layers never false-block') violation class: tool-version drift re-evaluating under broken exit semantics.",
+   "severity": "MEDIUM - machine-wide latent false-block on legitimate .js/.mjs commits containing 'pars'; no security impact; blocks vendored/twin code",
+   "author_initially": "agent (zcode GLM-5.3, 3DPrinting arming session): initially attempted the suggested 'fix and re-stage' (biome-canonical reformat), which did NOT clear the refusal and exposed the not-fixed-on-canonical behavior; an initial 'path-mode exit 0' claim was a pipe artifact ($? captured head's status) and is corrected in the transcript (P4)",
+   "resolution": "Refusal routed around honestly, no content contorted: the local .mjs stays UNCOMMITTED (parked in 3DPrinting junk/), and the 3DPrinting .zcode/config.json Stop hook is wired to the byte-identical COMMITTED Nexusmill twin by absolute path; the arming commit landed gate-CLEAR (3DPrinting b425415; review artifact gate_20261017-110143.md, cited in refs) and the stop gate resolves its per-repo ledger from CWD so behavior is identical. A real fix (scope the regex to actual biome parse diagnostics, or correct the invocation/exit handling for 2.5.15) is owner-ordered work on Tools/adversary-gate/adversary_gate.py _pregate_check_one (~line 2783) - flagged in the arming report and 3DPrinting docs/AGENT_STATE.md.",
+   "refs": [
+    "3DPrinting/.adversary/reviews/gate_20261017-110143.md (b425415 CLEAR review artifact)",
+    "3DPrinting/.adversary/probes/biome_stdin_falseblock_2026-10-17.txt (live probe transcript P1-P4)",
+    "colibri-code-review/.adversary/reviews/gate_20261017-110602.md (this row's round-1 BLOCK)",
+    "Tools/adversary-gate/adversary_gate.py _pregate_check_one biome branch (~2783-2788)",
+    "Nexusmill e5995de1 (original twin commit)",
+    "biome 2.5.15"
+   ]
+  },
+  {
+   "id": "EV-225-PREGATE-BIOME-FIX-3-ROUND-ACTIVATION-GATEKEEPING",
+   "date": "2026-10-17",
+   "repo": "Tools (adversary-gate engine) - executes EV-224's owner-ordered real fix",
+   "layer": "pre-commit local pre-gate remediation + certified runtime activation + validate_generation",
+   "caught": "Three catches inside the remediation itself. (1) Round-1 WARN (gate_20261017-161207.md): the rewritten probe ran biome with the temp dir as cwd, silently dropping repo-level biome.json authority the old stdin path had via cwd - a NEW false-block route for config-dependent repos (LOW; no armed repo ships a biome config today). (2) Round-2 WARN (gate_20261017-162706.md): _repo_root() inside the helper reaches _run_git, which fails via SystemExit (uncatchable by except Exception) - a documented degrade path became a hard abort - and the call falsified _local_pregate's no-git-I/O invariant; plus the check logic changed twice while _PREGATE_LOGIC_VERSION stayed 2, letting cached passes skip the config-aware classification. (3) The certified-runtime layer held the line twice: post-commit activation REFUSED to install enforcement bytes cleared only at WARN (403e169, d78e99b) - the gate policing its own maintenance until round 3 cleared (gate_20261017-163618.md) - and validate_generation refused the next commit after an unguarded (-B-less) snapshot import dropped __pycache__ into the d18b0af generation package (self-inflicted by the fixing session, cleaned, generation restored to its manifest set).",
+   "severity": "LOW findings, process-level wedges - but the activation gatekeeping prevented a WARN-cleared engine from silently becoming the machine-wide executing gate",
+   "author_initially": "agent (zcode GLM-5.3, separate fix session per owner option (a) - the session landing the blocked tranche did NOT edit the gate, removing the G39 conflict-of-interest); the first helper draft carried an unclosed try block and was refused by safe_replace's py_compile gate before touching the file",
+   "resolution": "Final design (d18b0af): path-mode biome check --reporter=json on a temp probe copy, classification ONLY on category=parse diagnostics (exit codes, lint/format findings and text regexes can never refuse), repo config honored via --config-path with the root THREADED AS A PARAMETER from _local_pregate (zero git I/O in the check), _PREGATE_LOGIC_VERSION=3; selftest rows T1/T2/T2b/T4/T5/T5b RED-first (battery 212/212, PBT 22/22). The blocked universal-tools dedrift tranche then landed UNCHANGED through the fixed engine (bea1a55, tier-2 CLEAR gate_20261017-164128.md) and the runtime re-pinned to it. Fix contract with the escape-rate ledger row: Tools/docs/plans/2026-10-17-biome-pregate-fix.md.",
+   "amends": "EV-224 - its resolution's owner-ordered real fix is EXECUTED; the 3DPrinting parked .mjs and any pars-containing staged js file now pass the fixed pre-gate",
+   "refs": [
+    "Tools/adversary-gate/adversary_gate.py _pregate_biome_parse + _pregate_check_one",
+    "Tools 403e169 / d78e99b / d18b0af (three fix rounds) and bea1a55 (tranche)",
+    "Tools/.adversary/reviews/gate_20261017-161207.md (round-1 WARN)",
+    "Tools/.adversary/reviews/gate_20261017-162706.md (round-2 WARN)",
+    "Tools/.adversary/reviews/gate_20261017-163618.md (round-3 CLEAR)",
+    "Tools/.adversary/reviews/gate_20261017-164128.md (tranche tier-2 CLEAR)",
+    "Tools/docs/plans/2026-10-17-biome-pregate-fix.md (Fix-Contract, 3 rounds)",
+    "biome 2.5.15; EV-224-PREGATE-BIOME-STDIN-PARS-FALSEBLOCK"
+   ]
+  },
+  {
+   "id": "EV-226-ZCODE-TWIN-9-ROUND-PORT",
+   "date": "2026-10-17",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK (nine rounds on the repo-by-repo zcode arming twin port)",
+   "caught": "Nine real defect classes in agent-authored hook/guard code across the rounds: (1) the G42 fail-arm denied its own deny message's recovery command; (2) the test suite could burn the owner's one-shot escape; (3) a re-commit without re-staging had the gate review stale index bytes; (4) payload slice caps summed past the 10000-char budget, silently deleting the AGENTS.md snapshot - the blank-slate condition the hook exists to prevent; (5) subprocess calls bounded for errors but not latency inside the 45s hook window; (6) the mid-FAIL apparatus lock enumerated 3 of 6 shipped mounts and omitted the git metadata dir - a fail-locked agent could defang the stop gate or the commit gate with one silent Write; (7) fail-triggers with no in-band remediation shape (store-missing, repo-gitless); (8) locale-codepage stdout silently losing G44 ingestion for any non-ANSI store summary while both tests stayed green on the shared failure prefix; (9) a mkdir remediation arm admitting traversal, then - over-corrected - rejecting the whitespace the segment split leaves behind.",
+   "severity": "MEDIUM-to-HIGH cluster (the apparatus-enumeration and codepage classes defeat the arming the port exists to install)",
+   "author_initially": "Accepted and fixed each test-first; one rebuttal filed and ACCEPTED by the reviewer (the shared one-shot escape contract across the mjs gate family - F2 round 7, explicitly not re-raised round 8).",
+   "resolution": "All fixed and pinned by decision-level rows in tests/test_zcode_twin.py (23 cases); landed as Tools 65eb0c7 after the round-10 CLEAR.",
+   "refs": [
+    "Tools 65eb0c7",
+    "Tools/.adversary/reviews/gate_20261017-210531.md through gate_20261017-230249.md (rounds 1-10)",
+    "Tools/docs/superpowers/plans/2026-10-17-zcode-twin-port.md",
+    "owner order 2026-10-17: the port is completed by the agent for the agent, repo by repo"
+   ]
+  },
+  {
+   "id": "EV-227-MCP-DEDUP-REBUTTAL",
+   "date": "2026-10-18",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (tier-1) -> factual --context rebuttal -> tier-2 CLEAR",
+   "caught": "Tier-1 BLOCKed the removal of the nexusmill-memory launch_wrapper entry from .zcode/config.json mcp.servers: from the repo diff alone the ingest messages 'query the store' looked unactionable because the deleted entry carried REPO_MEMORY_DB - the reviewer cannot see machine-wide plugin coverage from repo bytes.",
+   "severity": "MEDIUM (design-visibility gap; the runtime path was never broken)",
+   "author_initially": "Disputed with verifiable evidence, not prose: --context carried the plugin bytes path (cache tools/repo-memory/1.1.0/.mcp.json defining nexusmill-memory, byte-identical to Tools/repo-memory-plugin/.mcp.json), the same-section counterexamples (python-lsp/pdf-toolkit/azure mount fine; only the torch-class server failed), _launch_diag.log cold-start data, and the same-day sibling landings.",
+   "resolution": "Tier-2 re-verified the rebuttal against the bytes and CLEARed (gate_20261018-015344.md); commit f4f98b71 landed. The catch itself was CORRECT process: a server removal needs cross-file justification a single-repo diff cannot carry - exactly what --context exists for.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261018-015048.md (tier-1 BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261018-015344.md (tier-2 CLEAR)",
+    "Nexusmill f4f98b71",
+    "Tools ea14805",
+    "3DPrinting 89f157b"
+   ]
+  },
+  {
+   "id": "EV-228-STALE-45S-COMMENTS",
+   "date": "2026-10-18",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK round 1 on the G44 budget backport (verdict WARN, findings adjudicated)",
+   "caught": "Two stale comments still citing the OLD 45s hook window (zcode_grounding.ps1 header 'the 45s hook window kills the script' + session_health.py _git 'INSIDE the grounding hook's 45s window') after the raise to 75s - a maintainer re-sizing subprocess budgets from the header would size against the wrong number. The reviewer ALSO verified the functional math as sound (worst case 59s + kill overhead < 75s; inner 30s < outer 35s).",
+   "severity": "LOW (documentation accuracy in the sizing reference)",
+   "author_initially": "Accepted immediately - both comments fixed before the re-commit.",
+   "resolution": "Both comments updated to 75s; twin suite 23/23 fresh; commit ea14805 (tier-1 CLEAR, batch audit queued).",
+   "refs": [
+    "Tools .adversary/reviews/gate_20261018-013610.md",
+    "Tools ea14805"
+   ]
+  }
  ]
 }
