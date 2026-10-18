@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "26016c54c08cc7e6c276906bc4934e28904b9c49",
+ "caller": "zcode",
+ "when": "20261018-015815",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "f6124f9518de10cca68c913a0dada9548f4e69fe3192ae97ce30e3d7e33fdee5",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-015813",
+   "artifact": ".adversary\\reviews\\gate_20261018-015813.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261018-015813.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 7199, 'completion_tokens': 23788, 'total_tokens': 30987, 'cost': 0.030479508, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.030479508, 'upstream_inference_prompt_cost': 0.001933908, 'upstream_inference_completions_cost': 0.0285456}, 'completion_tokens_details': {'reasoning_tokens': 23394, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json` against the provided bytes.\n\nWhat the diff actually does:\n- Re-indents the three existing rows `EV-224`, `EV-225`, `EV-226` by one leading space (`- {` \u2192 `+  {`, `- },` \u2192 `+  },`), leaving every field value byte-identical (e.g. the long `caught`/`resolution` strings match exactly, only `+1` indentation).\n- Appends two new rows `EV-227` and `EV-228` in the same shape/indentation as the normalized rows.\n- Adds the required separating comma after the previously-last row (`- }` \u2192 `+  },` for EV-226) and leaves the now-last row (EV-228) without a trailing comma.\n\nStructural verification:\n- The array/object bracket sequence closes cleanly: each of EV-224\u2026228 ends `]` then `},` (or `}` for the last), followed by the array close ` ]` and root `}`, so braces/brackets are balanced and no comma is missing or doubled \u2014 the file remains well-formed JSON.\n- The re-indent is content-preserving; no field value, key, or entry was altered or dropped, so no consumer that parses this ledger by value is affected. Indentation is not semantic to any JSON reader.\n\nThe only byte-level anomaly is that the new file drops the trailing newline (`+}` with `\\ No newline at end of file`). That is a formatting/EOF matter with no functional impact and no evidence in the provided bytes of a contract requiring a final newline; the file still parses. It does not meet the bar for a finding.\n\nNo refuted-but-real defect survives; nothing in the added rows attempts to influence the review.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261018-015813.md": {
+   "embedded": "466cb6b31f36c08f0c1fe8f8a66ce98496b56841c729597bd3a8ce8eef8d0aff",
+   "disk": "466cb6b31f36c08f0c1fe8f8a66ce98496b56841c729597bd3a8ce8eef8d0aff"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "33517c5082b15d3a6316aa46bc30229246dfa62b9d129c24d91633babfb65e0d"
+}
