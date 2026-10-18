@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "c458af32e3949e1acbf78f55fcbb6f52bf5daf1f",
+ "caller": "zcode",
+ "when": "20261018-145243",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "258d072c79cf68cb9ae62707e4bbf55e841210c73f8b03e6244ce5ea7f57069d",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261018-145241",
+   "artifact": ".adversary\\reviews\\gate_20261018-145241.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261018-145241.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 4132, 'completion_tokens': 13465, 'total_tokens': 17597, 'cost': 0.017171808, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.017171808, 'upstream_inference_prompt_cost': 0.001013808, 'upstream_inference_completions_cost': 0.016158}, 'completion_tokens_details': {'reasoning_tokens': 12876, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nReviewed the staged bytes in `docs/gate_evidence.json`:\n\n- **Structural check (hunk 2, `@@ -3729,11 +3729,44 @@`)**: line arithmetic confirms the header. New-side count = 33 added lines (1 for the `},` that terminates the preceding entry, 15 for `EV-232`, 17 for `EV-233`) + 8 context lines (through the preceding row's `]`) + 3 trailing context lines (`   }`, `  ]`, ` }`) = 44, which lands exactly on scoped-window line 3772 (` }` closing the root object), matching the window's confirmed `3729: \"caught\": \u2026` / `3772: }`. Object/array delimiters balance: `],  },  {  \u2026 },  {  \u2026 ]  }  ]  }`. The new entry objects each carry the same nine keys in the same order as the neighbouring `EV-077` row (`id, date, repo, layer, caught, severity, author_initially, resolution, refs`), so no consumer of the established shape is broken.\n- **Field consistency inside the new rows**: `EV-232` layer \"BLOCK x4 then WARN (5 rounds\u2026)\" is consistent with its resolution (\"four BLOCK rounds \u2026 WARN clearance\"), and the six defects enumerated in its `caught` field are six distinct items. `EV-233` layer \"BLOCK x2 then CLEAR (3 dispatch rounds)\" matches its two MEDIUMs and \"round-3 CLEAR\"; its three refs are time-ascending (`143308` \u2192 `144149` \u2192 `144707`), as are `EV-232`'s range endpoints (`090430` \u2192 `094557`). The recovered-row figures (33 reviews / 143 rows) and the final census (964/851/715) are internally consistent.\n- **Hunk 1**: the single-line edit changes `\\u2026` to a literal `\u2026` inside the same JSON string. Both decode to the same string value, so this is a value-preserving byte normalization of the `EV-077` record, not an alteration of its content.\n- **Injection scan**: the added prose is descriptive evidence (review rounds, defects, resolutions); none of it addresses the reviewer, claims pre-approval, or asks for a softened review, so no reportable influence text is present.\n\nNo finding survives verification: nothing in the added reachable content changes a consumer's behaviour, no duplicate/fragmenting record is produced (both new rows are appended after the existing `Nexusmill` row under fresh ids), and the change is a scoped documentation append that leaves the file well-formed.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261018-145100.md",
+  "outcomes": {
+   "fixed": 3
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261018-145241.md": {
+   "embedded": "6fe45f1d9ccc27f33fd16926f211fe4d9bef058cffa2118f053fe5cced97a0c0",
+   "disk": "6fe45f1d9ccc27f33fd16926f211fe4d9bef058cffa2118f053fe5cced97a0c0"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "839c6838bc68ae1717768a719c962bb22e535174539499de5a57b640a6e358f8"
+}
