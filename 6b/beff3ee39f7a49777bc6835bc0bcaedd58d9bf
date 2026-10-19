@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "6bbeff3ee39f7a49777bc6835bc0bcaedd58d9bf",
+ "caller": "zcode",
+ "when": "20261019-033211",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "7411182d2015283c358b0d935d34108bb3368056c0ec10a55c497660bea9f26c",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261019-033209",
+   "artifact": ".adversary\\reviews\\gate_20261019-033209.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261019-033209.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1638, 'completion_tokens': 16796, 'total_tokens': 18434, 'cost': 0.020420808, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.020420808, 'upstream_inference_prompt_cost': 0.000265608, 'upstream_inference_completions_cost': 0.0201552}, 'completion_tokens_details': {'reasoning_tokens': 16217, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged diff against the provided bytes of `docs/gate_evidence.json`.\n\nChecks performed:\n- Brace/bracket balance: the added `+  },` correctly closes the preceding row's object and supplies the array separator; the added `+  {` opens the new row; the added `+   ]` closes the new row's `refs` array; the reused context `   }`, `  ]`, ` }` now close the new row, the enclosing array, and the root object respectively. One open, one close \u2014 balanced.\n- Comma placement: every new key and every `refs` entry is comma-terminated except the final entry of the new `refs` array and the final row object; no trailing comma precedes `]` or `}`.\n- String escaping: all quoted narrative values use single quotes/apostrophes only (`'contract GhostVault'`, `'// import @fake/...'`, `'src/Vault.sol'`, `'lib/solmate/...'`, `'src (5x)'`, `\"AUTHOR'S\"`); no unescaped `\"`, `\\`, or control characters inside the added strings.\n- Hunk arithmetic: `@@ -3762,11 +3762,28 @@` matches 11 context lines + 17 added lines = 28; the 17 inserted lines are exactly the `},`, `{`, eight key/value pairs, the `refs` array opener, five entries, and the array closer.\n- Internal consistency of the new row's claims: `layer` \"WARN x2 rounds\" matches the two `(r1 WARN)` / `(r2 WARN)` refs; the three enumerated defects (`r1-L1`, `r1-L2`, `r2-L1`) match \"Three real defects\", \"LOW x3\", and \"3 new verdict-named regressions\"; dates (`2026-10-19`) match the `gate_20261019-*` review refs; no key is duplicated within the object and no key of the sibling schema is omitted.\n- No text in the added content addresses the reviewer with pre-approval claims or requests to skip/soften review, so no influence-attempt finding applies.\n\nDiscarded hypotheses (not reported): indentation of the new object is one space shallower than the sibling row's \u2014 pure formatting, structurally harmless. The absence of a `(round-3 CLEAR)` review-file ref despite the \"round-3 CLEAR\" wording rests on a convention inferred from a single sibling row and no documented schema; impact would be informational only, so I do not assert it.\n\nNo defect introduced or enabled by this change survives verification.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261019-033209.md": {
+   "embedded": "56d7a3ff3b1812222db173d93af5296bcaf5b65d161a5ce4c7c162de0d27dc10",
+   "disk": "56d7a3ff3b1812222db173d93af5296bcaf5b65d161a5ce4c7c162de0d27dc10"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "97d3bcd30825dd9a8a16674917a29c1d83e0859b062c702d0658cdaffcc0ce44"
+}
