@@ -618,3 +618,15 @@ matched to the baseline's own author population with per-author rows as never-co
 context. Landed c82015de round-3 CLEAR. Full row with artifact refs: gate_evidence.json
 EV-233-RSI-T5-HONESTY-INSTRUMENT.
 Round-3 CLEAR artifact: Nexusmill .adversary/reviews/gate_20261018-144707.md.
+
+## EV-234 - the context-pack tranche: three WARN findings, one visible in the author's own smoke (2026-10-19)
+
+The RSI-inverted priors module drew two WARN rounds on the quality of the context it
+hands the reviewer: commented-out contracts polluted the protocol surface; a big code
+map could silently push the priors section - the reason the change exists - out of the
+pack; and bare import segments were counted as external dependencies. The third is
+the lesson: the napier live smoke had PRINTED the bogus "src (5x)" dependency line and
+it went unexamined until the reviewer quoted the generating code. All three fixed
+RED-first (comment stripping; priors-reserved budget; only @scope/pkg counts).
+Landed 8509d25f round-3 CLEAR. Full row with artifact refs: gate_evidence.json
+EV-234-BOUNTY-T2-CONTEXT-PACK.

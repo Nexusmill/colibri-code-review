@@ -3767,6 +3767,23 @@
     "Nexusmill tools/rsi/tests/test_measure.py",
     "Nexusmill commit c82015de"
    ]
+  },
+  {
+   "id": "EV-234-BOUNTY-T2-CONTEXT-PACK",
+   "date": "2026-10-19",
+   "repo": "Nexusmill",
+   "layer": "gate-review WARN x2 rounds (driver-addressed; tier-1 deepseek-v4.1-flash)",
+   "caught": "Three real defects in the context-pack tranche (the RSI-inverted priors module): (r1-L1) comment-blind regexes - a commented-out 'contract GhostVault' or '// import @fake/...' polluted the protocol surface handed to every review unit; (r1-L2) the single tail-slice pack cap could silently drop the ENTIRE priors section when a big code map filled the budget - the section the change exists to carry; (r2-L1) bare import segments ('src/Vault.sol', 'lib/solmate/...') were counted as external dependencies - the napier live smoke had printed the bogus 'src (5x)' dependency line and the author let it pass unexamined; the reviewer caught it from the code.",
+   "severity": "LOW x3 (LLM-facing context quality, no metric/spend effect)",
+   "author_initially": "All three accepted and fixed RED-first; the r2 finding is the row's lesson - the evidence of the defect was IN THE AUTHOR'S OWN SMOKE OUTPUT and still went unexamined until the reviewer quoted the generating code.",
+   "resolution": "Comment stripping before mapping; priors reserved budget (map truncates, priors never drop); only @scope/pkg specifiers count as external deps (bare segments are paths/remappings - ambiguous signal excluded by design). Suite 76/76 with 3 new verdict-named regressions; landed 8509d25f round-3 CLEAR.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261019-031541.md (r1 WARN)",
+    "Nexusmill .adversary/reviews/gate_20261019-032227.md (r2 WARN)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_context.py",
+    "Nexusmill colibri-bounty/tests/test_p2_context.py",
+    "Nexusmill commit 8509d25f"
+   ]
   }
  ]
 }
