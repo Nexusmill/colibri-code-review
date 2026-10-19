@@ -3784,6 +3784,23 @@
     "Nexusmill colibri-bounty/tests/test_p2_context.py",
     "Nexusmill commit 8509d25f"
    ]
+  },
+  {
+   "id": "EV-235-BOUNTY-T3-FORGE-PATH",
+   "date": "2026-10-19",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK x2 (both rounds independently confirmed the same findings; tier-1 deepseek-v4.1-flash)",
+   "caught": "The forge-path tranche's own wiring defects: (F1 MEDIUM x2) the dep-preparation root walk used an EXCLUSIVE boundary while framework choice used an inclusive one - a foundry.toml at the code root made dep-prep a silent no-op while the runner forced the foundry platform, reproducing exactly the silent-skip class the tranche exists to kill (uncovered by the tranche's own tests; the author's live napier verification had passed only because its projects are NESTED); (F2 MEDIUM x2) foundry_prepare ran unguarded - forge-missing/timeout/permission exceptions aborted the whole contest scan, breaking the module's documented fail-soft contract; (F3 LOW) failed forge installs (rc!=0) were recorded as installed and unresolved pins dropped in the production path.",
+   "severity": "MEDIUM x2 (one reintroduces the tranche's own target failure class)",
+   "author_initially": "All accepted, fixed RED-first; no rebuttals. The F1 class is the row's lesson: the author verified LIVE on a layout (nested projects) that happened to dodge the defect, and the tests dodged it the same way - verification must exercise the boundary case the code distinguishes, not just a passing end-to-end.",
+   "resolution": "Single _foundry_root helper shared by framework choice AND dep-prep discovery (inclusive boundary, boundary case now test-pinned); foundry_prepare fail-soft (foundry_prep_errors stat, scan continues); installer rc checked - rc!=0 recorded in foundry_unresolved, never counted installed. Suite 80->83 with the three verdict-named regressions; landed 33383e72 round-3 CLEAR.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261019-044615.md (r1 BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261019-044744.md (r2 BLOCK)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_static.py",
+    "Nexusmill colibri-bounty/tests/test_p2_foundry.py",
+    "Nexusmill commit 33383e72"
+   ]
   }
  ]
 }

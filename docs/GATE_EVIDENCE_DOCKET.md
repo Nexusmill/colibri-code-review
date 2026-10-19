@@ -630,3 +630,16 @@ it went unexamined until the reviewer quoted the generating code. All three fixe
 RED-first (comment stripping; priors-reserved budget; only @scope/pkg counts).
 Landed 8509d25f round-3 CLEAR. Full row with artifact refs: gate_evidence.json
 EV-234-BOUNTY-T2-CONTEXT-PACK.
+
+## EV-235 - the forge-path tranche: two BLOCK rounds, one reintroducing the tranche's own failure class (2026-10-19)
+
+The foundry wiring drew two BLOCK rounds with the same core catches: the dep-prep root
+walk used an exclusive boundary while framework choice used an inclusive one, so a
+foundry.toml AT the code root silently no-op-ed dependency preparation while the runner
+forced the foundry platform - every file would skip silently, the exact class the
+tranche exists to kill. The author's live napier verification had passed only because
+napier's projects are nested, and the tests dodged the boundary the same way. Also:
+unguarded forge invocation (abort-the-contest, breaking fail-soft) and failed installs
+recorded as installed. Fixed RED-first with a single shared _foundry_root helper,
+fail-soft prepare, and rc-checked installs recorded in stats. Landed 33383e72 round-3
+CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
