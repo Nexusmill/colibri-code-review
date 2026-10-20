@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "cf047dc1fca9197b4251c68465b5ef2fa0fcf701",
+ "caller": "zcode",
+ "when": "20261020-045710",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "70c927990700c944b847a454eab80a45351d70b3e3e58b3aa6dff8b43411adce",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261020-045708",
+   "artifact": ".adversary\\reviews\\gate_20261020-045708.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261020-045708.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1730, 'completion_tokens': 11314, 'total_tokens': 13044, 'cost': 0.013870008, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.013870008, 'upstream_inference_prompt_cost': 0.000293208, 'upstream_inference_completions_cost': 0.0135768}, 'completion_tokens_details': {'reasoning_tokens': 10991, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged hunk against the provided bytes.\n\n- The insertion is syntactically sound JSON: the previous entry's object is correctly terminated with `},`, the new object opens with `{`, all keys/values are paired, strings contain no unescaped `\"`, and the array/root closers `]` / `}` follow the new entry with no trailing comma.\n- The diff arithmetic is consistent with the hunk header (`@@ -3864,11 +3864,26 @@`: 15 added lines over 11 context lines), and the entry's key set (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`) matches the sibling entry's shape visible in the window.\n- Internal claims do not contradict each other: `severity` \"MEDIUM + LOW x2\" matches the three enumerated items in `caught`; the layer's \"BLOCK\" review and the resolution's \"gate CLEAR\" refer to different events (the blocking review vs. the subsequent landing commit), matching the convention of the prior entry; the ref timestamp `gate_20261020-044459.md` is consistent with `date` `2026-10-20`.\n\nNo reachable trigger in this change produces a wrong/fabricated record, a broken contract, or an invalid document. The window does not expose the rest of the file, so hypotheses about duplicate ids or cross-entry numbering cannot be verified against the supplied bytes and were discarded.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261020-045708.md": {
+   "embedded": "528f1dd924f7942776f2f26650577bf3ace1abefcad1165c0ecf6622e5d27336",
+   "disk": "528f1dd924f7942776f2f26650577bf3ace1abefcad1165c0ecf6622e5d27336"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "1f3abbd6664499a108bce464e2c1decfcdd60292acea521b00eb02d995cd7257"
+}
