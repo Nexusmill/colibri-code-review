@@ -3853,6 +3853,22 @@
     "Tools .adversary/reviews/gate_20261019-215002.md (tier-2 CLEAR)",
     "Nexusmill junk/probe_jev_verdict*.py (live probes, gitignored)"
    ]
+  },
+  {
+   "id": "EV-239-BOUNTY-S5-SYNTHESIS",
+   "date": "2026-10-19",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK x2 (tier-1 flagged -> tier-2 blind confirm) on the S5 synthesis module",
+   "caught": "union_findings' keyless-finding branch stored empty/missing-title findings under the SHARED falsy key - every keyless finding silently overwrote the last, invisible to dups, deflating scan_findings and inflating precision in the honest table; funnel_metrics was strict (f['title']) where union was tolerant; the table test asserted substrings the header always contains (vacuous).",
+   "severity": "MEDIUM x2 + LOW",
+   "author_initially": "All accepted, fixed RED-first: keyless findings append to their own list (invariant len(union)+len(dups)==sum(counts) pinned); funnel_metrics reads title defensively; the table test asserts a rendered tier cell.",
+   "resolution": "Landed in 5bb685dc (MISLABELED message: the scoped driver read a stale _commit_msg.txt and reused the S4 text; the CONTENT is the S5 synthesis tranche: s5.py + test_s5.py + docs/S5_HONEST_TABLE.md, gate CLEAR, notarized; amend would orphan the note chain - mislabel recorded here + AGENT_STATE). Suite 125/125; re-scored: union numbers unchanged (no keyless findings in the real dumps).",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261020-000612.md",
+    "Nexusmind .adversary/reviews/gate_20261020-000940.md",
+    "Nexusmill colibri-bounty/colibri_bounty/s5.py + tests/test_s5.py",
+    "Nexusmill colibri-bounty/docs/S5_HONEST_TABLE.md"
+   ]
   }
  ]
 }
