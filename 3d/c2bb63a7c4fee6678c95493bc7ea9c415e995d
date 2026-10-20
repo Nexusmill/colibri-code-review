@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "3dc2bb63a7c4fee6678c95493bc7ea9c415e995d",
+ "caller": "zcode",
+ "when": "20261020-001928",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "3442b01ded1613c9d27a5f78a788cb3e4ae479b0c29eb3449b024fc7bb90d9bb",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261020-001926",
+   "artifact": ".adversary\\reviews\\gate_20261020-001926.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261020-001926.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1642, 'completion_tokens': 12155, 'total_tokens': 13797, 'cost': 0.0150786, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 0, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.0150786, 'upstream_inference_prompt_cost': 0.0004926, 'upstream_inference_completions_cost': 0.014586}, 'completion_tokens_details': {'reasoning_tokens': 11533, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI checked the only bytes provided (the hunk at `docs/gate_evidence.json:3848..3874`, the scoped lines 3848 and 3874, and the diff).\n\nWhat I verified:\n\n- **JSON well-formedness of the splice.** The hunk keeps the prior entry's refs list close (`    ]`, i.e. content `   ]`), adds `  },` to terminate that entry, opens `  {` for the new entry, and closes it as `   ]` / `  }` before the untouched ` ]` / `}` at lines 3873\u20133874. Every added key line except the last member of `refs` carries a comma, the `refs` array has no trailing comma, and neither the entry nor the array is left with a dangling comma. The comma the new entry requires is supplied by the added `  },`.\n- **Line arithmetic.** `@@ -3848,11 +3848,27 @@` is consistent with the supplied hunk: 7 context ref strings + `    ]` + 16 added lines + `   }`, `  ]`, ` }` = 27 new lines ending exactly on the root `}` at line 3874 shown in the scoped window, and 7+1+3 = 11 old lines. No off-by-one or truncated structure.\n- **String escaping.** `\"caught\"` and `\"author_initially\"` contain single quotes (`union_findings'`, `f['title']`) and semicolons only \u2014 no unescaped `\"`, backslash, or control character that would break parsing.\n- **Indentation/consistency with siblings.** The new entry's shape (`\"refs\"` as last key, 3-space key indent, 4-space ref elements) matches the visible shape of the preceding entry's tail, so it is not a differently-keyed row.\n- **Date ordering claim.** The only apparent tension \u2014 `\"date\": \"2026-10-19\"` against refs `gate_20261020-000612.md` / `gate_20261020-000940.md` \u2014 is coherent, not a defect: the recorded commit landed late on Oct 19 and the gate notes are post-midnight reviews of it; nothing in the supplied bytes fixes the commit timestamp as Oct 20.\n- **No injection text.** The `\"resolution\"` prose records a historical mislabeled commit message and a past gate outcome for the *S5 tranche*; it is not addressed to the reviewer and does not assert pre-approval of this diff, so it is data, not an instruction to soften this review.\n\nAll other properties an evidence-entry checker might enforce (id uniqueness/sequence, required-key schema, ordering across the ~239 entries) depend on bytes outside the scoped window and were not alleged, since I can neither confirm nor refute them from what was provided.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261020-001926.md": {
+   "embedded": "db8d0e41e2d6194f6d01418cad4e9a43fead4d9df5df3f1ea0df0dbfe42e3656",
+   "disk": "db8d0e41e2d6194f6d01418cad4e9a43fead4d9df5df3f1ea0df0dbfe42e3656"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "ae2ae7b16385b84e9e503a8954a8c415d04c47fcab3513e9b8c2f1e3a7d5ef62"
+}
