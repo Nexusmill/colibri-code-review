@@ -643,3 +643,14 @@ unguarded forge invocation (abort-the-contest, breaking fail-soft) and failed in
 recorded as installed. Fixed RED-first with a single shared _foundry_root helper,
 fail-soft prepare, and rc-checked installs recorded in stats. Landed 33383e72 round-3
 CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
+
+### EV-242-BOUNTY-P2FOUNDRY-BATCHAUDIT - 2026-10-20 - Nexusmill
+**Layer:** tier-2 batch audit (deepseek-v4.1-flash:batch) BLOCK on landed tree 771ad9 (p2_scanner/p2_static/test_p2_foundry), surfaced by the W3 docs commit's audit drain
+
+**Caught:** (LOW) _remapping_pins re.search took only the first remapping per line so one-line remappings arrays under-installed deps; (LOW) default_runner forces the foundry framework for any file under a foundry.toml with no forge-presence guard, skipping every file when forge is absent; (LOW) adding 'lib' to SKIP_DIRS excludes any contest source living under a path component named lib from static AND llm review.
+
+**Severity:** LOW x3 (fail-soft bounded; reviewer-bounded premises)
+
+**Author initially:** Verified against CURRENT on-disk source per G35 before any re-fix: F1 verified-stale - _remapping_pins now uses re.finditer with the EV-237-F1 docstring ('ALL entries per line'), fixed by the W5 wave (dedb6722) AFTER the audited tree; F2+F3 adjudicated as documented design trades, not open defects - in-source comments state the deliberate choices (autodetection never trusted: fail-loud foundry prep errors beat the silent-skip; lib/ = foundry deps, never scan units) and both residuals are premise-bounded (forge installed per P2.1-T3 premise; no pack contest ships source under lib/).
+
+**Resolution:** No re-fix shipped: one finding verified-stale (fixed in a later landed tranche), two adjudicated-by-design with residuals on the record. The audit_findings BLOCK row stands as the catch; this row is the same-session record. Residual watch: if a future contest tarball ships source under lib/ or forge goes missing on the host, revisit SKIP_DIRS/framework forcing.
