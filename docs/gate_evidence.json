@@ -3801,6 +3801,39 @@
     "Nexusmill colibri-bounty/tests/test_p2_foundry.py",
     "Nexusmill commit 33383e72"
    ]
+  },
+  {
+   "id": "EV-236-BOUNTY-S4-EXECUTOR",
+   "date": "2026-10-19",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (r1) + WARN-collapsed-BLOCK (r2, r4) - tier-1 deepseek-v4.1-flash; r2's bigger sibling found by EXECUTING the spoof fixture (execute-instead-of-re-reason)",
+   "caught": "S4 PoC executor verdict defects: (r1 MEDIUM) adjudicate_poc keyed REFUTED on absence-from-failures - a candidate whose testPoc{i} never executed (not generated/skipped) read as 'passed: the asserted safety expectation held', violating the module's own docstring contract (trigger executed pre-fix: idx1 REFUTED though absent from the run); (r2 WARN + execution follow-on MEDIUM-by-impact) the text result-line regexes were spoofable by test-authored message text - p2_inv.parse_forge_results could REATTRIBUTE a failure to an embedded '] name()' (a failing testPoc0 carrying candidate 0's POC-0 marker parsed as a FAILURE OF testPoc1 - false CONFIRMED for the wrong candidate), and p2_poc's PASS-roster regex had the same class; (r4 LOWs) newline-forged-result-line residual + RSIFunnelPoc name colliding with S2's regex match 'RSIFunnel' (--match-contract is a REGEX, live-verified - PoC suites would pollute invariant runs).",
+   "severity": "MEDIUM (false verdicts: false REFUTED dismisses a real vulnerability; false CONFIRMED confirms the wrong candidate)",
+   "author_initially": "All accepted, no rebuttals. r1 fixed RED-first (PASS roster requirement); r2 anchored both regexes RED-first; r4 pulled the structural fix INTO the tranche instead of deferring to S5: the runner moved to forge test --json (deterministic suite-keyed per-test status/reason, live-captured - verdicts never parse free text on the S4 path) and the contract was renamed out of the RSIFunnel* namespace with exact-anchored match.",
+   "resolution": "Landed 6bdfa1a6 (gate CLEAR, notarized): parse_forge_json + run_poc_tests --json path with structured roster; REFUTED requires the test's name in the roster (raw-less dicts cannot REFUTE at all); anchored text regexes kept only for legacy text-shaped dicts; PocSuite.t.sol naming + stale RSIFunnelPoc.t.sol removed from the napier corpus project. Suite 117/117; live napier proof re-run post-fix (cand0 CONFIRMED marker-reason, cand1 REFUTED roster-backed).",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261019-181728.md (r1 BLOCK)",
+    "Nexusmill .adversary/reviews/gate_20261019-183229.md (r2 WARN)",
+    "Nexusmill .adversary/reviews/ (r4 WARN, scoped rounds)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_poc.py + p2_inv.py + tests",
+    "Nexusmill docs/remediation_manifest.json (2 rows, same commit)"
+   ]
+  },
+  {
+   "id": "EV-237-RECORDED-FOR-OWNER-SESSION",
+   "date": "2026-10-19",
+   "repo": "Nexusmill",
+   "layer": "batch-audit lane BLOCK (deepseek-v4.1-flash:batch, tree 771ad9d9, 05:07) + gate-review BLOCK on uncommitted WIP (r3) - findings on the PARALLEL SESSION's landed p2_static.py and in-flight tools/context_dump.py; recorded by the S4 session per the audit-lane instruction, remediation left to the owning session (collision discipline: their WIP is active in the same tree)",
+   "caught": "(audit LOWs on LANDED p2_static.py, verified against current source, unfixed: ) (1) _remapping_pins uses re.search per LINE - a foundry.toml listing several remappings on one line installs only the first pin (coverage gap, fail-soft-bounded); (2) default_runner forces the foundry platform for any file under foundry.toml - with forge absent every file in the project skips (premise-excluded on this box: forge verified installed); (3) SKIP_DIRS includes 'lib' globally - any contest whose own sources live under a path component named lib/ is excluded from static AND LLM review. (r3 MEDIUM on their UNCOMMITTED tools/context_dump.py: --file mode passes the file's DIRECTORY to load_latest which re-globs by mtime - the named rollout is never selected; the report misattributes the newest session's data under the requested file's label; non-model-io-*.jsonl names raise SystemExit though the file exists.)",
+   "severity": "LOW x3 (audit, landed) + MEDIUM (r3, uncommitted WIP)",
+   "author_initially": "Not this session's code. Verified real against current bytes (G35 discipline applied); NOT remediated here - the owning session is active (their add -A raced the S4 session's scoped commit four times; their WIP includes the affected files' siblings). Docket row filed same-session per the audit-lane instruction.",
+   "resolution": "OPEN - handed to the owning session via Nexusmill docs/AGENT_STATE.md (S4 entry lists all four findings + locations). The audit warning is verified non-blocking in gate source (_warn_flagged_audits is advisory; the PUSH guard is the barrier).",
+   "refs": [
+    "Nexusmill .adversary/audit_findings.jsonl (BLOCK row, tree 771ad9d9, 20261019-050724)",
+    "Nexusmill .adversary/reviews/gate_20261019-* (r3 BLOCK on tools/context_dump.py WIP)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_remapping_pins, default_runner, SKIP_DIRS)",
+    "Nexusmill tools/context_dump.py (uncommitted)"
+   ]
   }
  ]
 }
