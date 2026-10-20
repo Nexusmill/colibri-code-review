@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "55fddf629204038ac34a673c28ab8a513ed90fb4",
+ "caller": "zcode",
+ "when": "20261020-074436",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "fc19de04e8fa772a2335bc833377883befce67f8f74463741a2aed76b6b28f82",
+   "model": "deepseek/deepseek-v4.1-flash@baidu/fp8",
+   "verdict": "CLEAR",
+   "when": "20261020-074434",
+   "artifact": ".adversary\\reviews\\gate_20261020-074434.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261020-074434.md": "model: deepseek/deepseek-v4.1-flash@baidu/fp8 | provider: Baidu | usage: {'prompt_tokens': 1746, 'completion_tokens': 3889, 'total_tokens': 5635, 'cost': 0.000734791584, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.000734791584, 'upstream_inference_prompt_cost': 4.4105184e-05, 'upstream_inference_completions_cost': 0.0006906864}, 'completion_tokens_details': {'reasoning_tokens': 3700, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nThe staged hunk is syntactically valid JSON: the added `},` correctly separates the pre-existing entry from the new `EV-241-BOUNTY-MATCHER-V2` object, the new object reuses the same key set as its siblings (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`), and the trailing `}`/`]`/`}` still close the object, array, and root in order with no stray or missing comma. The stated arithmetic in the text (13/48 \u2248 27.1%, 11/31 \u2248 35.5%, \u22486.5\u00d7 the 4.2% v1 figure) is internally consistent. No caller, contract, or state is affected by a documentation-only append. No finding survives verification.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261020-074434.md": {
+   "embedded": "35842ea66d59ee30b8efbfe07159369d12798378698c0b14deac8d79411fced0",
+   "disk": "35842ea66d59ee30b8efbfe07159369d12798378698c0b14deac8d79411fced0"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "32fc05cca0892a5cc483413424323d9e4201dcf42bfb77c1f3934a63c885256c"
+}
