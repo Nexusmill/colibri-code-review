@@ -3869,6 +3869,21 @@
     "Nexusmill colibri-bounty/colibri_bounty/s5.py + tests/test_s5.py",
     "Nexusmill colibri-bounty/docs/S5_HONEST_TABLE.md"
    ]
+  },
+  {
+   "id": "EV-240-BOUNTY-WAVE-DEP-PINS",
+   "date": "2026-10-20",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK (tier-2 qwen3.8-omni-flash after tier-1 429s) on the W1+W2+W5 improvement wave",
+   "caught": "(MEDIUM) version-pinned remappings for the NEW known pins (e.g. solmate@6.7.0) parsed the version but installed HEAD silently - wrong dependency code compiled vs what the contest shipped, violating the module's own never-guessed doctrine (pre-change these pins were honestly unresolved); (LOW) quoteToken keyword never matched the lowercased corpus; (LOW) substring keyword counting scored 'draw' inside every withdraw() - raffle-lottery inflated on non-raffle code.",
+   "severity": "MEDIUM + LOW x2",
+   "author_initially": "All accepted, fixed RED-first in the landing commit: version-without-tag-format records unresolved and installs NOTHING; word-boundary regex counting with lowercased keywords.",
+   "resolution": "Landed dedb6722 (gate CLEAR, notarized, 5 findings adjudicated fixed). The W-wave itself: W1 priors library (21 classes), W2 near-miss study (6 blocked true matches; corrected precision 16.7%), W5 dep remediation (3/7 forge builds incl. bond; S4 executed on bond - name-truncation finding CONFIRMED-by-execution), W6 feasibility doc.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261020-044459.md",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_static.py + priors.py",
+    "Nexusmill commit dedb6722"
+   ]
   }
  ]
 }
