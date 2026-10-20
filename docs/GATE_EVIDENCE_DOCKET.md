@@ -654,3 +654,14 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Author initially:** Verified against CURRENT on-disk source per G35 before any re-fix: F1 verified-stale - _remapping_pins now uses re.finditer with the EV-237-F1 docstring ('ALL entries per line'), fixed by the W5 wave (dedb6722) AFTER the audited tree; F2+F3 adjudicated as documented design trades, not open defects - in-source comments state the deliberate choices (autodetection never trusted: fail-loud foundry prep errors beat the silent-skip; lib/ = foundry deps, never scan units) and both residuals are premise-bounded (forge installed per P2.1-T3 premise; no pack contest ships source under lib/).
 
 **Resolution:** No re-fix shipped: one finding verified-stale (fixed in a later landed tranche), two adjudicated-by-design with residuals on the record. The audit_findings BLOCK row stands as the catch; this row is the same-session record. Residual watch: if a future contest tarball ships source under lib/ or forge goes missing on the host, revisit SKIP_DIRS/framework forcing.
+
+### EV-243-G6V2-SKILL-ENFORCEMENT - 2026-10-20 - Nexusmill
+**Layer:** gate-review BLOCK x2 during the G6 v2 build (owner order 2026-10-20: jcodemunch as hook-enforced skill after the second grep drift)
+
+**Caught:** (MEDIUM) the v2 inRepo blob widening matched PATTERN tokens - 'zcat app.log | grep nexusmill' from an outside cwd false-denied, contradicting the v2 contract and risking a wasted one-shot OVERRIDE; (LOW) POSIX-token comments claimed a nexusmill-substring collapse test the code no longer performed; (HIGH) the Claude-guard reason-block rewrite collapsed the here-string terminator onto the next statement ('"@    $out = @{') - a PowerShell parse error that silently disabled the Claude-mount G6 guard, and the zcode-only test suite structurally could not see it.
+
+**Severity:** HIGH x1 + MEDIUM x1 + LOW x1 across the arc
+
+**Author initially:** All accepted, fixed RED-first: blob terms gated on $sawTarget (cwd-only commands with no path-like targets cannot deny); comments rewritten to the actual v2 rule with the bare-/nexusmill spelling documented as the r8-F2 residual class; terminator newline restored + PARSE_OK verified; two permanent tests added (PSParser tokenize of both Claude twins + empty-payload fail-open).
+
+**Resolution:** Landed b11bc87c (gate CLEAR + notarized; the commit's own adjudication recorded the fixes). Suite 77/77. The arc is the enforcement loop working as designed: the gate caught defects in the guard that enforces the rules, including one class (cross-twin parse rot) the existing suite was blind to.
