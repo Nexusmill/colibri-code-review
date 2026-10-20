@@ -3884,6 +3884,21 @@
     "Nexusmill colibri-bounty/colibri_bounty/p2_static.py + priors.py",
     "Nexusmill commit dedb6722"
    ]
+  },
+  {
+   "id": "EV-241-BOUNTY-MATCHER-V2",
+   "date": "2026-10-20",
+   "repo": "Nexusmill",
+   "layer": "gate-review BLOCK/WARN x6 rounds on matcher v2 (tier-1 + tier-2 models; several provider 429/incomplete rounds)",
+   "caught": "(MEDIUM) structurally-additive claim was false - folding is non-monotone (two shared tokens folding to one canonical DROPS Jaccard) and greedy is non-monotone under new candidates, so v2 could match FEWER truths than v1; (MEDIUM) the sub-band guardrail promised in the header was not enforced - mech_j alone promoted sub-band pairs; (MEDIUM) -es over-stripping: cases->cas never unifies with case (vowel-final singulars); (LOW x2) -ses/-es morphology (statuses=+es vs cases=+s indistinguishable by suffix - resolved by emitting BOTH stems); mechanisms/folded interplay in the band test; (LOW) the methods breakdown existed in the result dict but not the rendered table.",
+   "severity": "MEDIUM x3 + LOW x3 across the arc",
+   "author_initially": "All accepted, fixed RED-first each round: base-greedy-locks-first structure makes additivity literal; the title band is ALWAYS required for mechanism promotion; two-stem folding for ambiguous plurals; channels column added to the honest table.",
+   "resolution": "Landed eaa602d3 (gate CLEAR, notarized). Final validated numbers WITH the guardrail: union 13/48 = 27.1% precision (6.5x the v1 4.2%), clean 11/31 = 35.5%, 5/6 blocked-true recovered, 0 v1 matches lost, 4 false pairs (down from 9). NOTE: the commit message cites the pre-guardrail 37.5%; the committed table carries the correct 27.1%. Caveat recorded in-code: v2 was shaped on this pack - clean validation requires fresh contests.",
+   "refs": [
+    "Nexusmill .adversary/reviews/gate_20261020-* (matcher v2 arc)",
+    "Nexusmill colibri-bounty/colibri_bounty/match.py + s5.py",
+    "Nexusmill commit eaa602d3"
+   ]
   }
  ]
 }
