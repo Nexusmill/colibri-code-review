@@ -3834,6 +3834,25 @@
     "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_remapping_pins, default_runner, SKIP_DIRS)",
     "Nexusmill tools/context_dump.py (uncommitted)"
    ]
+  },
+  {
+   "id": "EV-238-GATE-JEV-VERDICT-BACKSTOP",
+   "date": "2026-10-19",
+   "repo": "Tools",
+   "layer": "gate-review BLOCK x2 + WARN(LOWs landed) + BLOCK(weak pins) -> tier-2 CLEAR, all on the gate's OWN SOURCE across four rounds; tier-1 deepseek-v4.1-flash, tier-2 qwen3.8-omni-flash final",
+   "caught": "The jev typed-decision verdict backstop (owner order after the jev-guard analysis) landed only because the gate kept refusing its own source: (R1 BLOCK MEDIUM) the first cut consulted jev on cmd_run's outcome where ONLY 'malformed' texts ever arrive - provider-TRUNCATED-with-marker and CONFLICTING-verdict texts, i.e. verdict shopping on exactly the terminal class ('never verdict shopping' doctrine); fix = consult moved to _call_model_ex's incomplete branch (finished, no-verdict-line class only) with resolution by APPENDED bare verdict line so every consumer (cmd_run, artifact, true-rate adjudicator, notary) reads ONE verdict. (R1 also) NaN confidence passes `conf < bar` (False) and bool passes isinstance - both now rejected. (R2 BLOCK MEDIUM) an EMPTY provider response ('choices': [], finish stop) arrives as incomplete with text='' and the backstop would fabricate a non-empty CLEAR - falsifying 'an empty response can never CLEAR'; fix = content-less texts refused BEFORE anything (even a selftest fake) can answer. (landed WARN LOWs, fixed same session) review text POSTed to the decisions API UNSCRUBBED (every other external transmit scrubs; for xai:/local: rungs the bytes never went anywhere, so the no-new-egress claim was false there) -> _jev_verdict_state scrubs; and reviewed_write (the DESTRUCTIVE exact-byte pre-write broker) shares _call_model_ex and silently gained the backstop -> jev_backstop is now OPT-IN (default False; exactly _cmd_run_snapshot's two tier sites pass True, AST-pinned; the broker fails closed to WriteDenied instead). (final BLOCK) the first pins were tautological (state == _scrub_text(x)[0] is x==x) and literal-counting - replaced with a runtime-built secret-shape absence check, a wiring regex (def-lookbehind), and an AST call-site count with enclosing function names.",
+   "severity": "MEDIUM x2 + LOW x3 across the arc; all accepted, zero rebuttals",
+   "author_initially": "All accepted and fixed RED-first each round. LIVE SELF-VALIDATION: during the final commit's own gate review, tier-1 returned a 0-byte response - the exact R2 glitch class - and the empty-text guard refused it, advancing the chain to tier-2 (CLEAR). The hardening defended its own landing.",
+   "resolution": "Landed bf556aa (backstop: _jev_verdict_request_body/_jev_parse_verdict/_jev_verdict_backstop/_jev_verdict_annotate + incomplete-branch wiring, bars block>=0.5 / clear+warn>=0.75, kill switches ADVERSARY_JEV_OFF + ADVERSARY_JEV_VERDICT_OFF, hermetic ADVERSARY_JEV_VERDICT_FAKE) + fc6122a (scrubbed consult state + opt-in caller scoping). Wire contract LIVE-verified both directions + e2e (MEDIUM text -> block p0.99 conf0.98; clean -> clear p1.0 conf1.0; annotated parses under the strict parser). Suite 229/229 (17 new checks over 4 RED rounds). Dependents import-clean.",
+   "refs": [
+    "Tools adversary-gate/adversary_gate.py + gate_selftest.py (bf556aa, fc6122a)",
+    "Tools .adversary/reviews/gate_20261019-201553.md (R1 BLOCK)",
+    "Tools .adversary/reviews/gate_20261019-204818.md (R2 BLOCK)",
+    "Tools .adversary/reviews/gate_20261019-210246.md (WARN LOWs)",
+    "Tools .adversary/reviews/gate_20261019-211932.md (weak-pins BLOCK)",
+    "Tools .adversary/reviews/gate_20261019-215002.md (tier-2 CLEAR)",
+    "Nexusmill junk/probe_jev_verdict*.py (live probes, gitignored)"
+   ]
   }
  ]
 }
