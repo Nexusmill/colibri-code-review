@@ -678,13 +678,15 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Resolution:** Landed 58db4452 - the driver's own dogfood commit, made BY the driver through the real armed gate (gate CLEAR + notarized, exit 0): the ultimate integration proof. Live verification of the underlying git behavior precedes the build (junk/verify_only_commit.py + GIT_TRACE: --only fires the config pre-commit hook against git's private next-index; anti-sweep, correct review bytes, notarization all proven on 2026-10-20). Six rounds, ~16 findings, zero rebuttals - the budgeted arc for a concurrency-critical tool.
 
 
-### EV-245-MATCHER-V3-ROUND-1 - 2026-10-20 - Nexusmill
-**Layer:** gate-review BLOCK x1 round on the matcher v3 tranche (colibri-bounty match_llm.py + match.py::match_findings_v3 + s5 adjudicator passthrough + the p2_llm slug-pin repair)
+### EV-245-MATCHER-V3-ROUNDS-1-2 - 2026-10-20 - Nexusmill
+**Layer:** gate-review BLOCK x2 rounds on the matcher v3 tranche (colibri-bounty match_llm.py + match.py::match_findings_v3 + s5 adjudicator passthrough + the p2_llm slug-pin repair)
 
 **Caught:** (MEDIUM) match_llm.adjudicate_pairs: bool('false') is True - a stringified same_bug NO verdict promoted as YES, violating the fail-closed contract the module's own docstring states; the accompanying unit test even ASSERTED the buggy truthiness ('definitely' -> True). (LOW) match_findings_v3: title-equality used_s marked every same-title twin of a v2-matched title used, so an unmatched twin could never be adjudicated - a recall gap in the new channel. (LOW) stats['promoted'] counted YES verdicts, not landed promotions (the greedy drops conflicting pairs) - misleading channel-health accounting.
 
 **Severity:** MEDIUM x1 + LOW x2, one round
 
 **Author initially:** All accepted, fixed RED-first: a literal JSON true is the only YES (the test rewritten to the strict contract: 'false'/'0'/'no'/None/absent -> NO); multiset Counter used_s so exactly K twins of a K-matched title are marked used; the stat renamed yes_verdicts with an honest-name test. Suite 162 -> 164.
+
+**Round 2 (BLOCK, both accepted):** the r1 multiset used_s fix was itself defective - v2 matching the LATER same-title twin left the already-consumed twin eligible (double-match); REVERSED to v2's conservative title-equality (the funnel's title_key dedup makes duplicate titles unreachable - the r1 'recall gap' could not occur in practice while its fix opened a real defect). int(2.5)/int(True) pair numbers coerced to valid indices; now only real JSON integers count. Suite 162 -> 165.
 
 **Resolution:** Landing commit follows this row in the same session (git_do_only scoped tranche); the round's artifact is .adversary/reviews/gate_20261020-211455.md.
