@@ -690,3 +690,27 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Round 2 (BLOCK, both accepted):** the r1 multiset used_s fix was itself defective - v2 matching the LATER same-title twin left the already-consumed twin eligible (double-match); REVERSED to v2's conservative title-equality (the funnel's title_key dedup makes duplicate titles unreachable - the r1 'recall gap' could not occur in practice while its fix opened a real defect). int(2.5)/int(True) pair numbers coerced to valid indices; now only real JSON integers count. Suite 162 -> 165.
 
 **Resolution:** Landing commit follows this row in the same session (git_do_only scoped tranche); the round's artifact is .adversary/reviews/gate_20261020-211455.md.
+
+### EV-246-GROK47-DOCKET-SCHEMA (2026-10-21, Nexusmill)
+
+**Layer:** gate-review WARN x2 rounds on the grok-4.7 feature-run artifacts commit (3 JSON ledgers; Nexusmill 0dd80699).
+
+**Severity:** LOW x2, two rounds
+
+**Caught:** 6 new manifest rows appended as ROOT KEYS outside `entries[]` (invisible to live-queue consumers); deferred rows used `reason`/`unblock` instead of the array's established `why_deferred`/`unblocks`.
+
+**Author initially:** Rows placed at manifest root + wrong field names - schema taken from the `_convention` docstring, not the live rows.
+
+**Resolution:** Both fixed in Nexusmill 0dd80699 (relocation + renames; adjudication 'fixed': 3). Lesson: convention docstrings drift; the bytes are the contract.
+
+### EV-247-AUDIT-BLOCK-771AD9D9-ADJUDICATED (2026-10-21, Nexusmill)
+
+**Layer:** tier-1 sampled batch-audit BLOCK (2026-10-19, tree 771ad9d9bb, p2_static.py foundry wiring) - driver-check warning on every commit since; adjudicated same session as the GROK47 run.
+
+**Severity:** LOW x3 (adjudicated: 1 fixed / 1 premise-excluded / 1 deliberate)
+
+**Caught:** (F1) `_remapping_pins` first-match-per-line only; (F2) forced-foundry skips all files when forge absent; (F3) `lib` in SKIP_DIRS excludes contest source under lib/.
+
+**Author initially:** None - adjudication row; no new code touched.
+
+**Resolution:** F1 FIXED on current bytes (finditer - the P2 session's EV-237 F1); F2 premise-excluded (forge installed is the P2.1-T3 premise; fail-soft records skip_reasons); F3 DELIBERATE (P2.1-T3 comment: lib/ = foundry deps, never scan units; lib/-sourced-contest edge risk accepted). No new remediation owed.

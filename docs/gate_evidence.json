@@ -3939,6 +3939,36 @@
    "severity": "MEDIUM x3 + LOW x2 across two rounds",
    "author_initially": "r1 all accepted RED-first: literal JSON true is the only YES; the promoted stat renamed yes_verdicts. r2 both accepted - the twin catch REVERSED the r1 fix (over-exclusion by title-equality is the safe side; the funnel's title_key dedup means duplicate titles cannot reach the matcher anyway - the r1 'recall gap' was unreachable in practice while its fix opened a real double-match path); pair numbers now require a real JSON integer. The reversal is the arc's own lesson: a fix for an unreachable gap created a reachable defect. Suite 162 -> 165.",
    "resolution": "Landing commit follows this row in the same session (git_do_only scoped tranche); artifacts: .adversary/reviews/gate_20261020-211455.md (r1) and the r2 review that follows it."
+  },
+  {
+   "id": "EV-246-GROK47-DOCKET-SCHEMA",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "gate-review WARN x2 rounds on the grok-4.7 feature-run artifacts commit (3 JSON ledgers; Nexusmill 0dd80699)",
+   "caught": "(LOW r1) docs/deferred_manifest.json + docs/features_manifest.json: 6 new rows appended as ROOT KEYS outside entries[] - invisible to any consumer reading the documented live queue. (LOW r2) the new deferred rows used reason/unblock instead of the array's established why_deferred/unblocks - name-keyed readers see empty rationale/unblock.",
+   "severity": "LOW x2, two rounds",
+   "author_initially": "Rows placed at manifest root + reason/unblock field names (schema taken from the _convention docstring, not the live rows)",
+   "resolution": "Both fixed in Nexusmill 0dd80699 (rows relocated into entries[]; fields renamed; gate adjudication mapped 'fixed': 3). Root cause: schema taken from the _convention docstring instead of the actual live rows - convention docstrings drift; the bytes are the contract.",
+   "refs": [
+    "Nexusmill/.adversary/reviews/gate_20261021-021210.md",
+    "Nexusmill/.adversary/reviews/gate_20261021-021953.md",
+    "Nexusmill commit 0dd80699 (the fixing commit; artifacts above are the two WARN rounds)"
+   ]
+  },
+  {
+   "id": "EV-247-AUDIT-BLOCK-771AD9D9-ADJUDICATED",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "tier-1 sampled batch-audit BLOCK (2026-10-19, tree 771ad9d9bb, p2_static.py foundry wiring) - driver-check warning on every commit since; adjudicated same session as the GROK47 run",
+   "caught": "3 LOWs: (F1) _remapping_pins re.search took only the FIRST remapping per line (second dep never installed, forge build dies); (F2) default_runner forces foundry for any file under foundry.toml - all files skipped when forge absent; (F3) 'lib' in SKIP_DIRS excludes contest source living under a lib/ component.",
+   "severity": "LOW x3 (adjudicated: 1 fixed / 1 premise-excluded / 1 deliberate)",
+   "author_initially": "None - adjudication row for a 2-day-old audit BLOCK flagged on every commit; no new code touched",
+   "resolution": "Adjudicated against current bytes 2026-10-21: F1 FIXED (finditer, all entries per line - the P2 session's EV-237 F1); F2 premise-excluded (forge installed is the P2.1-T3 premise; fail-soft records skip_reasons); F3 DELIBERATE (P2.1-T3 comment: lib/ = foundry deps, never scan units; edge risk of a contest with own source under lib/ accepted). No new remediation owed; the audit row stands as history.",
+   "refs": [
+    "Nexusmill/.adversary/reviews/gate_20261019-050055.md",
+    "Nexusmill/.adversary/audit_findings.jsonl (row 20261019-050724, tree 771ad9d9bb)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_static.py::_remapping_pins (current bytes: finditer)"
+   ]
   }
  ]
 }
