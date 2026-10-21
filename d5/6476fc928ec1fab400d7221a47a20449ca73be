@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "d56476fc928ec1fab400d7221a47a20449ca73be",
+ "caller": "zcode",
+ "when": "20261020-194917",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "06ae986517bbc68a108f4ecf2defe281e227eb4f97aa83244c31bae43b94c2cd",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261020-194914",
+   "artifact": ".adversary\\reviews\\gate_20261020-194914.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261020-194914.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 2380, 'completion_tokens': 22581, 'total_tokens': 24961, 'cost': 0.00679904792, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00679904792, 'upstream_inference_prompt_cost': 0.00016023392, 'upstream_inference_completions_cost': 0.006638814}, 'completion_tokens_details': {'reasoning_tokens': 22095, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json`, which appends a new evidence record `EV-244-GIT-DO-ONLY-DRIVER` after `EV-243`.\n\nChecks performed against the provided bytes:\n\n- **JSON structural validity.** The prior last element's close `}` becomes `},`, then a new object opens. The new object's fields each carry a trailing comma except the terminal `\"resolution\": \"...\"`, which correctly has none; the object closes with `}`, the array with `]`, and the root with `}`. Nesting (object \u2192 array \u2192 root object) is well-formed.\n- **String escaping.** None of the newly added field values (`layer`, `caught`, `severity`, `author_initially`, `resolution`) contain unescaped double quotes or control characters; the `'...'` single-quote segments and `<...>`/`--only`/`->`/`~16` are all valid inside JSON strings. The pre-existing `\\\"` in EV-243 is a valid escape and is a context line, unchanged.\n- **Internal consistency of the new record.** The `caught` tally (r1: 5 MEDIUM; r2: 2 MEDIUM + 1 LOW; r3: 1 MEDIUM; r4: 2 MEDIUM + 1 LOW; r5: 1 HIGH + 2 LOW) sums to HIGH\u00d71 + MEDIUM\u00d710 + LOW\u00d74, which exactly matches the `severity` field. The \"five finding rounds (r1\u2013r5) plus the CLEAR landing round (r6)\" reconciles with the \"x6\" round count once the explicitly noted r4 WARN+BLOCK double-verdict is accounted for.\n- **Schema/ordering.** The new record uses the same eight fields as the sibling `EV-243`, has the next sequential id, the same date and repo, and is appended in order as the final array element.\n- **No duplicate evidenced.** The visible array terminates with EV-243 immediately before the insertion, so no in-view duplicate id exists.\n\nI found no reachable defect: the addition is valid JSON, internally consistent, and does not break the surrounding array/object structure. No finding survives verification.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261020-194448.md",
+  "outcomes": {
+   "fixed": 1
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261020-194914.md": {
+   "embedded": "fe44ad16a3500eea05acd31aa47b1eb9953770498d6ade5b41def36ca638d439",
+   "disk": "fe44ad16a3500eea05acd31aa47b1eb9953770498d6ade5b41def36ca638d439"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "935897ab358336627394286381d18fec956bbc4a2159766a7a40981bb5aed03a"
+}
