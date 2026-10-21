@@ -36,7 +36,7 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "C:\\Users\\User\\source\\repos\\colibri-code-review\\zcode\\zcode_jcm_guard.ps1",
+                "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\zcode_jcm_guard.ps1",
                 "-SessionId",
                 "${CLAUDE_SESSION_ID}"
               ],
@@ -68,7 +68,7 @@
       ],
       "PostToolUse": [
         {
-          "matcher": "mcp__(plugin_jcodemunch_jcodemunch|jcodemunch)__.*",
+          "matcher": "Skill|mcp__(plugin_jcodemunch_jcodemunch|jcodemunch)__.*",
           "hooks": [
             {
               "type": "process",
@@ -79,7 +79,7 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "C:\\Users\\User\\source\\repos\\colibri-code-review\\zcode\\zcode_jcm_mark.ps1",
+                "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\zcode_jcm_mark.ps1",
                 "-SessionId",
                 "${CLAUDE_SESSION_ID}"
               ],
@@ -105,52 +105,5 @@
         }
       ]
     }
-  },
-  "events": {
-    "PreToolUse": [
-      {
-        "matcher": "Read|Bash",
-        "hooks": [
-          {
-            "type": "process",
-            "command": "powershell.exe",
-            "enabled": true,
-            "statusMessage": "G6 guard: jCodemunch-first (Read/Bash-search)",
-            "args": [
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\zcode_jcm_guard.ps1",
-              "-SessionId",
-              "${CLAUDE_SESSION_ID}"
-            ],
-            "timeoutMs": 15000
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Skill|mcp__(plugin_jcodemunch_jcodemunch|jcodemunch)__.*",
-        "hooks": [
-          {
-            "type": "process",
-            "command": "powershell.exe",
-            "enabled": true,
-            "args": [
-              "-NoProfile",
-              "-ExecutionPolicy",
-              "Bypass",
-              "-File",
-              "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\zcode_jcm_mark.ps1",
-              "-SessionId",
-              "${CLAUDE_SESSION_ID}"
-            ],
-            "timeoutMs": 15000
-          }
-        ]
-      }
-    ]
   }
 }
