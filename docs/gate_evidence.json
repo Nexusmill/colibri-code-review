@@ -3969,6 +3969,120 @@
     "Nexusmill/.adversary/audit_findings.jsonl (row 20261019-050724, tree 771ad9d9bb)",
     "Nexusmill colibri-bounty/colibri_bounty/p2_static.py::_remapping_pins (current bytes: finditer)"
    ]
+  },
+  {
+   "id": "EV-248-GROK47-T1-LEDGER-RECONCILIATION",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate tier-2 BLOCK (gate_20261021-033617, qwen3.8-omni-flash) on the GROK47 T1 p2_llm calls_detail ledger",
+   "caught": "Claimed the reconciliation test fails deterministically because per-row rounded costs cannot sum to the rounded cumulative. The arithmetic was wrong (round(0.000078, 4) is 0.0001, not 0.0 - the suite passed twice), but the underlying class was real: an independently rounded per-call cost diverges from the rounded cumulative for arbitrary inputs.",
+   "severity": "MEDIUM (rebutted as a deterministic-failure claim; the divergence CLASS was real)",
+   "resolution": "Rebutted with the arithmetic correction AND hardened by construction: ledger cost_usd is now the cumulative counter's after-minus-before move (telescoping invariant - rows sum back to cost_usd for ANY sequence), pinned by a second test on arbitrary prices. Reviewer verified the rebuttal against the bytes (follow-up WARN cleared). Landed in 42636710.",
+   "commit": "42636710",
+   "lesson": "A wrong arithmetic table can still point at a real invariant gap - close the class by construction instead of arguing the example.",
+   "refs": [
+    "Nexusmill commit 42636710 (GROK47 T1 p2_llm)",
+    "Nexusmill colibri-bounty/docs/GROK47_IMPLEMENTATION.md"
+   ],
+   "author_initially": "Accepted immediately (GROK47 run-1 implementation, session 10k; see GROK47_IMPLEMENTATION.md)"
+  },
+  {
+   "id": "EV-249-GROK47-T1-TITLE-KEY-JOIN-COLLISION",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate tier-1 BLOCK (gate_20261021-041546, deepseek-v4.1-flash-1017) on the GROK47 T1 verify_unit originals join",
+   "caught": "The first verify_unit fix joined model echoes to input candidates on frozenset(norm_tokens(title)) - NOT injective: two distinct candidates whose titles are token-order variants share one key, so a kept finding could be silently dropped or a deleted one returned.",
+   "severity": "MEDIUM",
+   "resolution": "Real catch, addressed by construction: identity is now the prompt-assigned candidate number n (VERIFY_PROMPT numbers candidates; the adjudicator pair-number discipline - real JSON int in range only, ghosts/duplicates dropped fail-closed). Titles left the join entirely. Landed in 42636710.",
+   "commit": "42636710",
+   "lesson": "A join key must be injective on the inputs it reconciles; normalized-title sets are not (token-order variants collide).",
+   "refs": [
+    "Nexusmill commit 42636710 (GROK47 T1 p2_llm)",
+    "Nexusmill colibri-bounty/docs/GROK47_IMPLEMENTATION.md"
+   ],
+   "author_initially": "Accepted immediately (GROK47 run-1 implementation, session 10k; see GROK47_IMPLEMENTATION.md)"
+  },
+  {
+   "id": "EV-250-GROK47-T4-SOLC-PIN-PARSING",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate rounds gate_20261021-052200 (WARN, LOW x2) + gate_20261021-053143 (tier-1 BLOCK) on the GROK47 T4 _foundry_solc/select_hits add-ons",
+   "caught": "(1) unknown min_impact labels fell back to floor 0 - silently keeping only High-ranked hits; (2) _foundry_solc was section-blind (a [profile.ci] pin could win over [profile.default]); (3) TOML trailing comments after a header ([profile.ci] # x) defeated section detection entirely.",
+   "severity": "LOW x2 + MEDIUM",
+   "resolution": "All three addressed in the landing commit: unknown budget labels filter NOTHING; section-aware parsing accepts only root/[profile.default] pins; the header is parsed to the FIRST ] so trailing comments count. Pinned by tests (unknown-label membership, ci-vs-default, comment-header shapes). Landed in 1aa035db.",
+   "commit": "1aa035db",
+   "lesson": "Line-oriented TOML parsing needs section awareness AND comment tolerance; fail-closed defaults must be chosen for least surprise (unknown label = no filter, not max filter).",
+   "refs": [
+    "Nexusmill commit 1aa035db (GROK47 T4 p2_static)",
+    "Nexusmill colibri-bounty/docs/GROK47_IMPLEMENTATION.md"
+   ],
+   "author_initially": "Accepted immediately (GROK47 run-1 implementation, session 10k; see GROK47_IMPLEMENTATION.md)"
+  },
+  {
+   "id": "EV-251-GROK47-T5-TABLE-SEPARATOR-CELLS",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate tier-1 BLOCK (gate_20261021-055752, deepseek-v4.1-flash-1017) on the GROK47 T5 honest_table separator row",
+   "caught": "The tier-generic separator row used a hand-counted multiplier (5 + 4 + 4 = 13 cells) against a 12-cell header/body - GitHub-flavored Markdown then renders the single consumer-facing artifact as literal text instead of a table. Shipped green because tests only asserted substrings.",
+   "severity": "MEDIUM",
+   "resolution": "Addressed by construction: the separator is derived from the header's own pipe count (agreement is structural, not counted), pinned by a cell-count test over header/separator/body. Landed in fb55646e.",
+   "commit": "fb55646e",
+   "lesson": "Never hand-count structural pairs (header/separator cells) - derive one from the other; substring tests do not catch layout defects.",
+   "refs": [
+    "Nexusmill commit fb55646e (GROK47 T5 s5)",
+    "Nexusmill colibri-bounty/docs/GROK47_IMPLEMENTATION.md"
+   ],
+   "author_initially": "Accepted immediately (GROK47 run-1 implementation, session 10k; see GROK47_IMPLEMENTATION.md)"
+  },
+  {
+   "id": "EV-252-GROK47-T5-OWNER-TP-DOUBLE-CREDIT",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate tier-1 BLOCK (gate_20261021-060607, deepseek-v4.1-flash-1017) on the GROK47 T5 owner_tps bucketing",
+   "caught": "Claimed two different-tier findings with morphological-variant titles could both match one judged truth, double-crediting owner_tps against union matched. The premise is unreachable today: the matcher is one-to-one per truth (used_t) and title_key dedup means one title has one owner - at most ONE record exists per truth.",
+   "severity": "MEDIUM (premise unreachable; invariant risk was real if the matcher ever changes)",
+   "resolution": "Rebutted with the one-to-one proof AND made the invariant structural regardless: truth credit is GLOBAL across owners (a truth is credited to at most one owner, so sum(owner_tps) can never exceed matched), pinned by the exact morphological-variant test the reviewer proposed. Landed in fb55646e.",
+   "commit": "fb55646e",
+   "lesson": "When a BLOCK's trigger is unreachable but the invariant it fears is load-bearing, make the invariant structural and pin it with the reviewer's own scenario.",
+   "refs": [
+    "Nexusmill commit fb55646e (GROK47 T5 s5)",
+    "Nexusmill colibri-bounty/docs/GROK47_IMPLEMENTATION.md"
+   ],
+   "author_initially": "Accepted immediately (GROK47 run-1 implementation, session 10k; see GROK47_IMPLEMENTATION.md)"
+  },
+  {
+   "id": "EV-253-STRAT-DOCKET-STATUS-FIELD",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate tier-1 BLOCK (gate_20261021-102829, deepseek-v4.1-flash-1017@deepinfra/fp8) on the GROK47-STRAT docket commit",
+   "caught": "Six new docs/deferred_manifest.json entries (GROK47-STRAT-1..5 + NTH, the owner-accepted grok-4.7 architecture proposals) omitted the status field that 155/162 live sibling entries carry - a docket consumer reading or filtering on entry['status'] would skip or KeyError the accepted rows so they never enter the docket despite why_deferred saying they were accepted.",
+   "severity": "MEDIUM",
+   "author_initially": "Accepted immediately - confirmed against the bytes (161/162 after fix; the single holdout is a 2026-08 legacy row predating the convention, left untouched).",
+   "resolution": "status=deferred added to all six rows via validated text surgery (json.load verified), manifest re-indexed, commit re-run clean.",
+   "refs": [
+    "Nexusmill/.adversary/reviews/gate_20261021-102829.md",
+    "Nexusmill docs/deferred_manifest.json (GROK47-STRAT-1..NTH)",
+    "AGENT_STATE session 10l"
+   ]
+  },
+  {
+   "id": "EV-254-G47R2-T1-GATE-ARC-ROUNDS-1-4",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the G47R2 T1 data-layer commit - BLOCK x3 + WARN x1 (gate_20261021-120619 qwen3.8-omni-flash after a deepseek transport error; gate_20261021-122546, gate_20261021-124335, gate_20261021-130111 deepseek-v4.1-flash-1017@deepinfra/fp8)",
+   "caught": "12 findings across 3 BLOCK rounds + 1 WARN round, all real, all fixed RED-first in-session. R1: start_after skipped r.name <= cursor unconditionally while resume_after names the JUST-FAILED repo, so the documented resume dropped the failed repo forever (MEDIUM - the 2026-10-16 F1 retry-blocked class one layer up); pytest_report_header printed paid-skipped before collection ever ran it, structurally always 0 (LOW). R2: the fixed cursor still skipped recorded-but-incomplete repos (tarball-only row whose later issues fetch failed; tarball deleted from disk) (MEDIUM); readonly connect bypassed the schema-identity checks entirely (MEDIUM); invalid-UTF-8 config.json raised UnicodeDecodeError through corpus_probe's never-raise contract (MEDIUM); fetch_issues(report=None) wrote no .sha256 sidecar (LOW); the shape-mismatch path leaked the sqlite handle, blocking in-process delete-and-refetch on Windows (LOW). R3: the cursor still skipped repos whose latest issues REFRESH failed (has_issues_dump=1 + issues_outcomes error) or whose dump file was deleted (MEDIUM); limit sliced BEFORE the cursor filter so a capped resume processed zero new repos and reported no error (MEDIUM); sync_start/advance/finish never committed - the resume cursor was not durable across process restart (MEDIUM). R4 (WARN): readonly rejected pre-stamp user_version=0 corpora that the write path upgrades in place, advising delete of a losslessly-upgradable paid-channel corpus (LOW); resume_after pinned the failed repo so resumes re-fetched issues for every post-failure success (LOW).",
+   "severity": "MEDIUM arc (7 MEDIUM + 5 LOW over four rounds)",
+   "author_initially": "All twelve accepted immediately on read - each re-traced against the bytes; r2 caught the r1 fix's own gap, r3 caught r2's (refresh-failure state, budget/cursor ordering, durability), r4 caught the pre-stamp nuance and the resume boundary - the multi-round arc working as designed.",
+   "resolution": "Cursor skips only the FULLY recorded prefix via _cursor_skip (row current + tarball on disk + dump recorded + dump file present + last outcome error-free), applied BEFORE the limit slice; resume_after names the LAST ATTEMPTED repo so a resume skips recorded work and retries only incomplete repos; paid-skipped moved to pytest_report_collectionfinish; readonly enforces the identity doctrine but reads pre-stamp corpora like the write path does (skip_missing), delete-advice reserved for foreign generations; UnicodeDecodeError caught with the config-invalid-json reason; sidecar written on every fetch_issues; every mismatch path closes the connection; sync_start/advance/finish each commit. 14 named regression tests. Suite 202 -> 250. Landed in f0085bb4 after a 5-round gate arc.",
+   "refs": [
+    "Nexusmill/.adversary/reviews/gate_20261021-120619.md",
+    "Nexusmill/.adversary/reviews/gate_20261021-122546.md",
+    "Nexusmill/.adversary/reviews/gate_20261021-124335.md",
+    "Nexusmill/.adversary/reviews/gate_20261021-130111.md",
+    "Nexusmill colibri-bounty/colibri_bounty/github_corpora.py (_cursor_skip, sync_org)",
+    "Nexusmill colibri-bounty/colibri_bounty/db.py (connect, sync_*)",
+    "Nexusmill colibri-bounty/colibri_bounty/config.py (_config_read)"
+   ]
   }
  ]
 }

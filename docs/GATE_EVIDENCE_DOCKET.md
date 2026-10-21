@@ -714,3 +714,95 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Author initially:** None - adjudication row; no new code touched.
 
 **Resolution:** F1 FIXED on current bytes (finditer - the P2 session's EV-237 F1); F2 premise-excluded (forge installed is the P2.1-T3 premise; fail-soft records skip_reasons); F3 DELIBERATE (P2.1-T3 comment: lib/ = foundry deps, never scan units; lib/-sourced-contest edge risk accepted). No new remediation owed.
+
+### EV-248-GROK47-T1-LEDGER-RECONCILIATION (2026-10-21, Nexusmill)
+
+**Layer:** adversary gate tier-2 BLOCK (gate_20261021-033617, qwen3.8-omni-flash) on the GROK47 T1 p2_llm calls_detail ledger
+
+**Caught:** Claimed the reconciliation test fails deterministically because per-row rounded costs cannot sum to the rounded cumulative. The arithmetic was wrong (round(0.000078, 4) is 0.0001, not 0.0 - the suite passed twice), but the underlying class was real: an independently rounded per-call cost diverges from the rounded cumulative for arbitrary inputs.
+
+**Severity:** MEDIUM (rebutted as a deterministic-failure claim; the divergence CLASS was real)
+
+**Resolution:** Rebutted with the arithmetic correction AND hardened by construction: ledger cost_usd is now the cumulative counter's after-minus-before move (telescoping invariant - rows sum back to cost_usd for ANY sequence), pinned by a second test on arbitrary prices. Reviewer verified the rebuttal against the bytes (follow-up WARN cleared). Landed in 42636710.
+
+**Landing commit:** 42636710  
+**Lesson:** A wrong arithmetic table can still point at a real invariant gap - close the class by construction instead of arguing the example.
+
+### EV-249-GROK47-T1-TITLE-KEY-JOIN-COLLISION (2026-10-21, Nexusmill)
+
+**Layer:** adversary gate tier-1 BLOCK (gate_20261021-041546, deepseek-v4.1-flash-1017) on the GROK47 T1 verify_unit originals join
+
+**Caught:** The first verify_unit fix joined model echoes to input candidates on frozenset(norm_tokens(title)) - NOT injective: two distinct candidates whose titles are token-order variants share one key, so a kept finding could be silently dropped or a deleted one returned.
+
+**Severity:** MEDIUM
+
+**Resolution:** Real catch, addressed by construction: identity is now the prompt-assigned candidate number n (VERIFY_PROMPT numbers candidates; the adjudicator pair-number discipline - real JSON int in range only, ghosts/duplicates dropped fail-closed). Titles left the join entirely. Landed in 42636710.
+
+**Landing commit:** 42636710  
+**Lesson:** A join key must be injective on the inputs it reconciles; normalized-title sets are not (token-order variants collide).
+
+### EV-250-GROK47-T4-SOLC-PIN-PARSING (2026-10-21, Nexusmill)
+
+**Layer:** adversary gate rounds gate_20261021-052200 (WARN, LOW x2) + gate_20261021-053143 (tier-1 BLOCK) on the GROK47 T4 _foundry_solc/select_hits add-ons
+
+**Caught:** (1) unknown min_impact labels fell back to floor 0 - silently keeping only High-ranked hits; (2) _foundry_solc was section-blind (a [profile.ci] pin could win over [profile.default]); (3) TOML trailing comments after a header ([profile.ci] # x) defeated section detection entirely.
+
+**Severity:** LOW x2 + MEDIUM
+
+**Resolution:** All three addressed in the landing commit: unknown budget labels filter NOTHING; section-aware parsing accepts only root/[profile.default] pins; the header is parsed to the FIRST ] so trailing comments count. Pinned by tests (unknown-label membership, ci-vs-default, comment-header shapes). Landed in 1aa035db.
+
+**Landing commit:** 1aa035db  
+**Lesson:** Line-oriented TOML parsing needs section awareness AND comment tolerance; fail-closed defaults must be chosen for least surprise (unknown label = no filter, not max filter).
+
+### EV-251-GROK47-T5-TABLE-SEPARATOR-CELLS (2026-10-21, Nexusmill)
+
+**Layer:** adversary gate tier-1 BLOCK (gate_20261021-055752, deepseek-v4.1-flash-1017) on the GROK47 T5 honest_table separator row
+
+**Caught:** The tier-generic separator row used a hand-counted multiplier (5 + 4 + 4 = 13 cells) against a 12-cell header/body - GitHub-flavored Markdown then renders the single consumer-facing artifact as literal text instead of a table. Shipped green because tests only asserted substrings.
+
+**Severity:** MEDIUM
+
+**Resolution:** Addressed by construction: the separator is derived from the header's own pipe count (agreement is structural, not counted), pinned by a cell-count test over header/separator/body. Landed in fb55646e.
+
+**Landing commit:** fb55646e  
+**Lesson:** Never hand-count structural pairs (header/separator cells) - derive one from the other; substring tests do not catch layout defects.
+
+### EV-252-GROK47-T5-OWNER-TP-DOUBLE-CREDIT (2026-10-21, Nexusmill)
+
+**Layer:** adversary gate tier-1 BLOCK (gate_20261021-060607, deepseek-v4.1-flash-1017) on the GROK47 T5 owner_tps bucketing
+
+**Caught:** Claimed two different-tier findings with morphological-variant titles could both match one judged truth, double-crediting owner_tps against union matched. The premise is unreachable today: the matcher is one-to-one per truth (used_t) and title_key dedup means one title has one owner - at most ONE record exists per truth.
+
+**Severity:** MEDIUM (premise unreachable; invariant risk was real if the matcher ever changes)
+
+**Resolution:** Rebutted with the one-to-one proof AND made the invariant structural regardless: truth credit is GLOBAL across owners (a truth is credited to at most one owner, so sum(owner_tps) can never exceed matched), pinned by the exact morphological-variant test the reviewer proposed. Landed in fb55646e.
+
+**Landing commit:** fb55646e  
+**Lesson:** When a BLOCK's trigger is unreachable but the invariant it fears is load-bearing, make the invariant structural and pin it with the reviewer's own scenario.
+
+
+### EV-254-G47R2-T1-GATE-ARC-ROUNDS-1-4 (2026-10-21, Nexusmill)
+
+**Layer:** adversary gate arc on the G47R2 T1 data-layer commit - BLOCK x3 + WARN x1 (qwen3.8-omni-flash once, deepseek-v4.1-flash-1017 three times)
+
+**Caught:** 12 findings, all real, all fixed RED-first in-session. R1: `start_after` skipped `r.name <= cursor` while `resume_after` names the JUST-FAILED repo - the documented resume dropped it forever (the 2026-10-16 F1 class one layer up); `paid-skipped` in the header was structurally 0 (read pre-collection). R2: the fixed cursor still skipped recorded-but-incomplete repos (tarball-only row with failed issues; deleted tarball); readonly connect bypassed schema identity; invalid-UTF-8 `config.json` raised through `corpus_probe`'s never-raise contract; report-less `fetch_issues` wrote no sidecar; the mismatch path leaked the sqlite handle blocking Windows delete-and-refetch. R3: the cursor still skipped repos whose latest issues REFRESH failed or whose dump file was deleted; limit sliced BEFORE the cursor filter so a capped resume processed zero new repos; the `sync_*` cursor helpers never committed - not durable across restart. R4 (WARN): readonly rejected pre-stamp corpora the write path upgrades in place (delete-advice on a losslessly-upgradable paid-channel corpus); `resume_after` pinned the failed repo so resumes re-fetched post-failure successes' issues.
+
+**Severity:** MEDIUM arc (7 MEDIUM + 5 LOW over four rounds)
+
+**Resolution:** Cursor skips only the FULLY recorded prefix (`_cursor_skip`), applied before the limit slice; `resume_after` names the LAST ATTEMPTED repo; paid-skipped moved to `pytest_report_collectionfinish`; readonly reads pre-stamp corpora like the write path does; `UnicodeDecodeError` caught; sidecar always written; every mismatch path closes the connection; each `sync_*` step commits. 14 named regression tests; suite 202 -> 250.
+
+**Landing commit:** f0085bb4
+**Lesson:** A resume cursor must key on FULL recordedness (row + artifact on disk + dump when in scope), never on name arithmetic or row existence alone - and each round catching the previous round's fix-gap is the multi-round arc doing its job, not a failure of it.
+
+### EV-253-STRAT-DOCKET-STATUS-FIELD (2026-10-21, Nexusmill)
+
+**Layer:** adversary gate tier-1 BLOCK (gate_20261021-102829, deepseek-v4.1-flash-1017@deepinfra/fp8) on the GROK47-STRAT docket commit
+
+**Caught:** Six new docs/deferred_manifest.json entries (GROK47-STRAT-1..5 + NTH, the owner-accepted grok-4.7 architecture proposals) omitted the status field that 155/162 live sibling entries carry - a docket consumer reading or filtering on entry['status'] would skip or KeyError the accepted rows so they never enter the docket despite why_deferred saying they were accepted.
+
+**Severity:** MEDIUM
+
+**Resolution:** status=deferred added to all six rows via validated text surgery (json.load verified), manifest re-indexed, commit re-run clean.
+
+**Landing commit:** 51c7e8cb
+**Lesson:** A docket row the gate forced into remediation must carry the schema every consumer iterates - the covenant fields are not optional garnish.
