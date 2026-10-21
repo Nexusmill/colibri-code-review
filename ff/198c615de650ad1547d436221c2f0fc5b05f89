@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "ff198c615de650ad1547d436221c2f0fc5b05f89",
+ "caller": "zcode",
+ "when": "20261020-205923",
+ "files": {
+  ".zcode/config.json": {
+   "sha": "75326607a80867d3cddc691dfa5513fa4a46fc6b765b51bdb158ee1107d9c8da",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261020-205921",
+   "artifact": ".adversary\\reviews\\gate_20261020-205921.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261020-205921.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 2552, 'completion_tokens': 14034, 'total_tokens': 16586, 'cost': 0.00414490608, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 2432, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00414490608, 'upstream_inference_prompt_cost': 1.891008e-05, 'upstream_inference_completions_cost': 0.004125996}, 'completion_tokens_details': {'reasoning_tokens': 13523, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['.zcode/config.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged `.zcode/config.json` change. I verified the resulting file is syntactically valid JSON with balanced braces (the `hooks.events` tree closes with `},` at indent 2, then a new sibling `\"events\"` object opens and the root closes at indent 0). The indentation fix in the first hunk and the dropped trailing newline are cosmetic. The substantive concern is the new top-level `\"events\"` tree.\n\nFindings:\n\n- LOW \u2014 `.zcode/config.json` \u2014 top-level `\"events\"` duplicates the pre-existing `hooks.events` tree. Quote: `  \"events\": {` (the new top-level block; the pre-existing one is `    \"events\": {`). Trigger: the config loader parses this file. If it reads `hooks.events` (as the pre-existing, working config implies), the newly added G6/jcm-mark hooks are inert \u2014 the statusMessages advertise guards that never fire. If instead the loader reads a top-level `events`, then the pre-existing guards \u2014 `SessionStart` grounding, the G42/G43 health fail-arm `PreToolUse`, and the G38 `Stop` gate \u2014 are silently dropped, since the new block only carries `PreToolUse` (Read|Bash) and `PostToolUse`. Either way one of the two trees does not take effect. Impact: guards advertised by `statusMessage` may not run, or existing guards may be shadowed. The ambiguity is introduced by this change.\n\n- LOW \u2014 `.zcode/config.json` \u2014 the new hooks reference scripts under a different repository root than every other hook in this file. Quote: `\"C:\\\\Users\\\\User\\\\source\\\\repos\\\\Nexusmill\\\\tools\\\\zcode_jcm_guard.ps1\",` and `\"C:\\\\Users\\\\User\\\\source\\\\repos\\\\Nexusmill\\\\tools\\\\zcode_jcm_mark.ps1\",` versus the file's other hooks pointing at `C:\\\\Users\\\\User\\\\source\\\\repos\\\\colibri-code-review\\\\zcode\\\\...`. Trigger: if the top-level block is consumed, these commands target paths outside this repo's own `zcode\\` tree. Impact: those hooks would fail or no-op if the referenced cross-repo paths are not present in the runtime environment; informational given I cannot verify the referenced files exist.\n\nVERDICT: WARN"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261020-203048.md",
+  "outcomes": {
+   "cleared-unedited": 3
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261020-205921.md": {
+   "embedded": "970119a87ea9ba5197cc3571a8386df7bf35fdc7fdedb5adcbd6f4cb6e34fdc9",
+   "disk": "970119a87ea9ba5197cc3571a8386df7bf35fdc7fdedb5adcbd6f4cb6e34fdc9"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "07221156eba9ed6d2a164b99471279013dc6749c587e3fa5c6cf48dd23974d3b"
+}
