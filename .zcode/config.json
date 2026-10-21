@@ -36,7 +36,7 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\zcode_jcm_guard.ps1",
+                "tools/zcode_jcm_guard.ps1",
                 "-SessionId",
                 "${CLAUDE_SESSION_ID}"
               ],
@@ -79,7 +79,7 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\zcode_jcm_mark.ps1",
+                "tools/zcode_jcm_mark.ps1",
                 "-SessionId",
                 "${CLAUDE_SESSION_ID}"
               ],
