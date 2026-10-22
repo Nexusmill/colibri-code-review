@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "459dbd1e4077053f0eb5b135d72af61fbc40f8c7",
+ "caller": "zcode",
+ "when": "20261022-134800",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "3e07667a8b84f9c7f081f64b7a5295ff829ad9628d1b62ea23b0adc94613507f",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261022-134757",
+   "artifact": ".adversary\\reviews\\gate_20261022-134757.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261022-134757.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 2177, 'completion_tokens': 11625, 'total_tokens': 13802, 'cost': 0.00355808992, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00355808992, 'upstream_inference_prompt_cost': 0.00014033992, 'upstream_inference_completions_cost': 0.00341775}, 'completion_tokens_details': {'reasoning_tokens': 11251, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nThe change appends a new evidence object to the JSON array in `docs/gate_evidence.json`. I verified the structural claims against the provided bytes:\n\n- The prior record's `refs` array closes with `]` (`    ]` context line); the added `+  },` correctly closes that prior object and supplies the array-element separator, and `+    {` opens the new object.\n- The new object's fields (`id`, `date`, `repo`, `layer`, `caught`, `resolution`, `severity`, `author_initially`, `refs`) are each comma-terminated except the last, and the `refs` array's four strings are comma-separated with no trailing comma.\n- The reused context `   }` now closes the new object, `  ]` closes the array, and ` }` closes the root object \u2014 bracket/brace counts remain balanced (net zero added `{`/`}` and `[`/`]`), so the file remains valid JSON.\n- The added `\"date\": \"2026-10-22\"`, `\"refs\"` entries (`gate_20261022-005558.md`, row `20261022-010425`) and the `layer` narrative are mutually consistent; no internal contradiction is visible in the supplied bytes.\n- The `\\ No newline at end of file` marker matches the pre-existing file state and is not introduced by this change.\n\nThe remaining claims (external commit hashes, test counts, consumer behavior) reference artifacts not supplied, so they are not verifiable here and cannot be treated as defects under the grounding contract. No reachable defect (syntax break, broken contract, wrong pointer, lost data) is introduced by the added bytes.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261022-134757.md": {
+   "embedded": "88406b8f5f578ade4a8ad3bc0b7e1b56f39725c6f51d3210caa636ffb43c380b",
+   "disk": "88406b8f5f578ade4a8ad3bc0b7e1b56f39725c6f51d3210caa636ffb43c380b"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "423ca0e698266cb90c9b20ee80d5e2575e85e369417db930a583d29edcb76b3e"
+}
