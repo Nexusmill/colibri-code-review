@@ -1083,3 +1083,37 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 - Nexusmill .adversary/audit_findings.jsonl (row 20261022-010425 - the row whose artifact field held the commit gate's CLEAR)
 - Nexusmill .adversary/reviews/gate_20261022-005558.md (the CLEAR the row mis-cited)
 - colibri-code-review docket EV-263 (the adjudication that surfaced the discrepancy)
+## 2026-10-22 Crucible T0: four inherited port defects caught on the copy (EV-270)
+
+**Layer:** gate-review BLOCK (tier 2, artifact gate_20261022-144454) on the Crucible founding tranche 3 (the ported llm/match_llm cores).
+
+**Caught:** four defects ALL inherited from upstream colibri-bounty code the faithful port copied verbatim - cache-hit chunks re-fold stale spend rows and inflate usd/token stats (~Nx over-report on cache-heavy reruns); a 429 retry posted one billed wire attempt beyond max_calls; budget_headroom().next_chat_raises omitted the input cap; duplicate pair rows left the verdict vector and the disposition mask in disagreement.
+
+**Severity:** MEDIUM (spend-reporting integrity + absolute-budget breach on the dispatch core every future paid Crucible tier rides; unreachable at T0 - tiers are stubs - but the T2 foundation).
+
+**Author's initial reaction:** Accepted on read, no rebuttal - and the irony is the row: the faithful-port discipline imported upstream's silent defects, and the gate caught on the COPY what had shipped in the ORIGINAL. The upstream funnel still carries all four.
+
+**Resolution:** all four fixed RED-first in Crucible ca18262 (contract tests, suite 17->21, RED run on record); remediation manifest rows; upstream flagged in Crucible docs/REFERENCE_FINDINGS.md for the funnel lane.
+
+**Refs:**
+- Crucible .adversary/reviews/gate_20261022-144454.md (BLOCK) + gate_20261022-150940.md (CLEAR)
+- Crucible ca18262, tests/test_smoke.py, docs/remediation_manifest.json, docs/REFERENCE_FINDINGS.md
+- Upstream Nexusmill colibri-bounty match_llm.py + p2_llm.py @ ed30d181 (all four present)
+
+## 2026-10-22 Crucible T0: snapshot findings rebutted as fix-upstream, re-verified CLEAR (EV-271)
+
+**Layer:** gate-review BLOCK (tier 2, artifact gate_20261022-142709) on the founding snapshot tranche (verbatim 28-module funnel copy).
+
+**Caught:** three LOW findings against snapshot bytes - truth.py tokenless-title collapse (recall denominator hole), truth.py non-UTF-8 judging dump crashes replay instead of the disclosed skip, portfolio.py FrontierClient dead _pinned condition makes the documented bounded config unusable.
+
+**Severity:** LOW (upstream-live-code defects surfaced through a never-imported reference tree).
+
+**Author's initial reaction:** Rebutted on WHERE the fix belongs, not severity - the snapshot is a byte-frozen provenance anchor (fingerprint pinned); patching it destroys the port diff-anchor. Fixes belong upstream or at port time.
+
+**Resolution:** rebuttal re-verified against the bytes -> CLEAR (gate_20261022-143415); snapshot landed unmodified (9ea934c); findings discharged to Crucible docs/REFERENCE_FINDINGS.md with port-phase dispositions. All three remain OPEN upstream.
+
+**Refs:**
+- Crucible .adversary/reviews/gate_20261022-142709.md (BLOCK) + gate_20261022-143415.md (CLEAR)
+- Crucible 9ea934c + docs/REFERENCE_FINDINGS.md
+- Upstream Nexusmill colibri-bounty truth.py + portfolio.py @ ed30d181 (OPEN)
+

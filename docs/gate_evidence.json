@@ -4322,6 +4322,38 @@
     "Nexusmill .adversary/reviews/gate_20261022-005558.md (the CLEAR the row mis-cited)",
     "colibri-code-review docket EV-263 (the adjudication that surfaced the discrepancy)"
    ]
+  },
+  {
+   "id": "EV-270-CRUCIBLE-T0-PORT-INHERITED-DEFECTS",
+   "date": "2026-10-22",
+   "repo": "Crucible",
+   "layer": "gate-review BLOCK (tier 2, artifact gate_20261022-144454)",
+   "caught": "FOUR defects in the freshly-ported funnel cores, ALL inherited from upstream colibri-bounty code the faithful port copied verbatim: (1) MEDIUM match_llm cache-hit chunks re-fold the last call's spend row into usd/token stats and count as calls - a rerun with one changed chunk reported ~Nx that chunk's cost; (2) MEDIUM llm 429 retry posted one billed wire attempt beyond max_calls (cap checked only before the retry loop); (3) LOW budget_headroom().next_chat_raises omitted the input-token cap it claims to predict; (4) LOW duplicate pair rows with conflicting verdicts left verdicts[i] True while pair_disposition[i] said model_no (vector and documented aligned mask disagreed).",
+   "severity": "MEDIUM (spend-reporting integrity + absolute-budget breach on the dispatch core that every future paid Crucible tier rides; none reachable at T0 - the tiers are unimplemented stubs - but the cores are the T2 foundation)",
+   "author_initially": "Accepted on read; all four verified against the ported bytes, no rebuttal attempted. The irony is logged: the faithful-port discipline (port-map law) is exactly what imported them - and the gate caught on the COPY what had shipped silently in the ORIGINAL.",
+   "resolution": "All four fixed RED-first in Crucible ca18262: contract tests test_cache_hit_does_not_fold_stale_spend, test_429_retry_cannot_exceed_max_calls, test_headroom_predicts_input_cap, test_duplicate_pair_rows_first_wins_consistent (suite 17->21, RED run on record before the fixes); rows in Crucible docs/remediation_manifest.json. The UPSTREAM live copies (Nexusmill colibri-bounty @ ed30d181) still carry all four - flagged in Crucible docs/REFERENCE_FINDINGS.md for the funnel maintenance lane.",
+   "refs": [
+    "Crucible .adversary/reviews/gate_20261022-144454.md (the BLOCK, 4 anchored findings)",
+    "Crucible .adversary/reviews/gate_20261022-150940.md (the fixed re-review, CLEAR)",
+    "Crucible ca18262 (fixes + tests + manifest), tests/test_smoke.py, docs/remediation_manifest.json, docs/REFERENCE_FINDINGS.md",
+    "Upstream: Nexusmill colibri-bounty/colibri_bounty/match_llm.py + p2_llm.py @ ed30d181 (all four defects present)"
+   ]
+  },
+  {
+   "id": "EV-271-CRUCIBLE-T0-SNAPSHOT-REBUTTAL-VERIFIED",
+   "date": "2026-10-22",
+   "repo": "Crucible",
+   "layer": "gate-review BLOCK (tier 2, artifact gate_20261022-142709)",
+   "caught": "Three LOW findings against the verbatim funnel snapshot bytes: truth.py valid_findings collapses two paid titles that normalize to zero tokens into one truth (recall denominator hole; the same class IS guarded in s5.union_findings); truth.py select_contests crashes on a non-UTF-8 or non-numeric judging dump instead of the documented per-contest disclosed skip; portfolio.py FrontierClient chat() dead _pinned condition never honors a caller-pinned max_tokens_per_call (documented bounded config unusable).",
+   "severity": "LOW (upstream-live-code defects surfaced through the snapshot; the snapshot tree is never imported in Crucible)",
+   "author_initially": "Rebutted - not on severity (all three are plausible upstream defects) but on WHERE the fix belongs: the snapshot is a byte-frozen provenance anchor (fingerprint 9b9946ed9ff7d733 pinned in its README and the port map); patching it would destroy the port diff-anchor and fork the code. Fixes belong upstream or at port time (T1 truth, T2 portfolio).",
+   "resolution": "Rebuttal re-verified by the reviewer against the bytes -> CLEAR (artifact gate_20261022-143415: 'No finding survives as a concrete, reachable defect with a real trigger and impact'); commit 9ea934c landed unmodified. Findings discharged to Crucible docs/REFERENCE_FINDINGS.md with port-phase fix dispositions and carried to the funnel lane via AGENT_STATE + store summary. Docket-relevant fact: all three remain OPEN upstream.",
+   "refs": [
+    "Crucible .adversary/reviews/gate_20261022-142709.md (the BLOCK)",
+    "Crucible .adversary/reviews/gate_20261022-143415.md (the rebuttal re-verification, CLEAR)",
+    "Crucible 9ea934c (snapshot commit) + docs/REFERENCE_FINDINGS.md",
+    "Upstream: Nexusmill colibri-bounty/colibri_bounty/truth.py + portfolio.py @ ed30d181 (defects present, OPEN)"
+   ]
   }
  ]
 }
