@@ -4306,6 +4306,22 @@
     "Nexusmill colibri-bounty/tests/test_strat4.py",
     "Nexusmill commit 1b0eabee (round-by-round notes in the message)"
    ]
+  },
+    {
+   "id": "EV-269-GATE-AUDIT-ROW-ARTIFACT-DEFECT",
+   "date": "2026-10-22",
+   "repo": "Tools",
+   "layer": "found during the w6 EV-263 adjudication (a defect IN the gate's own machinery, not a commit refusal): the audit-drain's audit_findings.jsonl row writer named the COMMIT GATE's review as its 'artifact' (meta.get('artifact') copied from the queue entry) and never persisted the drain's own review beyond the 2000-char text_head - when the drain CONTRADICTS a clearance (the 20261022-010425 w6-marker BLOCK vs the commit gate's CLEAR), the row points auditors at the wrong review and the real evidence is truncated. Owner order after the note: 'fixing the gate always is paramount'",
+   "caught": "(1) MEDIUM, evidence integrity: every drain verdict row carried a pointer to a review it did not produce; the drain's own full text (the actual evidence for BLOCK/WARN verdicts that gate shipping) existed only as text_head. Historical full texts are unrecoverable - recorded, not fabricated. (2) The fix run exposed a stale battery dating to the 2026-10-20 owner repin to flash-1017: test_tier2_chain_is_flash_high_plus_qwen_fallback still expected the retired baidu slug; FleetLadderParityTests::test_gate_ladder_parity_with_default_chain was red (the gate moved, the fleet mirror did not); fleet_selftest's fixture catalog and fleet-gate-ladder-order were green BEFORE the mirror fix only because both sides were stale together.",
+   "resolution": "Tools 6d75be7 (first-round CLEAR, notarized, runtime enforcement re-installed from the reviewed source): cmd_audit_drain now writes the drain's OWN full review to .adversary/reviews/audit_<queued>.md (audit_-prefix can never collide with gate_* artifacts) BEFORE the row lands; the row's 'artifact' names that file and the commit-gate review rides a new 'gate_artifact' field as provenance only. Consumers verified safe (the warning counter counts outcomes; the push guard matches tree/files/when - nothing reads row['artifact']). RED-first: test_drain_row_artifact_is_the_drains_own_review failed on pre-fix bytes. Battery repinned green: test_ladder_20261012.py 16/16 (incl. the new gate test), test_batch_review.py 19+13 subtests, fleet_selftest 21/21 PASS.",
+   "severity": "MEDIUM (post-commit audit-lane evidence integrity; verdicts were never wrong - their pointer and persistence were)",
+   "author_initially": "Accepted on read; the defect sat invisible because drain rows usually AGREE with the commit gate, so the wrong pointer surfaces exactly when it matters most - a contradiction. The sister lesson: two pin batteries had been red-or-hollow since the 2026-10-20 repin on files nobody ran; the gate's own battery is part of the gate.",
+   "refs": [
+    "Tools commit 6d75be7 (adversary-gate/adversary_gate.py cmd_audit_drain row writer; test_ladder_20261012.py; autoland/fleet_config.py GATE_LADDER; autoland/fleet_selftest.py)",
+    "Nexusmill .adversary/audit_findings.jsonl (row 20261022-010425 - the row whose artifact field held the commit gate's CLEAR)",
+    "Nexusmill .adversary/reviews/gate_20261022-005558.md (the CLEAR the row mis-cited)",
+    "colibri-code-review docket EV-263 (the adjudication that surfaced the discrepancy)"
+   ]
   }
  ]
 }
