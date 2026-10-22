@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "c4ef77b6b13e55e01daa5219aedf605531f73163",
+ "caller": "zcode",
+ "when": "20261022-094628",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "54656e7687add6b4d9d9723229a7c683e90b193a7d9b9fca656b334b50a4609a",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261022-094625",
+   "artifact": ".adversary\\reviews\\gate_20261022-094625.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261022-094625.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 6628, 'completion_tokens': 13073, 'total_tokens': 19701, 'cost': 0.00662999988, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00662999988, 'upstream_inference_prompt_cost': 0.00086480688, 'upstream_inference_completions_cost': 0.005765193}, 'completion_tokens_details': {'reasoning_tokens': 12671, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json`. It is a purely additive evidence-docket change appending seven new entries (EV-262 through EV-268) to the existing JSON array.\n\nChecks performed against the supplied bytes:\n- **JSON structure**: The prior entry's closing `}` is correctly promoted to `},` before the new objects; every new object opens with `{`, carries comma-separated fields, closes its `refs` array with `]`, and terminates with `},` (or the final object with `}`). Brace/bracket counts balance (7 objects + 7 refs arrays opened and closed), and the outer array `]` and root `}` are preserved. The result parses as valid JSON.\n- **Comma placement**: No double commas or missing separators at object boundaries.\n- **ID uniqueness**: EV-262\u2026EV-268 are distinct within the added set; no duplicate keys within any object.\n- **Internal consistency**: Per-entry finding counts match their severity summaries (e.g., EV-262 \"2 findings\" = 1 MEDIUM + 1 LOW; EV-267 \"3 findings\" = 1 MEDIUM + 2 LOW; EV-266 four rounds = 3 BLOCK + 1 repair; EV-268 18 rounds = 16 BLOCK + 2 WARN). The suite-count chain (391\u2192398\u2192403\u2192412\u2192416, then 419\u2192437) is not provably contiguous \u2014 intermediate commits/fixes (EV-263, EV-264) can account for the offset \u2014 so it is not a demonstrable error.\n- **No injection/pre-approval text**: None present.\n- **No caller/contract break**: The change is data-only and does not touch code paths; external file/commit references cannot be verified from the supplied bytes and are out of scope.\n\nNo defect survives verification.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261022-094625.md": {
+   "embedded": "c320168b926d99a864fa3cef931e283be71cba1f3283d66031f653f8afc94c90",
+   "disk": "c320168b926d99a864fa3cef931e283be71cba1f3283d66031f653f8afc94c90"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "c2f5a4f27f343168bde6ea02cb833c027cf2efd3d327bf73fef2cb092491ae27"
+}
