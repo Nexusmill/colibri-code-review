@@ -4193,6 +4193,119 @@
      "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_remapping_pins, default_runner, SKIP_DIRS)",
      "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (skip_reasons/files_dep_incomplete disposition)"
     ]
+  },
+    {
+   "id": "EV-262-G47R2-PHASEB-W6-GATE-ARC",
+   "date": "2026-10-22",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the Phase B W6 blinded-S3-protocol commit 40af8e43 - BLOCK x1",
+   "caught": "2 findings, both fixed RED-first in-commit. MEDIUM - the sealed key was co-located with the trees INSIDE the pool root, so the module's 'the blinding is STRUCTURAL, not procedural' claim was false at the first review: a fresh session operating in the pool directory could read key.json directly. Fixed: key_path() puts the sealed key at a SIBLING file (<pool>.key.json); the pool directory holds ONLY trees (pinned by a pool-listing assertion); the real E:/ pool key relocated. LOW - an unmeasured control arm (a pristine id missing from the dumps) read as clean while matched mutants scored detected - the false-positive arm silently unmeasured. Fixed: controls_measured gates every detected flag (voided + control_arm 'unmeasured' + score_valid False, per-tree match evidence preserved); gate test test_unmeasured_control_arm_voids_the_score.",
+   "resolution": "Both fixed in-commit; suite 397 -> 398 inside the 391 -> 398 tranche (the tranche message also corrects tranche 1's suite count to 391).",
+   "severity": "MEDIUM arc (1 MEDIUM + 1 LOW, single round)",
+   "author_initially": "Accepted on read; the key-co-location catch demolished the module's own docstring claim before it ever landed - and the audit lane (EV-263) then found the claimed guarantee was still false on a different axis after the fix.",
+   "refs": [
+    "Nexusmill colibri-bounty/colibri_bounty/w6.py (key_path, build_pool)",
+    "Nexusmill colibri-bounty/tests/test_w6.py",
+    "Nexusmill commit 40af8e43 (gate-round notes in the message)"
+   ]
+  },
+    {
+   "id": "EV-263-G47R2-W6-AUDIT-LANE-ARC-ADJUDICATION",
+   "date": "2026-10-22",
+   "repo": "Nexusmill",
+   "layer": "sampled tier-1 batch audit (audit-drain lane) - TWO BLOCK rows against the landed W6 protocol: 20261022-001039 (tree a991631876, artifact gate_20261022-000157.md) on the W6 tranche's bytes and 20261022-010425 (tree 89031e881d, artifact gate_20261022-005558.md) on the marker-fix commit 2f5cc66c; both adjudicated on current bytes at Phase C close-out",
+   "caught": "Row 1 carried the pre-fix attempt's findings (key co-location, unmeasured control arm - already caught and fixed by the commit gate's own r1, EV-262) PLUS one real residual the commit gate missed: every pristine tree was a byte-identical copy of the source, so hashing the pool directory revealed exactly the n_pristine-member identical group - the control arm - defeating the blinding through tree CONTENTS regardless of the opaque ids. Remediated by 2f5cc66c (per-tree '.w6-tree-id' marker + a pairwise-distinctness content-hash test; the real E:/bounty-corpus/w6_blind_v1 pool trees marked in place, sealed key untouched). Row 2 audited the marker commit itself and found the fix INEFFECTIVE: the marker adds no entropy the auditor does not already have (the id is the directory name), and the pristine trees' subtrees remain byte-identical - hashing each tree's contents EXCLUDING the marker (or simply diffing tree pairs: the pristine pair is the only pair whose entire diff is the marker file) still identifies the control arm; the new test verifies the symptom (whole-tree hash uniqueness), not the property (arm indistinguishability).",
+   "resolution": "Row 1's pre-fix findings verified fixed in-commit (key_path sibling + pool-listing pin are in the landed bytes); the identical-pristines residual remediated by 2f5cc66c. Row 2's finding adjudicated CONFIRMED on CURRENT bytes (build_pool's pristine loop is copytree + marker and nothing else, w6.py:135-142): the structural-blinding claim does not hold against a subtree/minus-marker hash or a pairwise diff. STATUS OPEN, escalated to the owner BEFORE the W6 cold audit - options on record: (a) single pristine control per pool (no identical pair exists), (b) distinct pristine sources per pool, (c) proceed on the sealed v1 pool with the residual disclosed in the protocol and the auditor barred from content-hashing/diffing pool trees. With this row all three standing audit-lane BLOCKs (20261019 = EV-261, 20261022-001039, 20261022-010425) are adjudicated; this finding is the one OPEN remediation.",
+   "severity": "MEDIUM (protocol-validity: the false-positive arm of the synthetic scorecard is de-anonymizable by an auditor who hashes or diffs; no money path)",
+   "author_initially": "Accepted on read; the second row is the audit lane catching what the commit gate had just cleared, and the third link in a chain (gate: key co-location -> lane: identical pristines -> marker fix -> lane: marker ineffective) where each fix restored the CLAIMED guarantee only against the exact probe that caught it. The session-state guess that the third standing BLOCK was a strat tree was wrong - it was this row.",
+   "refs": [
+    "Nexusmill .adversary/audit_findings.jsonl (rows 20261022-001039, 20261022-010425)",
+    "Nexusmill .adversary/reviews/gate_20261022-000157.md",
+    "Nexusmill .adversary/reviews/gate_20261022-005558.md",
+    "Nexusmill colibri-bounty/colibri_bounty/w6.py (build_pool pristine loop, key_path)",
+    "Nexusmill commits 40af8e43 + 2f5cc66c"
+   ]
+  },
+    {
+   "id": "EV-264-G47R2-PHASEB-S5-DOCSTRING-WARN-CLOSURE",
+   "date": "2026-10-22",
+   "repo": "Nexusmill",
+   "layer": "audit-lane WARN 20261021-002638 (artifact gate_20261021-001740.md) on the inv-tier wiring tree c3419122 - the s5.py module docstring still enumerated three dedup tiers after TIER_PRIORITY gained 'inv'; remediated in the Phase B tranche-1 commit 4e150da6 and docketed at close-out",
+   "caught": "LOW, documentation-contract: the priority order a maintainer reads from the docstring omitted the inv tier, so its last-place dedup participation was undiscoverable from the documented contract.",
+   "resolution": "Closed in 4e150da6: the docstring enumerates all four tiers (agent > t5 > poc > inv) AND a drift-guard test (test_docstring_names_every_priority_tier) now fails whenever TIER_PRIORITY grows without the prose following - the WARN class made structurally unrepeatable rather than text-patched.",
+   "severity": "LOW (advisory WARN on landed code)",
+   "author_initially": "Accepted; the fix landed inside Phase B tranche 1 (the queue item closed there) but the catch itself had no docket row - added now to keep the every-catch-gets-a-row covenant.",
+   "refs": [
+    "Nexusmill .adversary/audit_findings.jsonl (row 20261021-002638)",
+    "Nexusmill .adversary/reviews/gate_20261021-001740.md",
+    "Nexusmill colibri-bounty/colibri_bounty/s5.py (module docstring, TIER_PRIORITY)",
+    "Nexusmill commit 4e150da6"
+   ]
+  },
+    {
+   "id": "EV-265-G47R2-STRAT5-GATE-ARC",
+   "date": "2026-10-22",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the STRAT-5 verify-deletion shadow commit f0f8fbfa - BLOCK x1",
+   "caught": "2 findings, both fixed. MEDIUM - the raw-candidate stash stored the model title UNNORMALIZED, re-opening the T6 r2 crash class at the shadow matcher, OUTSIDE every fail-soft handler, after billing, meta unwritten = total run loss. Fixed at BOTH layers: the stash coerces like the kept-loop AND _score_and_dump coerces at the consumption point (last_stats is scanner-authored data); gate test test_null_title_raw_candidate_cannot_kill_the_scoring (RED: crashed). LOW - deleted_matched_truths counted BudgetExceeded/API-errored units as verify-deletions, corrupting the future exemption-gate decision; fixed: the stash happens only AFTER verify succeeds (errored units unmeasured, not deleted) and the shadow carries budget_stopped/llm_errors health flags; gate test test_errored_unit_is_unmeasured_not_deleted. (A duplicated verify block from the first fix edit was caught by the suite and removed.)",
+   "resolution": "Fixed in-commit; suite 398 -> 403 inside the tranche. The EXEMPTION half stays deferred per the row: gated on STRAT-1 core-flow candidates and on these shadow numbers accumulating across replays.",
+   "severity": "MEDIUM arc (1 MEDIUM + 1 LOW, single round)",
+   "author_initially": "Accepted on read; the untyped-boundary defect at a scanner-authored-data consumption point is the G47 class again - the third recurrence the gate has caught at exactly this seam.",
+   "refs": [
+    "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (shadow_raw_candidates stash)",
+    "Nexusmill colibri-bounty/colibri_bounty/replay_runner.py (_score_and_dump)",
+    "Nexusmill colibri-bounty/tests/test_strat5.py",
+    "Nexusmill commit f0f8fbfa (gate-round notes in the message)"
+   ]
+  },
+    {
+   "id": "EV-266-G47R2-STRAT2-GATE-ARC",
+   "date": "2026-10-22",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the STRAT-2 known-issues pre-check commit 8d439f85 - four rounds (BLOCK x3 documented in the commit message: rounds 1, 3, 4; round 2 the in-round test repair)",
+   "caught": "Round 1 (2 findings): MEDIUM - match_known ran on RAW review output upstream of every coercion, so a numeric/null title crashed the paid scan after billing (the T6 r2 class, third recurrence; the gate now coerces at its own boundary; gate test test_gate_survives_untyped_review_rows, RED: AttributeError). LOW - P2 counted the known-issue drop BEFORE verify but candidates_raw only after, so an API-errored verify left dropped > raw (P2X disagreed); candidates_raw now increments right after review, before the gate, in BOTH twins (test_drops_never_exceed_raw_on_verify_error pins the invariant on the error path). Round 3 (3 findings): MEDIUM - the harvest else-branch took the head of ANY doc wholesale, so ordinary protocol prose could swallow a fully-covered candidate title out of the default-ON paid verify set (silent recall loss, counter-only record); scoped sections only for every doc now, whole-file harvest reserved for KNOWN_ISSUES-named files, and every drop leaves a per-candidate audit record (known_issue_dropped_titles). LOW - flag_truth_hits lacked the r1 coercion (the guardrail could crash on untyped titles). LOW - the manifest resolution was dishonest (403->409 with 8 tests; corrected to the honest 403->412). Round 4 (1 finding): the wholesale branch was guarded by 'not _SECTION_RE', so a HEADED KNOWN_ISSUES.md fell into scoped extraction where its issue sub-headings match nothing - the text was silently dropped and the layer no-opped on the most natural file layout; KNOWN_ISSUES* files are now wholesale unconditionally, with the headed layout gate-tested.",
+   "resolution": "All fixed in-commit. Suite-count correction for the record: the commit message's round-4 note says 'Suite 413' - the honest final is 412 (the r4 gate test extended an existing function, so no net new test); the session-state correction is applied here.",
+   "severity": "MEDIUM arc (3 MEDIUM + 3 LOW over four rounds)",
+   "author_initially": "Accepted on read; round 4 is the arc's lesson - the round-3 fix for over-broad harvest introduced its own silent no-op on the headed layout, found only because the gate re-read the bytes with the new guard in mind.",
+   "refs": [
+    "Nexusmill colibri-bounty/colibri_bounty/known_issues.py (harvest_known_text, match_known, flag_truth_hits)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (the gate between review and verify)",
+    "Nexusmill colibri-bounty/tests/test_strat2.py",
+    "Nexusmill commit 8d439f85 (gate-round notes in the message)"
+   ]
+  },
+    {
+   "id": "EV-267-G47R2-STRAT3-GATE-ARC",
+   "date": "2026-10-22",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the STRAT-3 corroboration/exec/locus commit 2807a6bd - BLOCK x1",
+   "caught": "3 findings, all fixed. MEDIUM - count_duplicate_claims_v2 checked only folded/mechanism while v2 now scores through locus too: the double-report metric the T3 row created to see 'the channels the funnel actually scores with' was BLIND to the new channel (locus_accepts joins the check; gate test test_dup_claims_v2_sees_the_locus_channel). LOW - the locus name match was a raw substring ('Token' inside 'tokenomics', 'Core' inside 'score') - now a word-boundary regex (test_locus_naming_requires_a_word_boundary). LOW - max_pairs capped the band BEFORE the exec/paid split, so free exec pairs (and sub-band exec pairs exec then refuses) consumed paid-budget slots - the split now precedes the cap, which applies to the PAID band only; band_capped counts paid-band overflow.",
+   "resolution": "Fixed in-commit; suite 412 -> 416 inside the tranche.",
+   "severity": "MEDIUM arc (1 MEDIUM + 2 LOW, single round)",
+   "author_initially": "Accepted on read; the blind-metric catch is the meta-lesson - every new scoring channel must be joined into the metrics that exist to observe the channels, or the anti-blending guard itself goes blind.",
+   "refs": [
+    "Nexusmill colibri-bounty/colibri_bounty/match.py (_channel_scores, match_findings_v2/v3, count_duplicate_claims_v2)",
+    "Nexusmill colibri-bounty/colibri_bounty/s5.py (union_findings corroboration pooling)",
+    "Nexusmill colibri-bounty/tests/test_strat3.py",
+    "Nexusmill commit 2807a6bd (gate-round notes in the message)"
+   ]
+  },
+    {
+   "id": "EV-268-G47R2-STRAT4-GATE-ARC",
+   "date": "2026-10-22",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the STRAT-4 live finalist path commit 1b0eabee - EIGHTEEN rounds (BLOCK x16 + WARN x2 per the commit message's own round notes), the deepest arc in the docket",
+   "caught": "~35 findings, every one real, all fixed in-commit; they cluster into six classes. (1) CLI/parse: argparse nargs handed TIER=DUMP strings but cmd_live called .items() on the raw list (AttributeError on the exact documented CLI form); --tiers was not repeatable (last-flag-wins silently dropped a paid tier dump - caught TWICE, the r14 action=append fix had not actually landed and r15 re-caught it); duplicate tier keys silently overwrote a dump. (2) MONEY-SAFETY on the $100 program ceiling: a $0 'reservation' committed nothing (two $60 passes both budgeted); check+record non-atomic (two concurrent reservations both passed a $0 ledger); record() ran UNLOCKED (lost updates understated spend); record() had no stale-lock recovery (a killed process left fail-open accounting); the chat headroom check was READ-ONLY (two concurrent chats near the ceiling both spent); the reserve-then-amend flow double-billed against the live entry's own reservation; negative/NaN estimates bypassed the ceiling; an UNPRICED frontier client stayed callable (now fail-closed: price_out_usd_per_m must be pinned or chat refuses); final r18 shape - chat gates through the ATOMIC reserve (per-call hold), records the actual post-call, releases the hold clamped at what the same label reserved; the ceiling counts ACTUAL spend only and consumption is atomic. (3) LOCK DISCIPLINE: the lock derived by with_suffix('.lock') collided with a --ledger ending in .lock (the stale path renamed THE LEDGER ITSELF away and silently reset the ceiling); stale-lock reaping was TOCTOU three times over (unlink, rename, and os.replace each able to hit a FRESH holder's lock) - final shape: pid+time-token locks, re-read ownership verification, PID-UNIQUE stale names, release only when still ours. (4) LEDGER FILE RACES: non-atomic JSON IO (torn reads), init racing a recorded row, a $0-reservation write ordering that stranded on failed writes - write-temp-then-atomic-replace, O_EXCL creation, bounded retries, packet-serialized-before-reserve. (5) OUTPUT HONESTY: a FALSE $0.0 spend claim with no producer (n/a without a producer; one unknown usd poisons a mixed sum); tier-evidence fallthrough scoring t5 Highs at 1.5 instead of 3.0 (the tier names now ride the evidence table); a stringified severity '['High']' scoring silent 0.0; docstrings overclaiming (reserves vs checks) rewritten to what the code does; the cost expression dividing a known-subset sum by the FULL matched-High count while rendering spend n/a. (6) UNTYPED TIER-DUMP FIELDS crashing the packet build TWICE (r9: detail/severity/title/path; r11: corroboration left unvalidated) - the loader coerces what the packet reads (the G47 untyped-boundary class, twice more).",
+   "resolution": "All fixed in-commit with verdict-named gate tests through r18. SpendLedger is now atomic check/record/reserve/release under a pid-verified sibling .reserve.lock (never with_suffix), program-wide default ledger at the corpus root (COLIBRI_PROGRAM_LEDGER overridable), JSON IO atomic; FrontierClient rides its own budget namespace outside max_calls and REFUSES all wire calls unpriced; the live entry CHECKS headroom (the runbook's actual spend is the only charge - the reservation class killed entirely). Suite 419 -> 437.",
+   "severity": "MEDIUM-HIGH arc (~35 findings over eighteen rounds; the money-safety class dominates)",
+   "author_initially": "Accepted throughout, zero rebuttals; rounds 9-18 repeatedly caught defects in the PRIOR ROUND'S OWN FIX (r11 completing r9's coercion; r12/r13 closing the estimate/amendment hole r9's own test masked; r15 finding r14's append fix never landed) - the longest fix-begets-fix chain in the docket, and the reason the row's manifest resolution names all eighteen rounds.",
+   "refs": [
+    "Nexusmill colibri-bounty/colibri_bounty/portfolio.py (rank_finalists, SpendLedger, FrontierClient)",
+    "Nexusmill colibri-bounty/colibri_bounty/s5.py (matched_high, weighted_recall, honest_rollup)",
+    "Nexusmill colibri-bounty/colibri_bounty/live.py (cmd_live)",
+    "Nexusmill colibri-bounty/tests/test_strat4.py",
+    "Nexusmill commit 1b0eabee (round-by-round notes in the message)"
+   ]
   }
  ]
 }
