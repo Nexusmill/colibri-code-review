@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "80b75b6960f616c92b909f6f2476ba5a6759d904",
+ "caller": "zcode",
+ "when": "20261022-124432",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "c1e349b01e555a486a4b61015c7448b4b4c3155fc622c96e6a6cc54ea9295d48",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261022-124428",
+   "artifact": ".adversary\\reviews\\gate_20261022-124428.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261022-124428.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 2461, 'completion_tokens': 16063, 'total_tokens': 18524, 'cost': 0.00489069392, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00489069392, 'upstream_inference_prompt_cost': 0.00016817192, 'upstream_inference_completions_cost': 0.004722522}, 'completion_tokens_details': {'reasoning_tokens': 15593, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\n**Finding 1 \u2014 LOW \u2014 docs/gate_evidence.json \u2014 `resolution` / `refs` (EV-263-G47R2-W6-AUDIT-LANE-ARC-ADJUDICATION)**\n\nQuoted lines:\n- Added resolution text: `hardened in Nexusmill 52fabfa5`\n- Unchanged refs entry: `\"Nexusmill commits 40af8e43 + 2f5cc66c\"`\n\nTrigger: a reader or tool resolves the row's structured `refs` to verify the newly asserted CLOSED hardening.\n\nImpact: the row now depends on commit `52fabfa5` (and on the `w6_blinding_control_arm_2026_10_22` manifest row and the rebuilt `w6_blind_v2` pool) but none of these are added to `refs`, which still lists only the two originally audited commits `40af8e43 + 2f5cc66c`. The closure is traceable only through inline prose, not the structured evidence chain.\n\n**Finding 2 \u2014 LOW \u2014 docs/gate_evidence.json \u2014 `layer` / `refs` vs the new `resolution` NOTE**\n\nQuoted lines:\n- Layer: `artifact gate_20261022-005558.md`\n- Refs: `\"Nexusmill .adversary/reviews/gate_20261022-005558.md\"`\n- Added NOTE: `the drain row's artifact field names gate_20261022-005558.md, which holds the COMMIT GATE's CLEAR of the marker bytes`\n\nTrigger: a consumer follows the row's structured `layer`/`refs` to inspect the BLOCK that justified this row.\n\nImpact: the structured fields point at a document the NOTE now says is the commit gate's CLEAR, not the drain BLOCK, which \"survives only in the row's truncated text_head\". The record is now explicitly self-contradictory on its own supporting artifact, and the CLOSED adjudication rests on a truncated BLOCK record. The NOTE flags this as deferred to the gate's owner (separate tranche), so this is recorded rather than re-litigated.\n\nVERDICT: WARN"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261022-124428.md": {
+   "embedded": "cce865ce09355c89e2498ef599f3f48e5b686586e4779da7ff7ce3927d48c0aa",
+   "disk": "cce865ce09355c89e2498ef599f3f48e5b686586e4779da7ff7ce3927d48c0aa"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "0720e45ba36314c0e0447be4a7394db7c1eb0406348ac704548291d4c5f33fda"
+}
