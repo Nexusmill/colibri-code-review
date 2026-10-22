@@ -4354,6 +4354,21 @@
     "Crucible 9ea934c (snapshot commit) + docs/REFERENCE_FINDINGS.md",
     "Upstream: Nexusmill colibri-bounty/colibri_bounty/truth.py + portfolio.py @ ed30d181 (defects present, OPEN)"
    ]
+  },
+  {
+   "id": "EV-272-CRUCIBLE-T1-ORACLE-GATE-ARCS",
+   "date": "2026-10-22",
+   "repo": "Crucible",
+   "layer": "gate-review BLOCK x2 + WARN-cleared round (artifacts gate_20261022-162448, gate_20261022-164037, gate_20261022-165231)",
+   "caught": "Arc 1 (4 findings on the T1 oracle tranche): loader scalar/None/string files/delta_claims crashed tuple() or silently char-split a patch anchor (falsifying the loader's own crash-free guarantee); PERF_RE word boundaries could not match 'performance'/'speedups' (recall ceiling set by the regex); head captured by a separate rev-parse raced the walked log; binary numstat rows dropped their file anchor. Arc 2: the tok/s claim regex lacked a trailing word boundary - leftmost-first alternation FABRICATED '500 tokens/s' out of '500 tokens/sequence', violating the oracle's core invariant (numbers must be REAL ASSERTED CLAIMS); empty-repo git log crashed mine().",
+   "severity": "MEDIUM (oracle integrity: one finding fabricated measured evidence; one silently shrank the corpus by 141 rows)",
+   "author_initially": "Accepted on read both arcs, no rebuttals - every finding verified against the bytes; 5 of 6 were RED-proven in the test run before fixing.",
+   "resolution": "All fixed RED-first in Crucible 0407f95 (suites oracle 16/16 + smoke 21/21; corpus RE-MINED after each arc): the recall fix alone grew the corpus 312->453 rows (A-grade 73->94) - a direct, measured gate earning; the fabrication fix re-mined to UNCHANGED counts (path real but unreached in this history; guards future re-mines and hand-authored rows). Residual LOW noted from the clearing WARN round: binary-only diff_stat renders unknown counts as '+0 -0' (informational; fix owed next oracle tranche). Known cosmetic defect DISCLOSED: the landed commit message says '312 rows' (stale round-1 text); the committed corpus + docs/ORACLE_BASELINE.md correctly state 453 - content is authoritative.",
+   "refs": [
+    "Crucible .adversary/reviews/gate_20261022-162448.md + gate_20261022-164037.md + gate_20261022-165231.md",
+    "Crucible 0407f95 (fixes + tests + corpus), docs/ORACLE_BASELINE.md (three passes with deltas)",
+    "Crucible tests/test_oracle.py (RED-first contract tests incl. test_claims_do_not_fabricate_units)"
+   ]
   }
  ]
 }

@@ -1117,3 +1117,19 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 - Crucible 9ea934c + docs/REFERENCE_FINDINGS.md
 - Upstream Nexusmill colibri-bounty truth.py + portfolio.py @ ed30d181 (OPEN)
 
+## 2026-10-22 Crucible T1 oracle: two BLOCK arcs + WARN-cleared, corpus +141 rows from one catch (EV-272)
+
+**Layer:** gate-review BLOCK x2 (gate_20261022-162448, gate_20261022-164037) then WARN-cleared (gate_20261022-165231) on the T1 oracle tranche.
+
+**Caught:** loader scalar-field crash class; PERF_RE inflection recall gap; head/log race; binary anchor drop (arc 1) — then a tok/s regex that FABRICATED per-second claims from per-sequence counts and an empty-repo crash (arc 2).
+
+**Severity:** MEDIUM (oracle integrity — fabricated evidence class + a silent 141-row corpus shrink).
+
+**Author's initial reaction:** accepted on read, no rebuttals; 5 of 6 RED-proven before fixing.
+
+**Resolution:** all fixed RED-first in Crucible 0407f95; the corpus re-mined after each arc — the recall fix alone took it 312→453 rows (A 73→94), a measured gate earning. Residual LOW (binary diff_stat '+0 -0') owed next tranche; the landed commit message's '312 rows' is stale round-1 text — the committed corpus/baseline (453) is authoritative.
+
+**Refs:**
+- Crucible .adversary/reviews/gate_20261022-162448.md / -164037.md / -165231.md
+- Crucible 0407f95, docs/ORACLE_BASELINE.md, tests/test_oracle.py
+
