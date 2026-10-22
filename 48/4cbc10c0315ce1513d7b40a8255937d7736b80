@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "484cbc10c0315ce1513d7b40a8255937d7736b80",
+ "caller": "zcode",
+ "when": "20261022-153053",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "6adef1a8b93fcc69396a58f523b95e1dd95fd3784964ecd4db4024d1e9ea6b16",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261022-153051",
+   "artifact": ".adversary\\reviews\\gate_20261022-153051.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261022-153051.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 2531, 'completion_tokens': 9985, 'total_tokens': 12516, 'cost': 0.00311062192, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00311062192, 'upstream_inference_prompt_cost': 0.00017503192, 'upstream_inference_completions_cost': 0.00293559}, 'completion_tokens_details': {'reasoning_tokens': 9779, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nThe staged hunk appends two complete evidence objects (EV-270, EV-271) to the JSON array. I verified the structural edit: the prior entry's refs array is closed by `]`, then `+  },` supplies the previously-absent element separator for that entry, the two new objects open and close in balance (`+  },` after EV-270, context `   }` closing EV-271), and the outer `]` / `}` remain intact with no trailing comma. Hunk line count (-11/+43, +32 added) matches the 32 added lines. Field sets per object are unique (no duplicate keys), the enumerated findings match their counts (four defects/four tests 17\u219221; three LOW findings), and artifact timestamps are internally ordered. The added prose describes past author/reviewer actions and contains no instruction directed at this review. No concrete defect with a reachable trigger is introduced by the change.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261022-153051.md": {
+   "embedded": "90b3f34f58785ee76ab9eb5030da3f9318b3821c245453172a9e12dc25f0f014",
+   "disk": "90b3f34f58785ee76ab9eb5030da3f9318b3821c245453172a9e12dc25f0f014"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "c2250727b409faf8dd9e8d4f1070042af1cb8d9fbfa46f401188a48d723c8433"
+}
