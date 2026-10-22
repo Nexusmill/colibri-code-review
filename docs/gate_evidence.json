@@ -4083,6 +4083,116 @@
     "Nexusmill colibri-bounty/colibri_bounty/db.py (connect, sync_*)",
     "Nexusmill colibri-bounty/colibri_bounty/config.py (_config_read)"
    ]
+  },
+  {
+   "id": "EV-255-G47R2-T2-GATE-ARC",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the G47R2 T2 acquisition+status commit 17267d1c - BLOCK x2 (round 1 via the tier-2 backstop after a tier-1 transport error)",
+   "caught": "6 findings, all real, all fixed RED-first. R1: cmd_mirrors compared receipt dicts against the \"error\" string so the CLI always exited 0 (HIGH); db.sync_start's ON CONFLICT reset pages_done/next_page, wiping the persisted resume cursor the old inline SQL preserved (MEDIUM). R2: contract_gaps checked a misspelled join key (issues_item_finders vs issues_issue_finders) - a guaranteed false-clean from the re-check that exists to catch it; a successful run kept the previous run's error message beside status=ok; resolve_contest_root's \"shallowest descendant\" was lexicographic; the fingerprint guard could not fire on legacy upgraded cursors.",
+   "resolution": "All six fixed in-commit (status read from entry[\"status\"], sync_start touches only liveness fields with reset_run the sole cursor resetter, join key corrected, sync_finish always writes message, depth sort, legacy-cursor refusal). Suite 250 -> 276.",
+   "severity": "HIGH arc (1 HIGH + 5 MEDIUM/LOW over two rounds)",
+   "author_initially": "All accepted on read and re-traced against the bytes; the tier-2 backstop carried round 1 after the tier-1 transport error - the ladder failover working as designed.",
+   "refs": [
+     "Nexusmill colibri-bounty/colibri_bounty/mirrors.py (cmd_mirrors)",
+     "Nexusmill colibri-bounty/colibri_bounty/db.py (sync_start/sync_finish)",
+     "Nexusmill colibri-bounty/colibri_bounty/github_corpora.py (contract_gaps, resolve_contest_root)",
+     "Nexusmill commit 17267d1c (gate-round notes in the message)"
+    ]
+  },
+  {
+   "id": "EV-256-G47R2-T4-GATE-ARC",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the G47R2 T4 replay+spend-integrity commit 41d4b04e - 5 rounds per the session record; the landed commit message documents round 1 (the remaining rounds' fixes landed with the same commit)",
+   "caught": "Round 1 (BLOCK, documented in the commit message): per-contest severity lines inside the GFM table body terminated the table - every later contest row rendered as literal text (the EV-251 class reintroduced); tier_state never read the status:failed meta run_replay_tiers itself writes (a failed tier rendered not-run, under both meta conventions); the channel partition bucketed a whole MIXED contest into llm (per-MATCH bucketing via methods[\"llm\"] now). Later rounds fixed: stale dump mtime precedence masking a later failure; severity-slice precision mixing populations (scan_matched by scan severity); rescore ignoring failed meta; --max-cost overshoot silent (now disclosed + exit 3); a FAILED baseline row with 10 cells against an 11-cell header.",
+   "resolution": "All fixed in-commit with structure/mixed-contest/precision tests; severity lines moved after the last table row, tier_state classifies failed and renders FAILED, channel buckets are per-MATCH with channel-share labels. Suite 297 -> 315.",
+   "severity": "MEDIUM arc (~10 findings over five rounds)",
+   "author_initially": "Accepted on read; the GFM table-termination catch is the second recurrence of the EV-251 class inside table-rendering code - the structure test now pins the two-contest shape.",
+   "refs": [
+     "Nexusmill colibri-bounty/colibri_bounty/replay_runner.py (tier_state, rescore)",
+     "Nexusmill colibri-bounty/colibri_bounty/s5.py (severity lines, channel buckets)",
+     "Nexusmill colibri-bounty/colibri_bounty/cli.py (--max-cost disclosure, exit 3)",
+     "Nexusmill commit 41d4b04e (gate-round notes in the message)"
+    ]
+  },
+  {
+   "id": "EV-257-G47R2-T5A-GATE-ARC",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the G47R2 T5a foundry/solc pinning commit e0440167 - BLOCK x2 + WARN x2 (four rounds)",
+   "caught": "9 findings, all real, all fixed. R1: _pragma_window's caret bumped the MAJOR for 0.x pragmas (^0.7.6 read <1.0.0 so 0.8.19 \"fit\" and solc rejected the file - Solidity 0.x carets bump the MINOR); a bare pragma was treated as a caret span instead of an exact pin; the vendor-skip test imported names from another module so a swallowed NameError made it pass vacuously. R2: --remappings is not a slither flag (the option is --solc-remaps and takes remapping TEXT); ^0.0.x carets must bump the PATCH (full npm caret ladder now). R3 (WARN): docstring claimed a caret window for bare pragmas; skip-path comments claimed deterministic skip where solc=None means autodetect/fail-soft. R4 (WARN): foundry_installed extend sat OUTSIDE the prepare guard (truthy non-iterable would abort the scan); extra_skip matched lowercased parts verbatim while a bare string split into characters.",
+   "resolution": "All fixed RED-first in-commit; the caret ladder is pinned for 0.0.x/0.x/1.x and bare pragmas exact-pin. Suite 315 -> 327.",
+   "severity": "MEDIUM arc (3 MEDIUM + 6 LOW over four rounds)",
+   "author_initially": "Accepted on read; the vacuous-test catch (NameError swallowed into a pass) is its own lesson - cross-module test imports can silently disable the gate the test exists to be.",
+   "refs": [
+     "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_pragma_window, default_runner, extra_skip)",
+     "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (foundry_installed guard)",
+     "Nexusmill commit e0440167 (gate-round notes in the message)"
+    ]
+  },
+  {
+   "id": "EV-258-G47R2-T5B-GATE-ARC",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the G47R2 T5b PoC/inv execution commit 3b301847 - BLOCK x4",
+   "caught": "12 findings, all real, all fixed RED-first. R1: rc!=0 with zero parsed counts and no recognized phrase read \"invariants-held\" - a false success; the harness marker stamped only the FIRST revert literal (an unmarked assertTrue body could never CONFIRM, a guard revert monopolized the stamp); the Suite-result regex made \"; N skipped\" required, regressing the semicolon-less shape into a comma fallback that dropped the failed count. R2: all-SKIPPED matched invariants fell through to invariants-held; poc_source_gaps substring membership made testPoc1 \"found\" inside testPoc10, wasting the 600s forge budget. R3: auto-stamping every string literal turned guard reverts and data strings into bogus CONFIRMEDs (wrap-only + refuse unmarked now - which strings are assertion messages is not statically knowable); the match trio did not follow a per-contest contract; exception path lacked the candidates key; contract= param unusable with the module runner; phrase checks misclassified failing test-authored text; valid {} labeled compile_or_non_json. R4: POC-1 is a strict PREFIX of POC-10 - the substring guard accepted 10's marker for 1 and adjudication would CONFIRM 1 on 10's evidence (money-safety: a false grounded candidate; marker IDENTITY via not-followed-by-digit, pinned by the cross-collision fixture).",
+   "resolution": "All fixed in-commit; dispositions come from parsed failures first (phrases only for zero-parse runs), the marker is caller-owned identity, and adjudication matches marker identity. Suite 327 -> 338.",
+   "severity": "MEDIUM arc (3 MEDIUM + 9 LOW over four rounds)",
+   "author_initially": "Accepted on read; the R4 prefix collision is the strongest row of the arc - a false CONFIRM would have grounded a candidate on another candidate's evidence, exactly the money-safety failure the disposition layer exists to prevent.",
+   "refs": [
+     "Nexusmill colibri-bounty/colibri_bounty/p2_poc.py (render_poc_harness, adjudicate_poc, poc_source_gaps)",
+     "Nexusmill colibri-bounty/colibri_bounty/p2_inv.py (run_forge_tests dispositions)",
+     "Nexusmill commit 3b301847 (gate-round notes in the message)"
+    ]
+  },
+  {
+   "id": "EV-259-G47R2-T5C-GATE-ARC",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the G47R2 T5c unit-hub links commit 2d26d1d6 - BLOCK x1",
+   "caught": "4 findings (1 MEDIUM + 3 LOW), all fixed RED-first: the suffix FALLBACK broke on a per-file first-match break that locked the match at k=1 - pkg/lib/Math.sol lost to pkg/a/Math.sol for \"../lib/Math.sol\", splitting exactly the integration the module exists to keep in-unit (each file's LONGEST suffix now); components_split_by_budget counted files not components; the edge position field was a char offset where a LINE number is documented; cluster_files' preserve_hub seeding mis-seeded budget-cut bins (gate_20261021-180140 FINDING 4).",
+   "resolution": "All fixed in-commit with the longest-suffix pinned by the pkg/lib collision fixture. Suite 338 -> 347.",
+   "severity": "MEDIUM arc (single round)",
+   "author_initially": "Accepted on read - the k=1 lock was a first-match break masquerading as a tiebreak policy.",
+   "refs": [
+     "Nexusmill colibri-bounty/colibri_bounty/p2_units.py (suffix resolution, components_split_by_budget, edge lines)",
+     "Nexusmill commit 2d26d1d6 (gate-round notes in the message)"
+    ]
+  },
+  {
+   "id": "EV-260-G47R2-T6-GATE-ARC",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "adversary gate arc on the G47R2 T6 paid-channels/priors/matcher commit ddf52a2d - BLOCK x4 + WARN x1 + one malformed review retried to CLEAR (six rounds, deepseek-v4.1-flash-1017@deepinfra/fp8 throughout)",
+   "caught": "15 findings, all real, all fixed. R1: the new P2X unreadable-unit branch referenced an undefined name (unit_name0) - a NameError killed the whole paid scan after billing (MEDIUM); the replay-cache hit path counted the replay as a call and re-folded the PREVIOUS real call's cost (double billing in attribution); verify_unit booked a full model reject as a join-drop; the conditions stamp stored prompt_ids as a set (usage serializes verbatim - TypeError at reporting time). R2: type-unchecked model rows - a null detail reached the attribution substring test and 'stem in None' aborted the scan (MEDIUM); the verify ledger did not balance on subset echoes; budget_headroom omitted the input pre-estimate chat applies; an errored unit landed in no manifest bucket. R3: the BudgetExceeded branch REPLACED units_remaining, discarding units the new error-append had added (MEDIUM - extend, never assign); estimate dropped a whole unit on one unreadable member while scan reviews on any readable member. R4 (WARN): disposition-mask reuse crash; registry keywords not lowercased at install (mixed-case scores zero); classify tie-break silently alphabetical instead of curated order; estimate compared raw chars against the assembled-source truncation. R5: the r4 mask resize preserved a prior call's prefix - stale model_yes on unmeasured slots (MEDIUM; the mask resets every call, like the verdicts vector).",
+   "resolution": "All fifteen fixed RED-first in-commit with verdict-named gate tests; the reviewer explicitly verified each prior round's fixes in the following round (cache no-double-bill, n-join fail-closed, type normalization, twin/capped/greedy dedupe, band-guard inversion cleared three times as an exact complement). Suite 347 -> 389.",
+   "severity": "MEDIUM arc (5 MEDIUM + 10 LOW over five substantive rounds)",
+   "author_initially": "Every finding accepted on read; three rounds caught defects IN THE PRIOR ROUND'S FIX (r3's replace-vs-append against r2's append; r5's prefix-preserving reset against r4's resize; r2's type hazard riding the r1-authored branch) - the multi-round arc earning its cost, and the exact reason findings are fixed one hypothesis at a time.",
+   "refs": [
+     "Nexusmill/.adversary/reviews/gate_20261021-191136.md",
+     "Nexusmill/.adversary/reviews/gate_20261021-194035.md",
+     "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (unit ledger, estimate, type normalization)",
+     "Nexusmill colibri-bounty/colibri_bounty/match_llm.py (replay cache, pair_disposition)",
+     "Nexusmill colibri-bounty/colibri_bounty/p2_llm.py (verify_join ledger, conditions, budget_headroom)",
+     "Nexusmill colibri-bounty/colibri_bounty/priors.py (keyword install, tie-break)",
+     "Nexusmill commit ddf52a2d (gate-round notes in the message)"
+    ]
+  },
+  {
+   "id": "EV-261-AUDIT-LANE-20261019-ADJUDICATION",
+   "date": "2026-10-21",
+   "repo": "Nexusmill",
+   "layer": "sampled tier-1 batch audit (audit-drain lane) BLOCK on LANDED P2.1-T3 foundry wiring (tree 771ad9d9, queued 2026-10-19) - surfaced as the standing commit-time WARNING during the G47R2 T6 arc and adjudicated on current bytes at T7 close-out",
+   "caught": "3 LOW findings against the landed foundry wiring: _remapping_pins' re.search took only the first remapping per line (second dep never installed, forge build dies); default_runner forces the foundry framework whenever a foundry.toml ancestor exists, so a missing forge binary skips every file in that project (the failure mode a removed comment described); SKIP_DIRS gained \"lib\" globally, excluding any contest source living under a lib/ component from both static and LLM review.",
+   "resolution": "Adjudicated verified-stale/intended on CURRENT bytes, no re-fix (G35): finding 1 was already remediated under EV-237 (the parser is re.finditer with the docstring 'ALL entries per line - a one-line remappings array must install every dep' and the EV-237 F1 comment naming the exact defect); finding 2's silent-skip harm is addressed by the T5b/T4 disposition layer (named skip_reasons + skip_sample, and files_dep_incomplete excludes unresolved-dep roots from the clean-zero denominator), bounded by the P2.1-T3 premise that forge is installed on this machine; finding 3 is intended by design - the in-code comment documents foundry deps under lib/ as 'dependencies, never scan units', and the audit itself noted the test asserts intent.",
+   "severity": "LOW arc (advisory WARNING; sampled audit of landed code, not a commit refusal)",
+   "author_initially": "The lane worked as designed: the sampled audit flagged landed code, the WARNING carried it to the next commit, and the T7 adjudication closed it with per-finding current-bytes evidence instead of a reflexive re-fix.",
+   "refs": [
+     "Nexusmill .adversary/audit_findings.jsonl (row 20261019-050724)",
+     "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_remapping_pins, default_runner, SKIP_DIRS)",
+     "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (skip_reasons/files_dep_incomplete disposition)"
+    ]
   }
  ]
 }
