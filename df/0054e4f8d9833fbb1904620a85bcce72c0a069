@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "df0054e4f8d9833fbb1904620a85bcce72c0a069",
+ "caller": "zcode",
+ "when": "20261022-165530",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "d38ac0585a1ee627ab810d51e832cd006b0e52a1714427941adb360f53b5edc1",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261022-165527",
+   "artifact": ".adversary\\reviews\\gate_20261022-165527.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261022-165527.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 2024, 'completion_tokens': 8524, 'total_tokens': 10548, 'cost': 0.00263140192, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00263140192, 'upstream_inference_prompt_cost': 0.00012534592, 'upstream_inference_completions_cost': 0.002506056}, 'completion_tokens_details': {'reasoning_tokens': 8220, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI verified the staged change against the provided bytes:\n\n- **JSON structure**: The diff closes the prior object with `},`, opens a new object `{`, adds the new fields, closes its `refs` array with `]`, and reuses the existing `}` to close the new object before `]` and the root `}`. Brace/bracket/comma balance is correct; the resulting document is valid JSON with no trailing comma.\n- **Internal arithmetic**: `312 \u2192 453` is `+141`, matching the stated \"shrank ... by 141 rows\"; A-grade `73 \u2192 94` is `+21`; the finding counts (4 in Arc 1 + 2 in Arc 2 = 6) match \"5 of 6 were RED-proven.\" No contradiction found.\n- **Scope**: This is an evidence-ledger entry recording past upstream gate findings; the referenced artifacts (Crucible review files, commit 0407f95, ORACLE_BASELINE.md) are outside the supplied bytes, and their absence is not a defect of this change. The disclosed stale commit-message text is explicitly scoped to a different artifact and correctly flagged as non-authoritative.\n- **No injection**: The added text contains no review-suppression or pre-approval instructions.\n\nNo concrete, reachable defect (wrong data, broken contract, race, money/security issue) is introduced by this change.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261022-165527.md": {
+   "embedded": "09c416828b76559daa25821e1d732794470bfbaac0b70e9da7243f312bd40214",
+   "disk": "09c416828b76559daa25821e1d732794470bfbaac0b70e9da7243f312bd40214"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "5a156f56937f7d68696f5d81f3325db616ce48af279c685f1dea8ac9b6112cce"
+}
