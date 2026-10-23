@@ -4416,6 +4416,21 @@
     "watcher gpu_monitor.cpp (g_menu_tracking)",
     "Nexusmill AGENT_STATE session 11d-cont3"
    ]
+  },
+  {
+   "id": "EV-275-WATCHER-V3-OWNER-REPORT-ARC",
+   "date": "2026-10-23",
+   "repo": "watcher",
+   "layer": "owner in-use report -> gate-review BLOCK (gate_20261023-010740) -> round-2 CLEAR (gate_20261023-012605)",
+   "caught": "OWNER REPORT (the strongest catch class - a real user at a real screen): black terminal boxes flashing every few seconds + an unusable, unresponsive menu. Root cause in v2 (which the gate had CLEARED): the collector shelled to typeperf via _wpopen on the UI thread every 2s WM_TIMER - a console child spawned from a GUI app allocates a NEW CONSOLE WINDOW per invocation, and the ~1s child run blocked WndProc. The gate then caught what the rewrite still missed: HIGH - the End-ALL/confirm dialogs' own MODAL LOOPS re-enter WM_TRAYICON, destroying the menu tracked by the suspended outer TrackPopupMenu AND swapping g_app.procs after the count was computed but before the Yes click (wrong-process termination, one modal deeper than EV-274's); MEDIUM - shutdown deleted the critical section under a possible straggler worker (UAF on exit).",
+   "severity": "HIGH (second wrong-process-kill path found in the same app; plus the shipped-to-owner usability failure)",
+   "author_initially": "The v2 console-flash defect shipped past a gate CLEAR to the owner - the reviewer reviewed the diff, not the running app. The v3 arc findings were accepted on read, zero rebuttals.",
+   "resolution": "watcher 711802c (+scratch sweep 996a983): CreateProcessW + CREATE_NO_WINDOW + stdout pipe (zero consoles, verified by conhost-count delta 160->160 over a 12s run); worker thread owns ALL collection (5s loop) publishing into a critical-section snapshot; WM_TIMER is a tooltip-only copy; g_menu_tracking now guards BOTH modal kinds (menu + confirmation dialogs) and re-entrant tray clicks are ignored; End-ALL snapshots-then-confirms-then-kills ONE frozen list; g_snap.cs/g_workerStop live for the life of the process (deliberate leak-at-exit - the safe choice vs UAF). --once and the 12s tray harness both green.",
+   "refs": [
+    "watcher 711802c + .adversary/reviews/gate_20261023-010740.md + gate_20261023-012605.md",
+    "Nexusmill AGENT_STATE session 11d-cont4",
+    "the owner's in-use report (session transcript)"
+   ]
   }
  ]
 }

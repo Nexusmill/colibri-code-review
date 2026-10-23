@@ -1181,3 +1181,17 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 
 **Refs:** watcher c969fa0; .adversary/reviews/gate_20261022-233419.md..-001752.md
 
+## 2026-10-23 watcher v3: the owner's in-use report - a shipped-past-the-gate defect + the second wrong-process-kill path (EV-275)
+
+**Layer:** owner in-use report -> gate BLOCK (gate_20261023-010740) -> round-2 CLEAR.
+
+**Caught:** black console boxes flashing + frozen UI in the owner's hands: v2's typeperf collector ran a console child per 2s timer ON THE UI THREAD (new console window per spawn). The v3 rewrite's gate round then caught the End-ALL confirmation dialog's modal loop re-entering WM_TRAYICON - destroying the tracked menu and swapping the kill list under the pending Yes click (wrong-process termination again), plus a shutdown UAF on the snapshot critical section.
+
+**Severity:** HIGH (second wrong-process-kill path; plus a usability failure that shipped to the owner past a CLEAR).
+
+**Author's initial reaction:** the v2 defect class (runtime/visual, not in the diff bytes) is invisible to diff review - the owner WAS the test the gate cannot be. v3 findings accepted on read.
+
+**Resolution:** watcher 711802c: hidden worker collection (CREATE_NO_WINDOW, zero consoles - conhost delta 160->160 over 12s), snapshot model, both-modals guard + ignored re-entrant tray clicks, frozen-list End-ALL, process-lifetime sync objects.
+
+**Refs:** watcher 711802c; .adversary/reviews/gate_20261023-010740.md, -012605.md.
+
