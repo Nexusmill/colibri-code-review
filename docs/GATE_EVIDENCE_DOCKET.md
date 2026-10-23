@@ -1209,3 +1209,18 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Resolution:** 873c7eef keys on the kept-row ENUMERATION index (row-unique by construction); the number-0 twin case is test-pinned (RED -> GREEN); the manifest row amended in place naming the catch. Round-2 CLEAR verified the RED->GREEN as genuine.
 
 **Refs:** Nexusmill 8a07c900 + 873c7eef; .adversary/reviews/gate_20261023-071704.md (WARN), -072735.md (CLEAR); test_tokenless_titles_stay_distinct.
+
+
+## 2026-10-23 colibri-bounty extraction review arc: three BLOCK rounds caught three real funnel defects (EV-277)
+
+**Layer:** gate-review BLOCK x3 on the extraction's tranche A (the six heaviest funnel modules) - a fresh external reviewer pass over code that had been landing for weeks without fresh eyes.
+
+**Caught:** (1) p2_llm chat() escaped the fail-soft net on spec-valid provider responses (HTTP-date Retry-After; 200 non-object/choices-less bodies) - aborting paid scans after billing; (2) FrontierClient.chat never recorded a billed call's cost when the underlying chat raised post-accounting - a fail-OPEN spend ceiling; (3) exec-claimed truth rows kept occupying paid-band slots (dead pairs wasting paid tokens and displacing live pairs) while the pre-split capped ledger rows named promoted live pairs as never-sent.
+
+**Severity:** MEDIUM across all three (paid-spend loss + measurement-ledger corruption; narrow triggers).
+
+**Author's initial reaction:** accepted on read every round; two further findings rebutted with call-site/limitation evidence.
+
+**Resolution:** all three fixed RED-first in the new repo with verdict-named tests (suite 439/1); the fixes ride tranche A's staged commit; config-roots and docs tranches already landed (4ec0e4e, 57f9d70). One round's BLOCK rested on an anchor-refuted fabrication-signature finding - the adjudicator discarded it, no remediation owed.
+
+**Refs:** colibri-bounty/.adversary/reviews/gate_20261023-100432.md, -104134.md, -112800.md, -120821.md; docs/remediation_manifest.json row 1 (new repo).

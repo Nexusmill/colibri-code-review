@@ -4446,6 +4446,24 @@
     "colibri-bounty/tests/test_truth.py::test_tokenless_titles_stay_distinct",
     "docs/remediation_manifest.json UPSTREAM-TOKENLESS-TITLE-COLLAPSE row (amended)"
    ]
+  },
+  {
+   "id": "EV-277-EXTRACTION-REVIEW-FAILSOFT-ARC",
+   "date": "2026-10-23",
+   "repo": "colibri-bounty (extraction from Nexusmill @13ac64ef)",
+   "layer": "gate-review BLOCK x3 arc on the extraction's tranche A (six heaviest modules) - the fresh-reviewer pass over long-landed funnel code",
+   "caught": "Three real defects, all pre-existing in the live funnel, all fixed RED-first in the new repo: (1) p2_llm OpenRouterClient.chat raised ValueError on RFC-7231 HTTP-date Retry-After and AttributeError/KeyError/IndexError on 200 non-object/choices-less bodies - classes that escape the scanners' except (RuntimeError, OSError) net and abort a paid scan AFTER billing; (2) FrontierClient.chat released its hold but never recorded the billed call's actual cost when super().chat() raised post-accounting - a fail-OPEN program ceiling; (3) exec-claimed truth rows kept occupying paid-band max_pairs slots (dead pairs consumed paid tokens and displaced live pairs) and the capped ledger rows were emitted pre-split, naming promoted live pairs as never-sent.",
+   "severity": "MEDIUM x2 + MEDIUM (paid-spend loss classes + measurement-ledger corruption; narrow triggers)",
+   "author_initially": "accepted on read every round - each trigger traced end to end against bytes; two further findings rebutted with evidence (keyword-only FrontierClient call sites; OR-pragma autodetect fallback + dormant file_bias pending STRAT-1 A/B)",
+   "resolution": "All three fixed in the new repo with verdict-named tests (test_chat_retry_after_http_date_does_not_escape + two 200-body tests; test_frontier_chat_raising_after_billing_still_records_actual; test_exec_claimed_truth_drops_dead_paid_band_pairs + the round-4 capped-row extension). Suite 439 passed/1 skipped offline. The p2_llm fail-soft fix landed inside tranche A's pending commit; tranches 4ec0e4e + 57f9d70 (config roots + docs) already landed. One round's BLOCK rested on an anchor-refuted fabrication-signature finding (adjudicator discarded it, no remediation owed).",
+   "refs": [
+    "colibri-bounty 4ec0e4e + 57f9d70 (landed); tranche A staged pending the provider-window CLEAR",
+    "colibri-bounty/.adversary/reviews/gate_20261023-100432.md (round 1 BLOCK)",
+    "colibri-bounty/.adversary/reviews/gate_20261023-104134.md (round 2 BLOCK)",
+    "colibri-bounty/.adversary/reviews/gate_20261023-112800.md (round 3 BLOCK)",
+    "colibri-bounty/.adversary/reviews/gate_20261023-120821.md (anchor-refuted round)",
+    "colibri-bounty/docs/remediation_manifest.json row 1"
+   ]
   }
  ]
 }
