@@ -1,0 +1,54 @@
+{
+ "type": "CLEAR",
+ "commit": "f8e30ccb8690d541b2ce43eb8708dbd5ef36ced2",
+ "caller": "zcode",
+ "when": "20261023-085341",
+ "files": {
+  "reviews_archive/blink/_manifest.json": {
+   "sha": "5d1f2c5d7c4cbbfdc3b2844b0cec9cf5f7967cbe762f00b2c5f66557272dc0d9",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261023-085240",
+   "artifact": ".adversary\\reviews\\gate_20261023-085240.md"
+  },
+  "reviews_archive/colibri_marketplace/_manifest.json": {
+   "sha": "4ec7681600325e253e5d644924c146255b1d44bdac50e22ad5ecc43a345743e1",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261023-085240",
+   "artifact": ".adversary\\reviews\\gate_20261023-085240.md"
+  },
+  "reviews_archive/jcodemunch_mcp/_manifest.json": {
+   "sha": "3884eabef60d932749f3a1202dc9899a31fffee9d29051e52aa42fbfed25ce24",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261023-085240",
+   "artifact": ".adversary\\reviews\\gate_20261023-085240.md"
+  },
+  "reviews_archive/nexusmill/_manifest.json": {
+   "sha": "f9d339e4cd0dd231cc110865d77960a734052fb2157eb1a56258823a7df7bed3",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261023-085240",
+   "artifact": ".adversary\\reviews\\gate_20261023-085240.md"
+  },
+  "reviews_archive/tools/_manifest.json": {
+   "sha": "7b93ee28b35d069e9505cbe6be10db922eaa0c03a5c04ec6c03565bdbb0df23d",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261023-085240",
+   "artifact": ".adversary\\reviews\\gate_20261023-085240.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261023-085240.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 225429, 'completion_tokens': 60483, 'total_tokens': 285912, 'cost': 0.03980103792, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.03980103792, 'upstream_inference_prompt_cost': 0.02201903592, 'upstream_inference_completions_cost': 0.017782002}, 'completion_tokens_details': {'reasoning_tokens': 59994, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['reviews_archive/blink/_manifest.json', 'reviews_archive/colibri_marketplace/_manifest.json', 'reviews_archive/jcodemunch_mcp/_manifest.json', 'reviews_archive/nexusmill/_manifest.json', 'reviews_archive/tools/_manifest.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nFindings:\n\n1. LOW \u2014 `reviews_archive/nexusmill/_manifest.json` \u2014 entry `C:\\Users\\User\\source\\repos\\Nexusmill\\tests\\test_hunt_p3_fixes.py`, mode `bug`.\n   Offending lines:\n   `\"sha\": \"339bb4edba95b14a52705cc21b2f9e504350438872790f22357d0ee36af1580f\",`\n   `\"output\": \".colibri_reviews/tests__test_hunt_p3_fixes.py__bug__339bb4e.md\",`\n   Trigger: opening or validating the review file recorded for this entry, or reconstructing it from the recorded sha8 `339bb4ed`.\n   Impact: the recorded path embeds only 7 hex chars (`339bb4e`) while every one of the other 16 `test_hunt_*` entries added in the same batch embeds the full 8-char sha prefix (`2ffcbf79`, `e396865b`, `7a54765d`, `047a752f`, \u2026). The actual review file is therefore almost certainly `...339bb4ed.md`, so this record's output pointer is off by one character and resolves to a nonexistent path (ENOENT / \u201creview missing\u201d) for that file.\n\n2. LOW \u2014 `reviews_archive/nexusmill/_manifest.json` \u2014 entry `C:\\Users\\User\\source\\repos\\Nexusmill\\PatternSkin\\accel.py`, mode `bug`, nested `pass2_stage_e`.\n   Offending line:\n   `\"output\": \".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md (E-loop postscript appended)\",`\n   Trigger: any consumer that treats `pass2_stage_e.output` as a filesystem path (the same object shape is a plain path elsewhere, e.g. the clean `pass_prior_2026_09_10.output` for this file).\n   Impact: the value is not a valid path because of the appended prose suffix, so opening it fails; the secondary review link for this record is unusable (the primary `bug.output` is clean, so this is metadata-only).\n\nVERDICT: WARN"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261023-085240.md": {
+   "embedded": "ed76c9bc57b93300cb07a631f59f8cd8872cc2578ff56d0e36c66cad8eb36960",
+   "disk": "ed76c9bc57b93300cb07a631f59f8cd8872cc2578ff56d0e36c66cad8eb36960"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "568ac31e39234bb055382f028da41268c042735a040c16c645ac5aa7c343ecf9"
+}
