@@ -4401,6 +4401,21 @@
     "Crucible runs/20261022T193540/ + runs/README.md",
     "Crucible tests/test_t2.py"
    ]
+  },
+  {
+   "id": "EV-274-WATCHER-V2-ARC",
+   "date": "2026-10-22",
+   "repo": "watcher",
+   "layer": "gate-review BLOCK x2 + round-3 CLEAR (artifacts gate_20261022-233419, gate_20261023-000140, clear gate_20261023-001752)",
+   "caught": "Round 1: LOW swprintf truncation - confirmation dialog buffers sized so UWP-length process names (36 chars) dropped the 'Unsaved work is lost' warning from a DESTRUCTIVE TerminateProcess dialog; plus the junk/ build dir swept into staging. Round 2 (HIGH, the arc's centerpiece): the 2-second refresh timer fires inside TrackPopupMenu's MODAL message loop, so RebuildMenu DESTROYS the menu handle the modal loop is still tracking (use-after-free) AND re-sorts the index->pid map under a pending WM_COMMAND - a menu click could terminate the WRONG PROCESS. Also 2 MEDIUM/1 LOW on arm_repo-generated boilerplate (.claude settings args-key schema; adversary_audit baseline edge cases) - upstream Tools debt, flagged.",
+   "severity": "HIGH (wrong-process termination class on a destructive action - exactly what the gate exists for)",
+   "author_initially": "Accepted on read, zero rebuttals; the wrong-process path was reachable with two clicks and a 2s pause.",
+   "resolution": "Fixed in watcher c969fa0: g_menu_tracking guard around the modal loop (RefreshTray refuses during tracking - neither the menu nor the index map changes under a pending command); dialog buffers 200->1024 / 160->512; junk/ unstaged + gitignored. The arm-boilerplate findings rebutted by provenance (byte-identical certified Tools/arm-repo outputs; upstream row owed) and cleared round 3.",
+   "refs": [
+    "watcher c969fa0 + .adversary/reviews/gate_20261022-233419.md..gate_20261023-001752.md",
+    "watcher gpu_monitor.cpp (g_menu_tracking)",
+    "Nexusmill AGENT_STATE session 11d-cont3"
+   ]
   }
  ]
 }

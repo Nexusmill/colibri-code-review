@@ -1167,3 +1167,17 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 - Crucible c49a05e, .adversary/reviews/gate_20261022-195303.md..-213404.md
 - Crucible runs/20261022T193540/ + runs/README.md
 
+## 2026-10-22 watcher v2: the timer-vs-modal-menu race that could kill the wrong process (EV-274)
+
+**Layer:** gate-review BLOCK x2 + round-3 CLEAR on the GPU-monitor finish tranche.
+
+**Caught:** dialog-buffer truncation dropping the destructive-action warning; then the HIGH - the 2s timer destroying the popup menu inside TrackPopupMenu's modal loop and re-sorting the index->pid map under a pending WM_COMMAND, making 'End process' able to terminate the WRONG process.
+
+**Severity:** HIGH (wrong-process termination on a destructive action).
+
+**Author's initial reaction:** accepted on read, zero rebuttals.
+
+**Resolution:** tracking guard (RefreshTray refuses during menu tracking) + buffer fixes in watcher c969fa0; arm-boilerplate findings rebutted by certified-provenance and cleared round 3 (upstream Tools row owed).
+
+**Refs:** watcher c969fa0; .adversary/reviews/gate_20261022-233419.md..-001752.md
+
