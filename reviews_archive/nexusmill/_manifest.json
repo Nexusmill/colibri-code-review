@@ -968,7 +968,7 @@
     "pass2_stage_e": {
      "model": "zcode-glm-5.3 + gate gpt-6-luna-pro (6 rounds) + blind/reconcile gpt-6-luna-pro + cold kimi-k2-0905",
      "reviewed_at": "2026-09-28 03:18",
-     "output": ".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md (E-loop postscript appended)",
+     "output": ".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md",
      "new": 6
     }
    },
