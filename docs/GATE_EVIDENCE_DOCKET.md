@@ -1195,3 +1195,17 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 
 **Refs:** watcher 711802c; .adversary/reviews/gate_20261023-010740.md, -012605.md.
 
+
+## 2026-10-23 colibri-bounty upstream backport: the fix carried the defect class it closed (EV-276)
+
+**Layer:** gate-review WARN on 8a07c900 -> round-2 CLEAR on 873c7eef (artifacts gate_20261023-071704, gate_20261023-072735).
+
+**Caught:** the tokenless-title fix keyed keyless rows on issue_number - but parse silently maps absent/None numbers to 0, so two keyless PAID rows both numbered 0 still merged, exactly the recall-denominator hole the manifest row claimed to close.
+
+**Severity:** LOW (narrow trigger; the gate graded it informational/measurement-only).
+
+**Author's initial reaction:** accepted on read - the manifest claim overstated the code; remediated same session, zero rebuttals.
+
+**Resolution:** 873c7eef keys on the kept-row ENUMERATION index (row-unique by construction); the number-0 twin case is test-pinned (RED -> GREEN); the manifest row amended in place naming the catch. Round-2 CLEAR verified the RED->GREEN as genuine.
+
+**Refs:** Nexusmill 8a07c900 + 873c7eef; .adversary/reviews/gate_20261023-071704.md (WARN), -072735.md (CLEAR); test_tokenless_titles_stay_distinct.

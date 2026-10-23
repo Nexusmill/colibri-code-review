@@ -1223,7 +1223,7 @@
    "caught": "A FALSE refusal, twice, recorded because it is evidence about the layer: the tranche moved `_bounded_gunzip` from runtime/http_routes.py to security.bounded_gunzip so import-scip could share the gzip-bomb guard. Round 1 kept the old name bound with `from ..security import bounded_gunzip as _bounded_gunzip`; round 2 with a module-level `_bounded_gunzip = bounded_gunzip` assignment. The pre-check compares DEFINITIONS (def/class) between the old and new bytes, saw the def gone with six unstaged references in tests/test_v1_108_95.py, and refused before any review - both times, while that test file passed on both trees. Only staging the caller re-pointed (the test now imports the helper from its new home) let the review run.",
    "severity": "NONE (false positive of the layer) - the code was correct on all three trees",
    "author_initially": "Believed an import alias was a binding the check would honour; then believed an assignment would be. Neither is: the check is definition-based by design - Tools de3f953 added it after Tools 8245433 shipped exactly the hole where a reviewer never sees unstaged callers (EV-060) - and an alias is exactly what a reviewer cannot verify without the callers staged.",
-   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import \u2026 as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
+   "resolution": "tests/test_v1_108_95.py re-pointed to `from jcodemunch_mcp.security import bounded_gunzip as _bounded_gunzip` (one import statement; six usages unchanged) and staged; http_routes.py keeps the assignment alias for any other caller. Landed as jcodemunch-mcp d9f2521 after round 4 CLEAR (gate_20260913-201642.md). Lesson for the layer: a definition-based removed-symbol check treats `import … as` and `name = other` rebindings as removals; whether that is the right conservatism (it forces callers into the reviewed set, which is the point) or a gap (a move-with-alias is a common, safe refactor) is a Tools decision - recorded here as data, not as a verdict.",
    "refs": [
     "jcodemunch-mcp .adversary/reviews/ (rounds 1-2 wrote NO artifact - a REFUSED pre-check exits before the review; the captures are the session scratchpad gate_scipcap_r1.txt / gate_scipcap_r2.txt)",
     "jcodemunch-mcp .adversary/reviews/gate_20260913-200639.md (round 3 BLOCK, first round the pre-check let through)",
@@ -4094,11 +4094,11 @@
    "severity": "HIGH arc (1 HIGH + 5 MEDIUM/LOW over two rounds)",
    "author_initially": "All accepted on read and re-traced against the bytes; the tier-2 backstop carried round 1 after the tier-1 transport error - the ladder failover working as designed.",
    "refs": [
-     "Nexusmill colibri-bounty/colibri_bounty/mirrors.py (cmd_mirrors)",
-     "Nexusmill colibri-bounty/colibri_bounty/db.py (sync_start/sync_finish)",
-     "Nexusmill colibri-bounty/colibri_bounty/github_corpora.py (contract_gaps, resolve_contest_root)",
-     "Nexusmill commit 17267d1c (gate-round notes in the message)"
-    ]
+    "Nexusmill colibri-bounty/colibri_bounty/mirrors.py (cmd_mirrors)",
+    "Nexusmill colibri-bounty/colibri_bounty/db.py (sync_start/sync_finish)",
+    "Nexusmill colibri-bounty/colibri_bounty/github_corpora.py (contract_gaps, resolve_contest_root)",
+    "Nexusmill commit 17267d1c (gate-round notes in the message)"
+   ]
   },
   {
    "id": "EV-256-G47R2-T4-GATE-ARC",
@@ -4110,11 +4110,11 @@
    "severity": "MEDIUM arc (~10 findings over five rounds)",
    "author_initially": "Accepted on read; the GFM table-termination catch is the second recurrence of the EV-251 class inside table-rendering code - the structure test now pins the two-contest shape.",
    "refs": [
-     "Nexusmill colibri-bounty/colibri_bounty/replay_runner.py (tier_state, rescore)",
-     "Nexusmill colibri-bounty/colibri_bounty/s5.py (severity lines, channel buckets)",
-     "Nexusmill colibri-bounty/colibri_bounty/cli.py (--max-cost disclosure, exit 3)",
-     "Nexusmill commit 41d4b04e (gate-round notes in the message)"
-    ]
+    "Nexusmill colibri-bounty/colibri_bounty/replay_runner.py (tier_state, rescore)",
+    "Nexusmill colibri-bounty/colibri_bounty/s5.py (severity lines, channel buckets)",
+    "Nexusmill colibri-bounty/colibri_bounty/cli.py (--max-cost disclosure, exit 3)",
+    "Nexusmill commit 41d4b04e (gate-round notes in the message)"
+   ]
   },
   {
    "id": "EV-257-G47R2-T5A-GATE-ARC",
@@ -4126,10 +4126,10 @@
    "severity": "MEDIUM arc (3 MEDIUM + 6 LOW over four rounds)",
    "author_initially": "Accepted on read; the vacuous-test catch (NameError swallowed into a pass) is its own lesson - cross-module test imports can silently disable the gate the test exists to be.",
    "refs": [
-     "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_pragma_window, default_runner, extra_skip)",
-     "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (foundry_installed guard)",
-     "Nexusmill commit e0440167 (gate-round notes in the message)"
-    ]
+    "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_pragma_window, default_runner, extra_skip)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (foundry_installed guard)",
+    "Nexusmill commit e0440167 (gate-round notes in the message)"
+   ]
   },
   {
    "id": "EV-258-G47R2-T5B-GATE-ARC",
@@ -4141,10 +4141,10 @@
    "severity": "MEDIUM arc (3 MEDIUM + 9 LOW over four rounds)",
    "author_initially": "Accepted on read; the R4 prefix collision is the strongest row of the arc - a false CONFIRM would have grounded a candidate on another candidate's evidence, exactly the money-safety failure the disposition layer exists to prevent.",
    "refs": [
-     "Nexusmill colibri-bounty/colibri_bounty/p2_poc.py (render_poc_harness, adjudicate_poc, poc_source_gaps)",
-     "Nexusmill colibri-bounty/colibri_bounty/p2_inv.py (run_forge_tests dispositions)",
-     "Nexusmill commit 3b301847 (gate-round notes in the message)"
-    ]
+    "Nexusmill colibri-bounty/colibri_bounty/p2_poc.py (render_poc_harness, adjudicate_poc, poc_source_gaps)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_inv.py (run_forge_tests dispositions)",
+    "Nexusmill commit 3b301847 (gate-round notes in the message)"
+   ]
   },
   {
    "id": "EV-259-G47R2-T5C-GATE-ARC",
@@ -4156,9 +4156,9 @@
    "severity": "MEDIUM arc (single round)",
    "author_initially": "Accepted on read - the k=1 lock was a first-match break masquerading as a tiebreak policy.",
    "refs": [
-     "Nexusmill colibri-bounty/colibri_bounty/p2_units.py (suffix resolution, components_split_by_budget, edge lines)",
-     "Nexusmill commit 2d26d1d6 (gate-round notes in the message)"
-    ]
+    "Nexusmill colibri-bounty/colibri_bounty/p2_units.py (suffix resolution, components_split_by_budget, edge lines)",
+    "Nexusmill commit 2d26d1d6 (gate-round notes in the message)"
+   ]
   },
   {
    "id": "EV-260-G47R2-T6-GATE-ARC",
@@ -4170,14 +4170,14 @@
    "severity": "MEDIUM arc (5 MEDIUM + 10 LOW over five substantive rounds)",
    "author_initially": "Every finding accepted on read; three rounds caught defects IN THE PRIOR ROUND'S FIX (r3's replace-vs-append against r2's append; r5's prefix-preserving reset against r4's resize; r2's type hazard riding the r1-authored branch) - the multi-round arc earning its cost, and the exact reason findings are fixed one hypothesis at a time.",
    "refs": [
-     "Nexusmill/.adversary/reviews/gate_20261021-191136.md",
-     "Nexusmill/.adversary/reviews/gate_20261021-194035.md",
-     "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (unit ledger, estimate, type normalization)",
-     "Nexusmill colibri-bounty/colibri_bounty/match_llm.py (replay cache, pair_disposition)",
-     "Nexusmill colibri-bounty/colibri_bounty/p2_llm.py (verify_join ledger, conditions, budget_headroom)",
-     "Nexusmill colibri-bounty/colibri_bounty/priors.py (keyword install, tie-break)",
-     "Nexusmill commit ddf52a2d (gate-round notes in the message)"
-    ]
+    "Nexusmill/.adversary/reviews/gate_20261021-191136.md",
+    "Nexusmill/.adversary/reviews/gate_20261021-194035.md",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (unit ledger, estimate, type normalization)",
+    "Nexusmill colibri-bounty/colibri_bounty/match_llm.py (replay cache, pair_disposition)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_llm.py (verify_join ledger, conditions, budget_headroom)",
+    "Nexusmill colibri-bounty/colibri_bounty/priors.py (keyword install, tie-break)",
+    "Nexusmill commit ddf52a2d (gate-round notes in the message)"
+   ]
   },
   {
    "id": "EV-261-AUDIT-LANE-20261019-ADJUDICATION",
@@ -4189,12 +4189,12 @@
    "severity": "LOW arc (advisory WARNING; sampled audit of landed code, not a commit refusal)",
    "author_initially": "The lane worked as designed: the sampled audit flagged landed code, the WARNING carried it to the next commit, and the T7 adjudication closed it with per-finding current-bytes evidence instead of a reflexive re-fix.",
    "refs": [
-     "Nexusmill .adversary/audit_findings.jsonl (row 20261019-050724)",
-     "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_remapping_pins, default_runner, SKIP_DIRS)",
-     "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (skip_reasons/files_dep_incomplete disposition)"
-    ]
+    "Nexusmill .adversary/audit_findings.jsonl (row 20261019-050724)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_static.py (_remapping_pins, default_runner, SKIP_DIRS)",
+    "Nexusmill colibri-bounty/colibri_bounty/p2_scanner.py (skip_reasons/files_dep_incomplete disposition)"
+   ]
   },
-    {
+  {
    "id": "EV-262-G47R2-PHASEB-W6-GATE-ARC",
    "date": "2026-10-22",
    "repo": "Nexusmill",
@@ -4209,7 +4209,7 @@
     "Nexusmill commit 40af8e43 (gate-round notes in the message)"
    ]
   },
-    {
+  {
    "id": "EV-263-G47R2-W6-AUDIT-LANE-ARC-ADJUDICATION",
    "date": "2026-10-22",
    "repo": "Nexusmill",
@@ -4226,7 +4226,7 @@
     "Nexusmill commits 40af8e43 + 2f5cc66c"
    ]
   },
-    {
+  {
    "id": "EV-264-G47R2-PHASEB-S5-DOCSTRING-WARN-CLOSURE",
    "date": "2026-10-22",
    "repo": "Nexusmill",
@@ -4242,7 +4242,7 @@
     "Nexusmill commit 4e150da6"
    ]
   },
-    {
+  {
    "id": "EV-265-G47R2-STRAT5-GATE-ARC",
    "date": "2026-10-22",
    "repo": "Nexusmill",
@@ -4258,7 +4258,7 @@
     "Nexusmill commit f0f8fbfa (gate-round notes in the message)"
    ]
   },
-    {
+  {
    "id": "EV-266-G47R2-STRAT2-GATE-ARC",
    "date": "2026-10-22",
    "repo": "Nexusmill",
@@ -4274,7 +4274,7 @@
     "Nexusmill commit 8d439f85 (gate-round notes in the message)"
    ]
   },
-    {
+  {
    "id": "EV-267-G47R2-STRAT3-GATE-ARC",
    "date": "2026-10-22",
    "repo": "Nexusmill",
@@ -4290,7 +4290,7 @@
     "Nexusmill commit 2807a6bd (gate-round notes in the message)"
    ]
   },
-    {
+  {
    "id": "EV-268-G47R2-STRAT4-GATE-ARC",
    "date": "2026-10-22",
    "repo": "Nexusmill",
@@ -4307,7 +4307,7 @@
     "Nexusmill commit 1b0eabee (round-by-round notes in the message)"
    ]
   },
-    {
+  {
    "id": "EV-269-GATE-AUDIT-ROW-ARTIFACT-DEFECT",
    "date": "2026-10-22",
    "repo": "Tools",
@@ -4370,7 +4370,7 @@
     "Crucible tests/test_oracle.py (RED-first contract tests incl. test_claims_do_not_fabricate_units)"
    ]
   },
-    {
+  {
    "id": "EV-273-GATE-RECURRENCE-SCREEN-ARC",
    "date": "2026-10-22",
    "repo": "Tools",
@@ -4430,6 +4430,21 @@
     "watcher 711802c + .adversary/reviews/gate_20261023-010740.md + gate_20261023-012605.md",
     "Nexusmill AGENT_STATE session 11d-cont4",
     "the owner's in-use report (session transcript)"
+   ]
+  },
+  {
+   "id": "EV-276-UPSTREAM-BACKPORT-KEYLESS-UNIQUENESS",
+   "date": "2026-10-23",
+   "repo": "Nexusmill (colibri-bounty)",
+   "layer": "gate-review WARN on 8a07c900 -> round-2 CLEAR on 873c7eef (artifacts gate_20261023-071704 WARN, gate_20261023-072735 CLEAR)",
+   "caught": "The upstream-debt backport tranche's own fix carried the defect class it was closing: the tokenless-title keyless key was derived from issue_number, but parse_judging_issues maps absent/None numbers to 0 silently - two keyless PAID rows both numbered 0 still collapsed under the identical key (keyless#0), exactly the recall-denominator hole the manifest row claimed to close ('never merge'). Tier-2 also verified the widened disclosed-skip tuple could not catch it (no exception is raised).",
+   "severity": "LOW (narrow: two tokenless PAID titles with missing/None numbers in one dump; the gate itself graded it informational/measurement-only)",
+   "author_initially": "Accepted on read - the reviewer was right and the manifest claim overstated the code; remediated same session, zero rebuttals.",
+   "resolution": "Nexusmill 873c7eef: the keyless key now uses the kept-row ENUMERATION index (row-unique within the call by construction, not derivable from a field the parser silently zeroes); test_tokenless_titles_stay_distinct extended with the two number-0 rows (RED [0,1,2,3] vs 5 distinct -> GREEN [0,0,1,2,3], keyless_kept==4); manifest row amended in place naming the catch. Round-2 CLEAR verified the RED->GREEN as genuine and checked union-find/merge_kind interactions.",
+   "refs": [
+    "Nexusmill 8a07c900 + 873c7eef + .adversary/reviews/gate_20261023-071704.md (WARN) + gate_20261023-072735.md (CLEAR)",
+    "colibri-bounty/tests/test_truth.py::test_tokenless_titles_stay_distinct",
+    "docs/remediation_manifest.json UPSTREAM-TOKENLESS-TITLE-COLLAPSE row (amended)"
    ]
   }
  ]
