@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "68cae9a693073be79249a4b0230175cdc5a9fa40",
+ "caller": "zcode",
+ "when": "20261023-013250",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "e7bb1c2151139ee3fcf1ad0bdaf10d7b72c064e32f7db67ff103c355308c74b3",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261023-013248",
+   "artifact": ".adversary\\reviews\\gate_20261023-013248.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261023-013248.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 1843, 'completion_tokens': 20005, 'total_tokens': 21848, 'cost': 0.00898361688, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00898361688, 'upstream_inference_prompt_cost': 0.00016141188, 'upstream_inference_completions_cost': 0.008822205}, 'completion_tokens_details': {'reasoning_tokens': 19997, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261023-013248.md": {
+   "embedded": "41bf3d414bc1fbee16e20710ec1c1497362e901103c1ef9f6e6e5146a43eccf4",
+   "disk": "41bf3d414bc1fbee16e20710ec1c1497362e901103c1ef9f6e6e5146a43eccf4"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "016fd9c0f9fdeacfffdc21a375e55f06fa26948890ab64ed0fbed370adedeedd"
+}
