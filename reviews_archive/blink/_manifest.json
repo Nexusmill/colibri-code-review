@@ -4,9 +4,16 @@
     "rel": "0-check-setup.bat",
     "modes": {
       "bug": {
-        "sha": "ec24f5e6",
+        "sha": "ec24f5e66e58d896ab797c4f0bf247306bc76f63bf655e6cd274958fad10bc43",
         "output": ".colibri_reviews/0-check-setup.bat__bug__ec24f5e6.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/0-check-setup.bat__bug__ec24f5e6__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -14,9 +21,16 @@
     "rel": "0b-check-passwords.bat",
     "modes": {
       "bug": {
-        "sha": "d8fd6226",
+        "sha": "d8fd6226f24e363b7b17b9d69ed90ee0cdc5cfedeefc45c449a91292a1258385",
         "output": ".colibri_reviews/0b-check-passwords.bat__bug__d8fd6226.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/0b-check-passwords.bat__bug__d8fd6226__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -24,9 +38,16 @@
     "rel": "1-blink-login.bat",
     "modes": {
       "bug": {
-        "sha": "2198fa42",
+        "sha": "2198fa426d50044ac8671388868374c4ee4898fbba77b333eed13786be99245e",
         "output": ".colibri_reviews/1-blink-login.bat__bug__2198fa42.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/1-blink-login.bat__bug__2198fa42__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -34,9 +55,16 @@
     "rel": "2-youtube-login.bat",
     "modes": {
       "bug": {
-        "sha": "b8a93444",
+        "sha": "b8a93444e9199a3ba0fae9918082467f6538f2a80c998104e54ee0aed65dad3b",
         "output": ".colibri_reviews/2-youtube-login.bat__bug__b8a93444.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/2-youtube-login.bat__bug__b8a93444__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -44,9 +72,16 @@
     "rel": "3-test-dry-run.bat",
     "modes": {
       "bug": {
-        "sha": "ebf6db83",
+        "sha": "ebf6db83d02497e112bb1ec58f265d18fc9c943d3aafdbbe914827b896b866a2",
         "output": ".colibri_reviews/3-test-dry-run.bat__bug__ebf6db83.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/3-test-dry-run.bat__bug__ebf6db83__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -54,9 +89,16 @@
     "rel": "4-run-now.bat",
     "modes": {
       "bug": {
-        "sha": "c4e037aa",
+        "sha": "c4e037aa975b08689f9684c710ff613b3a2e450d51ca7d1866fd0ef874cc3b09",
         "output": ".colibri_reviews/4-run-now.bat__bug__c4e037aa.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/4-run-now.bat__bug__c4e037aa__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -64,9 +106,16 @@
     "rel": "5-status.bat",
     "modes": {
       "bug": {
-        "sha": "740c0620",
+        "sha": "740c06200d4b1e2ac4b8b132723eb453b99281f166f2b8772af19763e231e9c7",
         "output": ".colibri_reviews/5-status.bat__bug__740c0620.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/5-status.bat__bug__740c0620__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -74,9 +123,16 @@
     "rel": "birdcam/__init__.py",
     "modes": {
       "bug": {
-        "sha": "4d191809",
+        "sha": "4d191809e50e8d45bee2f23df388685067078796745f396a4f3b26e4d1628152",
         "output": ".colibri_reviews/birdcam____init__.py__bug__4d191809.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/birdcam____init__.py__bug__4d191809__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -84,9 +140,16 @@
     "rel": "birdcam/__main__.py",
     "modes": {
       "bug": {
-        "sha": "307299fd",
+        "sha": "307299fda7b77d22c64cb51430ec75e5f59d78e9c948786afb3b2544fe45e4b7",
         "output": ".colibri_reviews/birdcam____main__.py__bug__307299fd.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/birdcam____main__.py__bug__307299fd__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -94,9 +157,16 @@
     "rel": ".githooks/adversary_audit.py",
     "modes": {
       "bug": {
-        "sha": "f9bf4713",
+        "sha": "f9bf47136092e8d4710720edfbe33c7595ad4f1e7c1144dc9f8ae121b0fad4a0",
         "output": ".colibri_reviews/.githooks__adversary_audit.py__bug__f9bf4713.md",
-        "reviewed_at": "2026-09-10"
+        "reviewed_at": "2026-09-10",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/.githooks__adversary_audit.py__bug__f9bf4713__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -107,7 +177,13 @@
         "sha": "2b54ac5eb284f56ebfb11310c529c6ce6d16c6ce3c626c0f1a1f81deba8ab511",
         "output": ".colibri_reviews/birdcam__blink_client.py__bug__2b54ac5e.md",
         "reviewed_at": "2026-09-19 16:40",
-        "cost": 0
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/birdcam__blink_client.py__bug__2b54ac5e__p2.md",
+          "new": 3
+        }
       }
     }
   },
@@ -115,9 +191,9 @@
     "rel": "birdcam/cli.py",
     "modes": {
       "bug": {
-        "sha": "95ff22adb5e00c382f190a7b096ee00d034152ca87691a8fc158e9d3e3025284",
-        "output": ".colibri_reviews/birdcam__cli.py__bug__95ff22ad.md",
-        "reviewed_at": "2026-09-19 16:40",
+        "sha": "f458611257d1bd3861f8a46797723a6615391032b89c7bd4efd5b00fa3a13186",
+        "output": ".colibri_reviews/birdcam__cli.py__bug__f4586112.md",
+        "reviewed_at": "2026-10-05 05:00",
         "cost": 0
       }
     }
@@ -126,9 +202,10 @@
     "rel": "birdcam/compiler.py",
     "modes": {
       "bug": {
-        "sha": "cbe32a04",
-        "output": ".colibri_reviews/birdcam__compiler.py__bug__cbe32a04.md",
-        "reviewed_at": "2026-09-05"
+        "sha": "6c0acb8ea25996e178a43a2c069258a5a4c565b40afae5b673345b07837bab5d",
+        "output": ".colibri_reviews/birdcam__compiler.py__bug__6c0acb8e.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
       }
     }
   },
@@ -136,9 +213,9 @@
     "rel": "birdcam/config.py",
     "modes": {
       "bug": {
-        "sha": "6f05cdb4aa2dfc432a5766888b05c60aeb4d7d0b0f8154ccda61f0ba56d33cc9",
-        "output": ".colibri_reviews/birdcam__config.py__bug__6f05cdb4.md",
-        "reviewed_at": "2026-09-19 16:40",
+        "sha": "cbf3975a20bb8ef0564d78e5603c7405b0e7558484bf7868e1e3b9ae7a2d7ad2",
+        "output": ".colibri_reviews/birdcam__config.py__bug__cbf3975a.md",
+        "reviewed_at": "2026-10-05 05:00",
         "cost": 0
       }
     }
@@ -147,16 +224,10 @@
     "rel": "birdcam/pipeline.py",
     "modes": {
       "bug": {
-        "sha": "eda35139cc58d96861baf1508885a18f962ae54a55b76931f424432555331123",
-        "output": ".colibri_reviews/birdcam__pipeline.py__bug__eda35139.md",
-        "reviewed_at": "2026-09-19 16:40",
-        "cost": 0,
-        "pass2": {
-          "model": "grok-4.3 effort=high (grok-review CLI, rung M3)",
-          "reviewed_at": "2026-09-19 16:35",
-          "output": ".colibri_reviews/birdcam__pipeline.py__bug__eda35139.md",
-          "new": 1
-        }
+        "sha": "7974a99a8e155187eabbb369c414daee993f18708be894f3bbb8fde298b80aa9",
+        "output": ".colibri_reviews/birdcam__pipeline.py__bug__7974a99a.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
       }
     }
   },
@@ -164,9 +235,9 @@
     "rel": "birdcam/state.py",
     "modes": {
       "bug": {
-        "sha": "01fd844c97ca6bdc7ccf1e6bae7723c0bc218904af13604c4df18486e169706c",
-        "output": ".colibri_reviews/birdcam__state.py__bug__01fd844c.md",
-        "reviewed_at": "2026-09-19 16:40",
+        "sha": "5b2c6126528363b4d1a7e2088ad7e3e7670ebc8c2f610b13b41d2d2d409ad04c",
+        "output": ".colibri_reviews/birdcam__state.py__bug__5b2c6126.md",
+        "reviewed_at": "2026-10-05 05:00",
         "cost": 0
       }
     }
@@ -175,9 +246,10 @@
     "rel": "birdcam/youtube_client.py",
     "modes": {
       "bug": {
-        "sha": "8e230984",
-        "output": ".colibri_reviews/birdcam__youtube_client.py__bug__8e230984.md",
-        "reviewed_at": "2026-09-05"
+        "sha": "8c0558e550178e0a398da74c793f59965a9c3f61aca95d4c73681da4d8e0885c",
+        "output": ".colibri_reviews/birdcam__youtube_client.py__bug__8c0558e5.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
       },
       "debug": {
         "sha": "1052fa7dccfb58c77898777757d5c39a6a4621cdb985b53f28259a59e4227f97",
@@ -191,9 +263,16 @@
     "rel": "scripts/bootstrap.ps1",
     "modes": {
       "bug": {
-        "sha": "694f83f3",
+        "sha": "694f83f352ecb2fa0b984c1757bd0d1f6d7f0cef684ab3a4aaa4675a64efbaa7",
         "output": ".colibri_reviews/scripts__bootstrap.ps1__bug__694f83f3.md",
-        "reviewed_at": "2026-09-05"
+        "reviewed_at": "2026-09-05",
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/scripts__bootstrap.ps1__bug__694f83f3__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -201,9 +280,10 @@
     "rel": "scripts/check_password.py",
     "modes": {
       "bug": {
-        "sha": "7ae74dfd",
-        "output": ".colibri_reviews/scripts__check_password.py__bug__7ae74dfd.md",
-        "reviewed_at": "2026-09-05"
+        "sha": "3a6c979997b5d3cab65c6d9690bd506a0a38e6df9390729e4f243013b23beb4c",
+        "output": ".colibri_reviews/scripts__check_password.py__bug__3a6c9799.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
       }
     }
   },
@@ -211,9 +291,10 @@
     "rel": "scripts/register_schedule.ps1",
     "modes": {
       "bug": {
-        "sha": "b25365fe",
-        "output": ".colibri_reviews/scripts__register_schedule.ps1__bug__b25365fe.md",
-        "reviewed_at": "2026-09-05"
+        "sha": "12d9c501f12b470cbf9e301c80173327a59249a094be87169873545cfa178ab9",
+        "output": ".colibri_reviews/scripts__register_schedule.ps1__bug__12d9c501.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
       }
     }
   },
@@ -221,9 +302,9 @@
     "rel": "tests/test_state_and_pipeline.py",
     "modes": {
       "bug": {
-        "sha": "2a48b6a0d286b9e285b7a25c70593b725e10aafcccc292c55a020965a8065c52",
-        "output": ".colibri_reviews/tests__test_state_and_pipeline.py__bug__2a48b6a0.md",
-        "reviewed_at": "2026-09-19 16:40",
+        "sha": "6185bd649574cf5dd36d4d71881619a2e9d30422b78c39d572b2eed737581ac6",
+        "output": ".colibri_reviews/tests__test_state_and_pipeline.py__bug__6185bd64.md",
+        "reviewed_at": "2026-10-05 05:00",
         "cost": 0
       }
     }
@@ -235,7 +316,13 @@
         "sha": "39d665afe1719a6cbee0c6027d31ecbd6583ef9c126378abe59777bd52ae2f27",
         "output": ".colibri_reviews/scripts__yt_login_reminder.ps1__bug__39d665af.md",
         "reviewed_at": "2026-09-18 23:07",
-        "cost": 0
+        "cost": 0,
+        "pass2": {
+          "model": "ZCode in-session (account:zai-individual-coding-plan/GLM-5.3), colibri-review v0.4.0, security hunt",
+          "reviewed_at": "2026-10-05 05:00",
+          "output": ".colibri_reviews/scripts__yt_login_reminder.ps1__bug__39d665af__p2.md",
+          "new": 0
+        }
       }
     }
   },
@@ -243,9 +330,15 @@
     "rel": "birdcam/enricher.py",
     "modes": {
       "bug": {
-        "sha": "21fd6e4184e6f64272a62299f7bd01a69c89fdc3c1290230453f0e96f14816e5",
-        "output": ".colibri_reviews/birdcam__enricher.py__bug__21fd6e41.md",
-        "reviewed_at": "2026-09-19 16:40",
+        "sha": "c097cbf0ac904d4bb2e6b72b2a1f78db8327d1d8f1bdbc4a3b1bc14b6e871939",
+        "output": ".colibri_reviews/birdcam__enricher.py__bug__c097cbf0.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      },
+      "debug": {
+        "sha": "b1fe16021ef5c866ad3ce6a95081919b8f6dd1056c6b91ec66c17be447caf377",
+        "output": ".colibri_reviews/birdcam__enricher.py__debug__b1fe1602.md",
+        "reviewed_at": "2026-10-14 14:10",
         "cost": 0
       }
     }
@@ -254,9 +347,141 @@
     "rel": "tests/test_enricher.py",
     "modes": {
       "bug": {
-        "sha": "d5152f3008e68addb66c30765c99177a8e909a4a87e09e3f29fda36a88ebb66d",
-        "output": ".colibri_reviews/tests__test_enricher.py__bug__d5152f30.md",
-        "reviewed_at": "2026-09-19 16:40",
+        "sha": "206b3ed41476f08c78ee0c4059a023eda4146fd2d26096512d06ee6f3a625420",
+        "output": ".colibri_reviews/tests__test_enricher.py__bug__206b3ed4.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\cards.py": {
+    "rel": "birdcam/cards.py",
+    "modes": {
+      "bug": {
+        "sha": "c7cbe56f0af7d158ba8412c2004c46b1c67bbbb84cb7b99db1242dc6f6ba97d3",
+        "output": ".colibri_reviews/birdcam__cards.py__bug__c7cbe56f.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\birdcam\\person_detect.py": {
+    "rel": "birdcam/person_detect.py",
+    "modes": {
+      "bug": {
+        "sha": "2065cd3d386027f760eb6863ea644b04fd230f9e9e75b5f1f7b9c11edf6f4583",
+        "output": ".colibri_reviews/birdcam__person_detect.py__bug__2065cd3d.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\site\\music_worker.js": {
+    "rel": "site/music_worker.js",
+    "modes": {
+      "bug": {
+        "sha": "b8ad0e6a51c4905828d11bfaccb89175d6701f62573e8eb60ce41572af2e55a6",
+        "output": ".colibri_reviews/site__music_worker.js__bug__b8ad0e6a.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\config.example.yaml": {
+    "rel": "config.example.yaml",
+    "modes": {
+      "bug": {
+        "sha": "a00c55f6727432b7fb2623765401f200cdde28969be75caf34fcb5016bf4de65",
+        "output": ".colibri_reviews/config.example.yaml__bug__a00c55f6.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\scripts\\run_hourly.cmd": {
+    "rel": "scripts/run_hourly.cmd",
+    "modes": {
+      "bug": {
+        "sha": "3fbe9d268d23866996bedcfcfd3329c319e128e57c66f6f769c666ef60d5cf11",
+        "output": ".colibri_reviews/scripts__run_hourly.cmd__bug__3fbe9d26.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\scripts\\run_hourly_hidden.vbs": {
+    "rel": "scripts/run_hourly_hidden.vbs",
+    "modes": {
+      "bug": {
+        "sha": "79ba46935b2b44ef8a502a62c56cc00ec0b658261180ff502ce57ade4f54bc44",
+        "output": ".colibri_reviews/scripts__run_hourly_hidden.vbs__bug__79ba4693.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\6-register-hourly-runs.bat": {
+    "rel": "6-register-hourly-runs.bat",
+    "modes": {
+      "bug": {
+        "sha": "9459a2488784d58f9ee8798f18d45f1f90e892324bfe81214613393b62e8ad0d",
+        "output": ".colibri_reviews/6-register-hourly-runs.bat__bug__9459a248.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\7-remove-hourly-runs.bat": {
+    "rel": "7-remove-hourly-runs.bat",
+    "modes": {
+      "bug": {
+        "sha": "406a687aef1d26244045fcd538deca16a5b32566a1fe8ac46b96859bb07ae6e4",
+        "output": ".colibri_reviews/7-remove-hourly-runs.bat__bug__406a687a.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\8-open-music.bat": {
+    "rel": "8-open-music.bat",
+    "modes": {
+      "bug": {
+        "sha": "ba79c3abdd79a6acfcefba9f9fa5f12cc5f8fc6aaf67decc1aec4b80e4722416",
+        "output": ".colibri_reviews/8-open-music.bat__bug__ba79c3ab.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\9-review-person-detections.bat": {
+    "rel": "9-review-person-detections.bat",
+    "modes": {
+      "bug": {
+        "sha": "8dcd7e2dea8fe54b9006423a8f86c2ba97849b38b2c6b7cc9a64a9c5abd85669",
+        "output": ".colibri_reviews/9-review-person-detections.bat__bug__8dcd7e2d.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\tests\\test_cards.py": {
+    "rel": "tests/test_cards.py",
+    "modes": {
+      "bug": {
+        "sha": "3a4ce20addece595a7d95de60fa94f7df7b48f5d68e661ed3fc2173c11fb9f05",
+        "output": ".colibri_reviews/tests__test_cards.py__bug__3a4ce20a.md",
+        "reviewed_at": "2026-10-05 05:00",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\Blink\\tests\\test_person_detect.py": {
+    "rel": "tests/test_person_detect.py",
+    "modes": {
+      "bug": {
+        "sha": "b9a9263f11300cc0a1e454cea1a5fdce5e8cea70ea624096bb216081e4c68782",
+        "output": ".colibri_reviews/tests__test_person_detect.py__bug__b9a9263f.md",
+        "reviewed_at": "2026-10-05 05:00",
         "cost": 0
       }
     }

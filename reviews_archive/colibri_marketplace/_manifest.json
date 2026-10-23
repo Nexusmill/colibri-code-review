@@ -1,0 +1,57 @@
+{
+  "C:\\Users\\User\\source\\repos\\colibri-marketplace\\plugins\\adversary-gate\\tools\\adversary_gate.py": {
+    "rel": "plugins/adversary-gate/tools/adversary_gate.py",
+    "modes": {
+      "bug": {
+        "sha": "b520a143265aa08f1196e5d2f68450e687ed57af892e77a13e8d555f74a3dff6",
+        "output": ".colibri_reviews/plugins__adversary-gate__tools__adversary_gate.py__bug__b520a143.md",
+        "reviewed_at": "2026-09-27 06:20",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\colibri-marketplace\\plugins\\adversary-gate\\tools\\gate_selftest.py": {
+    "rel": "plugins/adversary-gate/tools/gate_selftest.py",
+    "modes": {
+      "bug": {
+        "sha": "a5bed2bcbf06731afbef1b0b83381ce577462c5530a9554375360e098718c675",
+        "output": ".colibri_reviews/plugins__adversary-gate__tools__gate_selftest.py__bug__a5bed2bc.md",
+        "reviewed_at": "2026-09-27 06:20",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\colibri-marketplace\\.claude-plugin\\marketplace.json": {
+    "rel": ".claude-plugin/marketplace.json",
+    "modes": {
+      "bug": {
+        "sha": "0345ef2f6ad9bb8d03fd887ec429db70e43affc03b2ee61927f427621f005b33",
+        "output": ".colibri_reviews/.claude-plugin__marketplace.json__bug__0345ef2f.md",
+        "reviewed_at": "2026-09-27 06:20",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\colibri-marketplace\\plugins\\adversary-gate\\.claude-plugin\\plugin.json": {
+    "rel": "plugins/adversary-gate/.claude-plugin/plugin.json",
+    "modes": {
+      "bug": {
+        "sha": "e8fa284c9f719f34004a5bf6f8acfc080b3878484e166f534d00be236699f903",
+        "output": ".colibri_reviews/plugins__adversary-gate__.claude-plugin__plugin.json__bug__e8fa284c.md",
+        "reviewed_at": "2026-09-27 06:20",
+        "cost": 0
+      }
+    }
+  },
+  "C:\\Users\\User\\source\\repos\\colibri-marketplace\\plugins\\adversary-gate\\README.md": {
+    "rel": "plugins/adversary-gate/README.md",
+    "modes": {
+      "bug": {
+        "sha": "5e835eb37f90b422b5ed27b2efa3edf0556bf425eb86253356b7c495710223c0",
+        "output": ".colibri_reviews/plugins__adversary-gate__README.md__bug__5e835eb3.md",
+        "reviewed_at": "2026-09-27 06:20",
+        "cost": 0
+      }
+    }
+  }
+}

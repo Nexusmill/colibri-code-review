@@ -1,0 +1,1034 @@
+{
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\storage\\sqlite_store.py": {
+  "rel": "src\\jcodemunch_mcp\\storage\\sqlite_store.py",
+  "modes": {
+   "bug": {
+    "sha": "811ec1b7db80b55f20eeb0e354a62b1f060e798777d69982f1b025969d784b49",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__storage__sqlite_store.py__bug__811ec1b7.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.6)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\config.py": {
+  "rel": "src\\jcodemunch_mcp\\config.py",
+  "modes": {
+   "bug": {
+    "sha": "78678210ba3a2cdddbdfa9963752315be0bde43add676cfc82f8d1462fd39429",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__config.py__bug__78678210.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over z-ai/glm-5.3-flash)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\search_symbols.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\search_symbols.py",
+  "modes": {
+   "bug": {
+    "sha": "45417d243830df210beb19100a7bdfcf1ddf9a4af9f4bae189b1939fec917f9a",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__search_symbols.py__bug__45417d24.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over z-ai/glm-5.3-flash)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\index_folder.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\index_folder.py",
+  "modes": {
+   "bug": {
+    "sha": "18b712cf3be2932748c3738c540f87e8bacbd7bdbad3b79f1581d75dc05cd5fa",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__index_folder.py__bug__18b712cf.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\plan_refactoring.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\plan_refactoring.py",
+  "modes": {
+   "bug": {
+    "sha": "0b7ee24fa316fe5b333471234615cc7affdaad239b0ed8caeaea7b5f8de67912",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__plan_refactoring.py__bug__0b7ee24f.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\storage\\token_tracker.py": {
+  "rel": "src\\jcodemunch_mcp\\storage\\token_tracker.py",
+  "modes": {
+   "bug": {
+    "sha": "133e72bbbe7dd20e9927596cffeb42da3dfd9eb2295fcec409f1b18d2482883a",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__storage__token_tracker.py__bug__133e72bb.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\watcher.py": {
+  "rel": "src\\jcodemunch_mcp\\watcher.py",
+  "modes": {
+   "bug": {
+    "sha": "4f4e844096a34e42bbea3958c118432f8b4b57be93315f32caacee6ca2124ac1",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__watcher.py__bug__4f4e8440.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\security.py": {
+  "rel": "src\\jcodemunch_mcp\\security.py",
+  "modes": {
+   "bug": {
+    "sha": "4b2ab9fc5c726324da81228316f93ff8ebde42d4d2bd821fe2a3e7d9fc84c464",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__security.py__bug__4b2ab9fc.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.6)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\audit_agent_config.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\audit_agent_config.py",
+  "modes": {
+   "bug": {
+    "sha": "e68d3bcdfac0a4215dcf0e2af701fd3c70117cd9702eee31c95fcbf4eb98f037",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__audit_agent_config.py__bug__e68d3bcd.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over z-ai/glm-5.3-flash)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\investigator\\deletion_safety.py": {
+  "rel": "src\\jcodemunch_mcp\\investigator\\deletion_safety.py",
+  "modes": {
+   "bug": {
+    "sha": "4486c91efb8ad1db918c5632f84845d2b88b06eba640c321fb19cdfcd98f5687",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__investigator__deletion_safety.py__bug__4486c91e.md",
+    "reviewed_at": "2026-09-13 21:05",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\storage\\index_store.py": {
+  "rel": "src\\jcodemunch_mcp\\storage\\index_store.py",
+  "modes": {
+   "bug": {
+    "sha": "9e93dc206571a106a77af435a8b26e694cc873b1eec5324017910ce89b10caaa",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__storage__index_store.py__bug__9e93dc20.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over z-ai/glm-5.3-flash)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\parser\\languages.py": {
+  "rel": "src\\jcodemunch_mcp\\parser\\languages.py",
+  "modes": {
+   "bug": {
+    "sha": "81e350492e5ef1559eee385bebf8497cd02f0f709449f36c2097fc42a9b52996",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__parser__languages.py__bug__81e35049.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over z-ai/glm-5.3-flash)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\search_ast.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\search_ast.py",
+  "modes": {
+   "bug": {
+    "sha": "fb096f7faf5cf656f2636202b7fc10f425df7eaf2d8b16682c23b9a1016071a8",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__search_ast.py__bug__fb096f7f.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\_call_graph.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\_call_graph.py",
+  "modes": {
+   "bug": {
+    "sha": "02260b6f258df182c343009091bd2f1736f1f270d8d65698e1a0f62713bf33c6",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools___call_graph.py__bug__02260b6f.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\check_delete_safe.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\check_delete_safe.py",
+  "modes": {
+   "bug": {
+    "sha": "634f3bf9b136785c782b9a09dae2b1dc0666a1ec69b735da4d3670f53ed9df01",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__check_delete_safe.py__bug__634f3bf9.md",
+    "reviewed_at": "2026-09-13 20:05",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\get_blast_radius.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\get_blast_radius.py",
+  "modes": {
+   "bug": {
+    "sha": "0fa9bc127c6b8699fffa9ff9bbb019185d5c3a07f56c53d564913d68bb12d24f",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__get_blast_radius.py__bug__0fa9bc12.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\parser\\imports.py": {
+  "rel": "src\\jcodemunch_mcp\\parser\\imports.py",
+  "modes": {
+   "bug": {
+    "sha": "a677573267817dcf68a5188bc303759f9bd7845d0d44500cbe7473e0b5edecfa",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__parser__imports.py__bug__a6775732.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\index_repo.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\index_repo.py",
+  "modes": {
+   "bug": {
+    "sha": "9ae704670302279a3c9b791ed8645ea8c3261bf6a4218610f0cbc24544a43eef",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__index_repo.py__bug__9ae70467.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\cli\\init.py": {
+  "rel": "src\\jcodemunch_mcp\\cli\\init.py",
+  "modes": {
+   "bug": {
+    "sha": "33efde9ed40a6fa9babf62fd7abe9fe9e5403b370b88c36548758f08c40c95a1",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__cli__init.py__bug__33efde9e.md",
+    "reviewed_at": "2026-09-05 23:30",
+    "model": "claude-fable-5-1 (Phase-3 gate over grok-4.3)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\runtime\\resolve.py": {
+  "rel": "src\\jcodemunch_mcp\\runtime\\resolve.py",
+  "modes": {
+   "bug": {
+    "sha": "8d99465b1d64588d8f196b1d9674d225e76d05e71ce57a339da369d56011a681",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__runtime__resolve.py__bug__8d99465b.md",
+    "reviewed_at": "2026-09-13 20:15",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\runtime\\otel.py": {
+  "rel": "src\\jcodemunch_mcp\\runtime\\otel.py",
+  "modes": {
+   "bug": {
+    "sha": "2469160d19ca150d0d5dc3ccc1f1fa53cef881effdb1bfc506ecee2632298a2c",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__runtime__otel.py__bug__2469160d.md",
+    "reviewed_at": "2026-09-13 20:15",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\runtime\\stack_log.py": {
+  "rel": "src\\jcodemunch_mcp\\runtime\\stack_log.py",
+  "modes": {
+   "bug": {
+    "sha": "d27fea59cd1b0bbf2bca0da7adae62448536e5d0ceb922f643f6ea20b974092b",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__runtime__stack_log.py__bug__d27fea59.md",
+    "reviewed_at": "2026-09-13 20:15",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\runtime\\ingest.py": {
+  "rel": "src\\jcodemunch_mcp\\runtime\\ingest.py",
+  "modes": {
+   "bug": {
+    "sha": "188fd431d76add6c621425d5eb5809fb84f7ac45e60154f2901ae945ed9471ec",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__runtime__ingest.py__bug__188fd431.md",
+    "reviewed_at": "2026-09-13 20:15",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\runtime\\stack_ingest.py": {
+  "rel": "src\\jcodemunch_mcp\\runtime\\stack_ingest.py",
+  "modes": {
+   "bug": {
+    "sha": "86ba1905f2e83b384d94eca1542c1c290bf7363dfe74dc412a1eb3f1d1ebb5a4",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__runtime__stack_ingest.py__bug__86ba1905.md",
+    "reviewed_at": "2026-09-13 20:15",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\cli\\install_pack.py": {
+  "rel": "src\\jcodemunch_mcp\\cli\\install_pack.py",
+  "modes": {
+   "bug": {
+    "sha": "f9c2f2db9d97b8eb31684a00d5d2f43b9129fff258a550de93ea89df47d9b73a",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__cli__install_pack.py__bug__f9c2f2db.md",
+    "reviewed_at": "2026-09-13 21:05",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\runtime\\sql_log.py": {
+  "rel": "src\\jcodemunch_mcp\\runtime\\sql_log.py",
+  "modes": {
+   "bug": {
+    "sha": "bb50814f99f9f43c1ab42a0237b0701506bbb7b3df34097d5729ba1037309b03",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__runtime__sql_log.py__bug__bb50814f.md",
+    "reviewed_at": "2026-09-13 21:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\runtime\\sql_ingest.py": {
+  "rel": "src\\jcodemunch_mcp\\runtime\\sql_ingest.py",
+  "modes": {
+   "bug": {
+    "sha": "4f456fbfa45317f1d4dc181409c37954a8569c9a5dbf5e464d2b6d1eba95cb0a",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__runtime__sql_ingest.py__bug__4f456fbf.md",
+    "reviewed_at": "2026-09-13 21:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\secret_classifier.py": {
+  "rel": "src\\jcodemunch_mcp\\secret_classifier.py",
+  "modes": {
+   "bug": {
+    "sha": "491b8b86709c54a1708604aa0df56fc9b51b349b1b71ab31d0307dd6bb807249",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__secret_classifier.py__bug__491b8b86.md",
+    "reviewed_at": "2026-09-13 22:10",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\enrichment\\lsp_bridge.py": {
+  "rel": "src\\jcodemunch_mcp\\enrichment\\lsp_bridge.py",
+  "modes": {
+   "bug": {
+    "sha": "359d99d8175c1c9682f56f85e6c5fe04a01859b69f09d9df6b16e685a2fe6d62",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__enrichment__lsp_bridge.py__bug__359d99d8.md",
+    "reviewed_at": "2026-09-13 22:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\parser\\extractor.py": {
+  "rel": "src\\jcodemunch_mcp\\parser\\extractor.py",
+  "modes": {
+   "bug": {
+    "sha": "359c0eabb6b395f7b9644b71e9b39e3a87d68c3b47dac90a9f8c181f683db247",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__parser__extractor.py__bug__359c0eab.md",
+    "reviewed_at": "2026-09-13 23:20",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\parser\\sql_preprocessor.py": {
+  "rel": "src\\jcodemunch_mcp\\parser\\sql_preprocessor.py",
+  "modes": {
+   "bug": {
+    "sha": "18b10068e44f64b2fca61ca2a8c8cb873bfd8bdaee7b8ee22ba74f94ee948708",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__parser__sql_preprocessor.py__bug__18b10068.md",
+    "reviewed_at": "2026-09-13 23:50",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\server.py": {
+  "rel": "src\\jcodemunch_mcp\\server.py",
+  "modes": {
+   "bug": {
+    "sha": "36a7fd0067d3a3798f44dfa0910c07e7cb08a6e66883ebe68555b7f3616e1269",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__server.py__bug__36a7fd00.md",
+    "reviewed_at": "2026-09-13 13:50",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\redact.py": {
+  "rel": "src\\jcodemunch_mcp\\redact.py",
+  "modes": {
+   "bug": {
+    "sha": "86a1e34effcbb0f7a825d2d0f78e4a2796b459e5a79f82578e58716c637eadf8",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__redact.py__bug__86a1e34e.md",
+    "reviewed_at": "2026-09-13 14:05",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\assemble_task_context.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\assemble_task_context.py",
+  "modes": {
+   "bug": {
+    "sha": "d84e593a89574a3d31f82373df67692629cc03a3941c816904817e7172e93cc4",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__assemble_task_context.py__bug__d84e593a.md",
+    "reviewed_at": "2026-09-13 14:35",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\handoff.py": {
+  "rel": "src\\jcodemunch_mcp\\handoff.py",
+  "modes": {
+   "bug": {
+    "sha": "65cf7f020d7a973eb5f805602c04a08db32dcfdb8e6048452cf73906f367b941",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__handoff.py__bug__65cf7f02.md",
+    "reviewed_at": "2026-09-13 15:05",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\render_diagram.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\render_diagram.py",
+  "modes": {
+   "bug": {
+    "sha": "9e0a155a7858489e34e6045eff8b6ab26ba677541512270c7b040ed12b989995",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__render_diagram.py__bug__9e0a155a.md",
+    "reviewed_at": "2026-09-13 15:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\service_installer.py": {
+  "rel": "src\\jcodemunch_mcp\\service_installer.py",
+  "modes": {
+   "bug": {
+    "sha": "8a09ffb687fd9a3647ca60eab5acccfeb4cf75bad7e8537b706862ec470d0e91",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__service_installer.py__bug__8a09ffb6.md",
+    "reviewed_at": "2026-09-13 15:50",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\get_project_intel.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\get_project_intel.py",
+  "modes": {
+   "bug": {
+    "sha": "257227e76a07fa1fa6c39760cb77c6f708b3cb9875107965a1f32a1c885fd95b",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__get_project_intel.py__bug__257227e7.md",
+    "reviewed_at": "2026-09-13 16:08",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\embeddings\\local_encoder.py": {
+  "rel": "src\\jcodemunch_mcp\\embeddings\\local_encoder.py",
+  "modes": {
+   "bug": {
+    "sha": "d01690c38556c64104995521ab0c8c456e3afdf31c4e06eb5c7fddc4e3db9d89",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__embeddings__local_encoder.py__bug__d01690c3.md",
+    "reviewed_at": "2026-09-13 16:28",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\agent_selector.py": {
+  "rel": "src\\jcodemunch_mcp\\agent_selector.py",
+  "modes": {
+   "bug": {
+    "sha": "7345dd40cfc9afae75f7d736eaa2288f0caa5ea22b7e2c8c0d075abe89c440cb",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__agent_selector.py__bug__7345dd40.md",
+    "reviewed_at": "2026-09-13 16:45",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\cli\\hooks.py": {
+  "rel": "src\\jcodemunch_mcp\\cli\\hooks.py",
+  "modes": {
+   "bug": {
+    "sha": "b9a3bbf2d71f0099ef1bba49ffcd567a3a01bf54b5e7dc235e0076032a5ba2e9",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__cli__hooks.py__bug__b9a3bbf2.md",
+    "reviewed_at": "2026-09-13 17:20",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\credentials.py": {
+  "rel": "src\\jcodemunch_mcp\\credentials.py",
+  "modes": {
+   "bug": {
+    "sha": "e044d55f4f5e0240123d943db7f0458605bf216337e8b12d44b82cfc8ceb017b",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__credentials.py__bug__e044d55f.md",
+    "reviewed_at": "2026-09-13 17:42",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\reindex_state.py": {
+  "rel": "src\\jcodemunch_mcp\\reindex_state.py",
+  "modes": {
+   "bug": {
+    "sha": "b40b4ce913f01509c68a619ada5573475fe6da08ca0fad26bfad2e65cd3edbc0",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__reindex_state.py__bug__b40b4ce9.md",
+    "reviewed_at": "2026-09-13 18:00",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tier_resolver.py": {
+  "rel": "src\\jcodemunch_mcp\\tier_resolver.py",
+  "modes": {
+   "bug": {
+    "sha": "c8b72334a3104aa13e617078baf7e3380a15c5e1ec2501e8c635901e27c3fb41",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tier_resolver.py__bug__c8b72334.md",
+    "reviewed_at": "2026-09-13 18:16",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\get_file_tree.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\get_file_tree.py",
+  "modes": {
+   "bug": {
+    "sha": "397ff25472db134b6c40bdac37368cc5990bce5e973cb40189fb2eb72da23418",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__get_file_tree.py__bug__397ff254.md",
+    "reviewed_at": "2026-09-13 18:34",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\storage\\embedding_store.py": {
+  "rel": "src\\jcodemunch_mcp\\storage\\embedding_store.py",
+  "modes": {
+   "bug": {
+    "sha": "a4b4e088984b492e88e286a6f5dbe763593901dd4c5c32cc1f309ca120346480",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__storage__embedding_store.py__bug__a4b4e088.md",
+    "reviewed_at": "2026-09-13 18:52",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\counter.py": {
+  "rel": "src\\jcodemunch_mcp\\counter.py",
+  "modes": {
+   "bug": {
+    "sha": "32d5a073af277ce7b91fc5c210eb3832eb42785ad8c7430d19b6ea36db98e1d9",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__counter.py__bug__32d5a073.md",
+    "reviewed_at": "2026-09-13 19:05",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\evidence\\producers.py": {
+  "rel": "src\\jcodemunch_mcp\\evidence\\producers.py",
+  "modes": {
+   "bug": {
+    "sha": "d6e8f37b87a6c505e54de6342c218467e02b7bf7b2a8a5261e265570259eeaee",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__evidence__producers.py__bug__d6e8f37b.md",
+    "reviewed_at": "2026-09-13 19:18",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\register_edit.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\register_edit.py",
+  "modes": {
+   "bug": {
+    "sha": "6da292d4c156f4bddd377c2958e263b2531fc9468416ef4791094101141fbcea",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__register_edit.py__bug__6da292d4.md",
+    "reviewed_at": "2026-09-13 19:52",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\_scip_consume.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\_scip_consume.py",
+  "modes": {
+   "bug": {
+    "sha": "3abfeac7c0e094cc2fe2a0541d7907ea31b304b857049f483d3d1e2842784584",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools___scip_consume.py__bug__3abfeac7.md",
+    "reviewed_at": "2026-09-13 20:05",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\check_edit_safe.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\check_edit_safe.py",
+  "modes": {
+   "bug": {
+    "sha": "4d5b2007988b65563b7678afcea02ed0dcce1dc1d1a976833572016c1836fb57",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__check_edit_safe.py__bug__4d5b2007.md",
+    "reviewed_at": "2026-09-13 20:05",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\get_dead_code_v2.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\get_dead_code_v2.py",
+  "modes": {
+   "bug": {
+    "sha": "62e4b35c2abbc6d6f2b98d982cf982f226e202d5d2a8e46d3ee4fc153f8bcc28",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__get_dead_code_v2.py__bug__62e4b35c.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\hook_event.py": {
+  "rel": "src\\jcodemunch_mcp\\hook_event.py",
+  "modes": {
+   "bug": {
+    "sha": "1410aafa42b9f6318eb85cb256b17f3593135fccc355c05fcfd785b89eefb141",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__hook_event.py__bug__1410aafa.md",
+    "reviewed_at": "2026-09-13 21:00",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\evidence\\scip.py": {
+  "rel": "src\\jcodemunch_mcp\\evidence\\scip.py",
+  "modes": {
+   "bug": {
+    "sha": "c4002eb8f884c7f3e4deda17e70c76295754d16f84033021c574d37a4f87d100",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__evidence__scip.py__bug__c4002eb8.md",
+    "reviewed_at": "2026-09-13 20:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\evidence\\scip_ingest.py": {
+  "rel": "src\\jcodemunch_mcp\\evidence\\scip_ingest.py",
+  "modes": {
+   "bug": {
+    "sha": "4857be9f4792b1b1b1505a77bbe7c14dd963bb44d7608b4eeec1a803c429576d",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__evidence__scip_ingest.py__bug__4857be9f.md",
+    "reviewed_at": "2026-09-13 20:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\org\\http_routes.py": {
+  "rel": "src\\jcodemunch_mcp\\org\\http_routes.py",
+  "modes": {
+   "bug": {
+    "sha": "4fe1a3c2114231e76979a86727647f5a4dabd21e8b3e5f4a301275bc7b198f62",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__org__http_routes.py__bug__4fe1a3c2.md",
+    "reviewed_at": "2026-09-13 21:30",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\org\\store.py": {
+  "rel": "src\\jcodemunch_mcp\\org\\store.py",
+  "modes": {
+   "bug": {
+    "sha": "1b79c1e24a4a526aa6631b366d52c1bc441817847d144b6b9c60d03108f13bb8",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__org__store.py__bug__1b79c1e2.md",
+    "reviewed_at": "2026-09-13 21:30",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\parser\\parse_cache.py": {
+  "rel": "src\\jcodemunch_mcp\\parser\\parse_cache.py",
+  "modes": {
+   "bug": {
+    "sha": "e2cc447d8f0fdea0db2ff664a291a1ad8a54183e738e9e12da0a3833aff23c63",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__parser__parse_cache.py__bug__e2cc447d.md",
+    "reviewed_at": "2026-09-13 21:45",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\retrieval\\verdict.py": {
+  "rel": "src\\jcodemunch_mcp\\retrieval\\verdict.py",
+  "modes": {
+   "bug": {
+    "sha": "dc5d9ab5a4c1e05aae6f2b86c88b1b5728f6414bc4a6f31e31a9db8c7176ded9",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__retrieval__verdict.py__bug__dc5d9ab5.md",
+    "reviewed_at": "2026-09-13 22:00",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\stdio_guard.py": {
+  "rel": "src\\jcodemunch_mcp\\stdio_guard.py",
+  "modes": {
+   "bug": {
+    "sha": "e41d0b36240dde7aad5834b9ed7ec147f54226c5dbcb6624422ea4c18e377c66",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__stdio_guard.py__bug__e41d0b36.md",
+    "reviewed_at": "2026-09-13 22:15",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\storage\\embedding_matrix.py": {
+  "rel": "src\\jcodemunch_mcp\\storage\\embedding_matrix.py",
+  "modes": {
+   "bug": {
+    "sha": "e6c5dd2aa04fa1614bc2905600179bce656a70ca009ddcb5138df599c27fc03c",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__storage__embedding_matrix.py__bug__e6c5dd2a.md",
+    "reviewed_at": "2026-09-13 22:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\get_watch_status.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\get_watch_status.py",
+  "modes": {
+   "bug": {
+    "sha": "a20a08ffb7c01ae217fd326728a1c2181b40c8ca44aec52d1147cf319b5b020e",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__get_watch_status.py__bug__a20a08ff.md",
+    "reviewed_at": "2026-09-13 22:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\index_file.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\index_file.py",
+  "modes": {
+   "bug": {
+    "sha": "d321af498a8cc7a3caf0496bbcf070cd2bee98f0d08d1817b399dbc464b9969e",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__index_file.py__bug__d321af49.md",
+    "reviewed_at": "2026-09-13 23:10",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summary, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\progress.py": {
+  "rel": "src\\jcodemunch_mcp\\progress.py",
+  "modes": {
+   "bug": {
+    "sha": "d3cab662695c5d04caebec1c7ba36feb712bb1207ab5adfc44927a25b753fc0b",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__progress.py__bug__d3cab662.md",
+    "reviewed_at": "2026-09-13 23:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\org\\license.py": {
+  "rel": "src\\jcodemunch_mcp\\org\\license.py",
+  "modes": {
+   "bug": {
+    "sha": "4f5eb7a292f648c54b695c48cb35c6adad02374e406ddd5c3b8038656b27e352",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__org__license.py__bug__4f5eb7a2.md",
+    "reviewed_at": "2026-09-13 23:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\parser\\hierarchy.py": {
+  "rel": "src\\jcodemunch_mcp\\parser\\hierarchy.py",
+  "modes": {
+   "bug": {
+    "sha": "32ef8570e60ef884172e30de372d33dda2ef7037d9f3123d83a1b975666dc87e",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__parser__hierarchy.py__bug__32ef8570.md",
+    "reviewed_at": "2026-09-13 23:40",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\parser\\context\\base.py": {
+  "rel": "src\\jcodemunch_mcp\\parser\\context\\base.py",
+  "modes": {
+   "bug": {
+    "sha": "32475b2c8cd1b73308af1dccc5c85fcc3c4c3ebd702c604cdced087fb483ce97",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__parser__context__base.py__bug__32475b2c.md",
+    "reviewed_at": "2026-09-13 23:55",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\storage\\selective.py": {
+  "rel": "src\\jcodemunch_mcp\\storage\\selective.py",
+  "modes": {
+   "bug": {
+    "sha": "91202292bc6ddbf2d5627913e3848768bc5a0475615068e93688ef91e0a4348c",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__storage__selective.py__bug__91202292.md",
+    "reviewed_at": "2026-09-13 23:55",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\watch_all.py": {
+  "rel": "src\\jcodemunch_mcp\\watch_all.py",
+  "modes": {
+   "bug": {
+    "sha": "625308969c31bd1f435b6b1c9205e7b7e03b8fa8ed3f6c661e428035d1c6aabb",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__watch_all.py__bug__62530896.md",
+    "reviewed_at": "2026-09-13 23:55",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\runtime\\http_routes.py": {
+  "rel": "src\\jcodemunch_mcp\\runtime\\http_routes.py",
+  "modes": {
+   "bug": {
+    "sha": "2abfec74bfca3cda49a72b45354f8c5ce957d086b07e0f26fbc3b0f72519f00a",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__runtime__http_routes.py__bug__2abfec74.md",
+    "reviewed_at": "2026-09-13 23:55",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\find_unused_paths.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\find_unused_paths.py",
+  "modes": {
+   "bug": {
+    "sha": "ec6bd0b3cf712c129ccd28c2efad867b77075ab910f4da5f5b72bb97cc321890",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__find_unused_paths.py__bug__ec6bd0b3.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\get_ranked_context.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\get_ranked_context.py",
+  "modes": {
+   "bug": {
+    "sha": "0257c3c4ad32c6e9aad77d859a0e51b226f9db5c69678d38d293cb9c6c33cfbc",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__get_ranked_context.py__bug__0257c3c4.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\get_symbol.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\get_symbol.py",
+  "modes": {
+   "bug": {
+    "sha": "10a0cac856ae741dfbcd488328d2af33a0587a517c7cfb66d6e4e693cd7d74c3",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__get_symbol.py__bug__10a0cac8.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\evidence\\receipts.py": {
+  "rel": "src\\jcodemunch_mcp\\evidence\\receipts.py",
+  "modes": {
+   "bug": {
+    "sha": "01a97f10a8ef4e765969c53f644b7d9238be66c93a3f8195b6f48a2637eea3a0",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__evidence__receipts.py__bug__01a97f10.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\cli\\skills.py": {
+  "rel": "src\\jcodemunch_mcp\\cli\\skills.py",
+  "modes": {
+   "bug": {
+    "sha": "3f2485e4f5488d8f9166bcc421dab46125b15f7ac359e4f81578436adf0c1656",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__cli__skills.py__bug__3f2485e4.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\cli\\whatsnew.py": {
+  "rel": "src\\jcodemunch_mcp\\cli\\whatsnew.py",
+  "modes": {
+   "bug": {
+    "sha": "7901da65cd69afe7997d3517ded86d08293b5138b8fb46717e068230ca91e106",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__cli__whatsnew.py__bug__7901da65.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\parser\\context\\git_blame.py": {
+  "rel": "src\\jcodemunch_mcp\\parser\\context\\git_blame.py",
+  "modes": {
+   "bug": {
+    "sha": "151a169eab6645a466cec19a43fee0c337640bb69879b245bd1c24083b37281a",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__parser__context__git_blame.py__bug__151a169e.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\investigator\\retrieval_counterfactual.py": {
+  "rel": "src\\jcodemunch_mcp\\investigator\\retrieval_counterfactual.py",
+  "modes": {
+   "bug": {
+    "sha": "ec504932b38762eeb08ccb7be88a9784a3713bdaef81e175c1c85543ac42df2a",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__investigator__retrieval_counterfactual.py__bug__ec504932.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\cli\\receipt.py": {
+  "rel": "src\\jcodemunch_mcp\\cli\\receipt.py",
+  "modes": {
+   "bug": {
+    "sha": "13d26d36913476d5a7ecc4a78a9d1b4d6d291acbde7d48cf3e9b1815458514ed",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__cli__receipt.py__bug__13d26d36.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\cli\\upgrade.py": {
+  "rel": "src\\jcodemunch_mcp\\cli\\upgrade.py",
+  "modes": {
+   "bug": {
+    "sha": "1c282b7f89d4b36eceef064acaf3eb541ddc30fd481db710b3413e22b3f8939b",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__cli__upgrade.py__bug__1c282b7f.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\find_dead_code.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\find_dead_code.py",
+  "modes": {
+   "bug": {
+    "sha": "34261a22c364f8fb02ac727cf6983c7bc982e8824bef621a18fcec80c087576e",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__find_dead_code.py__bug__34261a22.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\get_changed_symbols.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\get_changed_symbols.py",
+  "modes": {
+   "bug": {
+    "sha": "fa98ac8600efb26a11bf375dc61e9f2f09f914f0b0f8a23a25cf6698469813f9",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__get_changed_symbols.py__bug__fa98ac86.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\refresh.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\refresh.py",
+  "modes": {
+   "bug": {
+    "sha": "62c71b5bdd9944ffab14774aaeaf3ed26f9cb4e71afbf08135fdf368f57ebccd",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__refresh.py__bug__62c71b5b.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\check_references.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\check_references.py",
+  "modes": {
+   "bug": {
+    "sha": "11ef69945642f6d66a0e5aaaf378195a7dced51a83f3ffb587806c3d5da75ee7",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__check_references.py__bug__11ef6994.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\invalidate_cache.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\invalidate_cache.py",
+  "modes": {
+   "bug": {
+    "sha": "8baeb0eb12bbe31f0ec2fd3fbede22cf0709df98032e05342575abbc26b26798",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__invalidate_cache.py__bug__8baeb0eb.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\src\\jcodemunch_mcp\\tools\\check_rename_safe.py": {
+  "rel": "src\\jcodemunch_mcp\\tools\\check_rename_safe.py",
+  "modes": {
+   "bug": {
+    "sha": "68e21c1b89f437ea264d92feb7c130685e2e95043e411dd27390d0abee6d4e8a",
+    "output": "C:\\Users\\User\\source\\repos\\jcodemunch-mcp\\.colibri_reviews\\src__jcodemunch_mcp__tools__check_rename_safe.py__bug__68e21c1b.md",
+    "reviewed_at": "2026-09-13 23:59",
+    "model": "claude-opus-5 (in-session Phase-3 gate over the 2026-09-11 sub-agent summaries, artifacts reaudit/jcm/)",
+    "cost": 0.0
+   }
+  }
+ }
+}

@@ -1,0 +1,23 @@
+# ROOT history-read remediation review
+
+Source: adversary-gate/adversary_audit.py
+Reviewer: Codex parent with independent review_root_fix agent (exact pre-write CLEAR)
+SHA256: 86cd4dc33feadc8fc82266ea8b2402c228999d277923432b3b19d3148b329f89
+Date: 2026-09-09
+Mode: bug/debug
+Context: user BLOCK finding; current ROOT branch, installer vendoring contract, canonical/vendored parity, existing audit fixtures.
+
+## Verdict
+CLEAR for the exact independently reviewed changes. The deleted-ref trigger was confirmed in an isolated repository before editing.
+
+## Fixed since last review
+The previous ROOT classifier treated an absent branch ref as proof of no commits and returned clean even with unreachable history. Object enumeration must now succeed and contain only non-commit object types before returning clean. Errors, commit objects, and unexpected types fail closed. Removed inaccurate return-code commentary.
+
+## Validation
+Baseline 43/43 passed but missed deleted refs. Four new loose/packed-ref regressions in text/JSON modes failed before the production edit (43/47), then the complete audit selftest passed 47/47. Existing empty-repository, corrupt-ref, missing-object, notarized-root and shallow-history cases pass. Four supplemental in-memory enumeration probes passed (error, unexpected output, commit, non-commit types). Tools installer verify-only reports ARMED.
+
+## Cross-file synthesis
+Canonical and Tools-vendored auditor bytes match. The test helper validates fixture Git operations and isolates global configuration. OpenAIAstra has an independently staged vendored update; this task leaves that repository/index untouched so its owning task can import the corrected canonical file.
+
+## Limits
+This is history auditing and isolated test evidence, not proof of live host interception. Enumeration examines existing objects; deleted/pruned evidence cannot establish prior history. Automatic commit review is an additional subsequent gate.

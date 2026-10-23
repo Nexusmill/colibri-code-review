@@ -1,0 +1,685 @@
+{
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\harness_guard.py": {
+  "rel": "adversary-gate/harness_guard.py",
+  "modes": {
+   "bug": {
+    "sha": "379b2cdf45221adb11af14732871dca64d467657075b3262b740f04d2e26744a",
+    "output": ".colibri_reviews/adversary-gate__harness_guard.py__bug__379b2cdf.md",
+    "reviewed_at": "2026-09-02",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\adversary_audit.py": {
+  "rel": "adversary-gate/adversary_audit.py",
+  "modes": {
+   "bug": {
+    "sha": "3057073410aaa87b6b1763ba381732eb7ccfc6775cf78187de8b946fe0d36f14",
+    "output": ".colibri_reviews/adversary-gate__adversary_audit.py__bug__30570734.md",
+    "reviewed_at": "2026-10-03 17:59",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\adversary_gate.py": {
+  "rel": "adversary-gate/adversary_gate.py",
+  "modes": {
+   "bug": {
+    "sha": "c591024d7df59a752b80edcdc8ff3af62565fcfc474cb84f58086fc8cfb0a9e8",
+    "output": ".colibri_reviews/adversary-gate__adversary_gate.py__bug__c591024d.md",
+    "reviewed_at": "2026-10-10 13:48",
+    "cost": 0
+   },
+   "bug@027dc8ea": {
+    "sha": "027dc8ea784f61166555aca11ea7a578abb0f02d065492782c4388b6960967e7",
+    "output": ".colibri_reviews/adversary-gate__adversary_gate.py__bug__027dc8ea.md",
+    "reviewed_at": "2026-09-02",
+    "cost": 0.0
+   },
+   "feature": {
+    "sha": "89ac3f241c0e36a47931eff3e8b06449fcbaecd025ebac41b8d37611332485ce",
+    "output": ".colibri_reviews/adversary-gate__adversary_gate.py__feature__89ac3f24.md",
+    "reviewed_at": "2026-10-08 17:46",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\install_gate.py": {
+  "rel": "adversary-gate/install_gate.py",
+  "modes": {
+   "bug": {
+    "sha": "8a437201824b48053b3c2618f8adcf54e4bd4b8a542f1b3d87770018ce4c6bba",
+    "output": ".colibri_reviews/adversary-gate__install_gate.py__bug__8a437201.md",
+    "reviewed_at": "2026-10-03 17:59",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\screencap\\screencap.py": {
+  "rel": "screencap/screencap.py",
+  "modes": {
+   "bug": {
+    "sha": "14f8c3e43468052bf9d5256e84df29eca0eece08f27e5f5e48487e0fe6277e8b",
+    "output": ".colibri_reviews/screencap__screencap.py__bug__14f8c3e4.md",
+    "reviewed_at": "2026-09-02",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\hy4-review\\hy4_review.py": {
+  "rel": "hy4-review/hy4_review.py",
+  "modes": {
+   "bug": {
+    "sha": "c5392c005bcafa27bf80a6e909e9e1e7c66cfce5a523a67f7fea930ce94683c8",
+    "output": ".colibri_reviews/hy4-review__hy4_review.py__bug__c5392c00.md",
+    "reviewed_at": "2026-09-02",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\mcp\\server.py": {
+  "rel": "mcp/server.py",
+  "modes": {
+   "bug": {
+    "sha": "c647f9eba880149cce51906118e877309215c8d32929a5bd91dfb939ff34516f",
+    "output": ".colibri_reviews/mcp__server.py__bug__c647f9eb.md",
+    "reviewed_at": "2026-09-02",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\safe-edit\\_safe_edit.py": {
+  "rel": "safe-edit/_safe_edit.py",
+  "modes": {
+   "bug": {
+    "sha": "f97f34c7eb167837e371b63432ec5a94b7033fcffa59c30494616428abdc202e",
+    "output": ".colibri_reviews/safe-edit___safe_edit.py__bug__f97f34c7.md",
+    "reviewed_at": "2026-09-02",
+    "cost": 0.0
+   },
+   "feature": {
+    "sha": "e03e89e973662f0dcae0e9243b9f8076f5dd0e3b7e4634f3835ab4e84b7eab31",
+    "output": ".colibri_reviews/safe-edit___safe_edit.py__feature__e03e89e9.md",
+    "reviewed_at": "2026-10-08 17:46",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\sign\\install_cert.ps1": {
+  "rel": "sign/install_cert.ps1",
+  "modes": {
+   "bug": {
+    "sha": "364bee75b628ce4f779819bf0d0a63ea99dd807c4e8eb12b8a5e234f7a7433d9",
+    "output": ".colibri_reviews/sign__install_cert.ps1__bug__364bee75.md",
+    "reviewed_at": "2026-09-02",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\guard_selftest.py": {
+  "rel": "adversary-gate/guard_selftest.py",
+  "modes": {
+   "bug": {
+    "sha": "f8f6152604814319beba3f87c92eff3b8f7b7ccc7a8c577fb0e7b99a06237834",
+    "output": ".colibri_reviews/adversary-gate__guard_selftest.py__bug__f8f61526.md",
+    "reviewed_at": "2026-09-02",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\gate_selftest.py": {
+  "rel": "adversary-gate/gate_selftest.py",
+  "modes": {
+   "bug": {
+    "sha": "d5b891d597ecf8c1147fb99310188663172f78c724bc5a6427421f3e9599bec2",
+    "output": ".colibri_reviews/adversary-gate__gate_selftest.py__bug__d5b891d5.md",
+    "reviewed_at": "2026-10-03 08:36",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\owner_setup.py": {
+  "rel": "adversary-gate/owner_setup.py",
+  "modes": {
+   "bug": {
+    "sha": "284672f6cff40283c8ceb45d18560ab76c63001c345c9e40d349d617c89e232d",
+    "output": ".colibri_reviews/adversary-gate__owner_setup.py__bug__284672f6.md",
+    "reviewed_at": "2026-09-05",
+    "model": "claude-fable-5-1 (Phase-3 gate over z-ai/glm-5.3-flash)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\install_selftest.py": {
+  "rel": "adversary-gate/install_selftest.py",
+  "modes": {
+   "bug": {
+    "sha": "cbd3d491d0772fc3f6cf6cdcdb47bb200d2c02bf682b813bd767adae94bcdde8",
+    "output": ".colibri_reviews/adversary-gate__install_selftest.py__bug__cbd3d491.md",
+    "reviewed_at": "2026-10-01 16:11",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\audit_selftest.py": {
+  "rel": "adversary-gate/audit_selftest.py",
+  "modes": {
+   "bug": {
+    "sha": "cd6a4f8d8cc0beaaea5dcb4d8db80e6e332331faccbfaa669c140403c2633ee0",
+    "output": "C:\\Users\\User\\source\\repos\\Tools\\.colibri_reviews\\adversary-gate__audit_selftest.py__bug__cd6a4f8d.md",
+    "reviewed_at": "2026-09-10T04:41:28.370802+00:00",
+    "cost": null
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\grok-review\\grok_review.py": {
+  "rel": "grok-review/grok_review.py",
+  "modes": {
+   "bug": {
+    "sha": "1ca63ea5f41d835bc951e0c768234ad9c544248ecd4ebb78534a82f348df9ba3",
+    "output": ".colibri_reviews/grok-review__grok_review.py__bug__1ca63ea5.md",
+    "reviewed_at": "2026-09-05",
+    "model": "claude-fable-5-1 (Phase-3 gate over z-ai/glm-5.3-flash)",
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\plugin\\hooks\\protocol-gate.mjs": {
+  "rel": "plugin/hooks/protocol-gate.mjs",
+  "modes": {
+   "debug": {
+    "sha": "630c77526e6b1b811f062a2bef2d9e311ff6c63d76221e0342b5ea200da9bf81",
+    "output": ".colibri_reviews/plugin__hooks__protocol-gate.mjs__debug__630c7752.md",
+    "reviewed_at": "2026-09-08T13:13:03+00:00",
+    "tokens_in": 0,
+    "tokens_out": 0,
+    "cost": 0.0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\.githooks\\adversary_audit.py": {
+  "rel": ".githooks/adversary_audit.py",
+  "modes": {
+   "bug": {
+    "sha": "f9bf47136092e8d4710720edfbe33c7595ad4f1e7c1144dc9f8ae121b0fad4a0",
+    "output": "C:\\Users\\User\\source\\repos\\Tools\\.colibri_reviews\\.githooks__adversary_audit.py__bug__f9bf4713.md",
+    "reviewed_at": "2026-09-10T04:41:28.368802+00:00",
+    "cost": null
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\skill-gate\\skill_loader.py": {
+  "rel": "skill-gate/skill_loader.py",
+  "modes": {
+   "bug": {
+    "sha": "a66c53542c47968a5fc3f9794be43037599f564d3a3b496ec7f2899621c05504",
+    "output": ".colibri_reviews/skill-gate__skill_loader.py__bug__a66c5354.md",
+    "reviewed_at": "2026-09-26 20:30",
+    "cost": 0
+   },
+   "bug@536d1fba": {
+    "sha": "536d1fba9003a836fc58c1f13d415cbdae11a94d80febb4c2cad66d10857264e",
+    "output": ".colibri_reviews/skill-gate__skill_loader.py__bug__536d1fba.md",
+    "reviewed_at": "2026-09-16 05:24",
+    "cost": 0
+   },
+   "bug@0d38f8a6": {
+    "sha": "0d38f8a67a64eaecb93352f1618a521d8ab3d149dbb6a6bb20bb9e196c79a0a1",
+    "output": ".colibri_reviews/skill-gate__skill_loader.py__bug__0d38f8a6.md",
+    "reviewed_at": "2026-09-19 13:38",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\skill-gate\\test_skill_loader.py": {
+  "rel": "skill-gate/test_skill_loader.py",
+  "modes": {
+   "bug": {
+    "sha": "453ac6da36d2745fca4b0687a0a80cc9422166106e21ffb37e892a0890b7b4dd",
+    "output": ".colibri_reviews/skill-gate__test_skill_loader.py__bug__453ac6da.md",
+    "reviewed_at": "2026-09-26 20:30",
+    "cost": 0
+   },
+   "bug@283f1ced": {
+    "sha": "283f1cedb8f0b9f506ea95b2159386eeade82d006fd5cb73066e1c287839672d",
+    "output": ".colibri_reviews/skill-gate__test_skill_loader.py__bug__283f1ced.md",
+    "reviewed_at": "2026-09-16 05:24",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\enforcement_server.py": {
+  "rel": "adversary-gate/enforcement_server.py",
+  "modes": {
+   "bug": {
+    "sha": "088fc027e3a77276cfc81bc368ccc832ac4c844de79b054dd9b0dc01d3355a80",
+    "output": ".colibri_reviews/adversary-gate__enforcement_server.py__bug__088fc027.md",
+    "reviewed_at": "2026-09-19 13:38",
+    "cost": 0
+   },
+   "bug@eb747487": {
+    "sha": "eb7474872ac01c65cbe127e67b08dd7fb7dd12d0dc8239c4b1614c87cdb31a36",
+    "output": ".colibri_reviews/adversary-gate__enforcement_server.py__bug__eb747487.md",
+    "reviewed_at": "2026-09-16 05:56",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\codex_policy.py": {
+  "rel": "adversary-gate/codex_policy.py",
+  "modes": {
+   "bug": {
+    "sha": "b86163e661cb702022ef14665c3336119625f22c726ee2958fbb33d4e09f25dc",
+    "output": ".colibri_reviews/adversary-gate__codex_policy.py__bug__b86163e6.md",
+    "reviewed_at": "2026-10-03 07:44",
+    "cost": 0
+   },
+   "bug@7ff5eb65": {
+    "sha": "7ff5eb659f061981f8f9dc181485950b978876efac0d25637ddfba7ee6fe6b7a",
+    "output": ".colibri_reviews/adversary-gate__codex_policy.py__bug__7ff5eb65.md",
+    "reviewed_at": "2026-09-16 05:56",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_read_file.py": {
+  "rel": "adversary-gate/test_read_file.py",
+  "modes": {
+   "bug": {
+    "sha": "131da86e57b170de25ed4b68161b4d807c61cc5f3205793cd269339ef64dd16f",
+    "output": ".colibri_reviews/adversary-gate__test_read_file.py__bug__131da86e.md",
+    "reviewed_at": "2026-10-01 14:21",
+    "cost": 0
+   },
+   "bug@43a9ccb1": {
+    "sha": "43a9ccb100a2664bfbf0eea1d06b605267147fe3c8a41052c866fe5e9fa61af4",
+    "output": ".colibri_reviews/adversary-gate__test_read_file.py__bug__43a9ccb1.md",
+    "reviewed_at": "2026-09-16 05:56",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\reviewed_write.py": {
+  "rel": "adversary-gate/reviewed_write.py",
+  "modes": {
+   "bug": {
+    "sha": "8aaf01ba2d32b281ed2dd1e5382183b73a6a05d98d153f279d81237ddfd6f034",
+    "output": ".colibri_reviews/adversary-gate__reviewed_write.py__bug__8aaf01ba.md",
+    "reviewed_at": "2026-10-01 15:24",
+    "cost": 0
+   },
+   "feature": {
+    "sha": "abcd6153cee72611f9453d785583bfe28427f3a8fdf1783013f1baaced51e18b",
+    "output": ".colibri_reviews/adversary-gate__reviewed_write.py__feature__abcd6153.md",
+    "reviewed_at": "2026-10-08 17:46",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_review_completion.py": {
+  "rel": "adversary-gate/test_review_completion.py",
+  "modes": {
+   "bug": {
+    "sha": "379116143a26a149885f2a92e19f155e8c83101a2bbff3ade3684427cc7bf7d6",
+    "output": ".colibri_reviews/adversary-gate__test_review_completion.py__bug__37911614.md",
+    "reviewed_at": "2026-09-16 23:06",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\project_preview.py": {
+  "rel": "adversary-gate/project_preview.py",
+  "modes": {
+   "bug": {
+    "sha": "3b650e958f3b9f22ed0090efe2761062b2ba6e07ceef39d40aa470ce68d6f918",
+    "output": ".colibri_reviews/adversary-gate__project_preview.py__bug__3b650e95.md",
+    "reviewed_at": "2026-10-03 07:15",
+    "cost": 0
+   },
+   "bug@52b5ce2d": {
+    "sha": "52b5ce2d0717a869ee6ced577f92a3bc4729f082a2ae5695f402b2d45bf617bb",
+    "output": ".colibri_reviews/adversary-gate__project_preview.py__bug__52b5ce2d.md",
+    "reviewed_at": "2026-09-19 13:38",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\preview_worker.py": {
+  "rel": "adversary-gate/preview_worker.py",
+  "modes": {
+   "bug": {
+    "sha": "2fdfb20d5afc3eea997960355f409aaa58b3f3b391dc30defe02aeb507f26b51",
+    "output": ".colibri_reviews/adversary-gate__preview_worker.py__bug__2fdfb20d.md",
+    "reviewed_at": "2026-09-19 13:38",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_project_preview.py": {
+  "rel": "adversary-gate/test_project_preview.py",
+  "modes": {
+   "bug": {
+    "sha": "b4f5eda637cd951518413f9aee206922d51d106677adc9d827c7daa16e01139f",
+    "output": ".colibri_reviews/adversary-gate__test_project_preview.py__bug__b4f5eda6.md",
+    "reviewed_at": "2026-10-01 14:21",
+    "cost": 0
+   },
+   "bug@55349465": {
+    "sha": "553494657a27e6a02b6d56e1e86da4ca687ccc7eca3d062fafd7c1b45345210d",
+    "output": ".colibri_reviews/adversary-gate__test_project_preview.py__bug__55349465.md",
+    "reviewed_at": "2026-09-19 13:38",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_preview_worker.py": {
+  "rel": "adversary-gate/test_preview_worker.py",
+  "modes": {
+   "bug": {
+    "sha": "f0dcdc7e43c50fb6e2ed4aa67575be0e82a398d19fd075e9645d97228f444913",
+    "output": ".colibri_reviews/adversary-gate__test_preview_worker.py__bug__f0dcdc7e.md",
+    "reviewed_at": "2026-09-19 13:38",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_preview_approval.py": {
+  "rel": "adversary-gate/test_preview_approval.py",
+  "modes": {
+   "bug": {
+    "sha": "b54646a562ace5b039ceab1fee5dd0501b39ea9dcfd981256f79eada406e6c7b",
+    "output": ".colibri_reviews/adversary-gate__test_preview_approval.py__bug__b54646a5.md",
+    "reviewed_at": "2026-09-19 13:38",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_codex_policy.py": {
+  "rel": "adversary-gate/test_codex_policy.py",
+  "modes": {
+   "bug": {
+    "sha": "3d4bf05dbe2b2f97d1d9b0a21c4c28493e54425a0aeac26a26af5f58b0de6f7d",
+    "output": ".colibri_reviews/adversary-gate__test_codex_policy.py__bug__3d4bf05d.md",
+    "reviewed_at": "2026-10-03 07:44",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_enforcement_server.py": {
+  "rel": "adversary-gate/test_enforcement_server.py",
+  "modes": {
+   "bug": {
+    "sha": "077e8c6d818d044c8a7f5d1da65b0a3dbb0ea742d62dd3891f66e2d27a51d623",
+    "output": ".colibri_reviews/adversary-gate__test_enforcement_server.py__bug__077e8c6d.md",
+    "reviewed_at": "2026-09-19 13:38",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_reviewed_write.py": {
+  "rel": "adversary-gate/test_reviewed_write.py",
+  "modes": {
+   "bug": {
+    "sha": "95535c00a1cf280e5a107f80f26dc4886b13e52e6c1bd468732f5a6f613b24f2",
+    "output": ".colibri_reviews/adversary-gate__test_reviewed_write.py__bug__95535c00.md",
+    "reviewed_at": "2026-10-03 07:56",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\codex_guard_selftest.py": {
+  "rel": "adversary-gate/codex_guard_selftest.py",
+  "modes": {
+   "bug": {
+    "sha": "43b2c916c7894016b8d387164703797a380bc5f2fcc568bbc46fa0e43a07d612",
+    "output": ".colibri_reviews/adversary-gate__codex_guard_selftest.py__bug__43b2c916.md",
+    "reviewed_at": "2026-10-01 19:40",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\tests\\test_enforcement_suites.py": {
+  "rel": "tests/test_enforcement_suites.py",
+  "modes": {
+   "bug": {
+    "sha": "0d2f1839f8227c84271429b0675a613af2d0d45d60add6f8cdead189ad6fc3d7",
+    "output": ".colibri_reviews/tests__test_enforcement_suites.py__bug__0d2f1839.md",
+    "reviewed_at": "2026-09-27 10:25",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_kokoro_integration.py": {
+  "rel": "adversary-gate/test_kokoro_integration.py",
+  "modes": {
+   "bug": {
+    "sha": "5977d1e8d7f04455c28525c1ec3e6bfd33c0a904b5fddb9aeaa7b645d548f2ad",
+    "output": ".colibri_reviews/adversary-gate__test_kokoro_integration.py__bug__5977d1e8.md",
+    "reviewed_at": "2026-10-01 14:21",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\CODEX_INTEGRATION.md": {
+  "rel": "adversary-gate/CODEX_INTEGRATION.md",
+  "modes": {
+   "bug": {
+    "sha": "833ad36a4a99d2270ea08beda9e60171fa5a61c7bf7be14c3c9ae6b1992c34c3",
+    "output": ".colibri_reviews/adversary-gate__CODEX_INTEGRATION.md__bug__833ad36a.md",
+    "reviewed_at": "2026-10-01 20:52",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\.gitignore": {
+  "rel": ".gitignore",
+  "modes": {
+   "bug": {
+    "sha": "1c9f53ccd337f0f7cf9993f9ac7759f98527763be96c9bed277658a3fd7b2637",
+    "output": ".colibri_reviews/.gitignore__bug__1c9f53cc.md",
+    "reviewed_at": "2026-10-01 15:24",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\codex_guard.py": {
+  "rel": "adversary-gate/codex_guard.py",
+  "modes": {
+   "bug": {
+    "sha": "73710b566348225bb980db9da82cae20a0ba5a3870272f4dae9ecef29316a76c",
+    "output": ".colibri_reviews/adversary-gate__codex_guard.py__bug__73710b56.md",
+    "reviewed_at": "2026-10-02 15:23",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\enforcement_runtime.py": {
+  "rel": "adversary-gate/enforcement_runtime.py",
+  "modes": {
+   "bug": {
+    "sha": "75ae0bd46eabff9a428c24071da1994be91f85092a3395681dcbb904b6cc12c6",
+    "output": ".colibri_reviews/adversary-gate__enforcement_runtime.py__bug__75ae0bd4.md",
+    "reviewed_at": "2026-10-01 21:01",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\runtime_loader.py": {
+  "rel": "adversary-gate/runtime_loader.py",
+  "modes": {
+   "bug": {
+    "sha": "d4bbbf0ce47e1d2207c05afc8e0a35c9c5b05e9f72ff37a1b4cb945674b62474",
+    "output": ".colibri_reviews/adversary-gate__runtime_loader.py__bug__d4bbbf0c.md",
+    "reviewed_at": "2026-10-03 07:15",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_enforcement_runtime.py": {
+  "rel": "adversary-gate/test_enforcement_runtime.py",
+  "modes": {
+   "bug": {
+    "sha": "2dd85a97cff6fc5f4f06376df238f38807b6e66bfb2a58d276534ea141dd08e8",
+    "output": ".colibri_reviews/adversary-gate__test_enforcement_runtime.py__bug__2dd85a97.md",
+    "reviewed_at": "2026-10-03 07:15",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\codex_hooks.json": {
+  "rel": "adversary-gate/codex_hooks.json",
+  "modes": {
+   "bug": {
+    "sha": "e23faa3232ab72429fc12bb8d0ec4ac871f10584829176d6a791a1ac5698cd73",
+    "output": ".colibri_reviews/adversary-gate__codex_hooks.json__bug__e23faa32.md",
+    "reviewed_at": "2026-10-01 18:59",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\dispatchers\\pre-commit": {
+  "rel": "adversary-gate/dispatchers/pre-commit",
+  "modes": {
+   "bug": {
+    "sha": "42b764cf45f891e5d381fc1c1b68de13a380eb7ead848005338c2dc7d8eb05b2",
+    "output": ".colibri_reviews/adversary-gate__dispatchers__pre-commit__bug__42b764cf.md",
+    "reviewed_at": "2026-10-01 15:24",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\dispatchers\\post-commit": {
+  "rel": "adversary-gate/dispatchers/post-commit",
+  "modes": {
+   "bug": {
+    "sha": "18b643354fce5437aa7f1c40f56dbbefcb866f19674c6ce77e15ba63820c2076",
+    "output": ".colibri_reviews/adversary-gate__dispatchers__post-commit__bug__18b64335.md",
+    "reviewed_at": "2026-10-01 15:24",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\dispatchers\\pre-push": {
+  "rel": "adversary-gate/dispatchers/pre-push",
+  "modes": {
+   "bug": {
+    "sha": "5ada4a3d22b40e2ffe131a7a204103d8f6fcc88072523412662532d1c949441c",
+    "output": ".colibri_reviews/adversary-gate__dispatchers__pre-push__bug__5ada4a3d.md",
+    "reviewed_at": "2026-10-01 15:24",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\docs\\tasks\\2026-10-01-installed-enforcement.md": {
+  "rel": "docs/tasks/2026-10-01-installed-enforcement.md",
+  "modes": {
+   "bug": {
+    "sha": "9157f7f0928dfdb5e15cf14f70a0c2b0f38fbbc65c77759795834d652dc395f7",
+    "output": ".colibri_reviews/docs__tasks__2026-10-01-installed-enforcement.md__bug__9157f7f0.md",
+    "reviewed_at": "2026-10-01 15:24",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_batch_review.py": {
+  "rel": "adversary-gate/test_batch_review.py",
+  "modes": {
+   "bug": {
+    "sha": "f6373b122b95c0646f017f4521e521c4debfebbbbc3d3e20053c174e16c0b6a4",
+    "output": ".colibri_reviews/adversary-gate__test_batch_review.py__bug__f6373b12.md",
+    "reviewed_at": "2026-10-02 20:02",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_audit_text.py": {
+  "rel": "adversary-gate/test_audit_text.py",
+  "modes": {
+   "bug": {
+    "sha": "69b3974c697ebacfd2d447f22b07d36620f626247fb5d42ea10e0c1fafdab2e1",
+    "output": ".colibri_reviews/adversary-gate__test_audit_text.py__bug__69b3974c.md",
+    "reviewed_at": "2026-10-03 08:36",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_text_epoch.py": {
+  "rel": "adversary-gate/test_text_epoch.py",
+  "modes": {
+   "bug": {
+    "sha": "512e20acc379303eb9b8bf4ce9f46695eb491840c5e9f02b14957e86a6aa3a4b",
+    "output": ".colibri_reviews/adversary-gate__test_text_epoch.py__bug__512e20ac.md",
+    "reviewed_at": "2026-10-03 17:59",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\arm-repo\\arm_repo.py": {
+  "rel": "arm-repo/arm_repo.py",
+  "modes": {
+   "feature": {
+    "sha": "5320d047e265e80434db2fb03d5961ebeeb73d3f2a729086ab286a2220c7962f",
+    "output": ".colibri_reviews/arm-repo__arm_repo.py__feature__5320d047.md",
+    "reviewed_at": "2026-10-08 17:46",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\autoland\\fleet_config.py": {
+  "rel": "autoland/fleet_config.py",
+  "modes": {
+   "feature": {
+    "sha": "0388651ab7f3fd9ec951b4d25efaa80e13e06e72eef12f8a84c581b8cd5b0b77",
+    "output": ".colibri_reviews/autoland__fleet_config.py__feature__0388651a.md",
+    "reviewed_at": "2026-10-08 17:46",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\GATE_TOP_TO_BOTTOM.md": {
+  "rel": "adversary-gate/GATE_TOP_TO_BOTTOM.md",
+  "modes": {
+   "feature": {
+    "sha": "385bcbb2e646a9f474478abbb70c92e2720c9ff282b9fa8a9b1dc04ece43ee40",
+    "output": ".colibri_reviews/adversary-gate__GATE_TOP_TO_BOTTOM.md__feature__385bcbb2.md",
+    "reviewed_at": "2026-10-08 18:06",
+    "cost": 0.07,
+    "tokens_in": 8364,
+    "tokens_out": 23406
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\finding_adjudicator.py": {
+  "rel": "adversary-gate/finding_adjudicator.py",
+  "modes": {
+   "bug": {
+    "sha": "3f63047be1ec691794367f0b7dda474e8979658e0ec130d0090b910e2a2d3de5",
+    "output": ".colibri_reviews/adversary-gate__finding_adjudicator.py__bug__3f63047b.md",
+    "reviewed_at": "2026-10-10 13:48",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\test_finding_adjudicator.py": {
+  "rel": "adversary-gate/test_finding_adjudicator.py",
+  "modes": {
+   "bug": {
+    "sha": "fd677ae80048ebad349e0ce847b906cd1e6e352d35c5ccf0ebf07e805e4d9f20",
+    "output": ".colibri_reviews/adversary-gate__test_finding_adjudicator.py__bug__fd677ae8.md",
+    "reviewed_at": "2026-10-10 13:48",
+    "cost": 0
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Tools\\adversary-gate\\replay_local.py": {
+  "rel": "adversary-gate/replay_local.py",
+  "modes": {
+   "bug": {
+    "sha": "9a7dbe080e03185b9206118ca41147be1398aa2a0181033638001fa9e059c2aa",
+    "output": ".colibri_reviews/adversary-gate__replay_local.py__bug__9a7dbe08.md",
+    "reviewed_at": "2026-10-10 13:48",
+    "cost": 0
+   }
+  }
+ }
+}
