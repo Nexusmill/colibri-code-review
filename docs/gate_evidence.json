@@ -4386,6 +4386,21 @@
     "Nexusmill commit 031aed56 (recurrence_screen.json w6-guarantee bindings, screened live); docs/GLOBAL_RULES.md G45",
     "colibri-code-review docket EV-269 (the audit-drain artifact fix whose battery-staleness discovery triggered the owner's order)"
    ]
+  },
+  {
+   "id": "EV-273-CRUCIBLE-T2-SIX-ROUND-ARC",
+   "date": "2026-10-22",
+   "repo": "Crucible",
+   "layer": "gate-review BLOCK x6 + WARN-cleared (artifacts gate_20261022-195303/-201717/-203022/-204348/-210845/-212002, clear at -213404)",
+   "caught": "31 findings across six rounds on the T2 loop-closing tranche, every one confirmed and fixed in-round. Highlights: the founding run's accepted/ directory held bench-REJECTED candidates (MEDIUM proven from the committed run record itself - the gate reading the run's own artifacts as evidence); a paid step dying mid-run lost the entire spend ledger (twice - first the record, then the per-call snapshots, finally try/finally so a DYING call books its spend); the tok/s fabrication class (T1 arc-2) sibling in bench: unparseable tables silently scored not-faster; generation extraction spoofable by markdown quotes; LLM diff hunk-header miscounts and file-header/content-pair ambiguity (three successive discriminators); ghost CLI flag, starvation ceiling, transport resets, build glob swallowing build-info.cpp.in across the eight pipeline attempts.",
+   "severity": "MEDIUM (oracle/artifact integrity + spend-attribution; the loop's verdicts were never falsely positive - the catches were false-success PRESENTATION and lost records)",
+   "author_initially": "Accepted on read every round, zero rebuttals - six consecutive rounds of real findings on my own fresh code.",
+   "resolution": "All fixed RED-or-record-first in Crucible c49a05e (suites 51 green: 13 T2 + 21 smoke + 17 oracle). THE RUN (runs/20261022T193540): first unaided end-to-end close - hotpath profile -> 3 proposed -> 2 adversarially kept -> BOTH equivalent=true (3/3 fixed-seed probes exact-match on MSVC patched builds) -> bench tg128 -1.7%/+0.4% -> faster:false -> filed equivalent-not-faster/. Residual LOWs from the clearing WARN (build-timeout escapes the None guard; artifact-write OSError loses the record) owed next tranche.",
+   "refs": [
+    "Crucible c49a05e + .adversary/reviews/gate_20261022-195303.md through -213404.md",
+    "Crucible runs/20261022T193540/ + runs/README.md",
+    "Crucible tests/test_t2.py"
+   ]
   }
  ]
 }

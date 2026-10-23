@@ -1151,3 +1151,19 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 - Tools .adversary/runtime/active.json (generation 7f7d992 active; live refusal proof on a drifted temp-repo commit)
 - Nexusmill commit 031aed56 (recurrence_screen.json w6-guarantee bindings, screened live); docs/GLOBAL_RULES.md G45
 - colibri-code-review docket EV-269 (the audit-drain artifact fix whose battery-staleness discovery triggered the owner's order)
+## 2026-10-22 Crucible T2: six-round arc, 31 findings, first unaided loop-close (EV-273)
+
+**Layer:** gate-review BLOCK x6 + WARN-cleared (gate_20261022-195303 .. -213404) on the T2 tranche.
+
+**Caught:** 31 confirmed findings over six rounds - the founding run's accepted/ dir held bench-REJECTED candidates (proven from the committed run record); paid-step deaths lost the spend ledger (twice); unparseable bench tables silently scored not-faster; spoofable generation extraction; three generations of diff-header repair discriminators; plus the eight pipeline-seam fixes from the run attempts.
+
+**Severity:** MEDIUM (false-success presentation + lost records; never a false-positive verdict).
+
+**Author's initial reaction:** accepted on read every round, zero rebuttals.
+
+**Resolution:** all fixed in Crucible c49a05e (51 tests green). THE RUN: first unaided end-to-end close, both candidates verified equivalent on exact-match probes, honestly rejected at the bench gate (-1.7%/+0.4% vs the +2% bar). Two LOW residuals owed next tranche.
+
+**Refs:**
+- Crucible c49a05e, .adversary/reviews/gate_20261022-195303.md..-213404.md
+- Crucible runs/20261022T193540/ + runs/README.md
+
