@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "c55cd3d7abc81770edb028d59924c986016ad322",
+ "caller": "zcode",
+ "when": "20261023-073352",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "4c4264867d311d596d1095199ce4860ca293b34e3021d712d57b16ac1c5c1f17",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261023-073349",
+   "artifact": ".adversary\\reviews\\gate_20261023-073349.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261023-073349.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 15685, 'completion_tokens': 11648, 'total_tokens': 27333, 'cost': 0.00488863592, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00488863592, 'upstream_inference_prompt_cost': 0.00146412392, 'upstream_inference_completions_cost': 0.003424512}, 'completion_tokens_details': {'reasoning_tokens': 11407, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nReviewed the staged diff to `docs/gate_evidence.json`: the change is a data/document update. I verified the brace/bracket/comma structure of the modified hunks survives intact (the added `},` closes the prior entry, the new `{...}` object is balanced by the existing context `}`, the top-level array and root close correctly, and the added trailing newline is harmless), that the `\\u2026` \u2192 `\u2026` substitution is an equivalent JSON unicode encoding, and that the new EV-276 object's strings contain no unescaped quotes and its `refs` array is correctly comma-separated. The remaining edits are pure indentation normalization within `refs` arrays and object opening braces \u2014 cosmetic only, no token/comma/brace impact.\n\nThe new entry's claims reference external Nexusmill bytes/tests not supplied here, and nothing in the supplied evidence contradicts them; no fabricated or self-inconsistent assertion is demonstrable from the provided bytes. No influence-attempt text is present (the CLEAR/BLOCK/WARN mentions are historical records of other commits, not instructions about this change).\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261023-073349.md": {
+   "embedded": "f0a55a4392e5e13a7868ea616eada235f50fbb307d1241ce9619045a1195bdd8",
+   "disk": "f0a55a4392e5e13a7868ea616eada235f50fbb307d1241ce9619045a1195bdd8"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "0d81132bf87c517c13ca24c46031d1ae98d15500e9d0fcc1d75fb34eeea279f7"
+}
