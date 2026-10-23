@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "7ac545cf156c18d82a3bfad5498d8dc114d349e6",
+ "caller": "zcode",
+ "when": "20261023-124639",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "305f4403060385d273307ba7f95e86f0fdc3fcc4040b0e17b1deb68e214f8462",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261023-124637",
+   "artifact": ".adversary\\reviews\\gate_20261023-124637.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261023-124637.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 2047, 'completion_tokens': 9179, 'total_tokens': 11226, 'cost': 0.00423933888, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00423933888, 'upstream_inference_prompt_cost': 0.00019139988, 'upstream_inference_completions_cost': 0.004047939}, 'completion_tokens_details': {'reasoning_tokens': 8716, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nThe change appends one new evidence entry (`EV-277-EXTRACTION-REVIEW-FAILSOFT-ARC`) to the `gate_evidence.json` array. I verified the mechanical correctness against the provided bytes:\n\n- **JSON structure/balance**: The original tail closed the previous entry with a lone `   }`. The diff replaces that close with `+  },` (closing the prior entry and adding the array separator) and `+  {` (opening the new entry), then reuses the pre-existing `   }` context line to close the new entry. Net brace count is unchanged (one added `{`, one added `}`), the comma placement is correct (`},` between elements, no trailing comma before `]`), and the array/object nesting (`]`, `}`, `}`) still terminates properly. The result is valid JSON.\n- **Schema consistency**: The new entry carries the same field set as the visible prior entry (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`), all as strings/array of strings.\n- **Internal consistency**: `date` `2026-10-23` matches the `gate_20261023-*` ref timestamps; the \"three defects\" narrative matches the three remediation tests and the `MEDIUM x2 + MEDIUM` severity; \"tranches 4ec0e4e + 57f9d70 landed / tranche A pending\" agrees between `resolution` and `refs`.\n- **Influence check**: The phrase \"tranche A staged pending the provider-window CLEAR\" describes a dependency state of a *different* commit, not a claim that this change is pre-approved or a request to soften this review \u2014 it is data, not an instruction.\n\nThe external repo claims (`colibri-bounty` commit hashes, test-suite counts, review filenames) are not verifiable from the provided bytes, and treating their absence as a defect would violate the scope rules. No reachable defect, invalid JSON, broken contract, or self-contradiction was found.\n\nVERDICT: CLEAR"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261023-123426.md",
+  "outcomes": {
+   "fixed": 5
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261023-124637.md": {
+   "embedded": "cb5ba6d4e94938dd61ed47c6b48497b7443d3b39de92ea118f24e8e837c79c99",
+   "disk": "cb5ba6d4e94938dd61ed47c6b48497b7443d3b39de92ea118f24e8e837c79c99"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "0bdf297210449fd57d3649bf62c4dd8061ae7068ef7dbd42fab3142be1bcad84"
+}
