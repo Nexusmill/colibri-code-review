@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "6e08a852cbda0ab7ba53494d234a8a3376e4c3a3",
+ "caller": "zcode",
+ "when": "20261023-091345",
+ "files": {
+  "reviews_archive/nexusmill/_manifest.json": {
+   "sha": "fa6e565879d641920436d1536e5038d63c2b350ba7d636a1de6d27400af8207d",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261023-091343",
+   "artifact": ".adversary\\reviews\\gate_20261023-091343.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261023-091343.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 49762, 'completion_tokens': 3054, 'total_tokens': 52816, 'cost': 0.00570154592, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00570154592, 'upstream_inference_prompt_cost': 0.00480366992, 'upstream_inference_completions_cost': 0.000897876}, 'completion_tokens_details': {'reasoning_tokens': 2550, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['reviews_archive/nexusmill/_manifest.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\n**Review of the staged change** (`reviews_archive/nexusmill/_manifest.json`, one hunk)\n\nThe change alters exactly one string:\n\n- `\"output\": \".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md (E-loop postscript appended)\"` \u2192 `\"output\": \".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md\"`\n\nVerification performed against the provided bytes:\n\n1. **Resulting path is the real, canonical review file for this source.** The enclosing mode (`...\\PatternSkin\\accel.py` \u2192 `modes.bug`) already carries `\"output\": \".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md\"`, and its `\"note\"` states the Stage-E work is recorded inside that same file: `\"See the review file's E-loop postscript.\"` The nested `pass2_stage_e` record now points at the same file the parent entry documents \u2014 the pre-change string (with the trailing parenthetical glued into the path) was not a resolvable path, so the edit repairs rather than breaks the record.\n2. **No dangling references.** The suffixed string appears nowhere else in the staged file; nothing else links to it.\n3. **No duplicate/fragmenting record introduced.** `pass2_stage_e` is a nested pass sub-object inside a single absolute-keyed row (the sanctioned shape for multi-pass records, as with `pass2`, `passes.pass1`, `pass_prior_2026_09_10` elsewhere in this file), not a second top-level row for the file. No `files` wrapper, no relative-keyed wrapperless row, no second entry for a file that already has one is created by this hunk.\n4. **JSON validity / arithmetic untouched.** The edit only shortens a string literal; no brace, comma, or escaping is affected. The row's `sha` (`a298e3d4052d17\u2026`) is a full sha256 in canonical form and is unchanged.\n5. **No state/ordering, money, or security surface.** The field is descriptive metadata; no code path consumes it in the provided bytes in a way the edit changes.\n\nNo hypothesis survived checking; no finding is reportable.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261023-091343.md": {
+   "embedded": "f2f55fef1534a6d88595a70d88f51bab0df8ae0053548492323f5d18e99e344c",
+   "disk": "f2f55fef1534a6d88595a70d88f51bab0df8ae0053548492323f5d18e99e344c"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "576505e46915b8f3f5a489a24e0fba1f8e92737e685dba3c4e539ce458ed2e84"
+}
