@@ -4496,6 +4496,23 @@
     "Nexusmill junk/merge_12h/flagged_chunk.txt (the extracted chunk, 5930 chars)",
     "Tools/adversary-gate/adversary_gate.py _push_secret_audit + docscan.py scan_segmented/_chunk (reproduction path)"
    ]
+  },
+  {
+   "id": "EV-280-STACKED-ARMING-DEFEATS-ONE-SHOT-PUSH-OVERRIDE",
+   "date": "2026-10-24",
+   "repo": "Nexusmill (push-guard arming; surfaced by the origin/main merge push)",
+   "layer": "pre-push guard double-fire: the global config hooks (git 2.54+ hook.adversary-*, the 2026-10-11 machine arming) AND a leftover per-repo core.hooksPath pin (Tools/adversary-gate/hooks, live pre-commit/post-commit/pre-push shims) both run on every event - the exact stacking G39 forbids",
+   "caught": "The owner's PUSH_OVERRIDE was consumed and correctly downgraded the docs-model false positive in audit pass 1 - then the second, stacked hook invocation ran with no override left and REFUSED the same chunk: with a double-firing guard the one-shot override is structurally dead (pass 1 always eats it, pass 2 always refuses). Invisible on commits - pass 1 writes the clearance and pass 2 verifies it silently - the push path is the only place the consumption is uncached, which is why this stayed hidden since the pin reappeared. The flagged chunk (now 10; 9 before this session's doc additions shifted the boundary) is the SAME aider-doc API-key-location false positive (floor hits []).",
+   "severity": "HIGH (owner overrides on a stacked repo can never pass; every event on a stacked repo pays double gate cost)",
+   "author_initially": "root-caused from the live push log (two full audit passes per push), then verified against bytes: the repo .git/config pin, the live shim dir contents, the global ~/.gitconfig hook entries, and the empty system gitconfig (unsetting the pin cannot detach the gate). Chunk 10 extracted with the gate's own code - same false positive, not a new finding.",
+   "resolution": "OWNER-GATED (agents are blocked from hooksPath by the layer-2 guard, by design): git -C Nexusmill config --unset core.hooksPath -> the global config hooks keep the gate armed, single-fire; then a FRESH PUSH_OVERRIDE + push main + refs/notes/adversary. TOOLS QUEUE: the installer must stop (re-)pinning hooksPath when the config hooks are present (the pin most likely re-added by an install_gate run after the 2026-10-11 retirement), and install_gate --census should sweep every repo for the same stack.",
+   "refs": [
+    "Nexusmill push log 2026-10-24 (two audit passes; override consumed in pass 1, refused in pass 2)",
+    "Nexusmill .git/config core.hooksPath pin + Tools/adversary-gate/hooks shims (mtime Oct 8)",
+    "C:/Users/User/.gitconfig hook.adversary-* entries (the machine arming) + empty system gitconfig",
+    "Nexusmill junk/merge_12h/flagged_chunk10.txt (the shifted chunk - same aider-doc line, floor hits [])",
+    "G39 canon: 'config hooks fire FIRST and any active hookdir shim still runs after - NEVER stack them'"
+   ]
   }
  ]
 }

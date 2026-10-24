@@ -1254,3 +1254,18 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Resolution:** OWNER-GATED (pending): Damien's one-shot .adversary/PUSH_OVERRIDE (the 12g hatch; the funnel push precedent). The agent must not create it. Rewriting 13ac64ef would rewrite ~200 notarized commits for a no-value doc line.
 
 **Refs:** Nexusmill push attempt log; junk/merge_12h/flagged_chunk.txt; adversary_gate._push_secret_audit + docscan.scan_segmented/_chunk.
+
+
+## 2026-10-24 Nexusmill push refused TWICE in one push: stacked arming makes the one-shot override structurally dead (EV-280)
+
+**Layer:** pre-push guard double-fire - the global config hooks (the 2026-10-11 machine arming) AND a leftover per-repo hooksPath pin (Tools/adversary-gate/hooks, live shims) both run per event; the exact stacking G39 forbids.
+
+**Caught:** the owner's PUSH_OVERRIDE was consumed and downgraded the docs false positive in pass 1 - pass 2 (the stacked shim) had no override left and refused the same chunk. A one-shot override can never pass a double-firing guard. Invisible on commits (pass 2 silently verifies pass 1's clearance); only the push path consumes uncached. The flagged chunk (10 now, 9 before - shifted by this session's doc additions) is the SAME aider-doc API-key-location false positive (floor hits []).
+
+**Severity:** HIGH (overrides on a stacked repo can never pass; double gate cost per event).
+
+**Author's initial reaction:** root-caused from the live log, then verified against bytes: the repo pin, the shim dir, the global hook entries, the empty system gitconfig (unset cannot detach the gate); chunk 10 extracted with the gate's own code - same false positive, not a new finding.
+
+**Resolution:** OWNER-GATED: unset the repo's core.hooksPath pin (the global config hooks keep the gate armed, single-fire), then a FRESH PUSH_OVERRIDE + push. TOOLS QUEUE: the installer must stop re-pinning under config coverage (the pin likely re-added by an install_gate run after the 2026-10-11 retirement); install_gate --census sweeps for other stacked repos.
+
+**Refs:** Nexusmill push log 2026-10-24; .git/config pin + Tools/adversary-gate/hooks; ~/.gitconfig hook entries; junk/merge_12h/flagged_chunk10.txt; the G39 'never stack them' clause.
