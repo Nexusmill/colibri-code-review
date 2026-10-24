@@ -4513,6 +4513,23 @@
     "Nexusmill junk/merge_12h/flagged_chunk10.txt (the shifted chunk - same aider-doc line, floor hits [])",
     "G39 canon: 'config hooks fire FIRST and any active hookdir shim still runs after - NEVER stack them'"
    ]
+  },
+  {
+   "id": "EV-281-TRUTH-F124-REMEDIATION-TWO-ROUND-ARC",
+   "date": "2026-10-24",
+   "repo": "colibri-bounty (F1/F2/F4 remediation of colibri bughunt e5ac18ae)",
+   "layer": "gate-review BLOCK x2 + WARN (tier-2 deepseek-v4.1-flash-1017@deepinfra/fp8 at effort high)",
+   "caught": "Round 2 (gate_20261024-160604, 2 LOW): the F1 link-strip removed markdown links whole, so a genuine citation written as 'Duplicate of [#239](.../issues/239)' lost its #N (under-merge); the follow-digit guard matched \\s across newlines, dropping prose like 'Duplicate of #239\\n\\n1. Impact'. Round 3 (gate_20261024-162426, 1 MEDIUM + 2 LOW): the round-2 '/issues/' SUBSTRING check preserved labels for code files stored under an issues/ directory ('.../blob/main/issues/BufferRouter.sol#L331') - re-opening the exact F1 spurious-merge class the fix was for; the same-line guard still dropped prose 'see #12 5 wardens'; and a numeric-relative link '[#239](../239)' claim. Final WARN (gate_20261024-164129): the F1 manifest row's fix wording had inverted parentheticals (described the kept conditions where the code drops).",
+   "severity": "MEDIUM (round-3 substring check silently re-opened the fixed defect class for an untested input shape) + LOW x3",
+   "author_initially": "Accepted rounds 2 and 3 fixes immediately (red-green cycle executed for every changed assertion). REBUTTED round-3 finding 2 (numeric-relative issue links): not a GitHub markdown issue-link convention (GitHub renders issue refs as bare #N or /owner/repo/issues/N paths), zero instances in the 229-dump corpus (the reviewer's own trigger note), and the oracle's documented citation contract is bare prose '#N' - a numeric-URL rule would trade one speculative shape for the equally unattested false-positive form '[L#68](68)'. The rebuttal SURVIVED: the final round did not re-raise it.",
+   "resolution": "All committed in colibri-bounty 09872bb: link labels preserved only for issue-SHAPED URLs (re.search r'/issues/\\d+'), annotation guard is the annotation SHAPE (same-line digits up to a // comment or line end), 11 red-green-verified assertions across 9 verdict tests, corpus A/B unchanged through every round (link clusters 11->4, +19 truths in 7 non-baseline contests, 0 of 10 published-baseline contests moved). Manifest wording corrected in the follow-up docs commit. Round-3 finding 2 adjudicated no-change per the rebuttal above.",
+   "refs": [
+    "colibri-bounty .adversary/reviews/gate_20261024-160604.md",
+    "colibri-bounty .adversary/reviews/gate_20261024-162426.md",
+    "colibri-bounty .adversary/reviews/gate_20261024-164129.md",
+    "colibri-bounty 09872bb + docs/remediation_manifest.json rows 6-7",
+    "colibri-bounty .colibri_reviews/colibri_bounty__truth.py__bug__e5ac18ae.md (the review the remediation closes)"
+   ]
   }
  ]
 }
