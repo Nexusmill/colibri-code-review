@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "a988f9609ef200bcfaaf9645c81dade50fe27680",
+ "caller": "zcode",
+ "when": "20261024-160023",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "db832feef3031ccdcee4250c289bb398bbc12b542a9ab2c8bbc7acf5ab173f42",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261024-160021",
+   "artifact": ".adversary\\reviews\\gate_20261024-160021.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261024-160021.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 1990, 'completion_tokens': 12415, 'total_tokens': 14405, 'cost': 0.00565803588, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00565803588, 'upstream_inference_prompt_cost': 0.00018302088, 'upstream_inference_completions_cost': 0.005475015}, 'completion_tokens_details': {'reasoning_tokens': 11800, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (cache) | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json` against the provided bytes (the scoped window lines 4491\u20134518 and the diff hunk).\n\nChecks performed:\n\n- **JSON well-formedness.** Reconstructed the new tail from the hunk. The previous entry's refs array closes with `]`, then the added `+  },` closes that object with a comma; `+  {` opens the new object; all keys (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`) are comma-separated; the five `refs` elements have trailing commas except the last; `+   ]` closes the new refs array; the context `}` closes the new object, `]` the array, `}` the root. Brace/bracket balance is intact and no trailing/duplicate commas exist.\n- **String escaping.** All added string values use single quotes for internal quoting (`owner's`, `'config hooks fire FIRST\u2026'`, `[]`, `->`, `+`, `*`). No unescaped double quotes or backslashes; no non-ASCII or control characters. `(floor hits [])` is a literal string, not JSON.\n- **Line-count consistency.** Hunk header `@@ -4491,11 +4491,28 @@` implies 17 added lines; the added block contains exactly 17 `+` lines. Final new line 4518 = `}` matches the scoped window.\n- **Cross-entry consistency.** EV-280's narrative matches the visible EV-279 bytes: EV-279 says the push was refused at \"segment 1 chunk 9\"; EV-280 says the chunk is \"now 10; 9 before this session's doc additions shifted the boundary\". EV-279's resolution says the one-shot `PUSH_OVERRIDE` is \"consumed + logged\"; EV-280 says it \"was consumed and correctly downgraded \u2026 in audit pass 1\" then pass 2 refused. The `flagged_chunk.txt` \u2192 `flagged_chunk10.txt` ref progression is coherent. No contradiction.\n- **Schema/contract.** Field set matches the prior entry's shape; `severity` remains a descriptive string. No manifest-row doctrine applies (this is not `_manifest.json`), and the machine path in a `refs` value is a free-form reference, not a keyed row.\n- **Influence attempt.** The added content is ordinary evidence prose; it contains no instruction to skip or soften review.\n\nNo defect is introduced by this change that I can ground in the provided bytes. The external refs (`flagged_chunk10.txt`, `.gitconfig`, `G39` canon) are cited but not supplied, so their truth cannot be verified from the bytes and cannot be treated as fabrication without inventing evidence.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261024-160021.md": {
+   "embedded": "50ae064bf6320767d28832739540b644d57d2e2ef473b641758beb9e81a58571",
+   "disk": "50ae064bf6320767d28832739540b644d57d2e2ef473b641758beb9e81a58571"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "b8ca967805b3c462a806f9669ec8c22568c82f924057ffed78676c81e78507a5"
+}
