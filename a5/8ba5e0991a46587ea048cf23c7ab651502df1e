@@ -1,0 +1,33 @@
+{
+ "type": "CLEAR",
+ "commit": "a58ba5e0991a46587ea048cf23c7ab651502df1e",
+ "caller": "zcode",
+ "when": "20261023-214708",
+ "files": {
+  ".githooks/adversary_audit.py": {
+   "sha": "423fc3efddbc353883ef668bf697a384f778cb4dacd5dc269d5d6127ff334d73",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261023-210838",
+   "artifact": ".adversary\\reviews\\gate_20261023-210838.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261023-210838.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 11125, 'completion_tokens': 47233, 'total_tokens': 58358, 'cost': 0.01393033152, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 11008, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.01393033152, 'upstream_inference_prompt_cost': 4.382952e-05, 'upstream_inference_completions_cost': 0.013886502}, 'completion_tokens_details': {'reasoning_tokens': 46450, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['.githooks/adversary_audit.py'] | prompt: gate/adversary-review@1 (cache) | caller: zcode\n\nI reviewed the staged file against the diff, focusing on the new `_verify_chain_mac` and the reworked `C`/`R` record parsing in `_changed_code`.\n\nWhat I verified as sound:\n- The `C` record now consumes two paths (`C<score>\\0SRC\\0DST\\0`) and only `R` contributes a `D:` removal; this is the correct `--name-status -z` token layout and matches the old `R` branch behavior. (With `-M` only, git does not emit `C`, so the branch is defensive, not a regression.)\n- `datetime` is imported and used consistently; the `%Y%m%d-%H%M%S` slice length (15) is correct.\n- `os.path.isfile` swallows `ValueError` (embedded NUL), so a malformed `rel` does not crash there.\n- The artifact/`embedded==disk` check runs before the key-dependent branches, matching its comment.\n- The non-dict guard is effectively dead because `_audit_commit` calls `note.get(\"files\")` first, but that crash path predates this change and is not worsened by it.\n\nTwo real (LOW) gaps remain in the new code.\n\n---\n\n**LOW \u2014 `.githooks/adversary_audit.py` \u2014 `_verify_chain_mac`, prior-chain loop / mac computation**\n\n```\n        if isinstance(pn, dict) and pn.get(\"mac\"):\n            prior = pn[\"mac\"]\n            break\n```\n```\n    want = _h.new(key, (payload + \"|\" + prior).encode(\"utf-8\"), \"sha256\").hexdigest()\n```\n\nTrigger: a note on any ancestor commit whose `mac` field is a truthy non-string JSON value (`\"mac\": 123` or `\"mac\": true`) \u2014 i.e., exactly the tampered/forged-note input this tripwire exists to detect. `pn[\"mac\"]` is taken verbatim as `prior`, then `payload + \"|\" + prior` performs `str + int/bool`.\n\nImpact: uncaught `TypeError`; the auditor dies with a traceback instead of emitting a structured violation, and `--json` mode prints no document at all (the ROOT branch explicitly promises \"`--json` consumers always get a document\"). Exit is still non-zero, so it fails closed, but the structured-report/JSON contract is broken on adversarial input the function claims to type-guard (\"type-guard every field the walk touches\").\n\n---\n\n**LOW \u2014 `.githooks/adversary_audit.py` \u2014 `_verify_chain_mac`, live artifact check**\n\n```\n            live_p = os.path.join(repo, str(rel).replace(\"/\", os.sep))\n```\n```\n                live_s = open(live_p, encoding=\"utf-8\", errors=\"replace\").read()[:100_000]\n```\n\nTrigger: a note whose `artifacts_sha256` key `rel` is absolute (`/etc/...`, `C:\\...`) or contains `..`. `os.path.join(repo, rel)` discards `repo` when `rel` is absolute, so the path is not confined to the repository.\n\nImpact: the auditor opens and hashes an arbitrary local file outside the repo. Because `.read()` loads the whole file before the `[:100_000]` slice, a note pointing at a very large file can exhaust memory and crash the audit. No file content is echoed (only `rel`), so there is no exfiltration and the check still only compares hashes \u2014 informational/local-DoS only.\n\nVERDICT: WARN"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261023-195600.md",
+  "outcomes": {
+   "fixed": 2
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261023-210838.md": {
+   "embedded": "cd1af54398b55c41e3d3e6f80af51824ca242c50c780c96b0442982df77aa4e2",
+   "disk": "cd1af54398b55c41e3d3e6f80af51824ca242c50c780c96b0442982df77aa4e2"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "405c69f28990098b031cad3fe55446c5e655df312268f8453b43577e20a661df"
+}
