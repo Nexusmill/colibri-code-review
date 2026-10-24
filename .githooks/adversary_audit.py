@@ -30,6 +30,7 @@ check the evidence itself. Detection, not prevention - by design.
 """
 import argparse
 import hashlib
+import datetime
 import json
 import os
 import re
@@ -202,17 +203,21 @@ def _changed_code(repo, rev):
             i += 1
             continue
         code = st[0]
-        if code in ("A", "C", "M", "T"):
+        if code in ("A", "M", "T"):
             path = toks[i + 1]
             i += 2
             if _is_code(path, hn, text_files):
                 files[path] = blob_sha(rev, path)
-        elif code == "R":
+        elif code in ("R", "C"):
+            # gate round gate_20261009-151907: C (copy) records carry TWO paths
+            # exactly like R (C<score>\0SRC\0DST) - walking C in the single-path
+            # branch consumed only SRC and desynchronized the record stream. A
+            # copy never removes its source, so only R contributes a removal.
             old, new = toks[i + 1], toks[i + 2]
             i += 3
             if _is_code(new, hn, text_files):
                 files[new] = blob_sha(rev, new)
-            if _is_code(old, hn, text_files) and not _is_code(new, hn, text_files):
+            if code == "R" and _is_code(old, hn, text_files) and not _is_code(new, hn, text_files):
                 removals["D:" + old] = blob_sha(base, old)
         elif code == "D":
             old = toks[i + 1]
@@ -224,6 +229,138 @@ def _changed_code(repo, rev):
     files.update(removals)
     return files
 
+
+def _verify_chain_mac(repo, rev, ref, note):
+    """T3.3 / hole H1: verify the note's HMAC chain binding. Returns None when
+    valid/legacy/unkeyed, or a problem string that escalates the finding.
+    Legacy: notes without a mac whose notarization predates the key's creation
+    stamp are 'legacy-unsigned' - expected history, NOT a violation. A note
+    CARRYING a mac that does not verify, or one whose embedded artifact hashes
+    no longer match, is a violation (the tripwire fires)."""
+    import hashlib
+    import hmac as _h
+    # gate round 2026-10-23 (re-vendor reviews, colibri LOW + repo-memory
+    # findings): the note is hostile input - type-guard every field the
+    # walk touches, and verify the EMBEDDED artifact hashes for EVERY note
+    # BEFORE any key-dependent branch: the embedded==disk check needs no
+    # key, and both the legacy branch and the no-key degrade returned None
+    # before it, so mac-less notes and fresh CI clones never verified the
+    # one integrity datum they can (the comments claimed they did).
+    if not isinstance(note, dict):
+        return "note is not a JSON object (malformed)"
+    key_p = os.path.join(repo, ".adversary", "note_hmac.key")
+    key = None
+    # gate round 2026-10-23 (colibri re-vendor review MEDIUM): the legacy
+    # decision MUST come from the LOCAL key file's stamp. Seeding from the
+    # note's own mac_key_created let an unauthenticated note claim a future
+    # key-creation date and exempt itself - the forged? branch could never
+    # fire. The note's field is ignored for this decision entirely.
+    key_created = ""
+    try:
+      if os.path.isfile(key_p):
+        for ln in open(key_p, encoding="utf-8", errors="replace").read().splitlines():
+            t = ln.strip()
+            if len(t) == 64:
+                try:
+                    key = bytes.fromhex(t)
+                except ValueError:
+                    key = None   # corrupt hex: degrade to unverifiable-mac
+            elif ln.startswith("# created="):
+                key_created = ln.split("=", 1)[1].strip()
+    except OSError:
+        key = None            # unreadable key: degrade, never crash
+    import hashlib as _hl
+    arts = note.get("artifacts_sha256")
+    if arts is not None:
+        if not isinstance(arts, dict):
+            return "artifacts_sha256 is malformed (forged evidence)"
+        for rel, shas in arts.items():
+            if not isinstance(shas, dict):
+                return "artifact entry %s is malformed (forged evidence)" % rel
+            if shas.get("embedded") != shas.get("disk"):
+                return "embedded artifact %s hash mismatch (forged evidence)" % rel
+            # LIVE disk check: post-notarization tampering of the evidence file
+            # (record cannot catch a pre-record tamper - it reads both sides from
+            # the same bytes; the note is the anchor, the auditor is the witness)
+            live_p = os.path.join(repo, str(rel).replace("/", os.sep))
+            if not os.path.isfile(live_p):
+                # .adversary is gitignored transient state - fresh clones/CI never
+                # have the evidence files; the EMBEDDED hashes still verify the note
+                # body self-consistency. Absence is unverifiable, not tampering
+                # (gate round gate_20261009-063510 HIGH).
+                continue
+            try:
+                live_s = open(live_p, encoding="utf-8", errors="replace").read()[:100_000]
+            except OSError:
+                live_s = ""
+            live_sha = _hl.sha256(live_s.encode("utf-8", "replace")).hexdigest()
+            if live_sha != shas.get("disk"):
+                return "artifact %s changed on disk after notarization (tampered evidence)" % rel
+    mac = note.get("mac")
+    if not mac:
+        # legacy exemption with FORMAT-NORMALIZED dates: note stamps are
+        # %Y%m%d-%H%M%S and the key stamp is ISO - compare like with like
+        # (gate round gate_20261009-053337 HIGH: the raw string compare was
+        # always False, flagging every legacy note as forged)
+        when = str(note.get("when", ""))
+        try:
+            when_iso = datetime.datetime.strptime(when[:15], "%Y%m%d-%H%M%S").date().isoformat()
+        except ValueError:
+            when_iso = ""
+        # same-DAY pre-key notes are legacy too: the key stamp carries only day
+        # granularity, so a note stamped earlier the SAME day is indistinguishable
+        # from post-key - exempt on <= (gate round gate_20261009-065049 MEDIUM)
+        if key is None or (key_created and when_iso and when_iso <= key_created[:10]):
+            return None            # legacy note (pre-key) or unkeyed repo
+        return "note has no chain mac but the key predates it (forged?)"
+    # key-stamp identity: a note signed by a DIFFERENT key (multi-clone history,
+    # re-keyed machine) is UNVERIFIABLE here, not forged - degrade loud, never
+    # a violation (gate round gate_20261009-060518 HIGH)
+    local_stamp = ""
+    try:
+        if os.path.isfile(key_p):
+            for ln in open(key_p, encoding="utf-8", errors="replace").read().splitlines():
+                if ln.startswith("# created="):
+                    local_stamp = ln.split("=", 1)[1].strip()
+    except OSError:
+        key = None         # unreadable key: degrade to unverifiable (gate
+                          # round gate_20261009-062031 LOW), never crash the tripwire
+    note_stamp = note.get("mac_key_created") or ""
+    # unverifiable (degrade, never a violation): no local key (clone/CI -
+    # gate_20261009-053337 HIGH), or either stamp missing. When BOTH stamps are
+    # present and DIFFER, the note is either foreign-key signed (multi-clone
+    # history) or forged - this machine cannot distinguish, so it degrades too
+    # (gate_20261009-063510 MEDIUM: a forged note may omit the stamp entirely;
+    # stampless = unverifiable here, and the future --strict-mac ruling can
+    # tighten all three).
+    if key is None or not note_stamp or not local_stamp or note_stamp != local_stamp:
+        # also covers the no-key clone (.adversary never cloned - CI is the
+        # auditor primary deployment, gate_20261009-053337 HIGH)
+        return None
+        # a future owner ruling may add --strict-mac to make this fatal
+    prior = "GENESIS"
+    rc, log = _git(repo, ["log", "--format=%H", rev], check=False)
+    for c in (log.split()[1:] if rc == 0 else []):
+        rc2, raw = _git(repo, ["notes", "--ref", ref, "show", c], check=False)
+        if rc2 != 0:
+            continue
+        try:
+            pn = json.loads(raw)
+        except ValueError:
+            continue
+        if isinstance(pn, dict) and pn.get("mac"):
+            prior = pn["mac"]
+            break
+    body = dict(note)
+    body.pop("mac", None)
+    payload = json.dumps(body, sort_keys=True, separators=(",", ":"))
+    want = _h.new(key, (payload + "|" + prior).encode("utf-8"), "sha256").hexdigest()
+    if want != mac:
+        return "chain mac mismatch (note body or prior note tampered)"
+    return None
+
+def root_abs(repo):
+    return repo if os.path.isabs(repo) else os.path.abspath(repo)
 
 def _audit_commit(repo, rev, ref):
     """Returns (kind, detail): 'clean' | 'skip' (no code) | 'override' | 'violation'."""
@@ -248,6 +385,9 @@ def _audit_commit(repo, rev, ref):
             problems.append("%s: note sha does not match the committed blob (forged/stale note)" % key)
     if problems:
         return "violation", "; ".join(problems)
+    mac_problem = _verify_chain_mac(root_abs(repo), rev, ref, note)
+    if mac_problem:
+        return "violation", "NOTE INTEGRITY: " + mac_problem
     if note.get("type") == "OVERRIDE":
         return "override", "owner override, reason: %s" % (note.get("reason", "")[:200] or "(none)")
     if note.get("type") != "CLEAR":
