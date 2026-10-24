@@ -1,0 +1,40 @@
+{
+ "type": "CLEAR",
+ "commit": "4bd2de1752e69ce32ab8621725337eea006e6487",
+ "caller": "zcode",
+ "when": "20261024-142722",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "ffb444a8876f15c54776a243870632939dccbf629984cf78434dc016093038c0",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261024-142642",
+   "artifact": ".adversary\\reviews\\gate_20261024-142642.md"
+  },
+  "reviews_archive/nexusmill/_manifest.json": {
+   "sha": "9f380e9b5593ae525cf9570da31ecf750da9ff45175e802d3e2b82df5ffe5d1a",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "WARN",
+   "when": "20261024-142642",
+   "artifact": ".adversary\\reviews\\gate_20261024-142642.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261024-142642.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 52647, 'completion_tokens': 18978, 'total_tokens': 71625, 'cost': 0.01599889788, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.01599889788, 'upstream_inference_prompt_cost': 0.00762959988, 'upstream_inference_completions_cost': 0.008369298}, 'completion_tokens_details': {'reasoning_tokens': 18122, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 1 | files: ['docs/gate_evidence.json', 'reviews_archive/nexusmill/_manifest.json'] | prompt: gate/adversary-review@1 (cache) | caller: zcode\n\n## Findings\n\n**LOW \u2014 reviews_archive/nexusmill/_manifest.json, `pass2_stage_e.output` (accel.py entry)**\n\nQuoted staged line (added by this change):\n\n`     \"output\": \".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md (E-loop postscript appended)\",`\n\nTrigger: any consumer or future gate that resolves this record's `output` as a file path (e.g. `os.path.exists(...)` / opening the review file to check freshness or re-read the postscript) for the nested `pass2_stage_e` provenance row.\n\nImpact: the field's contract \u2014 a resolvable path to the review file \u2014 is broken; the path no longer names an existing file, so a resolver sees \"review missing\" rather than the appended review. Every other nested provenance record in this file (`passes.pass1.output`, `pass2.output`, `pass_prior_2026_09_10.output`, the `pass2` blocks on the test entries) carries a bare path, and the parent `bug` mode already carries a `note` (\"See the review file's E-loop postscript.\") plus the intact top-level `\"output\": \".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md\"`, so the annotation belongs in a `note`, not in the path field. Harm is informational (nested pass records are hand-added provenance, not mode rows read by the store), hence LOW.\n\n## Checks performed and discarded\n\n- JSON structure of both files: hunk `@@ -4459,11 +4459,43 @@` balances (old EV-277 close `]`/`}` retained as the EV-279 closer; the added ` },` closes EV-277; new tail `] } ] }` is well-formed), and the manifest hunk's `+ },` correctly closes the preceding `test_truth.py` row before the new key; the file's no-trailing-newline state is unchanged.\n- No second/duplicate row for `tools\\zcode_grounding.ps1`: the only occurrences of \"zcode\" in the staged manifest are the new absolute-keyed row and its `output`/`finding` text; no relative-keyed wrapperless row, no `files` wrapper.\n- The new row's `sha` (`aed27202\u2026664a`) and `sha_before_fix` (`5e894844\u202612cb`) are 64-hex full sha256 values; absolute key + `rel` + modes table is the canonical store shape (not a finding per doctrine).\n- Cross-artifact consistency: EV-278's \"total <= 9998 every branch\", the manifest finding's \"(9994 marked / 9998 unmarked)\", and the round-2 WARN text (\"9994 is the MARKED path; the unmarked slice path reaches 9998\") agree; \"Suite 90/90\" agrees between EV-278 and the manifest note; the correction commit `3a1ee822` / merge `8794dc1a` references match across both files.\n- EV-278's \"no runtime violation in any\" is consistent with its own scope (the three gate findings on the fix); the 7-row RED from run 1 is explicitly recorded in both artifacts.\n- The `<REDACTED:secret-assignment>` tag sits inside quoted prose in EV-279 describing a prior refusal; treated as a value of that shape per the redaction note, it is data in a string (no JSON breakage, nothing operates on it), and the surrounding text identifies it as the false-positive example \u2014 no finding raised on the tag itself.\n- The `rel` field using forward slashes (`tools/zcode_grounding.ps1`) matches existing precedent in the same file (`asset-forge/forge/output_opts.py`, `tests/test_hunt_evtimer.py`, `PatternSkin/apply_core.py`), so not raised.\n\nVERDICT: WARN"
+ },
+ "adjudication": {
+  "denial": "reviews/gate_20261024-142149.md",
+  "outcomes": {
+   "cleared-unedited": 3
+  },
+  "detail": ".adversary/adjudications.json"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261024-142642.md": {
+   "embedded": "caed1bbcf0253c454dd4f140870da84ca150916cb9dd5ea9fedd5f40ae1f167d",
+   "disk": "caed1bbcf0253c454dd4f140870da84ca150916cb9dd5ea9fedd5f40ae1f167d"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "a4242ae54b89c8cb0a3941e293c5cd28975d2d823693ff74593df2c7cd405cf6"
+}
