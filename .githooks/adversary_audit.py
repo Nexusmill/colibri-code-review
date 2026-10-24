@@ -348,7 +348,7 @@ def _verify_chain_mac(repo, rev, ref, note):
             pn = json.loads(raw)
         except ValueError:
             continue
-        if isinstance(pn, dict) and pn.get("mac"):
+        if isinstance(pn, dict) and isinstance(pn.get("mac"), str) and pn["mac"]:
             prior = pn["mac"]
             break
     body = dict(note)
