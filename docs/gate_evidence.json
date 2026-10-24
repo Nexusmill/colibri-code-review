@@ -4464,6 +4464,38 @@
     "colibri-bounty/.adversary/reviews/gate_20261023-120821.md (anchor-refuted round)",
     "colibri-bounty/docs/remediation_manifest.json row 1"
    ]
+  },
+  {
+   "id": "EV-278-MERGE-V2-RESOLUTION-AND-GROUNDING-BUDGET-ARC",
+   "date": "2026-10-24",
+   "repo": "Nexusmill (zcode hooks; merge of origin/main autoland T1.2+T2.2)",
+   "layer": "commit gate round 1 BLOCK (deepseek-v4.1-flash@deepinfra, gate_20261024-133132) -> round 2 WARN (tier-2 qwen3.8-omni-flash, gate_20261024-135547) on the closure; merge commit 8794dc1a",
+   "caught": "Two real findings on the author's own merge-integration fix, then a precision finding on the closure: (1) MEDIUM - the fix moved the T1.2/T2.2 front/board notes into the payload budget but left the snapshot slice's 200-char floor ignoring $cap: safe only while $ctx stayed under ~9.66k (guaranteed pre-merge), while the notes push the ceiling to ~10.7k - the floor branch could overflow the 10k contract by up to ~270; (2) LOW - FrontRegistryWiringTests.test_grounding_board_failure_fails_open asserted 'AUTOBOARD: unavailable' unconditionally - false-red plus live-state coupling on a machine where autoland resolves outside PYTHONPATH (the exact hazard its front sibling documents); (3) round-2 WARN - the closure's stated bound 'total <= 9994 in every branch' was imprecise: 9994 is the MARKED path; the unmarked slice path reaches 9998 (2-char headroom; missing-state 9965) - no runtime violation, but a false invariant recorded in three artifacts future gates would trust.",
+   "severity": "MEDIUM + LOW + LOW (no runtime violation in any; the MEDIUM was a reachable contract break in the degraded state)",
+   "author_initially": "accepted on read every round; every trigger re-derived against the bytes; the round-2 bound claim verified by the author's own re-derivation (9998 unmarked confirmed) before correcting it",
+   "resolution": "All three closed in-session before/after landing: (1) a NOTES BUDGET GUARD clamps the notes to the remaining budget (board digest yields first; the front note keeps its verdict prefix with the file's surrogate guard), the take floor yields to $cap, the marker appends only when it fits - total <= 9998 every branch; not hermetically testable (needs ctx > 9.65k; health/ingest are registry/store-driven with no env seam - verified); (2) the test row mirrors the front row's environment-agnostic pattern; (3) the bound text corrected in the grounding comment + both manifests + the colibri record + the archive copy. Merge suite 90/90 (run 1 recorded the 7-row RED). Correction commit 3a1ee822.",
+   "refs": [
+    "Nexusmill/.adversary/reviews/gate_20261024-133132.md (round 1 BLOCK)",
+    "Nexusmill/.adversary/reviews/gate_20261024-135547.md (round 2 WARN)",
+    "Nexusmill merge commit 8794dc1a + correction commit 3a1ee822",
+    "Nexusmill docs/remediation_manifest.json rows 2026-10-24 x2",
+    "Nexusmill .colibri_reviews/tools__zcode_grounding.ps1__debug__a2cf68de.md"
+   ]
+  },
+  {
+   "id": "EV-279-PUSH-DOCS-MODEL-FALSE-POSITIVE-AIDER-DOC",
+   "date": "2026-10-24",
+   "repo": "Nexusmill (push guard, outgoing refs/heads/main)",
+   "layer": "pre-push guard: the local docs model refused the push on 'segment 1: chunk 9' (first push attempt of the repo's 227-commit outgoing set)",
+   "caught": "The docs model flagged 'secret material' in a chunk of the outgoing documentation. Extracted with the gate's own _push_secret_audit + docscan._chunk: the chunk is the docs/aider_program_build.md text (commit 13ac64ef) and its ONLY secret-shaped item is the requirements-table line 'API key | baked into aider-local.cmd (from the 3DPrinting .env LM-Token)' - a key LOCATION (file + env-var name), no value. The regex floor finds nothing on the chunk (hits: []). A FALSE POSITIVE of the same class as the 12e funnel refusal (load_api_key(secrets_file: Path|None=None)); the permanent fix (a docs-reviewer signature/location exception) is already queued in the Tools queue.",
+   "severity": "FALSE POSITIVE (no secret exists; the refusal blocked a 227-commit push)",
+   "author_initially": "n/a - the refusal is the catch; the author reproduced the exact chunk with the gate's own code to verify before proposing the remedy",
+   "resolution": "OWNER-GATED (pending): Damien's one-shot .adversary/PUSH_OVERRIDE (the 12g hatch; precedent the funnel push) downgrades docs-model refusals to loud warnings (consumed + logged to push_overrides.json). The agent must not create the override. Alternative (not recommended): rewrite commit 13ac64ef - rewrites ~200 notarized commits for a no-value doc line.",
+   "refs": [
+    "Nexusmill push attempt (git push origin main, refused: docs reviewer, segment 1 chunk 9)",
+    "Nexusmill junk/merge_12h/flagged_chunk.txt (the extracted chunk, 5930 chars)",
+    "Tools/adversary-gate/adversary_gate.py _push_secret_audit + docscan.py scan_segmented/_chunk (reproduction path)"
+   ]
   }
  ]
 }

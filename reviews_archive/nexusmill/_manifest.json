@@ -968,7 +968,7 @@
     "pass2_stage_e": {
      "model": "zcode-glm-5.3 + gate gpt-6-luna-pro (6 rounds) + blind/reconcile gpt-6-luna-pro + cold kimi-k2-0905",
      "reviewed_at": "2026-09-28 03:18",
-     "output": ".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md",
+     "output": ".colibri_reviews/PatternSkin__accel.py__bug__f274a31f.md (E-loop postscript appended)",
      "new": 6
     }
    },
@@ -3238,6 +3238,21 @@
     "prompt": "colibri/feature@2 (langfuse)",
     "tokens_in": 2899,
     "tokens_out": 4044
+   }
+  }
+ },
+ "C:\\Users\\User\\source\\repos\\Nexusmill\\tools\\zcode_grounding.ps1": {
+  "rel": "tools/zcode_grounding.ps1",
+  "modes": {
+   "debug": {
+    "sha": "aed27202d2de247b1309bd85e3d176a755ffb1ee63fb8d0fa0a985ae9967664a",
+    "sha_before_fix": "5e89484451f22a1aad716c6c902e13c37c9767b6a40321383f9433a277f012cb",
+    "output": ".colibri_reviews/tools__zcode_grounding.ps1__debug__a2cf68de.md",
+    "reviewed_at": "2026-10-24 13:17",
+    "model": "deepseek-v4.1-flash (in-session Phase D debug)",
+    "prompt": "colibri/local-reviewer@1 (cache)",
+    "cost": 0.0,
+    "finding": "MERGE-BUDGET-OVERFLOW: the autoland T1.2/T2.2 front/board notes appended after the snapshot slice rode outside the 10k payload budget; 7 FrontRegistryWiringTests rows red (10040..10547 vs 10000). Fixed by building the notes before the budget (snapshot absorbs), then CLOSED against the gate round-1 MEDIUM: the 200-char slice floor still ignored $cap (safe only while ctx < ~9.66k) - the notes are now clamped to the remaining budget, the take floor yields to cap, and the marker is conditional; total <= 9998 in every branch (9994 marked / 9998 unmarked; gate round 2 WARN corrected this bound). Suite 90/90 green; the gate round-1 LOW (board fail-open row hermeticity) fixed in the same commit."
    }
   }
  }

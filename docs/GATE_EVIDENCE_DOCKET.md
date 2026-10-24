@@ -1224,3 +1224,33 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Resolution:** all three fixed RED-first in the new repo with verdict-named tests (suite 439/1); the fixes ride tranche A's staged commit; config-roots and docs tranches already landed (4ec0e4e, 57f9d70). One round's BLOCK rested on an anchor-refuted fabrication-signature finding - the adjudicator discarded it, no remediation owed.
 
 **Refs:** colibri-bounty/.adversary/reviews/gate_20261023-100432.md, -104134.md, -112800.md, -120821.md; docs/remediation_manifest.json row 1 (new repo).
+
+
+## 2026-10-24 Nexusmill origin/main merge: the fix carried a reachable budget break, and its closure a false bound (EV-278)
+
+**Layer:** commit gate round 1 BLOCK (deepseek-v4.1-flash@deepinfra) -> round 2 WARN (tier-2 qwen3.8-omni-flash) on the merge of autoland T1.2+T2.2.
+
+**Caught:** (1) the author's merge-integration fix moved the front/board notes into the 10k payload budget but left the snapshot slice's 200-char floor ignoring $cap - safe only while $ctx stayed under ~9.66k, which the notes break (ceiling ~10.7k): the floor branch could overflow by ~270; (2) the board fail-open test row was not environment-agnostic (false-red + live-state coupling on a pip -e/.pth machine - the exact hazard its front sibling documents); (3) round 2: the closure's stated bound was imprecise - 9994 is the marked path; the unmarked path reaches 9998 (2-char headroom).
+
+**Severity:** MEDIUM + LOW + LOW (no runtime violation; the MEDIUM was a reachable contract break in the degraded state).
+
+**Author's initial reaction:** accepted on read every round; every trigger re-derived against the bytes; the round-2 bound claim re-derived by the author (9998 confirmed) before correcting it.
+
+**Resolution:** NOTES BUDGET GUARD (notes clamp to the remaining budget; board yields first; front keeps its verdict prefix), the take floor yields to $cap, the marker is conditional - total <= 9998 every branch (not hermetically testable; no env seam on the capped blocks - verified); the test row mirrors its front sibling; the bound corrected in all five artifacts. Suite 90/90 (run 1 = the 7-row RED). Merge 8794dc1a + correction 3a1ee822.
+
+**Refs:** Nexusmill .adversary/reviews/gate_20261024-133132.md, -135547.md; docs/remediation_manifest.json x2; .colibri_reviews/tools__zcode_grounding.ps1__debug__a2cf68de.md.
+
+
+## 2026-10-24 Nexusmill push refused by the docs model on a no-value API-key-location line (EV-279)
+
+**Layer:** pre-push guard - the local docs model refused refs/heads/main on 'segment 1: chunk 9' (first push attempt of the 227-commit outgoing set).
+
+**Caught:** the flagged chunk (extracted with the gate's own _push_secret_audit + docscan._chunk) is the docs/aider_program_build.md text (13ac64ef); its ONLY secret-shaped item is the line naming where the aider key LIVES ('API key | baked into aider-local.cmd (from the 3DPrinting .env LM-Token)') - a location + env-var name, no value. The regex floor finds nothing on the chunk. A false positive of the 12e funnel class; the permanent fix (docs-reviewer signature/location exception) is queued in Tools.
+
+**Severity:** FALSE POSITIVE (no secret exists; a 227-commit push blocked).
+
+**Author's initial reaction:** reproduced the exact chunk with the gate's own code before proposing the remedy - the evidence is the extraction, not an assertion.
+
+**Resolution:** OWNER-GATED (pending): Damien's one-shot .adversary/PUSH_OVERRIDE (the 12g hatch; the funnel push precedent). The agent must not create it. Rewriting 13ac64ef would rewrite ~200 notarized commits for a no-value doc line.
+
+**Refs:** Nexusmill push attempt log; junk/merge_12h/flagged_chunk.txt; adversary_gate._push_secret_audit + docscan.scan_segmented/_chunk.
