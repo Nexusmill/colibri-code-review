@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "9d82ea9571f9fea603c1bda611354750907e0aa7",
+ "caller": "zcode",
+ "when": "20261024-182859",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "471635e05d91c0f5d2c87c29cbc90f6aeb1e7ed4d72ada296b8bc11d41d40590",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261024-182855",
+   "artifact": ".adversary\\reviews\\gate_20261024-182855.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261024-182855.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 1942, 'completion_tokens': 28599, 'total_tokens': 30541, 'cost': 0.00852541592, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00852541592, 'upstream_inference_prompt_cost': 0.00011730992, 'upstream_inference_completions_cost': 0.008408106}, 'completion_tokens_details': {'reasoning_tokens': 28457, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (cache) | caller: zcode\n\nThe staged diff appends a new evidence object to the JSON array in `docs/gate_evidence.json`. Structural checks pass: the previous entry's refs array is closed, the inserted `},` supplies the required separator, the new object's braces balance against the surrounding array/root closers, and the added strings contain no unescaped double quotes. The apparent 7-vs-14 F821 count difference is expressly scoped by `\"per CI config\"` and corroborated by the separate `\"local ruff: 7 sites ...\"` ref, so it does not survive as a contradiction. No defect introduced by this change survives verification.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261024-182855.md": {
+   "embedded": "61f4f17264e9075e0c67507faecae32cb25a822b3a686cf3e5cfcae5c7af4359",
+   "disk": "61f4f17264e9075e0c67507faecae32cb25a822b3a686cf3e5cfcae5c7af4359"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "437c5f1c437b1fcb576cfedecf7e3679b2461d5ffeb6f9811adea1e37a558357"
+}
