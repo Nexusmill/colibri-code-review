@@ -1269,3 +1269,18 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Resolution:** OWNER-GATED: unset the repo's core.hooksPath pin (the global config hooks keep the gate armed, single-fire), then a FRESH PUSH_OVERRIDE + push. TOOLS QUEUE: the installer must stop re-pinning under config coverage (the pin likely re-added by an install_gate run after the 2026-10-11 retirement); install_gate --census sweeps for other stacked repos.
 
 **Refs:** Nexusmill push log 2026-10-24; .git/config pin + Tools/adversary-gate/hooks; ~/.gitconfig hook entries; junk/merge_12h/flagged_chunk10.txt; the G39 'never stack them' clause.
+
+
+## 2026-10-24 Nexusmill: the cycle-break's dead-import sweep removed LIVE imports - CI lint caught 7 NameErrors the 4-round commit gate cleared (EV-282)
+
+**Layer:** CI hygiene lint (ruff F821) on the first push of the 229-commit backlog - the commit gate had cleared 60fb62f8 across four rounds.
+
+**Caught:** the PatternSkin cycle-break refactor's 'dead-import sweep' removed imports still live in other scopes: 7 latent NameErrors in __init__.py (subprocess x4, threading x3). Provenance proven by execution: ruff F821 on the parent blob = clean; on 60fb62f8 = 7; HEAD carries the same 7. Impact: mostly try/except-caught (silently-degraded features - e.g. the Spector 'launch from source' operator becomes a no-op); the threading sites are a potential uncaught-crash class.
+
+**Severity:** MEDIUM (real NameError class in the paid add-on's core file).
+
+**Author's initial reaction:** n/a - the CI layer caught it; provenance established same-session by running the linter against both git blobs.
+
+**Resolution:** QUEUED (own gated tranche): re-home the imports, ruff F821 = 0 + suite + gate; the e2e workflow green is the close condition.
+
+**Refs:** Nexusmill 60fb62f8 (parent clean / after 7); CI e2e run 40144399130; local ruff site list.

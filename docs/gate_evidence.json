@@ -4530,6 +4530,22 @@
     "colibri-bounty 09872bb + docs/remediation_manifest.json rows 6-7",
     "colibri-bounty .colibri_reviews/colibri_bounty__truth.py__bug__e5ac18ae.md (the review the remediation closes)"
    ]
+  },
+  {
+   "id": "EV-282-CYCLE-BREAK-DEAD-IMPORT-SWEEP-REMOVED-LIVE-IMPORTS",
+   "date": "2026-10-24",
+   "repo": "Nexusmill (blender_dev/addons/PatternSkin - the paid add-on core)",
+   "layer": "CI hygiene lint (ruff F821) on the FIRST push of the 229-commit backlog - the commit gate had cleared the introducing commit across FOUR rounds",
+   "caught": "60fb62f8 (the PatternSkin cycle-break refactor: 35-symbol move to common.py + 'leaf import re-homes + dead-import sweep') removed imports that were still live in other scopes: 7 latent NameErrors in __init__.py (subprocess x4, threading x3). PROVENANCE PROVEN BY EXECUTION, not inference: ruff --select F821 on the parent blob (60fb62f8^) = clean; on 60fb62f8 = 7; HEAD carries the same 7. Impact: the sites sit mostly inside try/except (silently-degraded features - e.g. the Spector 'launch from source' operator becomes a no-op) with the threading sites a potential uncaught crash class. The 4-round gate arc on that commit did not surface it and the local suite does not cover those paths.",
+   "severity": "MEDIUM (real NameError class in the paid add-on's core file; silent feature loss)",
+   "author_initially": "n/a - the CI layer caught it; the provenance was established the same session by running the linter against both git blobs (execute-instead-of-re-reason).",
+   "resolution": "QUEUED (own gated tranche): re-home `import subprocess` / `import threading` at the correct scopes (or module level), then ruff F821 = 0 + the local suite + the gate; the e2e workflow green is the close condition.",
+   "refs": [
+    "Nexusmill 60fb62f8 (introducing commit) - parent ruff-clean, after ruff-7",
+    "Nexusmill .github e2e run 40144399130 (hygiene lint, F821 x14 per CI config)",
+    "local ruff: 7 sites (subprocess x4, threading x3) at HEAD",
+    "Nexusmill docket-adjacent: the cycle-break's own gate arc (EV-185 family)"
+   ]
   }
  ]
 }
