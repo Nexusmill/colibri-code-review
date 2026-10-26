@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "9ad2c197f6d23797fd2557a3979e5f8dcb6237e6",
+ "caller": "zcode",
+ "when": "20261025-213157",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "107831e9a67a59ea7e6c18f5e4483a8af2abc7396ca10f7dd63dde2b8f1de356",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261025-213111",
+   "artifact": ".adversary\\reviews\\gate_20261025-213111.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261025-213111.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 2702, 'completion_tokens': 19731, 'total_tokens': 22433, 'cost': 0.00898905588, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.00898905588, 'upstream_inference_prompt_cost': 0.00028768488, 'upstream_inference_completions_cost': 0.008701371}, 'completion_tokens_details': {'reasoning_tokens': 19215, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI reviewed the staged change to `docs/gate_evidence.json` as an append-only JSON edit.\n\n**Structural/JSON validity checks:**\n- The added element is correctly separated from the preceding entry: the prior entry's `refs` array closes with `    ]`, then `+  },` closes the prior entry object **and supplies the required inter-element comma**, then `+  {` opens the new EV-285 object as a sibling in the same array.\n- The new object's fields (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`) are all properly comma-terminated; the final ref line ends without a trailing comma before `+   ]`.\n- Closing sequence balances: `+   ]` closes the new `refs` array, the context `   }` closes the new object, the context `  ]` closes the entries array, and the context ` }` closes the root object. No trailing comma appears before either `]`.\n- Hunk header `@@ -4573,11 +4573,27 @@` is consistent with the 16 added lines observed.\n- No unescaped double quotes appear inside any string value; backticks and single quotes used in `caught`/`refs` are JSON-safe.\n\n**Content checks:** The narrative is internally consistent with its own `refs`/`layer` fields (r1 WARN, r3 WARN, r4 BLOCK, r5 CLEAR; severities LOW\u00d72 + MEDIUM). The round-numbering convention (round 2 being a fix submission rather than a gate review) is stated and matches the \"four-round chain\" framing. External artifacts (commit `0511de1`, review files, `colibri-bounty` push, generation `0511de17e88a`) cannot be verified from the supplied bytes, and per scope I do not treat missing unrelated files as defects.\n\n**Injection check:** The author notes and embedded strings assert correctness/validation but contain no request to skip or soften review; treated as data.\n\nNo provable defect (invalid JSON, broken structure, duplicate/comma error, or reachable wrong behavior) is introduced by the provided bytes. The previous entry's closing-brace indentation shifts by one space (3\u21922), which is cosmetic and JSON-irrelevant; it does not alter the record's content.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261025-213111.md": {
+   "embedded": "e6eff6e6ce392fccc58748bf5941ce73970ad814e1afc08b1771e1e6dbc5f1df",
+   "disk": "e6eff6e6ce392fccc58748bf5941ce73970ad814e1afc08b1771e1e6dbc5f1df"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "0ac05ea15a17102833ceaade0c8a568a6804a631d328f7772bb730e0e1f71f2d"
+}
