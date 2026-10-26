@@ -1298,3 +1298,17 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Resolution:** FIXED + landed: 979baf0 (4 RED-first rows; battery 92/93 -> 97/97 incl. root-causing the known-open lag row as a flat-copy fixture artifact), CLEAR round 2, notarized. The WARN-evidence law is being documented in adversary_gate.py so the certified generation can activate.
 
 **Refs:** Tools .adversary/reviews/gate_20261025-190410.md (BLOCK) + gate_20261025-194933.md (CLEAR); adjudication_20261025-190410 (5 CONFIRMED_ANCHOR, 1 NO_ANCHOR = a finding-body fragment); Tools 979baf0; b115220 note row (verdict WARN, sha 7c734aad).
+
+## 2026-10-25 Tools: the docs-reviewer signature exception through FOUR gate rounds - every finding real, and the round-2 fix proven incomplete by round 4 (EV-285)
+
+**Layer:** gate-review WARN -> WARN -> BLOCK -> CLEAR, all tier 2 (gate_20261025-200844 / -202537 / -204128 / -211823).
+
+**Caught:** round 1 (LOW): the signature regex had no call-target requirement - `password makerbase (user: Admin)` absorbed the quoted value as a "function name" and the block was withdrawn, a hole in the push guard's docs barrier (the deterministic floor cannot catch a dictionary-word password). Round 3 (LOW): a docstring/code drift ("type-annotated or carry defaults" overstated the code's rule). Round 4 (BLOCK, MEDIUM): the round-2 fix was INCOMPLETE - a DEFAULTED parenthetical still absorbed the value (`password makerbase (user = None)`), and the selftest's bound rows lacked that shape, so the battery was green while the hole lived. The chain's strongest evidence: a fix that did not fully settle the class it claimed to close, caught by the next round.
+
+**Severity:** LOW x2 + MEDIUM, all real, all fixed.
+
+**Author's initial reaction:** the round-2 submission framed the annotation-only fix as settling the class; round 4 disproved that against the bytes. The finding was accepted and fixed, not rebutted.
+
+**Resolution:** FIXED at canonical and landed: Tools 0511de1 (two bounds: call-target adjacency + credential-role-prefix guard; SCAN_LOGIC_VERSION v2; 11 new selftest rows incl. every trigger). The same commit carried the WARN-evidence law and the push-guard remedy (a), supplying the CLEAR rows the certified catalog needed - the post-commit activate installed generation 0511de17e88a (the day-long lag closed). Live proof: the colibri-bounty push passed the docs barrier and landed the same session.
+
+**Refs:** Tools .adversary/reviews/gate_20261025-{200844,202537,204128,211823}.md; Tools 0511de1; colibri-bounty 349caf3..d299d30.

@@ -4578,6 +4578,22 @@
     "Tools commit 979baf0 (notarized CLEAR note; prior round adjudicated 6/6 fixed)",
     "b115220 note row: adversary-gate/adversary_gate.py verdict WARN, sha 7c734aad - the activation blocker"
    ]
+  },
+  {
+   "id": "EV-285-DOCSCAN-SIGNATURE-EXCEPTION-FOUR-ROUND-CHAIN-REBUTTAL-INCOMPLETE",
+   "date": "2026-10-25",
+   "repo": "Tools (adversary-gate/docscan.py - the author's own new signature-shape rule in the push guard's docs barrier)",
+   "layer": "gate-review WARN (gate_20261025-200844.md) -> WARN (gate_20261025-202537.md) -> BLOCK (gate_20261025-204128.md) -> CLEAR (gate_20261025-211823.md), all tier 2",
+   "caught": "Every round found something real on the author's own fix: round 1 (WARN, LOW) - the signature regex had no call-target requirement, so `password makerbase (user: Admin)` had its quoted value absorbed as a 'function name' and the block was withdrawn (a push-barrier hole: the deterministic floor cannot catch a dictionary-word password). Round 2's fix (an annotation alone is not signature evidence) was submitted as a correction; round 3 (WARN, LOW) confirmed the code correct but caught a docstring/code drift ('type-annotated or carry defaults' overstated the rule). Round 4 (BLOCK, MEDIUM) proved the round-2 fix INCOMPLETE: a DEFAULTED parenthetical still absorbed the value (`password makerbase (user = None)`) - and the reviewer noted the selftest's bound rows lacked that shape, so the battery was green while the hole lived. Closed with two bounds (call-target adjacency + credential-role-prefix guard) and the exact triggers as rows.",
+   "severity": "LOW x2 + MEDIUM, all real, all fixed; the MEDIUM is the strongest row in the chain: a rebuttal-adjacent fix that did not fully settle the class it claimed to close, caught by the next round against a green battery",
+   "author_initially": "The round-2 submission framed the annotation-only fix as settling the class; round 4 disproved that against the bytes. No rebuttal of the round-4 finding - accepted and fixed.",
+   "resolution": "FIXED at canonical and landed: Tools commit 0511de1 (signature exception + SCAN_LOGIC_VERSION v2 + 11 new selftest rows including every trigger; the same commit carries the WARN-evidence law and the push-guard remedy (a) and supplied the CLEAR rows the certified catalog needed - the post-commit activate installed generation 0511de17e88a and the day-long lag closed). CLEAR gate_20261025-211823. Live proof: the colibri-bounty push (the fix's purpose) passed the docs barrier and landed the same session.",
+   "refs": [
+    "Tools .adversary/reviews/gate_20261025-200844.md (r1 WARN) + gate_20261025-202537.md (r3 WARN) + gate_20261025-204128.md (r4 BLOCK) + gate_20261025-211823.md (r5 CLEAR)",
+    "Tools commit 0511de1 (notarized; 5 files, +172/-31)",
+    "colibri-bounty push 349caf3..d299d30 (the live close)",
+    "docscan selftest rows: password makerbase (user = None) / password makerbase(user=None) / password makerbase (db_password: str = None)"
+   ]
   }
  ]
 }
