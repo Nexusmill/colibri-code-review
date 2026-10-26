@@ -1,0 +1,26 @@
+{
+ "type": "CLEAR",
+ "commit": "3f3892c9d7caebd49b8c4567b291933452e78886",
+ "caller": "zcode",
+ "when": "20261025-210332",
+ "files": {
+  "docs/gate_evidence.json": {
+   "sha": "96c64c6814102299c4fc8a71c6f8ce07514d8b73508f03fbec30d414a8961049",
+   "model": "deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8",
+   "verdict": "CLEAR",
+   "when": "20261025-210231",
+   "artifact": ".adversary\\reviews\\gate_20261025-210231.md"
+  }
+ },
+ "artifacts": {
+  ".adversary\\reviews\\gate_20261025-210231.md": "model: deepseek/deepseek-v4.1-flash-1017@deepinfra/fp8 | provider: DeepInfra | usage: {'prompt_tokens': 3670, 'completion_tokens': 29834, 'total_tokens': 33504, 'cost': 0.01358677488, 'is_byok': False, 'prompt_tokens_details': {'cached_tokens': 768, 'cache_write_tokens': 0, 'audio_tokens': 0, 'video_tokens': 0}, 'cost_details': {'upstream_inference_cost': 0.01358677488, 'upstream_inference_prompt_cost': 0.00042998088, 'upstream_inference_completions_cost': 0.013156794}, 'completion_tokens_details': {'reasoning_tokens': 29358, 'image_tokens': 0, 'audio_tokens': 0}} | scrubbed: 0 | files: ['docs/gate_evidence.json'] | prompt: gate/adversary-review@1 (langfuse) | caller: zcode\n\nI checked the staged bytes for `docs/gate_evidence.json` and the surrounding context:\n\n- **Bracket/comma structure of the appended block is valid.** The preceding entry's `refs` array closes at `    ]`, the new `  },` closes that object and adds the separator, EV-283's object opens at `  {`, closes at `  },`, EV-284 opens at `  {`, closes at the (unchanged) `  }`, then ` ]` closes the entries array and ` }` closes the root. Indentation (entries at 2 spaces, keys at 3, refs elements at 4) matches the pre-existing entry, and there are no stray/missing commas or trailing commas.\n- **The diff is a pure insertion** (no `-` lines), so the \"append-only, no existing row modified\" claim holds for the provided hunk.\n- **String escaping is sound.** The embedded `\\\"files\\\"` / `\\\"sha\\\"` are escaped; the regex `-R[a-zA-Z]*\\\\b` is a valid JSON escape producing the intended `\\b`; all other quoted material uses single quotes or backticks, so no unescaped `\"` breaks the object.\n- **Entry schema matches the visible existing row** (`id`, `date`, `repo`, `layer`, `caught`, `severity`, `author_initially`, `resolution`, `refs`), and the two ids (`EV-283\u2026`, `EV-284\u2026`) and dates (2026-10-24, 2026-10-25) are distinct and ordered.\n- **The author-note count claim is reconcilable with the diff:** the parenthetical \"entries 284 -> 285\" is consistent with the two new rows being the 284th/285th entries and a resulting total of 285 (pre-image 283), matching the stated \"285 entries, correct tail, expected last id.\" No internal contradiction is provable from the supplied bytes.\n- External anchors (colibri-bounty, Tools files/commits) are outside the supplied bytes and, per scope, are not treated as defects.\n\nNo defect introduced by the change survives verification in the provided bytes.\n\nVERDICT: CLEAR"
+ },
+ "artifacts_sha256": {
+  ".adversary\\reviews\\gate_20261025-210231.md": {
+   "embedded": "9cea49f2b3c4df8e29a735e1b9b49a74f98caece888c542419a0ac78198b0fdb",
+   "disk": "9cea49f2b3c4df8e29a735e1b9b49a74f98caece888c542419a0ac78198b0fdb"
+  }
+ },
+ "mac_key_created": "2026-10-09T07:25:41",
+ "mac": "ee99b6bd400b9936f27616bfd3fd0049142652821b6e369844395ddc5be5a210"
+}
