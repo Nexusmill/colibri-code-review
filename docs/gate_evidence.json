@@ -4546,6 +4546,38 @@
     "local ruff: 7 sites (subprocess x4, threading x3) at HEAD",
     "Nexusmill docket-adjacent: the cycle-break's own gate arc (EV-185 family)"
    ]
+  },
+  {
+   "id": "EV-283-COLIBRI-BOUNTY-ARMING-TRANCHE-TWO-ROUND-BLOCK-VENDORED-PAYLOAD",
+   "date": "2026-10-24",
+   "repo": "colibri-bounty (G40 arming tranche - Tools/arm-repo/arm_repo.py installer payload, no hand-authored code)",
+   "layer": "gate-review BLOCK x2 (tier 2, deepseek-v4.1-flash-1017@deepinfra/fp8; artifacts .adversary/reviews/gate_20261024-181626.md + gate_20261024-182309.md)",
+   "caught": "Round 1 (1 MEDIUM, anchored): .githooks/adversary_audit.py::_audit_commit runs `rows = note.get(\"files\")` immediately after json.loads (only a ValueError guard) and dereferences `row.get(\"sha\")` BEFORE _verify_chain_mac's `isinstance(note, dict)` type guard - a valid-JSON non-object note ('[]', a bare string, or a non-dict files/row value) crashes the layer-3 auditor with AttributeError instead of reporting the intended 'note is not a JSON object (malformed)' violation, and the --json output contract is never emitted. Round 2 (1 MEDIUM + 2 LOW): .claude/settings.json installs the G38 skill gate as type:'command' with a SIBLING `args` array over a bare-interpreter command - that args shape is the ZCode `type:process` schema (used correctly by .zcode/config.json in the same tranche), not the Claude command-hook schema, so the installed hook would not run its `pre --level project` invocation (silent guard-bypass class); adversary_audit.py LOW (same note-type-guard finding, re-anchored); tools/zcode_jcm_guard.ps1 line 107 `-R[a-zA-Z]*\\b` matches only clusters STARTING with -R, so the common `ls -laR` form is a false negative in the guard's own '-R clusters' arm (comment line 104 names the class). All three anchors re-verified by the recording agent against the bytes before this row.",
+   "severity": "MEDIUM x2 + LOW - all against vendored installer payload (the settings.json one is a silent guard-bypass class)",
+   "author_initially": "n/a - installer output, not authored code; catches accepted after re-anchoring (G11), no rebuttal claimed.",
+   "resolution": "OPEN - owner ruling / upstream fix. The arming tranche is PARKED: index restored (files remain on disk untracked) and local hand-fixes deliberately NOT applied - adversary_audit.py is a vendored twin of the Tools/adversary-gate source, .claude/settings.json + the jcm guard are arm_repo.py outputs, so the fixes belong upstream or land with the owner's OVERRIDE. The repo is armed regardless on this machine via the machine-wide git-config hooks and the E:/repo-memory/colibri_bounty store.",
+   "refs": [
+    "colibri-bounty .adversary/reviews/gate_20261024-181626.md (round 1) + gate_20261024-182309.md (round 2)",
+    "colibri-bounty gate stdout: review-artifact commit d299d30 = tier-1 CLEAR; the arming diff = BLOCK x2",
+    "verified anchors: .claude/settings.json:8-20; .githooks/adversary_audit.py:378 vs the _verify_chain_mac guard; tools/zcode_jcm_guard.ps1:107 (comment :104)",
+    "colibri-code-review memory id=802c95b0-37a9-4f32-bced-97599ebe4f3f (G43 log for this docket write)"
+   ]
+  },
+  {
+   "id": "EV-284-EV280-PIN-RETIREMENT-THREE-FINDING-BLOCK-AND-WARN-EVIDENCE-LAG",
+   "date": "2026-10-25",
+   "repo": "Tools (adversary-gate/install_gate.py + install_selftest.py pin-retirement change - new logic staged by a parallel session; all findings addressed by this session in the bytes)",
+   "layer": "gate-review BLOCK (tier 2; artifact .adversary/reviews/gate_20261025-190410.md), then CLEAR round 2 (artifact gate_20261025-194933.md; tier-1 deepinfra returned incomplete after ~22 min and the ladder fell to qwen/qwen3.8-omni-flash, which traced every fixed path)",
+   "caught": "Three real findings on the author's own new logic: (MEDIUM) --verify-only printed ARMED and exited 0 for a retained per-repo hooksPath pin while --census called the same bytes stale/exit 1 - the module's own 'the two reporters can never disagree' invariant, broken by the change that introduced the pin_retired state, and untested (only the census row existed); (LOW) --sweep-retired-pin's no-pin branch returned 0 for a covered but never-installed checkout against the documented '0 = armed AND functional' exit table; (LOW) coverage + a foreign hooksPath + --force wrote .githooks/ + notes config then exited 1 at the post-install readback, and the alternative re-point would have created the exact config-hook + canonical-pin stacking the change exists to remove. Follow-on catch the same session, from the census lag warning: the certified-runtime activation had been REFUSED for a day because b115220 landed on a WARN clearance for adversary-gate/adversary_gate.py - enforcement_runtime.reviewed_payloads() refuses WARN rows by design (a WARN clearance lands a commit but never authorizes installing enforcement bytes), so the live certified generation silently lagged HEAD while every armed repo ran the older generation; root-caused from the lag warning to the exact note row (verdict WARN, reviewed sha 7c734aad vs the committed blob).",
+   "severity": "MEDIUM + LOW x2 (all real, all fixed) plus an operational enforcement-evidence gap (the WARN-clearance trap) found by root-causing the lag",
+   "author_initially": "n/a - the change was staged by a parallel session; this session addressed every finding in the bytes rather than rebutting. One sub-claim inside FINDING 3's trigger text was refuted against the bytes and the re-review upheld it: config_hooks.arming() (config_hooks.py:91-115) reads only hook.* entries and never core.hooksPath, so coverage cannot decline because of a foreign pin; the fail-safe False path is an import/exception failure whose else-branch sets CANON_HOOKS_DIR, which _hooks_equivalent() accepts.",
+   "resolution": "FIXED at canonical and landed: install_gate.py + install_selftest.py, Tools commit 979baf0 (4 new RED-first rows: verify_only_retained_pin_unarmed, sweep_nopin_uninstalled_not_armed_exit1, force_foreign_pin_under_coverage_refused_clean, sweep_refuses_foreign_pin_under_coverage; battery 92/93 -> 97/97, including root-causing the long-known-open census_warns_on_runtime_lag row as a flat-copy fixture artifact - the subprocess census imports the copy's enforcement_runtime whose CERTIFIED_CATALOG is layout-derived to <dir-containing-enforcement_runtime>/<file>, a path shape the flat fixture never committed; production Tools layout unaffected); CLEAR round 2 gate_20261025-194933; notarized. The WARN-evidence gap is closed by a follow-up adversary_gate.py commit documenting the law in the file itself, so the certified generation can activate.",
+   "refs": [
+    "Tools .adversary/reviews/gate_20261025-190410.md (BLOCK, 3 findings) + gate_20261025-194933.md (CLEAR round 2)",
+    "Tools .adversary/adjudication_20261025-190410 (5 CONFIRMED_ANCHOR, 1 NO_ANCHOR = FINDING 2's own body fragment - the '6 findings' count was fragment-splitting, not 6 findings)",
+    "Tools commit 979baf0 (notarized CLEAR note; prior round adjudicated 6/6 fixed)",
+    "b115220 note row: adversary-gate/adversary_gate.py verdict WARN, sha 7c734aad - the activation blocker"
+   ]
   }
  ]
 }

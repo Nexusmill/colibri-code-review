@@ -1284,3 +1284,17 @@ CLEAR. Full row: gate_evidence.json EV-235-BOUNTY-T3-FORGE-PATH.
 **Resolution:** QUEUED (own gated tranche): re-home the imports, ruff F821 = 0 + suite + gate; the e2e workflow green is the close condition.
 
 **Refs:** Nexusmill 60fb62f8 (parent clean / after 7); CI e2e run 40144399130; local ruff site list.
+
+## 2026-10-25 Tools: the EV-280 pin-retirement fix BLOCKed on three findings in its own new logic; the day-long certified-runtime lag root-caused to a WARN clearance row (EV-284)
+
+**Layer:** gate-review BLOCK (tier 2; artifact .adversary/reviews/gate_20261025-190410.md), then CLEAR round 2 (gate_20261025-194933.md; the tier-1 deepinfra attempt returned incomplete and the ladder fell to qwen/qwen3.8-omni-flash).
+
+**Caught:** three real findings on the change's own new logic: (MEDIUM) --verify-only printed ARMED/exit 0 for a retained per-repo hooksPath pin while --census called the same bytes stale/exit 1 - the module's own "the two reporters can never disagree" invariant, broken by the pin_retired state and untested; (LOW) --sweep-retired-pin's no-pin branch returned 0 for a covered but never-installed checkout against the documented "0 = armed AND functional" table; (LOW) coverage + a foreign hooksPath + --force wrote .githooks/ + notes config then exited 1 at the readback (the alternative re-point would have created the stacking the change removes). Same session, from the census lag warning: the certified-runtime activation had been REFUSED for a day because b115220 landed on a WARN clearance for adversary_gate.py - enforcement_runtime.reviewed_payloads() refuses WARN rows by design (a WARN lands a commit but never authorizes installing enforcement bytes), so the live generation silently lagged HEAD while every armed repo ran the older generation.
+
+**Severity:** MEDIUM + LOW x2, all real and all fixed; plus the operational enforcement-evidence gap.
+
+**Author's initial reaction:** n/a - the change was staged by a parallel session; findings addressed in the bytes, not argued. One sub-claim in FINDING 3's trigger text was refuted against the bytes and the re-review upheld it: config_hooks.arming() never reads core.hooksPath, so coverage cannot decline because of a foreign pin.
+
+**Resolution:** FIXED + landed: 979baf0 (4 RED-first rows; battery 92/93 -> 97/97 incl. root-causing the known-open lag row as a flat-copy fixture artifact), CLEAR round 2, notarized. The WARN-evidence law is being documented in adversary_gate.py so the certified generation can activate.
+
+**Refs:** Tools .adversary/reviews/gate_20261025-190410.md (BLOCK) + gate_20261025-194933.md (CLEAR); adjudication_20261025-190410 (5 CONFIRMED_ANCHOR, 1 NO_ANCHOR = a finding-body fragment); Tools 979baf0; b115220 note row (verdict WARN, sha 7c734aad).
